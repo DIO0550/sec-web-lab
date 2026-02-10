@@ -3,18 +3,13 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    }
-  },
   "forwardPorts": [3000, 5173, 5432],
   "portsAttributes": {
     "3000": { "label": "Backend (Hono)", "onAutoForward": "notify" },
     "5173": { "label": "Frontend (Vite)", "onAutoForward": "openBrowser" },
     "5432": { "label": "PostgreSQL", "onAutoForward": "silent" }
   },
-  "postCreateCommand": "cd /workspace/backend && npm install && cd /workspace/frontend && npm install",
+  "postCreateCommand": "cd /workspace/backend && pnpm install && cd /workspace/frontend && pnpm install",
   "customizations": {
     "vscode": {
       "extensions": [

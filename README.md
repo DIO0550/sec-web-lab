@@ -13,6 +13,7 @@ Web セキュリティの脆弱性を**実際に手を動かして学ぶ**ため
 | フロントエンド | Vite + React + TypeScript |
 | バックエンド | Hono (Node.js) |
 | データベース | PostgreSQL 16 |
+| パッケージマネージャー | pnpm |
 | 開発環境 | Dev Containers (Docker Compose) |
 
 ## セットアップ
@@ -36,10 +37,10 @@ Web セキュリティの脆弱性を**実際に手を動かして学ぶ**ため
 3. コンテナ内でサーバーを起動
    ```bash
    # バックエンド (port 3000)
-   cd backend && npm run dev
+   cd backend && pnpm dev
 
    # フロントエンド (port 5173) — 別ターミナルで
-   cd frontend && npm run dev
+   cd frontend && pnpm dev
    ```
 
 4. ブラウザで http://localhost:5173 にアクセス
@@ -48,8 +49,8 @@ Web セキュリティの脆弱性を**実際に手を動かして学ぶ**ため
 
 ```bash
 # PostgreSQL が localhost:5432 で動いている前提
-cd backend && npm install && npm run dev
-cd frontend && npm install && npm run dev
+cd backend && pnpm install && pnpm dev
+cd frontend && pnpm install && pnpm dev
 ```
 
 ## プロジェクト構成
