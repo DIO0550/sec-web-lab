@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <!-- 背景グラデーション -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <!-- 攻撃者カラー -->
+    <linearGradient id="attackerGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </linearGradient>
+    <!-- サーバーカラー -->
+    <linearGradient id="serverGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <!-- DBカラー -->
+    <linearGradient id="dbGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <!-- 矢印マーカー -->
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f87171"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>
+    </marker>
+    <marker id="arrowYellow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24"/>
+    </marker>
+    <!-- ドロップシャドウ -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="900" height="620" fill="url(#bg)" rx="12"/>
+
+  <!-- タイトル -->
+  <text x="450" y="40" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="bold">SQL Injection 攻撃フロー</text>
+  <text x="450" y="62" text-anchor="middle" fill="#94a3b8" font-size="13">認証バイパス — ' OR 1=1 --</text>
+
+  <!-- ===== アクター ===== -->
+
+  <!-- 攻撃者 -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="100" width="160" height="70" rx="10" fill="url(#attackerGrad)" stroke="#f87171" stroke-width="1.5"/>
+    <text x="120" y="130" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">🧑‍💻 攻撃者</text>
+    <text x="120" y="152" text-anchor="middle" fill="#fca5a5" font-size="11">悪意あるユーザー入力</text>
+  </g>
+
+  <!-- Webサーバー -->
+  <g filter="url(#shadow)">
+    <rect x="370" y="100" width="160" height="70" rx="10" fill="url(#serverGrad)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="450" y="130" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">🖥️ Webサーバー</text>
+    <text x="450" y="152" text-anchor="middle" fill="#93c5fd" font-size="11">Hono API</text>
+  </g>
+
+  <!-- データベース -->
+  <g filter="url(#shadow)">
+    <rect x="700" y="100" width="160" height="70" rx="10" fill="url(#dbGrad)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="780" y="130" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">🗄️ PostgreSQL</text>
+    <text x="780" y="152" text-anchor="middle" fill="#6ee7b7" font-size="11">users テーブル</text>
+  </g>
+
+  <!-- ===== ステップ 1: 攻撃者 → サーバー ===== -->
+  <line x1="200" y1="195" x2="370" y2="195" stroke="#f87171" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <g>
+    <rect x="30" y="185" width="170" height="60" rx="8" fill="#1e1b2e" stroke="#f87171" stroke-width="1" stroke-dasharray="4 2"/>
+    <text x="40" y="200" fill="#fbbf24" font-size="11" font-weight="bold">① ログインリクエスト</text>
+    <text x="40" y="218" fill="#fca5a5" font-size="10" font-family="monospace">username: ' OR 1=1 --</text>
+    <text x="40" y="234" fill="#fca5a5" font-size="10" font-family="monospace">password: (任意)</text>
+  </g>
+
+  <!-- ===== ステップ 2: サーバーでSQL構築 ===== -->
+  <g>
+    <rect x="310" y="260" width="280" height="100" rx="8" fill="#1e1b2e" stroke="#60a5fa" stroke-width="1" stroke-dasharray="4 2"/>
+    <text x="320" y="278" fill="#fbbf24" font-size="11" font-weight="bold">② 脆弱なSQL構築 (文字列結合)</text>
+    <text x="320" y="300" fill="#93c5fd" font-size="10" font-family="monospace">SELECT * FROM users</text>
+    <text x="320" y="316" fill="#93c5fd" font-size="10" font-family="monospace">WHERE username = ''</text>
+    <text x="320" y="332" fill="#f87171" font-size="10" font-weight="bold" font-family="monospace"> OR 1=1 --'</text>
+    <text x="320" y="348" fill="#64748b" font-size="10" font-family="monospace">AND password = '...' ← 無視される</text>
+  </g>
+  <line x1="450" y1="170" x2="450" y2="260" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <!-- ===== ステップ 3: サーバー → DB ===== -->
+  <line x1="590" y1="310" x2="700" y2="310" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <g>
+    <rect x="610" y="270" width="160" height="34" rx="6" fill="#1e1b2e" stroke="#34d399" stroke-width="1" stroke-dasharray="4 2"/>
+    <text x="620" y="292" fill="#fbbf24" font-size="11" font-weight="bold">③ 改ざんされたSQL実行</text>
+  </g>
+
+  <!-- ===== ステップ 4: DB → サーバー (全ユーザー返却) ===== -->
+  <line x1="700" y1="400" x2="530" y2="400" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowYellow)"/>
+  <g>
+    <rect x="700" y="380" width="170" height="70" rx="8" fill="#1e1b2e" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4 2"/>
+    <text x="710" y="398" fill="#fbbf24" font-size="11" font-weight="bold">④ 全レコード返却</text>
+    <text x="710" y="416" fill="#6ee7b7" font-size="10" font-family="monospace">→ admin / ...</text>
+    <text x="710" y="432" fill="#6ee7b7" font-size="10" font-family="monospace">→ user1 / ...</text>
+    <text x="710" y="448" fill="#6ee7b7" font-size="10" font-family="monospace">→ user2 / ...</text>
+  </g>
+
+  <!-- ===== ステップ 5: サーバー → 攻撃者 (認証成功) ===== -->
+  <line x1="370" y1="440" x2="200" y2="440" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowYellow)"/>
+  <g>
+    <rect x="310" y="420" width="210" height="52" rx="8" fill="#1e1b2e" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4 2"/>
+    <text x="320" y="438" fill="#fbbf24" font-size="11" font-weight="bold">⑤ 認証バイパス成功</text>
+    <text x="320" y="456" fill="#fca5a5" font-size="10">最初のレコード(admin)でログイン成功</text>
+  </g>
+
+  <!-- ===== 攻撃者の結果 ===== -->
+  <g>
+    <rect x="30" y="420" width="170" height="52" rx="8" fill="#450a0a" stroke="#f87171" stroke-width="1.5"/>
+    <text x="115" y="443" text-anchor="middle" fill="#f87171" font-size="13" font-weight="bold">⚠️ admin として</text>
+    <text x="115" y="461" text-anchor="middle" fill="#f87171" font-size="13" font-weight="bold">ログイン成功</text>
+  </g>
+
+  <!-- ===== 下部: 原因と対策 ===== -->
+  <line x1="40" y1="510" x2="860" y2="510" stroke="#334155" stroke-width="1"/>
+
+  <!-- 原因 -->
+  <g>
+    <rect x="40" y="530" width="390" height="70" rx="8" fill="#2d1517" stroke="#f87171" stroke-width="1"/>
+    <text x="55" y="552" fill="#f87171" font-size="12" font-weight="bold">✗ 脆弱なコード (文字列結合)</text>
+    <text x="55" y="572" fill="#fca5a5" font-size="10" font-family="monospace">query(`SELECT * FROM users</text>
+    <text x="55" y="588" fill="#fca5a5" font-size="10" font-family="monospace">  WHERE username = '${input}'`)</text>
+  </g>
+
+  <!-- 対策 -->
+  <g>
+    <rect x="460" y="530" width="400" height="70" rx="8" fill="#052e16" stroke="#34d399" stroke-width="1"/>
+    <text x="475" y="552" fill="#34d399" font-size="12" font-weight="bold">✓ 安全なコード (パラメータ化クエリ)</text>
+    <text x="475" y="572" fill="#6ee7b7" font-size="10" font-family="monospace">query(`SELECT * FROM users</text>
+    <text x="475" y="588" fill="#6ee7b7" font-size="10" font-family="monospace">  WHERE username = $1`, [input])</text>
+  </g>
+</svg>
