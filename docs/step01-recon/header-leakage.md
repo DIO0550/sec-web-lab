@@ -1,5 +1,11 @@
 # HTTPレスポンスヘッダーからの情報漏洩
 
+## 攻撃・対策フロー図
+
+| 攻撃図 | 対策図 |
+|--------|--------|
+| ![攻撃フロー](diagrams/header-leakage-attack.svg) | ![対策フロー](diagrams/header-leakage-defense.svg) |
+
 ## 対象ラボ
 
 ### 1. サーバー技術情報の露出

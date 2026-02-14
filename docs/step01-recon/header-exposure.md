@@ -1,5 +1,13 @@
 # 不要なヘッダー露出
 
+## 攻撃・対策フロー図
+
+> HTTPヘッダー情報漏洩と共通の図を参照
+
+| 攻撃図 | 対策図 |
+|--------|--------|
+| ![攻撃フロー](diagrams/header-leakage-attack.svg) | ![対策フロー](diagrams/header-leakage-defense.svg) |
+
 ## 対象ラボ
 
 ### 1. レスポンスヘッダーの過剰な情報公開

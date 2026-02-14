@@ -1,5 +1,11 @@
 # ディレクトリリスティング
 
+## 攻撃・対策フロー図
+
+| 攻撃図 | 対策図 |
+|--------|--------|
+| ![攻撃フロー](diagrams/directory-listing-attack.svg) | ![対策フロー](diagrams/directory-listing-defense.svg) |
+
 ## 対象ラボ
 
 ### 1. ファイル一覧の閲覧
