@@ -1,5 +1,11 @@
 # 機密ファイルの露出 (.git / .env / robots.txt)
 
+## 攻撃・対策フロー図
+
+| 攻撃図 | 対策図 |
+|--------|--------|
+| ![攻撃フロー](diagrams/sensitive-file-exposure-attack.svg) | ![対策フロー](diagrams/sensitive-file-exposure-defense.svg) |
+
 ## 対象ラボ
 
 ### 1. 設定ファイル・Git履歴の公開
