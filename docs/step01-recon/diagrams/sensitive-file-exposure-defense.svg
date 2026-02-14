@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGreen">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Sensitive File Exposure — Defense</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">機密ファイル露出に対する多層防御</text>
+  <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (dimmed) -->
+  <g transform="translate(200, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
+    <g transform="translate(0, 10)" opacity="0.45">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Attacker</text>
+  </g>
+
+  <!-- Web Server (protected) -->
+  <g transform="translate(550, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  BLOCKED ARROWS                                         -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker → Server: request (dimmed, still happens) -->
+  <path d="M 258 270 L 430 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
+
+  <!-- Block X on request path -->
+  <g transform="translate(450, 270)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Server → Attacker: 403 Forbidden (green safe) -->
+  <path d="M 492 300 L 258 300" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+
+  <!-- 403 label -->
+  <g transform="translate(375, 320)">
+    <rect x="-42" y="-10" width="84" height="20" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">403 Forbidden</text>
+  </g>
+
+  <!-- Attacker frustrated -->
+  <g transform="translate(200, 440)" filter="url(#shadow)">
+    <rect x="-95" y="-18" width="190" height="52" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+    <text x="0" y="0" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600" opacity="0.5">機密ファイルにアクセス不可</text>
+    <text x="0" y="16" text-anchor="middle" fill="#94a3b8" font-size="9" opacity="0.4">.env / .git → 403 / 404</text>
+    <text x="0" y="28" text-anchor="middle" fill="#ef4444" font-size="8.5" opacity="0.4">情報窃取に失敗</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 1: Middleware Filter                     -->
+  <!-- ====================================================== -->
+  <g transform="translate(385, 180)" filter="url(#shadow)">
+    <rect x="-58" y="-58" width="116" height="165" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <!-- Funnel/Filter icon -->
+    <g transform="translate(0, -28)">
+      <polygon points="-16,-14 16,-14 6,2 6,12 -6,12 -6,2" fill="none" stroke="#22c55e" stroke-width="1.4" stroke-linejoin="round"/>
+    </g>
+    <text x="0" y="18" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">パスフィルター</text>
+    <text x="0" y="32" text-anchor="middle" fill="#bbf7d0" font-size="8">ドットファイルへの</text>
+    <text x="0" y="43" text-anchor="middle" fill="#bbf7d0" font-size="8">アクセスを拒否</text>
+    <line x1="-42" y1="52" x2="42" y2="52" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="66" text-anchor="middle" fill="#4ade80" font-size="7.5">リクエストパスに</text>
+    <text x="0" y="78" text-anchor="middle" fill="#4ade80" font-size="7.5">/. が含まれたら拒否</text>
+    <text x="0" y="94" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">/\..*$ → 403</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 2: .gitignore + Deploy                   -->
+  <!-- ====================================================== -->
+  <g transform="translate(200, 580)" filter="url(#shadow)">
+    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-60, 22)">
+      <rect x="-9" y="-9" width="18" height="18" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <line x1="-4" y1="0" x2="4" y2="0" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">デプロイ除外</text>
+    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">機密ファイルをデプロイに含めない</text>
+    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">.dockerignore: .env</text>
+    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">.dockerignore: .git/</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 3: Nginx deny rule                       -->
+  <!-- ====================================================== -->
+  <g transform="translate(550, 460)" filter="url(#shadow)">
+    <rect x="-95" y="-20" width="190" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-60, 20)">
+      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">Nginx deny ルール</text>
+    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">Webサーバーレベルでブロック</text>
+    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="38" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">location ~ /\. &#123;</text>
+    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">  deny all;</text>
+    <text x="0" y="66" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">&#125;</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 4: Env vars via secrets manager          -->
+  <!-- ====================================================== -->
+  <g transform="translate(375, 620)" filter="url(#shadow)">
+    <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-112, 14)">
+      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
+      <line x1="0" y1="7" x2="0" y2="10" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/>
+    </g>
+    <text x="10" y="-2" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Secrets Manager</text>
+    <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">.envファイル自体を使用せず、環境変数を安全に管理</text>
+    <line x1="-136" y1="24" x2="136" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="10" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Docker secrets / AWS SSM / Vault</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE SIDEBAR                                        -->
+  <!-- ====================================================== -->
+  <g transform="translate(785, 100)">
+    <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
+    <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Layer 1 -->
+    <g transform="translate(18, 64)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">パスフィルター</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">ミドルウェアでドットファイルへの</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">アクセスを一律拒否</text>
+    </g>
+
+    <!-- Layer 2 -->
+    <g transform="translate(18, 130)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">デプロイ時の除外</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">.dockerignoreで.env, .git等を</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">本番環境に含めない</text>
+    </g>
+
+    <!-- Layer 3 -->
+    <g transform="translate(18, 196)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">Nginx deny ルール</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">Webサーバーレベルで</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">隠しファイルへのアクセスを拒否</text>
+    </g>
+
+    <!-- Layer 4 -->
+    <g transform="translate(18, 262)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">Secrets Manager</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">.envファイルを廃止し、</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">安全な秘密管理サービスを使用</text>
+    </g>
+
+    <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(30, 730)">
+    <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
+    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
+    <g transform="translate(172, 18)">
+      <circle cx="0" cy="0" r="8" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-3" y1="-3" x2="3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="-3" x2="-3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="188" y="22" fill="#86efac" font-size="9">ブロックポイント</text>
+    <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
+  </g>
+
+</svg>
