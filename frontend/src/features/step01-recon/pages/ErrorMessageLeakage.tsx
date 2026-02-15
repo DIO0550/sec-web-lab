@@ -1,10 +1,12 @@
 import { useState, useCallback } from "react";
-import { fetchText } from "../../hooks/useLabFetch";
-import { LabLayout } from "../../components/LabLayout";
-import { ComparisonPanel } from "../../components/ComparisonPanel";
-import { JsonTextViewer } from "../../components/ResponseViewer";
-import { FetchButton } from "../../components/FetchButton";
-import { CheckpointBox } from "../../components/CheckpointBox";
+import {
+  fetchText,
+  LabLayout,
+  ComparisonPanel,
+  JsonTextViewer,
+  FetchButton,
+  CheckpointBox,
+} from "../../common";
 
 type FetchResult = { status: number; body: string } | null;
 

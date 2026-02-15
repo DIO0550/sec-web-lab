@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Home } from "./pages/Home";
-
-// Step01: Recon（偵察フェーズ）
-import { Step01Index } from "./pages/step01/index";
-import { HeaderLeakage } from "./pages/step01/HeaderLeakage";
-import { SensitiveFileExposure } from "./pages/step01/SensitiveFileExposure";
-import { ErrorMessageLeakage } from "./pages/step01/ErrorMessageLeakage";
-import { DirectoryListing } from "./pages/step01/DirectoryListing";
-import { HeaderExposure } from "./pages/step01/HeaderExposure";
+import {
+  Step01Index,
+  HeaderLeakage,
+  SensitiveFileExposure,
+  ErrorMessageLeakage,
+  DirectoryListing,
+  HeaderExposure,
+} from "./features/step01-recon";
 
 export function App() {
   return (
