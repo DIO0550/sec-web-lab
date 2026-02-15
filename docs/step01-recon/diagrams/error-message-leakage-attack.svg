@@ -120,7 +120,7 @@
   </g>
 
   <!-- ===== Malicious request ===== -->
-  <g transform="translate(380, 165)">
+  <g transform="translate(380, 128)">
     <rect x="-205" y="-14" width="410" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
       <tspan fill="#ef4444">GET </tspan><tspan fill="#93c5fd">/api/users?id=</tspan><tspan fill="#ef4444">'OR 1=1--</tspan><tspan fill="#94a3b8">  (不正な入力)</tspan>

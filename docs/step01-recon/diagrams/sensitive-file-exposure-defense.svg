@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 840" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0f172a"/>
@@ -20,7 +20,7 @@
   </defs>
 
   <!-- Background -->
-  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+  <rect width="1100" height="840" fill="url(#bgGrad)" rx="12"/>
 
   <!-- ===== Title ===== -->
   <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Sensitive File Exposure — Defense</text>
@@ -70,14 +70,7 @@
   <!-- ====================================================== -->
 
   <!-- Attacker → Server: request (dimmed, still happens) -->
-  <path d="M 258 270 L 430 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
-
-  <!-- Block X on request path -->
-  <g transform="translate(450, 270)">
-    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
-    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-  </g>
+  <path d="M 258 270 L 448 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
 
   <!-- Server → Attacker: 403 Forbidden (green safe) -->
   <path d="M 492 300 L 258 300" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
@@ -112,6 +105,13 @@
     <text x="0" y="66" text-anchor="middle" fill="#4ade80" font-size="7.5">リクエストパスに</text>
     <text x="0" y="78" text-anchor="middle" fill="#4ade80" font-size="7.5">/. が含まれたら拒否</text>
     <text x="0" y="94" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">/\..*$ → 403</text>
+  </g>
+
+  <!-- Block X on request path (rendered after Defense Point 1 to appear on top) -->
+  <g transform="translate(468, 270)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
   <!-- ====================================================== -->
@@ -150,7 +150,7 @@
   <!-- ====================================================== -->
   <!--  DEFENSE POINT 4: Env vars via secrets manager          -->
   <!-- ====================================================== -->
-  <g transform="translate(375, 620)" filter="url(#shadow)">
+  <g transform="translate(375, 700)" filter="url(#shadow)">
     <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(-112, 14)">
       <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
@@ -213,7 +213,7 @@
   </g>
 
   <!-- ===== Legend ===== -->
-  <g transform="translate(30, 730)">
+  <g transform="translate(30, 790)">
     <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
     <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
