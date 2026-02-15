@@ -70,14 +70,7 @@
   <!-- ====================================================== -->
 
   <!-- Attacker → Server: request (dimmed, still happens) -->
-  <path d="M 258 270 L 430 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
-
-  <!-- Block X on request path -->
-  <g transform="translate(450, 270)">
-    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
-    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-  </g>
+  <path d="M 258 270 L 448 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
 
   <!-- Server → Attacker: 403 Forbidden (green safe) -->
   <path d="M 492 300 L 258 300" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
@@ -112,6 +105,13 @@
     <text x="0" y="66" text-anchor="middle" fill="#4ade80" font-size="7.5">リクエストパスに</text>
     <text x="0" y="78" text-anchor="middle" fill="#4ade80" font-size="7.5">/. が含まれたら拒否</text>
     <text x="0" y="94" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">/\..*$ → 403</text>
+  </g>
+
+  <!-- Block X on request path (rendered after Defense Point 1 to appear on top) -->
+  <g transform="translate(468, 270)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
   <!-- ====================================================== -->
