@@ -4,11 +4,11 @@ import { logger } from "hono/logger";
 import { getPool } from "./db/pool.js";
 
 // Step01: Recon（偵察）ラボ
-import headerLeakage from "./labs/header-leakage.js";
-import sensitiveFileExposure from "./labs/sensitive-file-exposure.js";
-import errorMessageLeakage from "./labs/error-message-leakage.js";
-import directoryListing from "./labs/directory-listing.js";
-import headerExposure from "./labs/header-exposure.js";
+import headerLeakage from "./labs/step01-recon/header-leakage.js";
+import sensitiveFileExposure from "./labs/step01-recon/sensitive-file-exposure.js";
+import errorMessageLeakage from "./labs/step01-recon/error-message-leakage.js";
+import directoryListing from "./labs/step01-recon/directory-listing.js";
+import headerExposure from "./labs/step01-recon/header-exposure.js";
 
 const app = new Hono();
 

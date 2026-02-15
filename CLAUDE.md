@@ -20,7 +20,9 @@ Webセキュリティの脆弱性を実際に体験して学ぶためのハン�
 ```
 backend/src/              → Hono API サーバー
   index.ts                → エントリポイント・ルート登録
-  labs/<lab-name>.ts      → 各ラボのルート定義
+  labs/                   → ラボのルート定義
+    step01-recon/         → Step 01: 偵察
+      <lab-name>.ts       → 各ラボのルート定義
   db/pool.ts              → PostgreSQL 接続プール
   db/seed.ts              → テストデータ投入
 frontend/src/             → React アプリ
@@ -59,7 +61,7 @@ pnpm typecheck       # 型チェック
 
 ### ラボの追加手順
 
-1. **バックエンド**: `backend/src/labs/<lab-name>.ts` に脆弱なルートを作成
+1. **バックエンド**: `backend/src/labs/<step>/<lab-name>.ts` に脆弱なルートを作成
    - Hono の `Hono` インスタンスを export する
    - `backend/src/index.ts` で `app.route()` を使って登録
 2. **フロントエンド**: `frontend/src/features/<step>/pages/<LabName>.tsx` にページを作成

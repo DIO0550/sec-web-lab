@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { getPool } from "../db/pool.js";
+import { getPool } from "../../db/pool.js";
 
 const app = new Hono();
 
