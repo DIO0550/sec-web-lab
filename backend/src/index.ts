@@ -3,6 +3,13 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { getPool } from "./db/pool.js";
 
+// Step01: Recon（偵察）ラボ
+import headerLeakage from "./labs/step01-recon/header-leakage.js";
+import sensitiveFileExposure from "./labs/step01-recon/sensitive-file-exposure.js";
+import errorMessageLeakage from "./labs/step01-recon/error-message-leakage.js";
+import directoryListing from "./labs/step01-recon/directory-listing.js";
+import headerExposure from "./labs/step01-recon/header-exposure.js";
+
 const app = new Hono();
 
 app.use("*", logger());
@@ -29,9 +36,56 @@ app.get("/api/health", async (c) => {
 });
 
 // ========================================
-// この下に脆弱なエンドポイントを追加していく
-// 各ラボ (lab) ごとにルートファイルを分けて管理する
+// Step01: Recon（偵察）ラボ
 // ========================================
+app.route("/api/labs/header-leakage", headerLeakage);
+app.route("/api/labs/sensitive-file-exposure", sensitiveFileExposure);
+app.route("/api/labs/error-message-leakage", errorMessageLeakage);
+app.route("/api/labs/directory-listing", directoryListing);
+app.route("/api/labs/header-exposure", headerExposure);
+
+// ラボ一覧API
+app.get("/api/labs", (c) => {
+  return c.json({
+    labs: [
+      {
+        id: "header-leakage",
+        name: "HTTPヘッダー情報漏洩",
+        category: "step01-recon",
+        difficulty: 1,
+        path: "/labs/header-leakage",
+      },
+      {
+        id: "sensitive-file-exposure",
+        name: "機密ファイルの露出",
+        category: "step01-recon",
+        difficulty: 1,
+        path: "/labs/sensitive-file-exposure",
+      },
+      {
+        id: "error-message-leakage",
+        name: "エラーメッセージ情報漏洩",
+        category: "step01-recon",
+        difficulty: 1,
+        path: "/labs/error-message-leakage",
+      },
+      {
+        id: "directory-listing",
+        name: "ディレクトリリスティング",
+        category: "step01-recon",
+        difficulty: 1,
+        path: "/labs/directory-listing",
+      },
+      {
+        id: "header-exposure",
+        name: "セキュリティヘッダー欠如",
+        category: "step01-recon",
+        difficulty: 1,
+        path: "/labs/header-exposure",
+      },
+    ],
+  });
+});
 
 console.log("Server starting on http://localhost:3000");
 
