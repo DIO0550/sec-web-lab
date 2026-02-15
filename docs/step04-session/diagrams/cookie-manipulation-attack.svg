@@ -1,0 +1,263 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f97316"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Cookie Security Misconfiguration</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">Cookie属性の不備が招く3つの攻撃経路</text>
+  <rect x="278" y="66" width="204" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP A05 — Security Misconfiguration</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker -->
+  <g transform="translate(115, 220)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Victim (Browser) -->
+  <g transform="translate(380, 220)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
+      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
+      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#d8b4fe" font-size="13" font-weight="700">被害者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#a855f7" font-size="9.5" opacity="0.7">ブラウザ</text>
+  </g>
+
+  <!-- Web Server -->
+  <g transform="translate(645, 220)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">target.com</text>
+  </g>
+
+  <!-- ===== Vulnerability callout (central, below server) ===== -->
+  <g transform="translate(645, 370)" filter="url(#shadow)">
+    <rect x="-115" y="-18" width="230" height="66" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ 脆弱性: Cookie属性なし</text>
+    <text x="0" y="16" text-anchor="middle" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">Set-Cookie: session_id=abc123</text>
+    <text x="0" y="32" text-anchor="middle" fill="#fed7aa" font-size="9">HttpOnly/Secure/SameSite 未設定</text>
+    <text x="0" y="44" text-anchor="middle" fill="#fed7aa" font-size="8">→ 3つの攻撃経路が同時に存在</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK VECTOR 1: XSS → document.cookie (HttpOnly無)    -->
+  <!-- ====================================================== -->
+
+  <!-- Label for Vector 1 -->
+  <g transform="translate(120, 400)" filter="url(#shadow)">
+    <rect x="-80" y="-14" width="160" height="42" rx="6" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="0" y="2" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="700">経路1: HttpOnly無</text>
+    <text x="0" y="18" text-anchor="middle" fill="#ef4444" font-size="8.5">XSS → document.cookie窃取</text>
+  </g>
+
+  <!-- Arrow: XSS script reads cookie from victim -->
+  <path d="M 324 280 Q 250 350 200 336" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="280" cy="340" r="14" fill="#ef4444"/>
+  <text x="280" y="345" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK VECTOR 2: HTTP傍受 (Secure無)                   -->
+  <!-- ====================================================== -->
+
+  <!-- Label for Vector 2 -->
+  <g transform="translate(380, 460)" filter="url(#shadow)">
+    <rect x="-95" y="-14" width="190" height="42" rx="6" fill="#1e1b2e" stroke="#f97316" stroke-width="1.5"/>
+    <text x="0" y="2" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="700">経路2: Secure無</text>
+    <text x="0" y="18" text-anchor="middle" fill="#f97316" font-size="8.5">HTTP平文通信 → Cookie傍受</text>
+  </g>
+
+  <!-- Arrow: Sniffing between Victim and Server -->
+  <path d="M 436 250 L 589 250" fill="none" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
+  <circle cx="514" cy="228" r="14" fill="#f97316"/>
+  <text x="514" y="233" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+  <text x="514" y="218" text-anchor="middle" fill="#fdba74" font-size="9" font-weight="600">HTTP平文で送信</text>
+
+  <!-- Sniffing icon between victim and server -->
+  <g transform="translate(510, 270)">
+    <text x="0" y="0" text-anchor="middle" fill="#f97316" font-size="8" font-family="'Fira Code', monospace">Cookie: session_id=abc123</text>
+    <text x="0" y="12" text-anchor="middle" fill="#f97316" font-size="7" opacity="0.7">↑ 傍受可能 (暗号化なし)</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK VECTOR 3: CSRF (SameSite無)                     -->
+  <!-- ====================================================== -->
+
+  <!-- Label for Vector 3 -->
+  <g transform="translate(120, 540)" filter="url(#shadow)">
+    <rect x="-80" y="-14" width="160" height="42" rx="6" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="0" y="2" text-anchor="middle" fill="#d8b4fe" font-size="10" font-weight="700">経路3: SameSite無</text>
+    <text x="0" y="18" text-anchor="middle" fill="#a855f7" font-size="8.5">外部サイト → Cookie自動送信</text>
+  </g>
+
+  <!-- Arrow: CSRF from external site → Server with Cookie -->
+  <path d="M 200 540 Q 400 610 589 310" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowPurple)" filter="url(#glow)"/>
+  <circle cx="380" cy="580" r="14" fill="#a855f7"/>
+  <text x="380" y="585" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+  <text x="420" cy="600" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="600">
+    <tspan x="420" y="600">Cookie付きCSRF</tspan>
+  </text>
+
+  <!-- ===== Code example bar ===== -->
+  <g transform="translate(380, 630)">
+    <rect x="-240" y="-14" width="480" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
+      <tspan fill="#64748b">Set-Cookie:</tspan><tspan fill="#ef4444"> session_id=abc123; Path=/</tspan><tspan fill="#94a3b8"> (属性なし)</tspan>
+    </text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="370" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">3つの攻撃経路</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Vector 1: HttpOnly -->
+    <circle cx="34" cy="72" r="13" fill="#ef4444"/>
+    <text x="34" y="77" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#fca5a5" font-size="11.5" font-weight="600">HttpOnly なし</text>
+    <text x="56" y="80" fill="#f8fafc" font-size="10" font-weight="600">→ XSSでCookie窃取</text>
+    <text x="56" y="96" fill="#94a3b8" font-size="9">document.cookieでセッションIDを</text>
+    <text x="56" y="109" fill="#94a3b8" font-size="9">読み取り外部サーバーに送信</text>
+
+    <line x1="20" y1="122" x2="285" y2="122" stroke="#334155" stroke-width="0.5"/>
+
+    <!-- Vector 2: Secure -->
+    <circle cx="34" cy="148" r="13" fill="#f97316"/>
+    <text x="34" y="153" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="140" fill="#fdba74" font-size="11.5" font-weight="600">Secure なし</text>
+    <text x="56" y="156" fill="#f8fafc" font-size="10" font-weight="600">→ ネットワーク傍受</text>
+    <text x="56" y="172" fill="#94a3b8" font-size="9">HTTP平文通信でCookieが送信され</text>
+    <text x="56" y="185" fill="#94a3b8" font-size="9">公衆Wi-Fi等で傍受される</text>
+
+    <line x1="20" y1="198" x2="285" y2="198" stroke="#334155" stroke-width="0.5"/>
+
+    <!-- Vector 3: SameSite -->
+    <circle cx="34" cy="224" r="13" fill="#a855f7"/>
+    <text x="34" y="229" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="216" fill="#d8b4fe" font-size="11.5" font-weight="600">SameSite なし</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="10" font-weight="600">→ CSRF攻撃</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9">外部サイトからのリクエストに</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9">Cookieが自動付与される</text>
+
+    <line x1="16" y1="280" x2="289" y2="280" stroke="#334155" stroke-width="1"/>
+
+    <!-- Summary -->
+    <text x="152" y="306" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="700">共通の根本原因</text>
+    <text x="152" y="324" text-anchor="middle" fill="#94a3b8" font-size="9.5">セキュリティ属性がデフォルト無効</text>
+    <text x="152" y="340" text-anchor="middle" fill="#94a3b8" font-size="9.5">→ 明示的に設定しないと全経路が無防備</text>
+    <text x="152" y="360" text-anchor="middle" fill="#ef4444" font-size="9" font-family="'Fira Code', monospace">setCookie(c, 'sid', val, {path: '/'})</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="680" x2="1070" y2="680" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="705" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">使用される攻撃テクニック</text>
+
+  <!-- Card: XSS Cookie窃取 -->
+  <g transform="translate(165, 718)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <text x="0" y="4" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700">&lt;/&gt;</text>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">XSS Cookie窃取</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">document.cookieで読み取り</text>
+  </g>
+
+  <!-- Card: ネットワーク傍受 -->
+  <g transform="translate(465, 718)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#f97316" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#f97316" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <circle cx="0" cy="0" r="7" fill="none" stroke="#f97316" stroke-width="1.2"/>
+      <line x1="-4" y1="0" x2="4" y2="0" stroke="#f97316" stroke-width="1.2"/>
+      <line x1="0" y1="-4" x2="0" y2="4" stroke="#f97316" stroke-width="1.2"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">ネットワーク傍受</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">HTTP平文通信でCookie傍受</text>
+  </g>
+
+  <!-- Card: CSRF自動送信 -->
+  <g transform="translate(765, 718)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#a855f7" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#a855f7" opacity="0.1"/>
+    <g transform="translate(-94, 18)">
+      <rect x="-8" y="-6" width="16" height="11" rx="2" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <polyline points="-8,-6 0,1 8,-6" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">CSRF自動送信</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">クロスサイトでCookie自動付与</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 495)">
+    <rect x="0" y="0" width="305" height="86" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">経路1: XSS攻撃</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#f97316" stroke-width="2"/>
+    <text x="190" y="38" fill="#fdba74" font-size="9.5">経路2: 傍受</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#a855f7" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="58" fill="#d8b4fe" font-size="9.5">経路3: CSRF</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+    <line x1="14" y1="70" x2="44" y2="70" stroke="#a855f7" stroke-width="2"/>
+    <text x="52" y="74" fill="#d8b4fe" font-size="9.5">ユーザー通信</text>
+  </g>
+
+</svg>
