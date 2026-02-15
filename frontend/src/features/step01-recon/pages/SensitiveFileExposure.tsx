@@ -1,12 +1,9 @@
-import {
-  useMultiTest,
-  fetchText,
-  LabLayout,
-  ComparisonPanel,
-  TextViewer,
-  FetchButton,
-  CheckpointBox,
-} from "../../common";
+import { useMultiTest, fetchText } from "../../../hooks/useLabFetch";
+import { LabLayout } from "../../../components/LabLayout";
+import { ComparisonPanel } from "../../../components/ComparisonPanel";
+import { TextViewer } from "../../../components/ResponseViewer";
+import { FetchButton } from "../../../components/FetchButton";
+import { CheckpointBox } from "../../../components/CheckpointBox";
 
 const TARGET_FILES = [
   { path: ".env", label: ".env (環境変数)" },

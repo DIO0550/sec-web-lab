@@ -1,12 +1,8 @@
-import {
-  useLabFetch,
-  fetchJsonWithHeaders,
-  type HeaderResponse,
-  LabLayout,
-  ComparisonPanel,
-  FetchButton,
-  CheckpointBox,
-} from "../../common";
+import { useLabFetch, fetchJsonWithHeaders, type HeaderResponse } from "../../../hooks/useLabFetch";
+import { LabLayout } from "../../../components/LabLayout";
+import { ComparisonPanel } from "../../../components/ComparisonPanel";
+import { FetchButton } from "../../../components/FetchButton";
+import { CheckpointBox } from "../../../components/CheckpointBox";
 
 // チェックするセキュリティヘッダーの定義
 const SECURITY_HEADERS = [
