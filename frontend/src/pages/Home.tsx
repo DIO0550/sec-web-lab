@@ -7,41 +7,45 @@ type HealthStatus = {
   time: string;
 } | null;
 
-const LABS = [
+const STEPS = [
   {
-    id: "header-leakage",
-    name: "HTTPヘッダー情報漏洩",
-    description: "X-Powered-By, Server 等のヘッダーから技術スタックが特定される",
-    difficulty: 1,
-    path: "/labs/header-leakage",
+    id: "step01",
+    name: "Step 01: Recon (偵察フェーズ)",
+    description: "攻撃者がターゲットの情報を収集するフェーズで悪用される脆弱性を体験",
+    labCount: 5,
+    path: "/step01",
   },
   {
-    id: "sensitive-file-exposure",
-    name: "機密ファイルの露出",
-    description: ".env, .git/, robots.txt 等の機密ファイルがWebからアクセス可能",
-    difficulty: 1,
-    path: "/labs/sensitive-file-exposure",
+    id: "step02",
+    name: "Step 02: Injection (インジェクション)",
+    description: "SQL Injection, XSS 等の入力値を悪用した攻撃",
+    labCount: 0,
+    path: "/step02",
+    comingSoon: true,
   },
   {
-    id: "error-message-leakage",
-    name: "エラーメッセージ情報漏洩",
-    description: "エラーメッセージにSQL文やスタックトレース等の内部情報が含まれる",
-    difficulty: 1,
-    path: "/labs/error-message-leakage",
+    id: "step03",
+    name: "Step 03: Auth (認証)",
+    description: "認証の欠陥を悪用した攻撃",
+    labCount: 0,
+    path: "/step03",
+    comingSoon: true,
   },
   {
-    id: "directory-listing",
-    name: "ディレクトリリスティング",
-    description: "ディレクトリ一覧が表示され、ファイル構成が外部から丸見えになる",
-    difficulty: 1,
-    path: "/labs/directory-listing",
+    id: "step04",
+    name: "Step 04: Session (セッション管理)",
+    description: "セッション管理の脆弱性を悪用した攻撃",
+    labCount: 0,
+    path: "/step04",
+    comingSoon: true,
   },
   {
-    id: "header-exposure",
-    name: "セキュリティヘッダー欠如",
-    description: "セキュリティヘッダーが未設定でブラウザの保護機能が無効のまま",
-    difficulty: 1,
-    path: "/labs/header-exposure",
+    id: "step05",
+    name: "Step 05: Access Control (アクセス制御)",
+    description: "アクセス制御の不備を悪用した攻撃",
+    labCount: 0,
+    path: "/step05",
+    comingSoon: true,
   },
 ];
 
@@ -58,58 +62,68 @@ export function Home() {
 
   return (
     <div>
-      <h2>Step 01: Recon (偵察フェーズ)</h2>
+      <h2>Learning Steps</h2>
       <p>
-        攻撃者がターゲットの情報を収集するフェーズで悪用される脆弱性を体験します。
-        各ラボには<strong>脆弱バージョン</strong>と<strong>安全バージョン</strong>があり、
-        攻撃と防御の両方を学べます。
+        Webセキュリティの脆弱性をステップごとに体験して学びます。
+        各ステップには複数のラボがあり、<strong>脆弱バージョン</strong>と
+        <strong>安全バージョン</strong>の両方を試せます。
       </p>
 
       <div style={{ marginTop: 24 }}>
-        {LABS.map((lab) => (
-          <div
-            key={lab.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: 4,
-              padding: 16,
-              marginBottom: 12,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <h3 style={{ margin: "0 0 4px 0" }}>
-                <Link to={lab.path} style={{ textDecoration: "none" }}>
-                  {lab.name}
-                </Link>
-              </h3>
-              <p style={{ margin: 0, color: "#666", fontSize: 14 }}>{lab.description}</p>
+        {STEPS.map((step) => {
+          const isAvailable = !step.comingSoon;
+          return (
+            <div
+              key={step.id}
+              style={{
+                border: `1px solid ${isAvailable ? "#333" : "#ddd"}`,
+                borderRadius: 4,
+                padding: 16,
+                marginBottom: 12,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                opacity: isAvailable ? 1 : 0.5,
+              }}
+            >
+              <div>
+                <h3 style={{ margin: "0 0 4px 0" }}>
+                  {isAvailable ? (
+                    <Link to={step.path} style={{ textDecoration: "none" }}>
+                      {step.name}
+                    </Link>
+                  ) : (
+                    step.name
+                  )}
+                </h3>
+                <p style={{ margin: 0, color: "#666", fontSize: 14 }}>{step.description}</p>
+              </div>
+              <div style={{ textAlign: "right", minWidth: 100 }}>
+                <span style={{ fontSize: 12, color: "#888" }}>
+                  {step.labCount > 0 ? `${step.labCount} labs` : "coming soon"}
+                </span>
+                <br />
+                {isAvailable && (
+                  <Link
+                    to={step.path}
+                    style={{
+                      display: "inline-block",
+                      marginTop: 4,
+                      padding: "4px 12px",
+                      background: "#333",
+                      color: "#fff",
+                      borderRadius: 4,
+                      textDecoration: "none",
+                      fontSize: 13,
+                    }}
+                  >
+                    Start
+                  </Link>
+                )}
+              </div>
             </div>
-            <div style={{ textAlign: "right", minWidth: 80 }}>
-              <span style={{ fontSize: 12, color: "#888" }}>
-                {"★".repeat(lab.difficulty)}{"☆".repeat(3 - lab.difficulty)}
-              </span>
-              <br />
-              <Link
-                to={lab.path}
-                style={{
-                  display: "inline-block",
-                  marginTop: 4,
-                  padding: "4px 12px",
-                  background: "#333",
-                  color: "#fff",
-                  borderRadius: 4,
-                  textDecoration: "none",
-                  fontSize: 13,
-                }}
-              >
-                Start
-              </Link>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <h3 style={{ marginTop: 32 }}>Server Status</h3>
