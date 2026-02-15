@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="800" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">SQL Injection Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">SQLインジェクション — 認証バイパス攻撃の流れ</text>
+  <rect x="290" y="66" width="180" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP Top 10 — A03:Injection</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS (階層型: 縦配置)                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (top) -->
+  <g transform="translate(380, 160)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Web Server (middle) -->
+  <g transform="translate(380, 380)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Vulnerable App</text>
+  </g>
+
+  <!-- Database (bottom) -->
+  <g transform="translate(380, 600)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#f59e0b" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <ellipse cx="0" cy="-14" rx="20" ry="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,-14 L-20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M20,-14 L20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <ellipse cx="0" cy="14" rx="20" ry="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,0 Q0,8 20,0" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.5"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fcd34d" font-size="13" font-weight="700">データベース</text>
+    <text x="0" y="86" text-anchor="middle" fill="#f59e0b" font-size="9.5" opacity="0.7">PostgreSQL</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (down, left side) — 悪意ある入力 -->
+  <path d="M 355 285 L 355 350" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="325" cy="318" r="16" fill="#ef4444"/>
+  <text x="325" y="323" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+
+  <!-- Step 2: Server internal — SQL文構築 (shown as code box) -->
+
+  <!-- Step 3: Server → DB (down, left side) — 改ざんクエリ送信 -->
+  <path d="M 355 505 L 355 570" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="325" cy="538" r="16" fill="#ef4444"/>
+  <text x="325" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Step 4: DB → Server (up, right side) — 全レコード返却 -->
+  <path d="M 405 570 L 405 505" fill="none" stroke="#f59e0b" stroke-width="2.2" marker-end="url(#arrowAmber)"/>
+  <circle cx="435" cy="538" r="16" fill="#f59e0b"/>
+  <text x="435" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- Step 5: Server → Attacker (up, right side) — データ返却 -->
+  <path d="M 405 350 L 405 285" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="435" cy="318" r="16" fill="#3b82f6"/>
+  <text x="435" y="323" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+
+  <!-- ====================================================== -->
+  <!--  TRANSFORMATION BOXES (between layers)                  -->
+  <!-- ====================================================== -->
+
+  <!-- Input payload (left of Step 1 arrow) -->
+  <g transform="translate(170, 310)" filter="url(#shadow)">
+    <rect x="-115" y="-18" width="230" height="36" rx="6" fill="#0f172a" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">攻撃ペイロード (ユーザー名)</text>
+    <text x="0" y="14" text-anchor="middle" fill="#ef4444" font-size="10" font-family="'Fira Code', monospace">' OR 1=1 --</text>
+  </g>
+
+  <!-- SQL Query Construction (vulnerability box, between server and DB) -->
+  <g transform="translate(160, 440)" filter="url(#shadow)">
+    <rect x="-120" y="-22" width="240" height="68" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-5" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ 脆弱性: 文字列結合によるSQL構築</text>
+    <text x="0" y="14" text-anchor="middle" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">`...WHERE username='${input}'`</text>
+    <text x="0" y="30" text-anchor="middle" fill="#fed7aa" font-size="8.5">ユーザー入力がSQL構文として解釈される</text>
+    <!-- Step 2 badge -->
+    <circle cx="-130" cy="0" r="16" fill="#f97316"/>
+    <text x="-130" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+  </g>
+
+  <!-- Generated SQL (below vulnerability box) -->
+  <g transform="translate(170, 530)">
+    <rect x="-135" y="-14" width="270" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="'Fira Code', monospace">
+      <tspan fill="#93c5fd">WHERE username=</tspan><tspan fill="#ef4444">'' OR 1=1 --</tspan><tspan fill="#64748b">'</tspan>
+    </text>
+  </g>
+
+  <!-- Result (right of Step 4/5) -->
+  <g transform="translate(590, 440)" filter="url(#shadow)">
+    <rect x="-90" y="-18" width="180" height="52" rx="8" fill="#1e1b2e" stroke="#f59e0b" stroke-width="1"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#fcd34d" font-size="10" font-weight="600">DB 実行結果</text>
+    <text x="0" y="14" text-anchor="middle" fill="#94a3b8" font-size="9">OR 1=1 が常に真 →</text>
+    <text x="0" y="28" text-anchor="middle" fill="#ef4444" font-size="9.5" font-weight="600">全ユーザーのレコード返却</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="376" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">悪意ある入力の送信</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">ログインフォームのユーザー名に</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">' OR 1=1 -- を入力して送信</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="124" r="13" fill="#f97316"/>
+    <text x="34" y="129" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="120" fill="#f8fafc" font-size="11.5" font-weight="600">SQL文の文字列結合</text>
+    <text x="56" y="136" fill="#94a3b8" font-size="9.5">サーバーが入力値をそのまま</text>
+    <text x="56" y="149" fill="#94a3b8" font-size="9.5">SQL文に結合（脆弱なコード）</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="180" r="13" fill="#ef4444"/>
+    <text x="34" y="185" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="176" fill="#f8fafc" font-size="11.5" font-weight="600">改ざんクエリの実行</text>
+    <text x="56" y="192" fill="#94a3b8" font-size="9.5">OR 1=1 を含む改ざんされた</text>
+    <text x="56" y="205" fill="#94a3b8" font-size="9.5">SQLがDBに送信される</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="236" r="13" fill="#f59e0b"/>
+    <text x="34" y="241" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="11.5" font-weight="600">全レコードの返却</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9.5">OR 1=1 が常に真 → 全ユーザーの</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9.5">データがDBから返される</text>
+
+    <!-- Step 5 -->
+    <circle cx="34" cy="292" r="13" fill="#3b82f6"/>
+    <text x="34" y="297" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+    <text x="56" y="288" fill="#f8fafc" font-size="11.5" font-weight="600">認証バイパス成功</text>
+    <text x="56" y="304" fill="#94a3b8" font-size="9.5">最初のレコード（admin）で</text>
+    <text x="56" y="317" fill="#94a3b8" font-size="9.5">ログインが成功してしまう</text>
+
+    <!-- Key insight -->
+    <line x1="16" y1="340" x2="289" y2="340" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="362" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="600">💀 パスワード不要で管理者権限を取得</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="710" x2="1070" y2="710" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="735" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">🔥 使用される攻撃テクニック</text>
+
+  <!-- Card: Auth Bypass -->
+  <g transform="translate(165, 752)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <line x1="-6" y1="0" x2="6" y2="0" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="6" cy="0" r="4" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <circle cx="-2" cy="-5" r="2" fill="#ef4444" opacity="0.5"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">認証バイパス</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">' OR 1=1 -- で全件取得</text>
+  </g>
+
+  <!-- Card: UNION Extraction -->
+  <g transform="translate(465, 752)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <rect x="-7" y="-6" width="14" height="12" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="-4" y1="-2" x2="4" y2="-2" stroke="#ef4444" stroke-width="1"/>
+      <line x1="-4" y1="2" x2="4" y2="2" stroke="#ef4444" stroke-width="1"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">UNION SELECT</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">他テーブルのデータを抽出</text>
+  </g>
+
+  <!-- Card: Comment Injection -->
+  <g transform="translate(765, 752)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="11" font-family="'Fira Code', monospace">--</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">コメントアウト</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">-- でSQL後続条件を無効化</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 500)">
+    <rect x="0" y="0" width="305" height="84" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">サーバー応答</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#f59e0b" stroke-width="2"/>
+    <text x="52" y="58" fill="#fcd34d" font-size="9.5">DB応答</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+    <line x1="14" y1="72" x2="44" y2="72" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="52" y="76" fill="#fca5a5" font-size="9.5">ペイロード</text>
+  </g>
+
+</svg>
