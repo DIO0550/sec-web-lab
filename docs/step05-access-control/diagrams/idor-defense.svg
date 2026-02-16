@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGreen">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">IDOR — Defense Strategy</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">安全でない直接オブジェクト参照に対する防御</text>
+  <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (dimmed) -->
+  <g transform="translate(115, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
+    <g transform="translate(0, 10)" opacity="0.45">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">user3</text>
+  </g>
+
+  <!-- Web Server (protected) -->
+  <g transform="translate(400, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <!-- Shield badge -->
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected API</text>
+  </g>
+
+  <!-- Database (protected) -->
+  <g transform="translate(645, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <ellipse cx="0" cy="-14" rx="20" ry="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,-14 L-20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M20,-14 L20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <ellipse cx="0" cy="14" rx="20" ry="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,0 Q0,8 20,0" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.5"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">データベース</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  BLOCKED ARROWS                                         -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (dimmed request) -->
+  <path d="M 171 270 L 310 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3" marker-end="url(#arrowRed)"/>
+
+  <!-- Attack request URL -->
+  <g transform="translate(240, 240)">
+    <rect x="-100" y="-12" width="200" height="22" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="0.8" opacity="0.5"/>
+    <text x="0" y="3" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace" opacity="0.6">
+      <tspan fill="#64748b">GET </tspan><tspan fill="#93c5fd">/api/users/</tspan><tspan fill="#ef4444">1</tspan><tspan fill="#93c5fd">/profile</tspan>
+    </text>
+  </g>
+
+  <!-- Block X between attacker and server -->
+  <g transform="translate(330, 270)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- 403 Forbidden response -->
+  <path d="M 342 295 L 171 295" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <g transform="translate(260, 316)">
+    <rect x="-50" y="-11" width="100" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">403 Forbidden</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 1: Authorization Middleware              -->
+  <!-- ====================================================== -->
+  <g transform="translate(400, 460)" filter="url(#shadow)">
+    <rect x="-145" y="-22" width="290" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <!-- Shield icon -->
+    <g transform="translate(-108, 20)">
+      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="10" y="-4" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">認可チェック (Authorization)</text>
+    <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">セッションのユーザーIDとリクエストIDを照合</text>
+    <line x1="-130" y1="24" x2="130" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (currentUser.id !== targetId)</text>
+    <text x="0" y="58" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  return c.json(&#123; error: 403 &#125;)</text>
+    <text x="0" y="72" text-anchor="middle" fill="#4ade80" font-size="8">session.userId=3 ≠ request.id=1 → 拒否</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 2: UUID (Optional)                       -->
+  <!-- ====================================================== -->
+  <g transform="translate(170, 460)" filter="url(#shadow)">
+    <rect x="-80" y="-22" width="160" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-44, 18)">
+      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
+    </g>
+    <text x="12" y="-4" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">UUID v4</text>
+    <text x="12" y="12" text-anchor="middle" fill="#bbf7d0" font-size="8.5">推測困難なIDで</text>
+    <text x="12" y="25" text-anchor="middle" fill="#bbf7d0" font-size="8.5">列挙攻撃を防止</text>
+    <line x1="-66" y1="34" x2="66" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="50" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">550e8400-e29b-</text>
+    <text x="0" y="63" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">41d4-a716-...</text>
+    <text x="0" y="75" text-anchor="middle" fill="#4ade80" font-size="7.5">※多層防御（根本対策ではない）</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 3: Session-based Access                  -->
+  <!-- ====================================================== -->
+  <g transform="translate(630, 460)" filter="url(#shadow)">
+    <rect x="-80" y="-22" width="160" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-44, 18)">
+      <rect x="-10" y="-8" width="20" height="16" rx="3" fill="none" stroke="#22c55e" stroke-width="1.3"/>
+      <circle cx="0" cy="0" r="4" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="0" y1="4" x2="0" y2="7" stroke="#22c55e" stroke-width="1.2"/>
+    </g>
+    <text x="12" y="-4" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">セッションベース</text>
+    <text x="12" y="12" text-anchor="middle" fill="#bbf7d0" font-size="8.5">URLにIDを含めず</text>
+    <text x="12" y="25" text-anchor="middle" fill="#bbf7d0" font-size="8.5">セッションから取得</text>
+    <line x1="-66" y1="34" x2="66" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="50" text-anchor="middle" fill="#22c55e" font-size="8" font-family="'Fira Code', monospace">GET /api/profile</text>
+    <text x="0" y="63" text-anchor="middle" fill="#22c55e" font-size="8" font-family="'Fira Code', monospace">id = session.userId</text>
+    <text x="0" y="75" text-anchor="middle" fill="#4ade80" font-size="7.5">IDの改ざん自体が不可能</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE SIDEBAR (right)                                -->
+  <!-- ====================================================== -->
+  <g transform="translate(785, 100)">
+    <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
+    <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Layer 1: Authorization Check -->
+    <g transform="translate(18, 64)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">認可チェック（根本対策）</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">セッションのユーザーIDと</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">リクエストIDの一致を検証</text>
+    </g>
+
+    <!-- Layer 2: UUID -->
+    <g transform="translate(18, 130)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">UUID v4（多層防御）</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">推測困難なIDで連番列挙を</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">困難に（根本対策ではない）</text>
+    </g>
+
+    <!-- Layer 3: Session-based -->
+    <g transform="translate(18, 196)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">セッションベース取得</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">URLにリソースIDを含めず</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">セッションからIDを取得</text>
+    </g>
+
+    <!-- Layer 4: Monitoring -->
+    <g transform="translate(18, 262)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">レートリミット＋監視</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">大量ID列挙アクセスの</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">検知・ブロック</text>
+    </g>
+
+    <!-- Defense-in-depth note -->
+    <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(30, 700)">
+    <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
+    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
+    <g transform="translate(172, 18)">
+      <circle cx="0" cy="0" r="8" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-3" y1="-3" x2="3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="-3" x2="-3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="188" y="22" fill="#86efac" font-size="9">ブロックポイント</text>
+    <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
+  </g>
+
+</svg>
