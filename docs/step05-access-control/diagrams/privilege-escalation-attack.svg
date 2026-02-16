@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowYellow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Privilege Escalation Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">権限昇格 — 攻撃の流れ</text>
+  <rect x="270" y="66" width="220" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP A01 — Broken Access Control</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (一般ユーザー) -->
+  <g transform="translate(115, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <!-- Hooded figure -->
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">role: user</text>
+  </g>
+
+  <!-- Web Server (Hono API) -->
+  <g transform="translate(400, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <!-- Rack server icon -->
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Hono API</text>
+  </g>
+
+  <!-- Admin API -->
+  <g transform="translate(645, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#f59e0b" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <!-- Server/lock icon -->
+      <rect x="-16" y="-14" width="32" height="14" rx="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="-8" cy="-7" r="2" fill="#f59e0b"/><circle cx="-1" cy="-7" r="2" fill="#f59e0b"/>
+      <rect x="-16" y="4" width="32" height="14" rx="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="-8" cy="11" r="2" fill="#f59e0b"/><circle cx="-1" cy="11" r="2" fill="#f59e0b"/>
+      <!-- Lock overlay -->
+      <g transform="translate(12, 24)">
+        <rect x="-6" y="-1" width="12" height="9" rx="2" fill="#1e1b2e" stroke="#f59e0b" stroke-width="1.2"/>
+        <path d="M-3,-1 L-3,-5 Q-3,-8 0,-8 Q3,-8 3,-5 L3,-1" fill="none" stroke="#f59e0b" stroke-width="1.2"/>
+        <circle cx="0" cy="3" r="1.3" fill="#f59e0b"/>
+      </g>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fcd34d" font-size="13" font-weight="700">管理者API</text>
+    <text x="0" y="86" text-anchor="middle" fill="#f59e0b" font-size="9.5" opacity="0.7">Admin API</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker inspects JS/Network tab (self-loop arrow above attacker) -->
+  <path d="M 80 195 Q 80 170 115 170 Q 150 170 150 195" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="115" cy="155" r="16" fill="#ef4444"/>
+  <text x="115" y="160" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+
+  <!-- Step 2: Attacker → Server (admin endpoint request) Y=240 -->
+  <path d="M 171 240 L 342 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="256" cy="218" r="16" fill="#ef4444"/>
+  <text x="256" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+
+  <!-- Step 3: Server → Admin API (no role check, forwards request) Y=250 -->
+  <path d="M 458 250 L 587 250" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="522" cy="228" r="16" fill="#3b82f6"/>
+  <text x="522" y="233" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Step 4: Admin API → Server → Attacker (admin data returned) -->
+  <path d="M 587 275 L 458 275" fill="none" stroke="#f59e0b" stroke-width="2.2" marker-end="url(#arrowYellow)"/>
+  <path d="M 342 290 L 171 290" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="522" cy="297" r="16" fill="#f59e0b"/>
+  <text x="522" y="302" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- ===== Request example ===== -->
+  <g transform="translate(260, 170)">
+    <rect x="-130" y="-14" width="260" height="24" rx="5" fill="#0f172a" stroke="#ef4444" stroke-width="1"/>
+    <text x="0" y="2" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="'Fira Code', monospace">
+      <tspan fill="#64748b">GET </tspan><tspan fill="#ef4444">/api/admin/users</tspan>
+    </text>
+  </g>
+  <g transform="translate(260, 200)">
+    <rect x="-130" y="-14" width="260" height="20" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="1" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace">
+      <tspan fill="#64748b">Cookie: </tspan><tspan fill="#fca5a5">session_id=normal-user</tspan>
+    </text>
+  </g>
+
+  <!-- ===== Vulnerability callout ===== -->
+  <g transform="translate(400, 410)" filter="url(#shadow)">
+    <rect x="-155" y="-18" width="310" height="72" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ 脆弱性: ロール検証の欠如</text>
+    <text x="0" y="18" text-anchor="middle" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">if (!currentUser) return 401</text>
+    <text x="0" y="32" text-anchor="middle" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">// role check missing!</text>
+    <text x="0" y="48" text-anchor="middle" fill="#fed7aa" font-size="8.5">認証は確認するが、認可（ロール）チェックがない</text>
+  </g>
+
+  <!-- ===== Leaked data box ===== -->
+  <g transform="translate(115, 420)" filter="url(#shadow)">
+    <rect x="-68" y="-28" width="136" height="108" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <text x="0" y="-12" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">漏洩した管理者データ</text>
+    <text x="0" y="6" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace">&#123;"users": [</text>
+    <text x="0" y="19" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace"> &#123;"id":1,"role":"admin"</text>
+    <text x="0" y="32" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace">  "email":"admin@..."&#125;</text>
+    <text x="0" y="45" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace"> &#123;"id":2,...&#125;, ...]&#125;</text>
+    <text x="0" y="65" text-anchor="middle" fill="#ef4444" font-size="8.5">全ユーザー情報が漏洩</text>
+    <text x="0" y="78" text-anchor="middle" fill="#ef4444" font-size="8">設定情報も取得可能</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="340" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">管理者エンドポイントを発見</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">JSソースやNetwork Tabを調査し</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">/api/admin/users 等のURLを発見</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="130" r="13" fill="#ef4444"/>
+    <text x="34" y="135" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="126" fill="#f8fafc" font-size="11.5" font-weight="600">一般ユーザーで管理者APIを呼出</text>
+    <text x="56" y="142" fill="#94a3b8" font-size="9.5">通常ユーザーのセッションCookieで</text>
+    <text x="56" y="155" fill="#94a3b8" font-size="9.5">GET /api/admin/users にリクエスト</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="192" r="13" fill="#3b82f6"/>
+    <text x="34" y="197" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="188" fill="#f8fafc" font-size="11.5" font-weight="600">認証のみ確認、認可はスキップ</text>
+    <text x="56" y="204" fill="#94a3b8" font-size="9.5">サーバーはCookieが有効か確認するが</text>
+    <text x="56" y="217" fill="#94a3b8" font-size="9.5">user.role === 'admin' の検証がない</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="254" r="13" fill="#f59e0b"/>
+    <text x="34" y="259" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="250" fill="#f8fafc" font-size="11.5" font-weight="600">管理者データが返却される</text>
+    <text x="56" y="266" fill="#94a3b8" font-size="9.5">全ユーザー一覧、システム設定等</text>
+    <text x="56" y="279" fill="#94a3b8" font-size="9.5">管理者専用データがそのまま返却</text>
+
+    <!-- Impact note -->
+    <line x1="16" y1="298" x2="289" y2="298" stroke="#334155" stroke-width="1"/>
+    <circle cx="34" cy="320" r="13" fill="#ef4444"/>
+    <text x="34" y="325" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">!</text>
+    <text x="56" y="316" fill="#fca5a5" font-size="11" font-weight="600">影響: 完全な権限昇格</text>
+    <text x="56" y="332" fill="#94a3b8" font-size="9.5">管理機能の不正利用が可能に</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="560" x2="750" y2="560" stroke="#334155" stroke-width="1"/>
+  <text x="390" y="585" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">使用される攻撃テクニック</text>
+
+  <!-- Card: URL推測 -->
+  <g transform="translate(140, 608)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="11" font-family="'Fira Code', monospace">/??</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">URL推測</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">管理者用エンドポイントを推測</text>
+  </g>
+
+  <!-- Card: フロントエンド解析 -->
+  <g transform="translate(420, 608)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="13" font-family="'Fira Code', monospace">JS</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">フロントエンド解析</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">JSバンドルからAPI URLを抽出</text>
+  </g>
+
+  <!-- Card: 垂直権限昇格 -->
+  <g transform="translate(700, 608)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <line x1="0" y1="5" x2="0" y2="-8" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round"/>
+      <polyline points="-4,-3 0,-8 4,-3" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">垂直権限昇格</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">一般ユーザー→管理者権限を取得</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 465)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">サーバー→管理者API</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#f59e0b" stroke-width="2"/>
+    <text x="52" y="58" fill="#fcd34d" font-size="9.5">データ応答</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+  </g>
+
+</svg>
