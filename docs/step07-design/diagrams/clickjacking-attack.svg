@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Clickjacking Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">クリックジャッキング — 透明iframeによるUI偽装攻撃</text>
+  <rect x="280" y="66" width="200" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP — Security Misconfiguration</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (罠サイト) -->
+  <g transform="translate(115, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Trap Site Owner</text>
+  </g>
+
+  <!-- Victim -->
+  <g transform="translate(380, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
+      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
+      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#d8b4fe" font-size="13" font-weight="700">被害者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#a855f7" font-size="9.5" opacity="0.7">Victim</text>
+  </g>
+
+  <!-- Legitimate Server -->
+  <g transform="translate(645, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">正規サイト</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Target Site</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Victim (upper curve - 罠リンク送信) -->
+  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="248" cy="150" r="16" fill="#ef4444"/>
+  <text x="248" y="155" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+
+  <!-- Step 2: Victim → Browser box (罠ページ表示) -->
+  <path d="M 380 345 L 380 410" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowPurple)"/>
+  <circle cx="404" cy="378" r="16" fill="#a855f7"/>
+  <text x="404" y="383" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+
+  <!-- Step 3: Victim click → Legitimate Server (iframe経由) -->
+  <path d="M 436 240 L 589 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="514" cy="218" r="16" fill="#ef4444"/>
+  <text x="514" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Step 4: Server processes action -->
+  <path d="M 645 345 L 645 410" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <circle cx="669" cy="378" r="16" fill="#3b82f6"/>
+  <text x="669" y="383" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- Step 5: Stolen action → Attacker benefits (lower curve) -->
+  <path d="M 600 480 C 520 620, 200 620, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="330" cy="610" r="16" fill="#ef4444"/>
+  <text x="330" y="615" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+
+  <!-- Browser box (trap page with iframe) -->
+  <g transform="translate(380, 462)" filter="url(#shadow)">
+    <rect x="-80" y="-28" width="160" height="80" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <rect x="-70" y="-20" width="140" height="13" rx="3" fill="#0f172a"/>
+    <circle cx="-60" cy="-14" r="2.5" fill="#ef4444"/>
+    <circle cx="-52" cy="-14" r="2.5" fill="#f59e0b"/>
+    <circle cx="-44" cy="-14" r="2.5" fill="#22c55e"/>
+    <text x="0" y="6" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">罠ページ + 透明iframe</text>
+    <text x="0" y="20" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace">opacity: 0.0001</text>
+    <text x="0" y="34" text-anchor="middle" fill="#ef4444" font-size="8.5">偽UIの裏に正規サイトを重ねる</text>
+    <text x="0" y="46" text-anchor="middle" fill="#94a3b8" font-size="8">z-index で正規サイトを上に配置</text>
+  </g>
+
+  <!-- Server action box -->
+  <g transform="translate(645, 462)" filter="url(#shadow)">
+    <rect x="-68" y="-28" width="136" height="70" rx="8" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <rect x="-58" y="-20" width="116" height="13" rx="3" fill="#0f172a"/>
+    <circle cx="-48" cy="-14" r="2.5" fill="#ef4444"/>
+    <circle cx="-40" cy="-14" r="2.5" fill="#f59e0b"/>
+    <circle cx="-32" cy="-14" r="2.5" fill="#22c55e"/>
+    <text x="0" y="6" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="600">操作実行</text>
+    <text x="0" y="20" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="'Fira Code', monospace">POST /delete-account</text>
+    <text x="0" y="34" text-anchor="middle" fill="#ef4444" font-size="8.5">意図しないアクション完了</text>
+  </g>
+
+  <!-- ===== Vulnerability callout ===== -->
+  <g transform="translate(250, 420)" filter="url(#shadow)">
+    <rect x="-100" y="-18" width="200" height="52" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">&#9888; iframe埋め込み許可</text>
+    <text x="0" y="16" text-anchor="middle" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">X-Frame-Options: なし</text>
+    <text x="0" y="28" text-anchor="middle" fill="#fed7aa" font-size="8.5">正規サイトがiframeに読み込み可能</text>
+  </g>
+
+  <!-- ===== Malicious iframe code ===== -->
+  <g transform="translate(380, 560)">
+    <rect x="-195" y="-14" width="390" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
+      <tspan fill="#ef4444">&lt;iframe</tspan><tspan fill="#93c5fd"> src="target.com"</tspan><tspan fill="#fca5a5"> style="opacity:0; position:absolute"</tspan><tspan fill="#ef4444">&gt;</tspan>
+    </text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="320" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">罠ページへ誘導</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">攻撃者がiframe付き罠ページを</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">用意し被害者にURLを送る</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="124" r="13" fill="#a855f7"/>
+    <text x="34" y="129" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="120" fill="#f8fafc" font-size="11.5" font-weight="600">罠ページ表示</text>
+    <text x="56" y="136" fill="#94a3b8" font-size="9.5">透明iframeが正規サイトを読み</text>
+    <text x="56" y="149" fill="#94a3b8" font-size="9.5">込み、偽UIが上に表示される</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="180" r="13" fill="#ef4444"/>
+    <text x="34" y="185" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="176" fill="#f8fafc" font-size="11.5" font-weight="600">偽ボタンクリック</text>
+    <text x="56" y="192" fill="#94a3b8" font-size="9.5">被害者が見えるボタンをクリック</text>
+    <text x="56" y="205" fill="#94a3b8" font-size="9.5">→実際は透明iframe内をクリック</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="236" r="13" fill="#3b82f6"/>
+    <text x="34" y="241" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="11.5" font-weight="600">意図しない操作実行</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9.5">正規サイトが被害者の認証情報で</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9.5">アカウント削除等の操作を実行</text>
+
+    <!-- Step 5 -->
+    <circle cx="34" cy="292" r="13" fill="#ef4444"/>
+    <text x="34" y="297" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+    <text x="56" y="288" fill="#f8fafc" font-size="11.5" font-weight="600">攻撃者の目的達成</text>
+    <text x="56" y="304" fill="#94a3b8" font-size="9.5">被害者は操作に気づかず、</text>
+    <text x="56" y="317" fill="#94a3b8" font-size="9.5">攻撃者の意図した操作が完了</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="660" x2="1070" y2="660" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="685" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">&#128293; 使用される攻撃テクニック</text>
+
+  <!-- Card: Transparent iframe -->
+  <g transform="translate(165, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="11" font-family="'Fira Code', monospace">&lt;/&gt;</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">透明iframe重ね合わせ</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">opacity:0 + z-indexでUI偽装</text>
+  </g>
+
+  <!-- Card: UI Redressing -->
+  <g transform="translate(465, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <rect x="-8" y="-6" width="16" height="12" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="-5" y1="-2" x2="5" y2="-2" stroke="#ef4444" stroke-width="0.8"/>
+      <line x1="-5" y1="2" x2="3" y2="2" stroke="#ef4444" stroke-width="0.8"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">UI Redressing</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">偽UIで正規操作を隠す</text>
+  </g>
+
+  <!-- Card: Social Engineering -->
+  <g transform="translate(765, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 18)">
+      <rect x="-8" y="-6" width="16" height="11" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <polyline points="-8,-6 0,1 8,-6" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">ソーシャルエンジニアリング</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">魅力的な偽ボタンで誘導</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 445)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">サーバー応答</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#a855f7" stroke-width="2"/>
+    <text x="52" y="58" fill="#d8b4fe" font-size="9.5">ユーザー通信</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+  </g>
+
+</svg>

@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGreen">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Business Logic Flaw — Defense Strategy</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">ビジネスロジックの欠陥に対する多層防御</text>
+  <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (dimmed) -->
+  <g transform="translate(115, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
+    <g transform="translate(0, 10)" opacity="0.45">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Attacker</text>
+  </g>
+
+  <!-- Web Server (protected) -->
+  <g transform="translate(380, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
+  </g>
+
+  <!-- Database (protected) -->
+  <g transform="translate(645, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 8)">
+      <ellipse cx="0" cy="-14" rx="20" ry="7" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,-14 L-20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M20,-14 L20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <ellipse cx="0" cy="14" rx="20" ry="7" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <ellipse cx="0" cy="0" rx="20" ry="7" fill="none" stroke="#f59e0b" stroke-width="1.0" opacity="0.5"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">データベース/在庫</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected DB</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  BLOCKED ARROWS                                         -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (dimmed, blocked at server) -->
+  <path d="M 170 250 Q 250 155 324 250" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
+
+  <!-- Block mark on step 1 arrow -->
+  <g transform="translate(300, 200)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Step 3: Server → DB attempt blocked -->
+  <path d="M 436 282 L 550 282" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
+  <g transform="translate(562, 282)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Step 5: Attacker benefit blocked -->
+  <path d="M 580 500 C 520 680, 200 680, 115 380" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
+  <g transform="translate(340, 670)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 1: 入力バリデーション                     -->
+  <!-- ====================================================== -->
+  <g transform="translate(248, 188)" filter="url(#shadow)">
+    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-60, 22)">
+      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">入力バリデーション</text>
+    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">サーバー側で業務ルール検証</text>
+    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (quantity &lt;= 0) throw</text>
+    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (price !== db.price) throw</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 2: トランザクション制御                    -->
+  <!-- ====================================================== -->
+  <g transform="translate(512, 455)" filter="url(#shadow)">
+    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-60, 22)">
+      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
+    </g>
+    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">トランザクション制御</text>
+    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">在庫チェック〜注文確定をアトミックに</text>
+    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">BEGIN; SELECT ... FOR UPDATE;</text>
+    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">UPDATE stock; COMMIT;</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 3: サーバー側価格参照                     -->
+  <!-- ====================================================== -->
+  <g transform="translate(380, 580)" filter="url(#shadow)">
+    <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-112, 14)">
+      <ellipse cx="0" cy="0" rx="9" ry="6" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+      <text x="0" y="3" text-anchor="middle" fill="#22c55e" font-size="7" font-family="'Fira Code', monospace">DB</text>
+    </g>
+    <text x="10" y="-2" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">サーバー側価格参照</text>
+    <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">クライアント送信の価格を使わずDBから取得</text>
+    <line x1="-136" y1="24" x2="136" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="10" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">const price = await db.query("SELECT price FROM products")</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 4: 監査ログ                               -->
+  <!-- ====================================================== -->
+  <g transform="translate(645, 580)" filter="url(#shadow)">
+    <rect x="-68" y="-20" width="136" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-32, 14)">
+      <rect x="-9" y="-8" width="18" height="16" rx="2" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-5" y1="-3" x2="5" y2="-3" stroke="#22c55e" stroke-width="0.8"/>
+      <line x1="-5" y1="1" x2="5" y2="1" stroke="#22c55e" stroke-width="0.8"/>
+      <line x1="-5" y1="5" x2="3" y2="5" stroke="#22c55e" stroke-width="0.8"/>
+    </g>
+    <text x="0" y="-3" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">監査ログ</text>
+    <text x="0" y="13" text-anchor="middle" fill="#bbf7d0" font-size="8.5">異常な注文パターンを</text>
+    <text x="0" y="26" text-anchor="middle" fill="#bbf7d0" font-size="8.5">検知・記録</text>
+    <line x1="-54" y1="34" x2="54" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="46" text-anchor="middle" fill="#22c55e" font-size="8" font-family="'Fira Code', monospace">audit.log(order)</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE SIDEBAR                                        -->
+  <!-- ====================================================== -->
+  <g transform="translate(785, 100)">
+    <rect x="0" y="0" width="295" height="380" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
+    <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Layer 1 -->
+    <g transform="translate(18, 64)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">入力バリデーション</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">サーバー側で業務ルール検証</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">(quantity &gt; 0, price matches DB)</text>
+    </g>
+
+    <!-- Layer 2 -->
+    <g transform="translate(18, 130)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">トランザクション制御</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">在庫チェック〜注文確定を</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">アトミックに実行 (SELECT FOR UPDATE)</text>
+    </g>
+
+    <!-- Layer 3 -->
+    <g transform="translate(18, 196)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">サーバー側価格参照</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">クライアント送信の価格を無視し</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">必ずDBから正規価格を取得</text>
+    </g>
+
+    <!-- Layer 4 -->
+    <g transform="translate(18, 262)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">監査ログ</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">異常な注文パターン(負の値、</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">大量注文等)を検知・記録</text>
+    </g>
+
+    <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Summary -->
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">&#128274; 多層防御 (Defense in Depth)</text>
+    <text x="148" y="346" text-anchor="middle" fill="#94a3b8" font-size="9">入力検証 + トランザクション +</text>
+    <text x="148" y="362" text-anchor="middle" fill="#94a3b8" font-size="9">価格整合性チェック + 監査ログ</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(30, 730)">
+    <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
+    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
+    <g transform="translate(172, 18)">
+      <circle cx="0" cy="0" r="8" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-3" y1="-3" x2="3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="-3" x2="-3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="188" y="22" fill="#86efac" font-size="9">ブロックポイント</text>
+    <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
+  </g>
+
+</svg>
