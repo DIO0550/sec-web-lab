@@ -1,0 +1,272 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGreen">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowGreenReverse" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Sensitive Data over HTTP &#8212; Defense Strategy</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">HTTP&#12391;&#12398;&#27231;&#23494;&#12487;&#12540;&#12479;&#36865;&#20449;&#12395;&#23550;&#12377;&#12427;&#22810;&#23652;&#38450;&#24481;</text>
+  <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
+
+  <!-- ====================================================== -->
+  <!--  SECURE COMMUNICATION (green line above actors)        -->
+  <!-- ====================================================== -->
+  <line x1="175" y1="175" x2="605" y2="175" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)" filter="url(#glowGreen)"/>
+  <line x1="605" y1="183" x2="175" y2="183" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreenReverse)" filter="url(#glowGreen)"/>
+  <rect x="280" y="155" width="230" height="20" rx="6" fill="#052e16" stroke="#22c55e" stroke-width="0.8"/>
+  <text x="395" y="169" text-anchor="middle" fill="#86efac" font-size="9.5" font-weight="600">&#128274; HTTPS/TLS&#26263;&#21495;&#21270;&#12373;&#12428;&#12383;&#30452;&#25509;&#36890;&#20449;</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS (MITM layout: Victim LEFT, Attacker CENTER dimmed, Server RIGHT) -->
+  <!-- ====================================================== -->
+
+  <!-- Victim (Left - protected) -->
+  <g transform="translate(120, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
+      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
+      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">&#34987;&#23475;&#32773;</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected</text>
+  </g>
+
+  <!-- Attacker / Eavesdropper (Center - dimmed) -->
+  <g transform="translate(390, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
+    <g transform="translate(0, 10)" opacity="0.45">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">&#25915;&#25731;&#32773;</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Eavesdropper</text>
+  </g>
+
+  <!-- Web Server (Right - protected) -->
+  <g transform="translate(660, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">Web&#12469;&#12540;&#12496;&#12540;</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected Server</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  BLOCKED ARROWS (attacker cannot intercept)            -->
+  <!-- ====================================================== -->
+
+  <!-- Attempted intercept: Victim → Attacker (blocked) -->
+  <path d="M 176 265 L 290 265" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
+  <g transform="translate(306, 265)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Attempted intercept: Attacker → Server (blocked) -->
+  <path d="M 446 290 L 560 290" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
+  <g transform="translate(490, 290)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Attacker sees encrypted data (dimmed box) -->
+  <g transform="translate(390, 440)" filter="url(#shadow)">
+    <rect x="-78" y="-22" width="156" height="60" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1" opacity="0.4" stroke-dasharray="4,2"/>
+    <text x="0" y="-4" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600" opacity="0.5">&#35299;&#35501;&#19981;&#33021;&#12394;&#12487;&#12540;&#12479;</text>
+    <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace" opacity="0.5">x7&#163;&#167;k9&#8226;&#402;...&#9608;&#9608;&#9608;&#9608;</text>
+    <text x="0" y="28" text-anchor="middle" fill="#ef4444" font-size="8" opacity="0.4">TLS&#26263;&#21495;&#21270;&#12395;&#12424;&#12426;&#35299;&#35501;&#19981;&#21487;</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 1: HTTPS (TLS)                          -->
+  <!-- ====================================================== -->
+  <g transform="translate(120, 460)" filter="url(#shadow)">
+    <rect x="-52" y="-20" width="220" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-22, 16)">
+      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="56" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">HTTPS (TLS)</text>
+    <text x="56" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">&#36890;&#20449;&#12398;&#23436;&#20840;&#26263;&#21495;&#21270;</text>
+    <line x1="-38" y1="22" x2="154" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="56" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">https://example.com/login</text>
+    <text x="56" y="56" text-anchor="middle" fill="#4ade80" font-size="8.5">TLS 1.3&#12391;&#20840;&#36890;&#20449;&#12434;&#26263;&#21495;&#21270;</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 2: HSTS                                  -->
+  <!-- ====================================================== -->
+  <g transform="translate(120, 580)" filter="url(#shadow)">
+    <rect x="-52" y="-20" width="220" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-22, 16)">
+      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
+    </g>
+    <text x="56" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">HSTS</text>
+    <text x="56" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">HTTP&#12363;&#12425;HTTPS&#12408;&#12398;&#24375;&#21046;&#12522;&#12480;&#12452;&#12524;&#12463;&#12488;</text>
+    <line x1="-38" y1="22" x2="154" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="56" y="40" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">Strict-Transport-Security:</text>
+    <text x="56" y="54" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">max-age=31536000; includeSubDomains</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 3: Certificate Pinning                   -->
+  <!-- ====================================================== -->
+  <g transform="translate(460, 530)" filter="url(#shadow)">
+    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-60, 16)">
+      <rect x="-8" y="-6" width="16" height="12" rx="2" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-5" y1="-2" x2="5" y2="-2" stroke="#22c55e" stroke-width="0.8"/>
+      <line x1="-5" y1="2" x2="3" y2="2" stroke="#22c55e" stroke-width="0.8"/>
+    </g>
+    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Certificate Pinning</text>
+    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">&#35388;&#26126;&#26360;&#12398;&#22266;&#23450;&#12391;&#20605;&#35388;&#26126;&#26360;&#12434;&#25298;&#21542;</text>
+    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Public-Key-Pins:</text>
+    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">pin-sha256="base64=="</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE POINT 4: Secure Cookie                         -->
+  <!-- ====================================================== -->
+  <g transform="translate(460, 650)" filter="url(#shadow)">
+    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-60, 16)">
+      <circle cx="0" cy="3" r="7" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+      <path d="M-3,-1 Q0,-5 3,-1" fill="none" stroke="#22c55e" stroke-width="1"/>
+      <path d="M-5,2 Q0,-3 5,2" fill="none" stroke="#22c55e" stroke-width="1"/>
+    </g>
+    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Secure Cookie</text>
+    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">Secure&#23646;&#24615;&#12391;HTTP&#12391;&#12398;Cookie&#36865;&#20449;&#12434;&#38450;&#27490;</text>
+    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Set-Cookie: sid=xxx;</text>
+    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Secure; HttpOnly; SameSite=Lax</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  DEFENSE SIDEBAR                                        -->
+  <!-- ====================================================== -->
+  <g transform="translate(785, 100)">
+    <rect x="0" y="0" width="295" height="380" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">&#38450;&#24481;&#12524;&#12452;&#12516;&#12540;&#19968;&#35239;</text>
+    <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Layer 1 -->
+    <g transform="translate(18, 64)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">HTTPS (TLS)</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">&#20840;&#36890;&#20449;&#12434;TLS 1.3&#12391;&#26263;&#21495;&#21270;&#12290;</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">&#20621;&#21463;&#12375;&#12390;&#12418;&#35299;&#35501;&#19981;&#21487;&#33021;</text>
+    </g>
+
+    <!-- Layer 2 -->
+    <g transform="translate(18, 130)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">HSTS</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">HTTP&#12450;&#12463;&#12475;&#12473;&#12434;&#33258;&#21205;&#30340;&#12395;</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">HTTPS&#12408;&#12522;&#12480;&#12452;&#12524;&#12463;&#12488;</text>
+    </g>
+
+    <!-- Layer 3 -->
+    <g transform="translate(18, 196)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">Certificate Pinning</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">&#35388;&#26126;&#26360;&#12434;&#22266;&#23450;&#12375;&#12289;MITM&#25915;&#25731;&#12398;</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">&#20605;&#35388;&#26126;&#26360;&#12434;&#25298;&#21542;</text>
+    </g>
+
+    <!-- Layer 4 -->
+    <g transform="translate(18, 262)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">Secure Cookie</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">Secure&#23646;&#24615;&#12395;&#12424;&#12426;HTTP&#12391;&#12398;</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">Cookie&#36865;&#20449;&#12434;&#12502;&#12525;&#12483;&#12463;</text>
+    </g>
+
+    <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Summary -->
+    <g transform="translate(18, 322)">
+      <text x="130" y="4" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">&#128274; &#22810;&#23652;&#38450;&#24481; (Defense in Depth)</text>
+      <text x="130" y="22" text-anchor="middle" fill="#94a3b8" font-size="9">&#26263;&#21495;&#21270; + &#24375;&#21046;HTTPS + &#35388;&#26126;&#26360;&#26908;&#35388;</text>
+      <text x="130" y="38" text-anchor="middle" fill="#94a3b8" font-size="9">+ Cookie&#20445;&#35703;&#12398;&#22810;&#37325;&#38450;&#24481;</text>
+    </g>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  TLS Encryption tunnel visual                           -->
+  <!-- ====================================================== -->
+  <g transform="translate(390, 195)">
+    <rect x="-245" y="-10" width="490" height="20" rx="10" fill="#22c55e" opacity="0.06" stroke="#22c55e" stroke-width="0.8" stroke-dasharray="4,2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="600" opacity="0.6">&#9473;&#9473;&#9473; TLS 1.3 &#26263;&#21495;&#21270;&#12488;&#12531;&#12493;&#12523; &#9473;&#9473;&#9473;</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(30, 735)">
+    <rect x="0" y="0" width="420" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
+    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">&#36974;&#26029;&#12373;&#12428;&#12383;&#25915;&#25731;</text>
+    <g transform="translate(172, 18)">
+      <circle cx="0" cy="0" r="8" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-3" y1="-3" x2="3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="-3" x2="-3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="188" y="22" fill="#86efac" font-size="9">&#12502;&#12525;&#12483;&#12463;&#12509;&#12452;&#12531;&#12488;</text>
+    <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="304" y="22" fill="#86efac" font-size="9">&#38450;&#24481;&#27231;&#27083;</text>
+    <line x1="358" y1="18" x2="388" y2="18" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <text x="396" y="22" fill="#86efac" font-size="9">&#26263;&#21495;&#21270;&#36890;&#20449;</text>
+  </g>
+
+</svg>

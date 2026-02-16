@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">No Rate Limiting — Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">レート制限なし — ブルートフォース／辞書攻撃によるアカウント侵害</text>
+  <rect x="280" y="66" width="200" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP — Broken Authentication</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker (攻撃者) -->
+  <g transform="translate(115, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Web Server (Login API) -->
+  <g transform="translate(380, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Login API</text>
+  </g>
+
+  <!-- Victim Account (被害者) -->
+  <g transform="translate(645, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
+      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
+      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#d8b4fe" font-size="13" font-weight="700">被害者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#a855f7" font-size="9.5" opacity="0.7">Victim Account</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (upper curve - 辞書攻撃開始) -->
+  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="248" cy="150" r="16" fill="#ef4444"/>
+  <text x="248" y="155" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+
+  <!-- Step 2: Server → Attacker (line Y=240 - 全リクエスト処理) -->
+  <path d="M 324 240 L 171 240" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <circle cx="248" cy="222" r="16" fill="#3b82f6"/>
+  <text x="248" y="227" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+
+  <!-- Step 3: Server → Attacker (大量の失敗レスポンス) -->
+  <path d="M 324 260 L 171 260" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <circle cx="248" cy="260" r="16" fill="#3b82f6"/>
+  <text x="248" y="265" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Step 4: Attacker → Server (line Y=282 - 正しいパスワードがヒット) -->
+  <path d="M 171 282 L 324 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="248" cy="298" r="16" fill="#ef4444"/>
+  <text x="248" y="303" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- Step 5: Server → Victim (lower curve - 不正ログイン) -->
+  <path d="M 436 310 Q 540 430 589 310" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="514" cy="410" r="16" fill="#ef4444"/>
+  <text x="514" y="415" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+
+  <!-- ===== Brute force visualization (repeated requests) ===== -->
+  <g transform="translate(248, 336)" filter="url(#shadow)">
+    <rect x="-85" y="-16" width="170" height="48" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">大量リクエスト送信中...</text>
+    <text x="0" y="14" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace">admin:password1, admin:123456</text>
+    <text x="0" y="26" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace">admin:qwerty, admin:dragon...</text>
+  </g>
+
+  <!-- ===== Victim compromise box ===== -->
+  <g transform="translate(645, 430)" filter="url(#shadow)">
+    <rect x="-68" y="-22" width="136" height="65" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <text x="0" y="-4" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">アカウント侵害</text>
+    <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="'Fira Code', monospace">200 OK: Login Success</text>
+    <text x="0" y="28" text-anchor="middle" fill="#ef4444" font-size="8.5">被害者に通知なし</text>
+    <text x="0" y="38" text-anchor="middle" fill="#94a3b8" font-size="8">攻撃者がアカウントを完全掌握</text>
+  </g>
+
+  <!-- ===== Vulnerability callout ===== -->
+  <g transform="translate(380, 430)" filter="url(#shadow)">
+    <rect x="-110" y="-18" width="220" height="60" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">&#9888; ログイン試行回数の制限なし</text>
+    <text x="0" y="16" text-anchor="middle" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">// レート制限なし</text>
+    <text x="0" y="30" text-anchor="middle" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">// — 無制限に試行可能</text>
+  </g>
+
+  <!-- ===== Vulnerable code snippet ===== -->
+  <g transform="translate(380, 530)">
+    <rect x="-195" y="-14" width="390" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
+      <tspan fill="#ef4444">app.post</tspan><tspan fill="#93c5fd">('/login'</tspan><tspan fill="#94a3b8">, (c) =&gt; { </tspan><tspan fill="#6b7280">/* 試行回数チェックなし */</tspan><tspan fill="#94a3b8"> })</tspan>
+    </text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="365" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">辞書攻撃開始</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">攻撃者がログインAPIに</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">パスワードリストで総当たり開始</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="124" r="13" fill="#3b82f6"/>
+    <text x="34" y="129" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="120" fill="#f8fafc" font-size="11.5" font-weight="600">全リクエストを処理</text>
+    <text x="56" y="136" fill="#94a3b8" font-size="9.5">サーバーがレート制限なしで</text>
+    <text x="56" y="149" fill="#94a3b8" font-size="9.5">全リクエストを正常に受け付ける</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="180" r="13" fill="#3b82f6"/>
+    <text x="34" y="185" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="176" fill="#f8fafc" font-size="11.5" font-weight="600">大量の失敗レスポンス</text>
+    <text x="56" y="192" fill="#94a3b8" font-size="9.5">401 Unauthorizedが返るが</text>
+    <text x="56" y="205" fill="#94a3b8" font-size="9.5">ロックもCAPTCHAも発動しない</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="236" r="13" fill="#ef4444"/>
+    <text x="34" y="241" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="11.5" font-weight="600">正しいパスワードがヒット</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9.5">十分な試行回数の後、正しい</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9.5">パスワードで認証が成功する</text>
+
+    <!-- Step 5 -->
+    <circle cx="34" cy="292" r="13" fill="#ef4444"/>
+    <text x="34" y="297" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+    <text x="56" y="288" fill="#f8fafc" font-size="11.5" font-weight="600">アカウント不正アクセス</text>
+    <text x="56" y="304" fill="#94a3b8" font-size="9.5">被害者のアカウントに不正ログ</text>
+    <text x="56" y="317" fill="#94a3b8" font-size="9.5">インし、データを窃取・改ざん</text>
+
+    <!-- Summary -->
+    <line x1="16" y1="336" x2="289" y2="336" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="356" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">&#128274; パスワードの複雑さに依存する脆弱な防御</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="580" x2="1070" y2="580" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="605" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">&#128293; 使用される攻撃テクニック</text>
+
+  <!-- Card: 辞書攻撃 -->
+  <g transform="translate(165, 618)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="50" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <rect x="-8" y="-6" width="16" height="12" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="-5" y1="-2" x2="5" y2="-2" stroke="#ef4444" stroke-width="0.8"/>
+      <line x1="-5" y1="2" x2="3" y2="2" stroke="#ef4444" stroke-width="0.8"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">辞書攻撃</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">よく使われるパスワード</text>
+    <text x="10" y="42" text-anchor="middle" fill="#94a3b8" font-size="8.5">リストで試行</text>
+  </g>
+
+  <!-- Card: ブルートフォース -->
+  <g transform="translate(465, 618)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="50" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <path d="M-6,-6 L6,-6 L6,6 L-6,6 Z" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="-3" y1="0" x2="3" y2="0" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="0" y1="-3" x2="0" y2="3" stroke="#ef4444" stroke-width="1.2"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">ブルートフォース</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">全組み合わせを</text>
+    <text x="10" y="42" text-anchor="middle" fill="#94a3b8" font-size="8.5">網羅的に試行</text>
+  </g>
+
+  <!-- Card: クレデンシャルスタッフィング -->
+  <g transform="translate(765, 618)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="50" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 18)">
+      <rect x="-8" y="-6" width="16" height="11" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <polyline points="-8,-6 0,1 8,-6" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">クレデンシャルスタッフィング</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">流出した認証情報を</text>
+    <text x="10" y="42" text-anchor="middle" fill="#94a3b8" font-size="8.5">流用して別サービスで試行</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 490)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">サーバー応答</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#a855f7" stroke-width="2"/>
+    <text x="52" y="58" fill="#d8b4fe" font-size="9.5">被害者通信</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+  </g>
+
+</svg>
