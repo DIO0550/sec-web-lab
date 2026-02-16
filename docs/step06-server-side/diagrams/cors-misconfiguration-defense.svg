@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGreen">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">CORS Misconfiguration — Defense</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">CORS設定不備に対する多層防御</text>
+  <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
+
+  <!-- Attacker (dimmed) -->
+  <g transform="translate(115, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
+    <g transform="translate(0, 10)" opacity="0.45">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">evil.com</text>
+  </g>
+
+  <!-- Victim (protected) -->
+  <g transform="translate(380, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
+      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
+      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">被害者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected</text>
+  </g>
+
+  <!-- Server (protected) -->
+  <g transform="translate(645, 280)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <g transform="translate(42, -22)">
+      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
+      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">対象サーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Strict CORS</text>
+  </g>
+
+  <!-- Blocked arrows -->
+  <path d="M 436 270 L 550 270" fill="none" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowPurple)" opacity="0.35"/>
+  <path d="M 587 300 L 500 300" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
+
+  <!-- Block X - browser blocks response -->
+  <g transform="translate(470, 300)">
+    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <text x="470" y="330" text-anchor="middle" fill="#86efac" font-size="8" font-weight="600">ブラウザがブロック</text>
+
+  <!-- Defense 1: Origin Whitelist -->
+  <g transform="translate(160, 460)" filter="url(#shadow)">
+    <rect x="-120" y="-20" width="240" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-82, 22)">
+      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="20" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">オリジンホワイトリスト</text>
+    <text x="20" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">許可オリジンを明示的に列挙</text>
+    <line x1="-104" y1="24" x2="104" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">ALLOWED_ORIGINS.includes(</text>
+    <text x="0" y="58" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  origin) ? origin : ''</text>
+    <text x="0" y="72" text-anchor="middle" fill="#4ade80" font-size="7.5">根本対策 — 第1防御層</text>
+  </g>
+
+  <!-- Defense 2: No wildcard with credentials -->
+  <g transform="translate(470, 460)" filter="url(#shadow)">
+    <rect x="-120" y="-20" width="240" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-82, 20)">
+      <rect x="-9" y="-9" width="18" height="18" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <line x1="-5" y1="-5" x2="5" y2="5" stroke="#22c55e" stroke-width="1.4"/>
+      <line x1="5" y1="-5" x2="-5" y2="5" stroke="#22c55e" stroke-width="1.4"/>
+    </g>
+    <text x="20" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">* + credentials 禁止</text>
+    <text x="20" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">ワイルドカードとCookie併用を排除</text>
+    <line x1="-104" y1="24" x2="104" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">// ブラウザが自動拒否:</text>
+    <text x="0" y="58" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">ACAO: * + credentials</text>
+    <text x="0" y="72" text-anchor="middle" fill="#4ade80" font-size="7.5">根本対策 — ブラウザ仕様</text>
+  </g>
+
+  <!-- Defense 3: Preflight + CSRF Token -->
+  <g transform="translate(380, 610)" filter="url(#shadow)">
+    <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <g transform="translate(-112, 14)">
+      <rect x="-9" y="-9" width="18" height="18" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+      <text x="0" y="4" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="700">✓</text>
+    </g>
+    <text x="10" y="-2" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">プリフライト + CSRFトークン</text>
+    <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">OPTIONSで許可メソッド/ヘッダーを厳密指定</text>
+    <line x1="-136" y1="24" x2="136" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="10" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Access-Control-Allow-Methods: GET, POST</text>
+  </g>
+
+  <!-- Defense sidebar -->
+  <g transform="translate(785, 100)">
+    <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
+    <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+
+    <g transform="translate(18, 64)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">オリジンホワイトリスト</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">許可するオリジンを明示的に</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">列挙し、それ以外は拒否</text>
+    </g>
+
+    <g transform="translate(18, 130)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">* と credentials の排他</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">ワイルドカード使用時は</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">credentials: trueを設定しない</text>
+    </g>
+
+    <g transform="translate(18, 196)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">プリフライトの適切な処理</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">OPTIONSで許可メソッドと</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">ヘッダーを厳密に指定</text>
+    </g>
+
+    <g transform="translate(18, 262)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">CSRFトークン</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">CORSとは別に状態変更</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">リクエストにトークンを要求</text>
+    </g>
+
+    <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(30, 730)">
+    <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
+    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
+    <g transform="translate(172, 18)">
+      <circle cx="0" cy="0" r="8" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="-3" y1="-3" x2="3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="-3" x2="-3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="188" y="22" fill="#86efac" font-size="9">ブロックポイント</text>
+    <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+    <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
+  </g>
+
+</svg>
