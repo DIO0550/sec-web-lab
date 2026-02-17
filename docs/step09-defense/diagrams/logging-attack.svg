@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f97316"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Insufficient Logging Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">不十分なログ — 攻撃の流れ</text>
+  <rect x="240" y="66" width="280" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP — Security Logging and Monitoring Failures</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker -->
+  <g transform="translate(115, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Web Server -->
+  <g transform="translate(380, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Vulnerable App</text>
+  </g>
+
+  <!-- Log System (empty / absent) -->
+  <g transform="translate(645, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#f97316" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <g transform="translate(0, 6)">
+      <!-- Document icon with X overlay to indicate no logging -->
+      <rect x="-16" y="-18" width="32" height="40" rx="3" fill="none" stroke="#f97316" stroke-width="1.3" opacity="0.5"/>
+      <line x1="-8" y1="-8" x2="8" y2="-8" stroke="#f97316" stroke-width="1" opacity="0.3"/>
+      <line x1="-8" y1="-1" x2="8" y2="-1" stroke="#f97316" stroke-width="1" opacity="0.3"/>
+      <line x1="-8" y1="6" x2="8" y2="6" stroke="#f97316" stroke-width="1" opacity="0.3"/>
+      <line x1="-8" y1="13" x2="8" y2="13" stroke="#f97316" stroke-width="1" opacity="0.3"/>
+      <!-- Large X over the document -->
+      <line x1="-14" y1="-16" x2="14" y2="20" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+      <line x1="14" y1="-16" x2="-14" y2="20" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fdba74" font-size="13" font-weight="700">ログシステム</text>
+    <text x="0" y="86" text-anchor="middle" fill="#f97316" font-size="9.5" opacity="0.7">Empty / Absent</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (brute force login attempts) -->
+  <path d="M 171 235 L 322 235" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="247" cy="213" r="16" fill="#ef4444"/>
+  <text x="247" y="218" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+
+  <!-- Step 2: Server → Log System (crossed out / no data sent) -->
+  <path d="M 438 260 L 560 260" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="6,3" opacity="0.35"/>
+  <!-- Block X on the arrow to indicate no logging -->
+  <g transform="translate(500, 260)">
+    <circle cx="0" cy="0" r="14" fill="#451a03" stroke="#ef4444" stroke-width="1.5"/>
+    <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <circle cx="500" cy="236" r="16" fill="#f97316"/>
+  <text x="500" y="241" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+
+  <!-- Step 3: Server → Attacker (401 but no trace) -->
+  <path d="M 322 280 L 171 280" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="247" cy="302" r="16" fill="#ef4444"/>
+  <text x="247" y="307" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Step 4: Attacker → Server (success after brute force) -->
+  <path d="M 171 330 L 322 330" fill="none" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="247" cy="352" r="16" fill="#ef4444"/>
+  <text x="247" y="357" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- ===== Vulnerability callout (below server) ===== -->
+  <g transform="translate(380, 420)" filter="url(#shadow)">
+    <rect x="-130" y="-18" width="260" height="58" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">&#9888; セキュリティイベント未記録</text>
+    <text x="0" y="16" text-anchor="middle" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">// ログなし - 攻撃の痕跡が残らない</text>
+    <text x="0" y="30" text-anchor="middle" fill="#fed7aa" font-size="8.5">認証失敗・成功がどこにも記録されない</text>
+  </g>
+
+  <!-- ===== Empty log visualization (below log system) ===== -->
+  <g transform="translate(645, 420)" filter="url(#shadow)">
+    <rect x="-100" y="-18" width="200" height="70" rx="8" fill="#1e1b2e" stroke="#f97316" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">ログ出力</text>
+    <text x="0" y="16" text-anchor="middle" fill="#64748b" font-size="9" font-family="'Fira Code', monospace">Server started on port 3000</text>
+    <text x="0" y="30" text-anchor="middle" fill="#475569" font-size="9" font-family="'Fira Code', monospace">...</text>
+    <text x="0" y="44" text-anchor="middle" fill="#475569" font-size="8.5" font-style="italic">(何も記録されない)</text>
+  </g>
+
+  <!-- ===== Request example bar ===== -->
+  <g transform="translate(380, 530)">
+    <rect x="-210" y="-14" width="420" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
+      <tspan fill="#64748b">POST </tspan><tspan fill="#93c5fd">/api/labs/logging/vulnerable/login</tspan><tspan fill="#ef4444"> x1000</tspan>
+    </text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="310" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">ブルートフォース攻撃</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">大量のパスワードを自動試行</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">ログイン失敗を繰り返す</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="128" r="13" fill="#f97316"/>
+    <text x="34" y="133" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="124" fill="#f8fafc" font-size="11.5" font-weight="600">ログ記録なし</text>
+    <text x="56" y="140" fill="#94a3b8" font-size="9.5">サーバーはイベントを記録せず</text>
+    <text x="56" y="153" fill="#94a3b8" font-size="9.5">攻撃の痕跡が一切残らない</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="188" r="13" fill="#ef4444"/>
+    <text x="34" y="193" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="184" fill="#f8fafc" font-size="11.5" font-weight="600">検知を回避</text>
+    <text x="56" y="200" fill="#94a3b8" font-size="9.5">監視システムにデータがないため</text>
+    <text x="56" y="213" fill="#94a3b8" font-size="9.5">アラートが発報されない</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="248" r="13" fill="#ef4444"/>
+    <text x="34" y="253" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="244" fill="#f8fafc" font-size="11.5" font-weight="600">侵入・横展開</text>
+    <text x="56" y="260" fill="#94a3b8" font-size="9.5">パスワード特定後にログイン成功</text>
+    <text x="56" y="273" fill="#94a3b8" font-size="9.5">その後の活動も記録されない</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="600" x2="1070" y2="600" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="630" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">&#128293; 使用される攻撃テクニック</text>
+
+  <!-- Card: Brute Force -->
+  <g transform="translate(165, 648)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <line x1="-6" y1="-4" x2="6" y2="-4" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="-6" y1="0" x2="6" y2="0" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="-6" y1="4" x2="6" y2="4" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">ブルートフォース</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">大量のパスワード試行を自動化</text>
+  </g>
+
+  <!-- Card: Detection Evasion -->
+  <g transform="translate(465, 648)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <circle cx="0" cy="0" r="7" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="-4" y1="-4" x2="4" y2="4" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">検知回避</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">ログがないため攻撃が見えない</text>
+  </g>
+
+  <!-- Card: No Audit Trail -->
+  <g transform="translate(765, 648)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <rect x="-7" y="-7" width="14" height="14" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="-4" y1="-4" x2="4" y2="4" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="4" y1="-4" x2="-4" y2="4" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">監査証跡なし</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">事後の侵害調査が不可能</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 435)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#f97316" stroke-width="2" stroke-dasharray="6,3" opacity="0.35"/>
+    <text x="190" y="38" fill="#fdba74" font-size="9.5">未記録の通信</text>
+    <g transform="translate(28, 54)">
+      <circle cx="0" cy="0" r="7" fill="#451a03" stroke="#ef4444" stroke-width="1"/>
+      <line x1="-3" y1="-3" x2="3" y2="3" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="3" y1="-3" x2="-3" y2="3" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+    <text x="52" y="58" fill="#fca5a5" font-size="9.5">ログ欠落ポイント</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+  </g>
+
+</svg>
