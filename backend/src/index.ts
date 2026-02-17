@@ -10,6 +10,12 @@ import errorMessageLeakage from "./labs/step01-recon/error-message-leakage.js";
 import directoryListing from "./labs/step01-recon/directory-listing.js";
 import headerExposure from "./labs/step01-recon/header-exposure.js";
 
+// Step02: Injection（インジェクション）ラボ
+import sqlInjection from "./labs/step02-injection/sql-injection.js";
+import xss from "./labs/step02-injection/xss.js";
+import commandInjection from "./labs/step02-injection/command-injection.js";
+import openRedirect from "./labs/step02-injection/open-redirect.js";
+
 const app = new Hono();
 
 app.use("*", logger());
@@ -43,6 +49,14 @@ app.route("/api/labs/sensitive-file-exposure", sensitiveFileExposure);
 app.route("/api/labs/error-message-leakage", errorMessageLeakage);
 app.route("/api/labs/directory-listing", directoryListing);
 app.route("/api/labs/header-exposure", headerExposure);
+
+// ========================================
+// Step02: Injection（インジェクション）ラボ
+// ========================================
+app.route("/api/labs/sql-injection", sqlInjection);
+app.route("/api/labs/xss", xss);
+app.route("/api/labs/command-injection", commandInjection);
+app.route("/api/labs/open-redirect", openRedirect);
 
 // ラボ一覧API
 app.get("/api/labs", (c) => {
@@ -82,6 +96,34 @@ app.get("/api/labs", (c) => {
         category: "step01-recon",
         difficulty: 1,
         path: "/labs/header-exposure",
+      },
+      {
+        id: "sql-injection",
+        name: "SQLインジェクション",
+        category: "step02-injection",
+        difficulty: 1,
+        path: "/labs/sql-injection",
+      },
+      {
+        id: "xss",
+        name: "クロスサイトスクリプティング (XSS)",
+        category: "step02-injection",
+        difficulty: 1,
+        path: "/labs/xss",
+      },
+      {
+        id: "command-injection",
+        name: "OSコマンドインジェクション",
+        category: "step02-injection",
+        difficulty: 2,
+        path: "/labs/command-injection",
+      },
+      {
+        id: "open-redirect",
+        name: "オープンリダイレクト",
+        category: "step02-injection",
+        difficulty: 1,
+        path: "/labs/open-redirect",
       },
     ],
   });

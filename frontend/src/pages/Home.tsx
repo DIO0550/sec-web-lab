@@ -18,10 +18,9 @@ const STEPS = [
   {
     id: "step02",
     name: "Step 02: Injection (インジェクション)",
-    description: "SQL Injection, XSS 等の入力値を悪用した攻撃",
-    labCount: 0,
+    description: "SQL Injection, XSS, コマンドインジェクション等の入力値を悪用した攻撃",
+    labCount: 4,
     path: "/step02",
-    comingSoon: true,
   },
   {
     id: "step03",
