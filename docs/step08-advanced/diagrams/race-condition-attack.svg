@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Race Condition (TOCTOU) Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">レースコンディション — 同時リクエストによる二重処理</text>
+  <rect x="280" y="66" width="200" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP — Business Logic Flaws</text>
+
+  <!-- Attacker -->
+  <g transform="translate(115, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Web Server -->
+  <g transform="translate(380, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Vulnerable App</text>
+  </g>
+
+  <!-- Database -->
+  <g transform="translate(645, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#f59e0b" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <ellipse cx="0" cy="-14" rx="20" ry="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,-14 L-20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M20,-14 L20,14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <ellipse cx="0" cy="14" rx="20" ry="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <path d="M-20,0 Q0,8 20,0" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.5"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fcd34d" font-size="13" font-weight="700">データベース</text>
+    <text x="0" y="86" text-anchor="middle" fill="#f59e0b" font-size="9.5" opacity="0.7">PostgreSQL</text>
+  </g>
+
+  <!-- Step 1: Request A (upper arrow) -->
+  <path d="M 171 230 L 318 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="245" cy="208" r="16" fill="#ef4444"/>
+  <text x="245" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+  <text x="245" y="198" text-anchor="middle" fill="#fca5a5" font-size="8">リクエストA</text>
+
+  <!-- Step 1b: Request B (lower arrow, slightly offset) -->
+  <path d="M 171 272 L 318 272" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="245" cy="294" r="16" fill="#ef4444"/>
+  <text x="245" y="299" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+  <text x="245" y="318" text-anchor="middle" fill="#fca5a5" font-size="8">リクエストB</text>
+
+  <!-- Step 2: Server → DB SELECT (both read same value) -->
+  <path d="M 438 240 L 583 240" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowAmber)"/>
+  <circle cx="510" cy="218" r="16" fill="#3b82f6"/>
+  <text x="510" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+  <text x="510" y="208" text-anchor="middle" fill="#93c5fd" font-size="8">SELECT balance</text>
+
+  <!-- Step 3: DB returns 100 to both -->
+  <path d="M 583 282 L 438 282" fill="none" stroke="#f59e0b" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="510" cy="304" r="16" fill="#f59e0b"/>
+  <text x="510" y="309" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+  <text x="510" y="324" text-anchor="middle" fill="#fcd34d" font-size="8">→ 100円 (両方同じ値)</text>
+
+  <!-- Step 4: Server → DB UPDATE (both decrement) -->
+  <path d="M 438 345 Q 510 390 583 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="510" cy="385" r="16" fill="#ef4444"/>
+  <text x="510" y="390" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- Timeline box showing TOCTOU -->
+  <g transform="translate(380, 450)" filter="url(#shadow)">
+    <rect x="-165" y="-22" width="330" height="98" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-4" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ TOCTOU — チェックと更新の間に隙間</text>
+    <text x="-140" y="18" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">A: SELECT→100円 ✓ → UPDATE -100</text>
+    <text x="-140" y="34" fill="#fb923c" font-size="9" font-family="'Fira Code', monospace">B: SELECT→100円 ✓ → UPDATE -100</text>
+    <line x1="-150" y1="44" x2="150" y2="44" stroke="#f97316" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="62" text-anchor="middle" fill="#fed7aa" font-size="9">結果: 残高 -100円 (100円しかないのに200円分購入)</text>
+  </g>
+
+  <!-- Result arrow back to attacker -->
+  <path d="M 260 548 C 200 620, 120 600, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="160" cy="600" r="16" fill="#ef4444"/>
+  <text x="160" y="605" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+
+  <!-- Step Sidebar -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="336" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">同時リクエスト送信</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">攻撃者が100円の購入リクエスト</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">を同時に2つ送信する</text>
+
+    <circle cx="34" cy="124" r="13" fill="#3b82f6"/>
+    <text x="34" y="129" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="120" fill="#f8fafc" font-size="11.5" font-weight="600">残高チェック (SELECT)</text>
+    <text x="56" y="136" fill="#94a3b8" font-size="9.5">両リクエストが同時にDBから</text>
+    <text x="56" y="149" fill="#94a3b8" font-size="9.5">残高100円を読み取る</text>
+
+    <circle cx="34" cy="180" r="13" fill="#f59e0b"/>
+    <text x="34" y="185" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="176" fill="#f8fafc" font-size="11.5" font-weight="600">チェック通過</text>
+    <text x="56" y="192" fill="#94a3b8" font-size="9.5">両方「100円≧100円」で</text>
+    <text x="56" y="205" fill="#94a3b8" font-size="9.5">残高チェックを通過してしまう</text>
+
+    <circle cx="34" cy="236" r="13" fill="#ef4444"/>
+    <text x="34" y="241" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="11.5" font-weight="600">二重UPDATE実行</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9.5">両方が UPDATE balance - 100 を</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9.5">実行し、残高が-100円に</text>
+
+    <circle cx="34" cy="292" r="13" fill="#ef4444"/>
+    <text x="34" y="297" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+    <text x="56" y="288" fill="#f8fafc" font-size="11.5" font-weight="600">不正購入成功</text>
+    <text x="56" y="304" fill="#94a3b8" font-size="9.5">100円の残高で200円分の</text>
+    <text x="56" y="317" fill="#94a3b8" font-size="9.5">商品を購入できてしまう</text>
+  </g>
+
+  <!-- Attack Technique Cards -->
+  <line x1="30" y1="660" x2="1070" y2="660" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="685" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">🔥 使用される攻撃テクニック</text>
+
+  <g transform="translate(165, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="13">⚡</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">並行リクエスト</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">同時に複数リクエストを送信</text>
+  </g>
+
+  <g transform="translate(465, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="13">⏱</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">TOCTOU悪用</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">チェック→更新間の隙間を突く</text>
+  </g>
+
+  <g transform="translate(765, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="13">💰</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">二重処理</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">残高超過の購入が成立</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(775, 460)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">DB読み取り</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#f59e0b" stroke-width="2"/>
+    <text x="52" y="58" fill="#fcd34d" font-size="9.5">DB応答</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+  </g>
+</svg>
