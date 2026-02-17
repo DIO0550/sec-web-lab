@@ -7,14 +7,14 @@ import {
   ErrorMessageLeakage,
   DirectoryListing,
   HeaderExposure,
-} from "./features/step01-recon";
+} from "./labs/step01-recon";
 import {
   Step02Index,
   SqlInjection,
   Xss,
   CommandInjection,
   OpenRedirect,
-} from "./features/step02-injection";
+} from "./labs/step02-injection";
 
 export function App() {
   return (
