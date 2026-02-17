@@ -31,7 +31,7 @@ frontend/src/             → React アプリ
   pages/                  → トップレベルページ (Home等)
   hooks/                  → 共通カスタムフック
   components/             → 共通UIコンポーネント
-  features/               → ステップ別の機能モジュール
+  labs/                   → ステップ別のラボモジュール
     step01-recon/         → Step 01: 偵察
       pages/              → ラボページコンポーネント
       index.ts            → barrel export
@@ -64,19 +64,19 @@ pnpm typecheck       # 型チェック
 1. **バックエンド**: `backend/src/labs/<step>/<lab-name>.ts` に脆弱なルートを作成
    - Hono の `Hono` インスタンスを export する
    - `backend/src/index.ts` で `app.route()` を使って登録
-2. **フロントエンド**: `frontend/src/features/<step>/pages/<LabName>.tsx` にページを作成
-   - `features/<step>/index.ts` の barrel export に追加
+2. **フロントエンド**: `frontend/src/labs/<step>/pages/<LabName>.tsx` にページを作成
+   - `labs/<step>/index.ts` の barrel export に追加
    - `frontend/src/App.tsx` にルートを追加
 3. **ドキュメント**: `docs/<step>/<lab-name>.md` に解説を作成
 
 ### フロントエンド構成ルール
 
-- **共通コード** (`src/hooks/`, `src/components/`): 複数の feature で再利用するフック・コンポーネントはここに置く
-- **feature モジュール** (`src/features/<step>/`): ステップ固有のページやロジックをまとめる
+- **共通コード** (`src/hooks/`, `src/components/`): 複数のラボで再利用するフック・コンポーネントはここに置く
+- **ラボモジュール** (`src/labs/<step>/`): ステップ固有のページやロジックをまとめる
   - `pages/` にラボページを配置し、`index.ts` で barrel export する
-  - feature 内のページは `../../../hooks/` や `../../../components/` から共通コードをインポートする
+  - ラボ内のページは `../../../hooks/` や `../../../components/` から共通コードをインポートする
 - **トップレベルページ** (`src/pages/`): Home 等のステップに属さないページ
-- **新しいステップを追加する場合**: `src/features/step<NN>-<name>/` を作成し、同じ構成に従う
+- **新しいステップを追加する場合**: `src/labs/step<NN>-<name>/` を作成し、同じ構成に従う
 
 ### 脆弱なコードと安全なコードの管理
 

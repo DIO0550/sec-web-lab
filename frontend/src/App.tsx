@@ -7,7 +7,14 @@ import {
   ErrorMessageLeakage,
   DirectoryListing,
   HeaderExposure,
-} from "./features/step01-recon";
+} from "./labs/step01-recon";
+import {
+  Step02Index,
+  SqlInjection,
+  Xss,
+  CommandInjection,
+  OpenRedirect,
+} from "./labs/step02-injection";
 
 export function App() {
   return (
@@ -24,6 +31,8 @@ export function App() {
             <Link to="/">Home</Link>
             <span style={{ color: "#ccc" }}>|</span>
             <Link to="/step01">Step01: Recon</Link>
+            <span style={{ color: "#ccc" }}>|</span>
+            <Link to="/step02">Step02: Injection</Link>
           </nav>
           <hr />
         </header>
@@ -39,6 +48,13 @@ export function App() {
             <Route path="/step01/error-message-leakage" element={<ErrorMessageLeakage />} />
             <Route path="/step01/directory-listing" element={<DirectoryListing />} />
             <Route path="/step01/header-exposure" element={<HeaderExposure />} />
+
+            {/* Step02: Injection（インジェクション） */}
+            <Route path="/step02" element={<Step02Index />} />
+            <Route path="/step02/sql-injection" element={<SqlInjection />} />
+            <Route path="/step02/xss" element={<Xss />} />
+            <Route path="/step02/command-injection" element={<CommandInjection />} />
+            <Route path="/step02/open-redirect" element={<OpenRedirect />} />
           </Routes>
         </main>
       </div>
