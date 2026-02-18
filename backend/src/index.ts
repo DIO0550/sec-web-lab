@@ -16,6 +16,13 @@ import xss from "./labs/step02-injection/xss.js";
 import commandInjection from "./labs/step02-injection/command-injection.js";
 import openRedirect from "./labs/step02-injection/open-redirect.js";
 
+// Step03: Auth（認証）ラボ
+import plaintextPassword from "./labs/step03-auth/plaintext-password.js";
+import weakHash from "./labs/step03-auth/weak-hash.js";
+import bruteForce from "./labs/step03-auth/brute-force.js";
+import defaultCredentials from "./labs/step03-auth/default-credentials.js";
+import weakPasswordPolicy from "./labs/step03-auth/weak-password-policy.js";
+
 const app = new Hono();
 
 app.use("*", logger());
@@ -57,6 +64,15 @@ app.route("/api/labs/sql-injection", sqlInjection);
 app.route("/api/labs/xss", xss);
 app.route("/api/labs/command-injection", commandInjection);
 app.route("/api/labs/open-redirect", openRedirect);
+
+// ========================================
+// Step03: Auth（認証）ラボ
+// ========================================
+app.route("/api/labs/plaintext-password", plaintextPassword);
+app.route("/api/labs/weak-hash", weakHash);
+app.route("/api/labs/brute-force", bruteForce);
+app.route("/api/labs/default-credentials", defaultCredentials);
+app.route("/api/labs/weak-password-policy", weakPasswordPolicy);
 
 // ラボ一覧API
 app.get("/api/labs", (c) => {
@@ -124,6 +140,41 @@ app.get("/api/labs", (c) => {
         category: "step02-injection",
         difficulty: 1,
         path: "/labs/open-redirect",
+      },
+      {
+        id: "plaintext-password",
+        name: "平文パスワード保存",
+        category: "step03-auth",
+        difficulty: 1,
+        path: "/labs/plaintext-password",
+      },
+      {
+        id: "weak-hash",
+        name: "弱いハッシュアルゴリズム",
+        category: "step03-auth",
+        difficulty: 2,
+        path: "/labs/weak-hash",
+      },
+      {
+        id: "brute-force",
+        name: "ブルートフォース攻撃",
+        category: "step03-auth",
+        difficulty: 1,
+        path: "/labs/brute-force",
+      },
+      {
+        id: "default-credentials",
+        name: "デフォルト認証情報",
+        category: "step03-auth",
+        difficulty: 1,
+        path: "/labs/default-credentials",
+      },
+      {
+        id: "weak-password-policy",
+        name: "弱いパスワードポリシー",
+        category: "step03-auth",
+        difficulty: 1,
+        path: "/labs/weak-password-policy",
       },
     ],
   });

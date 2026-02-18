@@ -15,6 +15,14 @@ import {
   CommandInjection,
   OpenRedirect,
 } from "./labs/step02-injection";
+import {
+  Step03Index,
+  PlaintextPassword,
+  WeakHash,
+  BruteForce,
+  DefaultCredentials,
+  WeakPasswordPolicy,
+} from "./labs/step03-auth";
 
 export function App() {
   return (
@@ -33,6 +41,8 @@ export function App() {
             <Link to="/step01">Step01: Recon</Link>
             <span style={{ color: "#ccc" }}>|</span>
             <Link to="/step02">Step02: Injection</Link>
+            <span style={{ color: "#ccc" }}>|</span>
+            <Link to="/step03">Step03: Auth</Link>
           </nav>
           <hr />
         </header>
@@ -55,6 +65,14 @@ export function App() {
             <Route path="/step02/xss" element={<Xss />} />
             <Route path="/step02/command-injection" element={<CommandInjection />} />
             <Route path="/step02/open-redirect" element={<OpenRedirect />} />
+
+            {/* Step03: Auth（認証） */}
+            <Route path="/step03" element={<Step03Index />} />
+            <Route path="/step03/plaintext-password" element={<PlaintextPassword />} />
+            <Route path="/step03/weak-hash" element={<WeakHash />} />
+            <Route path="/step03/brute-force" element={<BruteForce />} />
+            <Route path="/step03/default-credentials" element={<DefaultCredentials />} />
+            <Route path="/step03/weak-password-policy" element={<WeakPasswordPolicy />} />
           </Routes>
         </main>
       </div>
