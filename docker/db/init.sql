@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,  -- 意図的に平文保存 (脆弱)
     email VARCHAR(255),
     role VARCHAR(50) DEFAULT 'user',
+    must_change_password BOOLEAN DEFAULT false,  -- Step03: デフォルト認証情報ラボ用
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -26,11 +27,11 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 -- 初期データ
-INSERT INTO users (username, password, email, role)
+INSERT INTO users (username, password, email, role, must_change_password)
 VALUES
-    ('admin', 'admin123', 'admin@example.com', 'admin'),
-    ('user1', 'password1', 'user1@example.com', 'user'),
-    ('user2', 'password2', 'user2@example.com', 'user')
+    ('admin', 'admin123', 'admin@example.com', 'admin', true),  -- デフォルト認証情報（要変更）
+    ('user1', 'password1', 'user1@example.com', 'user', false),
+    ('user2', 'password2', 'user2@example.com', 'user', false)
 ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO posts (user_id, title, content)
