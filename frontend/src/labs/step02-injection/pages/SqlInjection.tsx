@@ -44,23 +44,23 @@ function LoginForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>ユーザー名:</label>
+      <div className="mb-3">
+        <div className="mb-1">
+          <label className="text-[13px] block">ユーザー名:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>パスワード:</label>
+        <div className="mb-1">
+          <label className="text-[13px] block">パスワード:</label>
           <input
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
@@ -68,9 +68,9 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
@@ -78,7 +78,7 @@ function LoginForm({
                 setUsername(p.username);
                 setPassword(p.password);
               }}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -88,34 +88,28 @@ function LoginForm({
 
       {result && (
         <div
-          style={{
-            marginTop: 8,
-            padding: 12,
-            borderRadius: 4,
-            background: result.success ? "#e8f5e9" : "#ffebee",
-            border: `1px solid ${result.success ? "#4caf50" : "#f44336"}`,
-          }}
+          className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}
         >
-          <div style={{ fontWeight: "bold", color: result.success ? "#2e7d32" : "#c62828" }}>
+          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
             {result.success ? "ログイン成功" : "ログイン失敗"}
           </div>
-          <div style={{ fontSize: 13 }}>{result.message}</div>
+          <div className="text-[13px]">{result.message}</div>
           {result.user && (
-            <pre style={{ fontSize: 12, background: "#f5f5f5", padding: 8, borderRadius: 4, marginTop: 8 }}>
+            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}
           {result._debug && (
-            <details style={{ marginTop: 8 }}>
-              <summary style={{ fontSize: 12, color: "#888", cursor: "pointer" }}>実行されたSQL</summary>
-              <pre style={{ fontSize: 11, background: "#1a1a2e", color: "#e94560", padding: 8, borderRadius: 4 }}>
+            <details className="mt-2">
+              <summary className="text-xs text-[#888] cursor-pointer">実行されたSQL</summary>
+              <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
                 {result._debug.query}
               </pre>
-              <div style={{ fontSize: 11, color: "#888" }}>返却行数: {result._debug.rowCount}</div>
+              <div className="text-[11px] text-[#888]">返却行数: {result._debug.rowCount}</div>
             </details>
           )}
           {result.error && (
-            <pre style={{ fontSize: 11, color: "#c00", marginTop: 4 }}>{result.error}</pre>
+            <pre className="text-[11px] text-[#c00] mt-1">{result.error}</pre>
           )}
         </div>
       )}
@@ -144,14 +138,14 @@ function SearchForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <label style={{ fontSize: 13, display: "block" }}>検索キーワード:</label>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-3">
+        <label className="text-[13px] block">検索キーワード:</label>
+        <div className="flex gap-2">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, flex: 1 }}
+            className="py-1 px-2 border border-[#ccc] rounded flex-1"
           />
           <FetchButton onClick={() => onSearch(mode, query)} disabled={isLoading}>
             検索
@@ -159,14 +153,14 @@ function SearchForm({
         </div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
               onClick={() => setQuery(p.query)}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -175,36 +169,36 @@ function SearchForm({
       </div>
 
       {result && (
-        <div style={{ marginTop: 8 }}>
-          <div style={{ fontSize: 13, color: "#888" }}>{result.count} 件の結果</div>
+        <div className="mt-2">
+          <div className="text-[13px] text-[#888]">{result.count} 件の結果</div>
           {result.results.length > 0 && (
-            <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", marginTop: 4 }}>
+            <table className="w-full text-xs border-collapse mt-1">
               <thead>
-                <tr style={{ background: "#f5f5f5" }}>
-                  <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>title</th>
-                  <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>content</th>
+                <tr className="bg-[#f5f5f5]">
+                  <th className="p-1 border border-[#ddd] text-left">title</th>
+                  <th className="p-1 border border-[#ddd] text-left">content</th>
                 </tr>
               </thead>
               <tbody>
                 {result.results.map((r, i) => (
                   <tr key={i}>
-                    <td style={{ padding: 4, border: "1px solid #ddd" }}>{r.title}</td>
-                    <td style={{ padding: 4, border: "1px solid #ddd" }}>{r.content}</td>
+                    <td className="p-1 border border-[#ddd]">{r.title}</td>
+                    <td className="p-1 border border-[#ddd]">{r.content}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )}
           {result._debug && (
-            <details style={{ marginTop: 8 }}>
-              <summary style={{ fontSize: 12, color: "#888", cursor: "pointer" }}>実行されたSQL</summary>
-              <pre style={{ fontSize: 11, background: "#1a1a2e", color: "#e94560", padding: 8, borderRadius: 4 }}>
+            <details className="mt-2">
+              <summary className="text-xs text-[#888] cursor-pointer">実行されたSQL</summary>
+              <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
                 {result._debug.query}
               </pre>
             </details>
           )}
           {result.error && (
-            <pre style={{ fontSize: 11, color: "#c00", marginTop: 4 }}>{result.error}</pre>
+            <pre className="text-[11px] text-[#c00] mt-1">{result.error}</pre>
           )}
         </div>
       )}
@@ -262,8 +256,8 @@ export function SqlInjection() {
       description="ユーザー入力がSQL文に直接埋め込まれることで、認証のバイパスや他テーブルのデータ抽出が可能になる脆弱性です。"
     >
       {/* 認証バイパス */}
-      <h3 style={{ marginTop: 24 }}>Lab 1: 認証バイパス</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: 認証バイパス</h3>
+      <p className="text-sm text-[#666]">
         ユーザー名に <code>{`' OR 1=1 --`}</code> を入力して、パスワードなしでログインを試みてください。
       </p>
       <ComparisonPanel
@@ -276,8 +270,8 @@ export function SqlInjection() {
       />
 
       {/* データ抽出 */}
-      <h3 style={{ marginTop: 32 }}>Lab 2: データ抽出 (UNION)</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-8">Lab 2: データ抽出 (UNION)</h3>
+      <p className="text-sm text-[#666]">
         検索欄に <code>{`' UNION SELECT username, password FROM users --`}</code> を入力して、
         ユーザーテーブルの内容を抽出してみてください。
       </p>

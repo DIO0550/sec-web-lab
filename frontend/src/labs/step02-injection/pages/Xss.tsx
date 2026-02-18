@@ -39,14 +39,14 @@ function ReflectedXssTest({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <label style={{ fontSize: 13, display: "block" }}>検索キーワード:</label>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-3">
+        <label className="text-[13px] block">検索キーワード:</label>
+        <div className="flex gap-2">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, flex: 1 }}
+            className="py-1 px-2 border border-[#ccc] rounded flex-1"
           />
           <FetchButton onClick={() => onSearch(mode, query)} disabled={isLoading}>
             検索
@@ -54,14 +54,14 @@ function ReflectedXssTest({
         </div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
               onClick={() => setQuery(p.query)}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -70,34 +70,20 @@ function ReflectedXssTest({
       </div>
 
       {result && (
-        <div style={{ marginTop: 8 }}>
-          <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>
+        <div className="mt-2">
+          <div className="text-xs text-[#888] mb-1">
             サーバーからのHTMLレスポンス:
           </div>
           <pre
-            style={{
-              background: "#1a1a2e",
-              color: mode === "vulnerable" ? "#e94560" : "#4ecdc4",
-              padding: 12,
-              borderRadius: 4,
-              overflow: "auto",
-              fontSize: 12,
-              maxHeight: 200,
-              whiteSpace: "pre-wrap",
-            }}
+            className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[200px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
           >
             {result.html}
           </pre>
-          <div style={{ fontSize: 12, color: "#888", marginTop: 8, marginBottom: 4 }}>
+          <div className="text-xs text-[#888] mt-2 mb-1">
             ブラウザでの描画結果 (dangerouslySetInnerHTML):
           </div>
           <div
-            style={{
-              border: `2px solid ${mode === "vulnerable" ? "#c00" : "#080"}`,
-              padding: 12,
-              borderRadius: 4,
-              background: "#fff",
-            }}
+            className={`border-2 p-3 rounded bg-white ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
             dangerouslySetInnerHTML={{ __html: result.html }}
           />
         </div>
@@ -139,26 +125,26 @@ function StoredXssTest({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>タイトル:</label>
+      <div className="mb-3">
+        <div className="mb-1">
+          <label className="text-[13px] block">タイトル:</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>内容:</label>
+        <div className="mb-1">
+          <label className="text-[13px] block">内容:</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={2}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex gap-2">
           <FetchButton onClick={() => onPost(mode, title, content)} disabled={isLoading}>
             投稿
           </FetchButton>
@@ -168,9 +154,9 @@ function StoredXssTest({
         </div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
@@ -178,7 +164,7 @@ function StoredXssTest({
                 setTitle(p.title);
                 setContent(p.content);
               }}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -187,36 +173,20 @@ function StoredXssTest({
       </div>
 
       {posts && (
-        <div style={{ marginTop: 8 }}>
-          <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>
+        <div className="mt-2">
+          <div className="text-xs text-[#888] mb-1">
             サーバーからのHTMLフラグメント:
           </div>
           <pre
-            style={{
-              background: "#1a1a2e",
-              color: mode === "vulnerable" ? "#e94560" : "#4ecdc4",
-              padding: 12,
-              borderRadius: 4,
-              overflow: "auto",
-              fontSize: 12,
-              maxHeight: 150,
-              whiteSpace: "pre-wrap",
-            }}
+            className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[150px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
           >
             {posts.postsHtml}
           </pre>
-          <div style={{ fontSize: 12, color: "#888", marginTop: 8, marginBottom: 4 }}>
+          <div className="text-xs text-[#888] mt-2 mb-1">
             ブラウザでの描画結果 (dangerouslySetInnerHTML):
           </div>
           <div
-            style={{
-              border: `2px solid ${mode === "vulnerable" ? "#c00" : "#080"}`,
-              padding: 12,
-              borderRadius: 4,
-              background: "#fff",
-              maxHeight: 200,
-              overflow: "auto",
-            }}
+            className={`border-2 p-3 rounded bg-white max-h-[200px] overflow-auto ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
             dangerouslySetInnerHTML={{ __html: posts.postsHtml }}
           />
         </div>
@@ -286,8 +256,8 @@ export function Xss() {
       description="ユーザー入力がHTMLとしてブラウザに解釈されることで、任意のJavaScriptが実行される脆弱性です。"
     >
       {/* Reflected XSS */}
-      <h3 style={{ marginTop: 24 }}>Lab 1: Reflected XSS (反射型)</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: Reflected XSS (反射型)</h3>
+      <p className="text-sm text-[#666]">
         URLパラメータの値がHTMLレスポンスにそのまま反映されます。
         <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> を入力してみてください。
       </p>
@@ -301,8 +271,8 @@ export function Xss() {
       />
 
       {/* Stored XSS */}
-      <h3 style={{ marginTop: 32 }}>Lab 2: Stored XSS (格納型)</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-8">Lab 2: Stored XSS (格納型)</h3>
+      <p className="text-sm text-[#666]">
         掲示板にスクリプトを含む投稿を行い、他のユーザーが閲覧した際にスクリプトが実行されることを確認します。
       </p>
       <ComparisonPanel
@@ -327,7 +297,7 @@ export function Xss() {
       />
 
       <CheckpointBox variant="warning" title="注意">
-        <p style={{ fontSize: 13, color: "#666" }}>
+        <p className="text-[13px] text-[#666]">
           脆弱版の「ブラウザでの描画結果」では、<code>dangerouslySetInnerHTML</code> を使用してHTMLを描画しています。
           実際のブラウザでは <code>&lt;script&gt;</code> タグは innerHTML 経由では実行されませんが、
           <code>&lt;img onerror&gt;</code> や <code>&lt;svg onload&gt;</code> は実行されます。

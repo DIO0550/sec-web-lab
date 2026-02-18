@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  /* 脆弱バージョンの配色 */
+  --color-vuln-bg: #1a1a2e;
+  --color-vuln-text: #e94560;
+
+  /* 安全バージョンの配色 */
+  --color-secure-bg: #1a2e1a;
+  --color-secure-text: #4ecdc4;
+
+  /* エラー表示の配色 */
+  --color-error-bg: #2e1a1a;
+  --color-error-text: #ff6b6b;
+}

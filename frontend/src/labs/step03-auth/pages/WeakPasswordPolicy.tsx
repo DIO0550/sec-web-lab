@@ -51,24 +51,24 @@ function RegisterForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>ユーザー名:</label>
+      <div className="mb-3">
+        <div className="mb-1">
+          <label className="text-[13px] block">ユーザー名:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
             placeholder="testuser"
           />
         </div>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>パスワード:</label>
+        <div className="mb-1">
+          <label className="text-[13px] block">パスワード:</label>
           <input
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
@@ -76,24 +76,24 @@ function RegisterForm({
         </FetchButton>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>弱いパスワード:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">弱いパスワード:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {weakPresets.map((p) => (
             <button
               key={p.label}
               onClick={() => setPassword(p.password)}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer", color: "#c00" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer text-[#c00]"
             >
               {p.label}
             </button>
           ))}
         </div>
-        <div style={{ marginTop: 4 }}>
-          <span style={{ fontSize: 12, color: "#888" }}>強いパスワード:</span>
+        <div className="mt-1">
+          <span className="text-xs text-[#888]">強いパスワード:</span>
           <button
             onClick={() => setPassword(strongPreset.password)}
-            style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer", color: "#080", marginLeft: 4 }}
+            className="text-[11px] py-0.5 px-2 cursor-pointer text-[#080] ml-1"
           >
             {strongPreset.label}
           </button>
@@ -101,19 +101,13 @@ function RegisterForm({
       </div>
 
       {result && (
-        <div style={{
-          marginTop: 8,
-          padding: 12,
-          borderRadius: 4,
-          background: result.success ? "#e8f5e9" : "#ffebee",
-          border: `1px solid ${result.success ? "#4caf50" : "#f44336"}`,
-        }}>
-          <div style={{ fontWeight: "bold", color: result.success ? "#2e7d32" : "#c62828" }}>
+        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
+          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
             {result.success ? "登録成功" : "登録失敗"}
           </div>
-          <div style={{ fontSize: 13 }}>{result.message}</div>
+          <div className="text-[13px]">{result.message}</div>
           {result._debug && (
-            <div style={{ marginTop: 4, fontSize: 11, color: "#888" }}>
+            <div className="mt-1 text-[11px] text-[#888]">
               {result._debug.message}
             </div>
           )}
@@ -142,14 +136,14 @@ function StrengthChecker({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <label style={{ fontSize: 13, display: "block" }}>パスワードを入力:</label>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-3">
+        <label className="text-[13px] block">パスワードを入力:</label>
+        <div className="flex gap-2">
           <input
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, flex: 1 }}
+            className="py-1 px-2 border border-[#ccc] rounded flex-1"
           />
           <FetchButton onClick={() => onCheck(password)} disabled={isLoading}>
             チェック
@@ -157,14 +151,14 @@ function StrengthChecker({
         </div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>テスト用パスワード:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">テスト用パスワード:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {testPasswords.map((p) => (
             <button
               key={p}
               onClick={() => { setPassword(p); onCheck(p); }}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p}
             </button>
@@ -173,25 +167,25 @@ function StrengthChecker({
       </div>
 
       {results.length > 0 && (
-        <div style={{ marginTop: 12 }}>
-          <table style={{ width: "100%", fontSize: 11, borderCollapse: "collapse" }}>
+        <div className="mt-3">
+          <table className="w-full text-[11px] border-collapse">
             <thead>
-              <tr style={{ background: "#f5f5f5" }}>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>パスワード</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>長さ</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>判定</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>理由</th>
+              <tr className="bg-[#f5f5f5]">
+                <th className="p-1 border border-[#ddd] text-left">パスワード</th>
+                <th className="p-1 border border-[#ddd] text-left">長さ</th>
+                <th className="p-1 border border-[#ddd] text-left">判定</th>
+                <th className="p-1 border border-[#ddd] text-left">理由</th>
               </tr>
             </thead>
             <tbody>
               {results.map((r, i) => (
-                <tr key={i} style={{ background: r.valid ? "#e8f5e9" : "#ffebee" }}>
-                  <td style={{ padding: 4, border: "1px solid #ddd", fontFamily: "monospace" }}>{r.password}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{r.length}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>
-                    {r.valid ? <span style={{ color: "#2e7d32" }}>OK</span> : <span style={{ color: "#c62828" }}>NG</span>}
+                <tr key={i} className={r.valid ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}>
+                  <td className="p-1 border border-[#ddd] font-mono">{r.password}</td>
+                  <td className="p-1 border border-[#ddd]">{r.length}</td>
+                  <td className="p-1 border border-[#ddd]">
+                    {r.valid ? <span className="text-[#2e7d32]">OK</span> : <span className="text-[#c62828]">NG</span>}
                   </td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{r.reason ?? "-"}</td>
+                  <td className="p-1 border border-[#ddd]">{r.reason ?? "-"}</td>
                 </tr>
               ))}
             </tbody>
@@ -254,8 +248,8 @@ export function WeakPasswordPolicy() {
       subtitle="弱いパスワードの登録を許してしまう"
       description="パスワード強度チェックがないと、123456 や password のような極めて弱いパスワードが登録でき、辞書攻撃で瞬時に突破されます。"
     >
-      <h3 style={{ marginTop: 24 }}>Lab 1: パスワード登録テスト</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: パスワード登録テスト</h3>
+      <p className="text-sm text-[#666]">
         弱いパスワード（<code>123456</code>, <code>a</code> 等）で登録を試みてください。
         脆弱版は何でも受け付けますが、安全版は強度チェックで拒否します。
       </p>
@@ -268,8 +262,8 @@ export function WeakPasswordPolicy() {
         }
       />
 
-      <h3 style={{ marginTop: 32 }}>Lab 2: パスワード強度チェッカー</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-8">Lab 2: パスワード強度チェッカー</h3>
+      <p className="text-sm text-[#666]">
         様々なパスワードの強度をチェックしてみてください。
         安全版では8文字以上・大文字小文字数字・ブラックリスト照合の3段階チェックが行われます。
       </p>

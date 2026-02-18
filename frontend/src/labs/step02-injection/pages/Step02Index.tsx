@@ -40,45 +40,28 @@ export function Step02Index() {
         攻撃と防御の両方を学べます。
       </p>
 
-      <div style={{ marginTop: 24 }}>
+      <div className="mt-6">
         {LABS.map((lab) => (
           <div
             key={lab.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: 4,
-              padding: 16,
-              marginBottom: 12,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
+            className="border border-[#ddd] rounded p-4 mb-3 flex justify-between items-center"
           >
             <div>
-              <h3 style={{ margin: "0 0 4px 0" }}>
-                <Link to={`/step02/${lab.id}`} style={{ textDecoration: "none" }}>
+              <h3 className="m-0 mb-1">
+                <Link to={`/step02/${lab.id}`} className="no-underline">
                   {lab.name}
                 </Link>
               </h3>
-              <p style={{ margin: 0, color: "#666", fontSize: 14 }}>{lab.description}</p>
+              <p className="m-0 text-[#666] text-sm">{lab.description}</p>
             </div>
-            <div style={{ textAlign: "right", minWidth: 80 }}>
-              <span style={{ fontSize: 12, color: "#888" }}>
+            <div className="text-right min-w-[80px]">
+              <span className="text-xs text-[#888]">
                 {"★".repeat(lab.difficulty)}{"☆".repeat(3 - lab.difficulty)}
               </span>
               <br />
               <Link
                 to={`/step02/${lab.id}`}
-                style={{
-                  display: "inline-block",
-                  marginTop: 4,
-                  padding: "4px 12px",
-                  background: "#333",
-                  color: "#fff",
-                  borderRadius: 4,
-                  textDecoration: "none",
-                  fontSize: 13,
-                }}
+                className="inline-block mt-1 px-3 py-1 bg-[#333] text-white rounded no-underline text-[13px]"
               >
                 Start
               </Link>

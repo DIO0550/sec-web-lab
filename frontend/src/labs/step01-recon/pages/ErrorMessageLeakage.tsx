@@ -30,17 +30,17 @@ function TestCaseList({
 }) {
   return (
     <>
-      <h4 style={{ color: mode === "vulnerable" ? "#c00" : "#080" }}>
+      <h4 className={mode === "vulnerable" ? "text-[#c00]" : "text-[#080]"}>
         {mode === "vulnerable" ? "脆弱バージョン" : "安全バージョン"}
       </h4>
       {TEST_INPUTS.map((input) => (
-        <div key={input.id} style={{ marginBottom: 12 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div key={input.id} className="mb-3">
+          <div className="flex items-center gap-2">
             <FetchButton onClick={() => onTest(mode, input.id)} disabled={isLoading} size="small">
               実行
             </FetchButton>
-            <span style={{ fontSize: 13 }}>{input.label}</span>
-            <span style={{ fontSize: 11, color: "#888" }}>-- {input.description}</span>
+            <span className="text-[13px]">{input.label}</span>
+            <span className="text-[11px] text-[#888]">-- {input.description}</span>
           </div>
           <JsonTextViewer result={results[input.id] ?? null} />
         </div>
@@ -94,7 +94,7 @@ export function ErrorMessageLeakage() {
       description="不正な入力でエラーを誘発すると、SQL文・テーブル名・スタックトレース等の内部情報が漏洩する脆弱性です。"
     >
       {/* プリセットテスト */}
-      <h3 style={{ marginTop: 24 }}>プリセットテスト</h3>
+      <h3 className="mt-6">プリセットテスト</h3>
       <ComparisonPanel
         vulnerableContent={
           <TestCaseList mode="vulnerable" results={vulnerableResults} isLoading={isLoading} onTest={handleTest} />
@@ -106,17 +106,17 @@ export function ErrorMessageLeakage() {
 
       {/* カスタム入力 */}
       <CheckpointBox title="カスタム入力テスト" variant="warning">
-        <p style={{ fontSize: 13, color: "#666" }}>
+        <p className="text-[13px] text-[#666]">
           任意の入力でエラーを誘発してみてください。脆弱版と安全版を同時にテストします。
         </p>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div className="flex gap-2 items-center">
           <code>/api/labs/error-message-leakage/[mode]/users/</code>
           <input
             type="text"
             value={customInput}
             onChange={(e) => setCustomInput(e.target.value)}
             placeholder="入力値"
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4 }}
+            className="py-1 px-2 border border-[#ccc] rounded"
           />
           <FetchButton onClick={handleCustomTest} disabled={isLoading || !customInput.trim()}>
             テスト
@@ -124,13 +124,13 @@ export function ErrorMessageLeakage() {
         </div>
 
         {(customVulnResult || customSecureResult) && (
-          <div style={{ display: "flex", gap: 24, marginTop: 12 }}>
-            <div style={{ flex: 1 }}>
-              <strong style={{ color: "#c00" }}>脆弱版</strong>
+          <div className="flex gap-6 mt-3">
+            <div className="flex-1">
+              <strong className="text-[#c00]">脆弱版</strong>
               <JsonTextViewer result={customVulnResult} />
             </div>
-            <div style={{ flex: 1 }}>
-              <strong style={{ color: "#080" }}>安全版</strong>
+            <div className="flex-1">
+              <strong className="text-[#080]">安全版</strong>
               <JsonTextViewer result={customSecureResult} />
             </div>
           </div>

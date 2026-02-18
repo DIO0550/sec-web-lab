@@ -1,12 +1,5 @@
 import type { TextResponse, HeaderResponse } from "../hooks/useLabFetch";
 
-// --- テーマカラー定数 ---
-const COLORS = {
-  vulnerable: { bg: "#1a1a2e", text: "#e94560" },
-  secure: { bg: "#1a2e1a", text: "#4ecdc4" },
-  error: { bg: "#2e1a1a", text: "#ff6b6b" },
-} as const;
-
 // --- ヘッダー付きレスポンスの表示 ---
 
 type HeaderViewerProps = {
@@ -19,17 +12,17 @@ type HeaderViewerProps = {
  */
 export function HeaderViewer({ result, mode }: HeaderViewerProps) {
   if (!result) return null;
-  const theme = COLORS[mode];
+  const isVuln = mode === "vulnerable";
   return (
-    <div style={{ marginTop: 16 }}>
+    <div className="mt-4">
       <h4>レスポンスヘッダー</h4>
-      <pre style={{ background: theme.bg, color: theme.text, padding: 12, borderRadius: 4, overflow: "auto" }}>
+      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-3 rounded overflow-auto`}>
         {Object.entries(result.headers)
           .map(([k, v]) => `${k}: ${v}`)
           .join("\n")}
       </pre>
       <h4>レスポンスボディ</h4>
-      <pre style={{ background: "#f5f5f5", padding: 12, borderRadius: 4, overflow: "auto" }}>
+      <pre className="bg-[#f5f5f5] p-3 rounded overflow-auto">
         {JSON.stringify(result.body, null, 2)}
       </pre>
     </div>
@@ -49,25 +42,16 @@ type TextViewerProps = {
 export function TextViewer({ result }: TextViewerProps) {
   if (!result) return null;
   const isError = result.status >= 400;
-  const theme = isError ? COLORS.error : COLORS.vulnerable;
   return (
-    <div style={{ marginTop: 8 }}>
+    <div className="mt-2">
       <div>
         Status:{" "}
-        <span style={{ color: isError ? "#c00" : "#080", fontWeight: "bold" }}>
+        <span className={`font-bold ${isError ? "text-[#c00]" : "text-[#080]"}`}>
           {result.status}
         </span>
       </div>
       <pre
-        style={{
-          background: theme.bg,
-          color: theme.text,
-          padding: 12,
-          borderRadius: 4,
-          overflow: "auto",
-          fontSize: 13,
-          maxHeight: 200,
-        }}
+        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-3 rounded overflow-auto text-[13px] max-h-[200px]`}
       >
         {result.body}
       </pre>
@@ -95,20 +79,12 @@ export function JsonTextViewer({ result }: JsonTextViewerProps) {
     formatted = result.body;
   }
   return (
-    <div style={{ marginTop: 4 }}>
-      <span style={{ color: isError ? "#c00" : "#080", fontWeight: "bold", fontSize: 13 }}>
+    <div className="mt-1">
+      <span className={`font-bold text-[13px] ${isError ? "text-[#c00]" : "text-[#080]"}`}>
         {result.status}
       </span>
       <pre
-        style={{
-          background: "#1a1a2e",
-          color: isError ? "#e94560" : "#4ecdc4",
-          padding: 10,
-          borderRadius: 4,
-          overflow: "auto",
-          fontSize: 12,
-          maxHeight: 200,
-        }}
+        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-2.5 rounded overflow-auto text-xs max-h-[200px]`}
       >
         {formatted}
       </pre>
