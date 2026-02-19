@@ -23,6 +23,13 @@ import {
   DefaultCredentials,
   WeakPasswordPolicy,
 } from "./labs/step03-auth";
+import {
+  Step05Index,
+  Idor,
+  PathTraversal,
+  PrivilegeEscalation,
+  MassAssignment,
+} from "./labs/step05-access-control";
 
 export function App() {
   return (
@@ -43,6 +50,8 @@ export function App() {
             <Link to="/step02">Step02: Injection</Link>
             <span className="text-[#ccc]">|</span>
             <Link to="/step03">Step03: Auth</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step05">Step05: Access Control</Link>
           </nav>
           <hr />
         </header>
@@ -73,6 +82,13 @@ export function App() {
             <Route path="/step03/brute-force" element={<BruteForce />} />
             <Route path="/step03/default-credentials" element={<DefaultCredentials />} />
             <Route path="/step03/weak-password-policy" element={<WeakPasswordPolicy />} />
+
+            {/* Step05: Access Control（アクセス制御） */}
+            <Route path="/step05" element={<Step05Index />} />
+            <Route path="/step05/idor" element={<Idor />} />
+            <Route path="/step05/path-traversal" element={<PathTraversal />} />
+            <Route path="/step05/privilege-escalation" element={<PrivilegeEscalation />} />
+            <Route path="/step05/mass-assignment" element={<MassAssignment />} />
           </Routes>
         </main>
       </div>
