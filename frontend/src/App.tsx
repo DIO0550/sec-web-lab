@@ -23,6 +23,13 @@ import {
   DefaultCredentials,
   WeakPasswordPolicy,
 } from "./labs/step03-auth";
+import {
+  Step04Index,
+  CookieManipulation,
+  SessionFixation,
+  SessionHijacking,
+  Csrf,
+} from "./labs/step04-session";
 
 export function App() {
   return (
@@ -43,6 +50,8 @@ export function App() {
             <Link to="/step02">Step02: Injection</Link>
             <span className="text-[#ccc]">|</span>
             <Link to="/step03">Step03: Auth</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step04">Step04: Session</Link>
           </nav>
           <hr />
         </header>
@@ -73,6 +82,13 @@ export function App() {
             <Route path="/step03/brute-force" element={<BruteForce />} />
             <Route path="/step03/default-credentials" element={<DefaultCredentials />} />
             <Route path="/step03/weak-password-policy" element={<WeakPasswordPolicy />} />
+
+            {/* Step04: Session（セッション管理） */}
+            <Route path="/step04" element={<Step04Index />} />
+            <Route path="/step04/cookie-manipulation" element={<CookieManipulation />} />
+            <Route path="/step04/session-fixation" element={<SessionFixation />} />
+            <Route path="/step04/session-hijacking" element={<SessionHijacking />} />
+            <Route path="/step04/csrf" element={<Csrf />} />
           </Routes>
         </main>
       </div>

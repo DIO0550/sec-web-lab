@@ -23,6 +23,12 @@ import bruteForce from "./labs/step03-auth/brute-force.js";
 import defaultCredentials from "./labs/step03-auth/default-credentials.js";
 import weakPasswordPolicy from "./labs/step03-auth/weak-password-policy.js";
 
+// Step04: Session（セッション）ラボ
+import cookieManipulation from "./labs/step04-session/cookie-manipulation.js";
+import sessionFixation from "./labs/step04-session/session-fixation.js";
+import sessionHijacking from "./labs/step04-session/session-hijacking.js";
+import csrf from "./labs/step04-session/csrf.js";
+
 const app = new Hono();
 
 app.use("*", logger());
@@ -73,6 +79,14 @@ app.route("/api/labs/weak-hash", weakHash);
 app.route("/api/labs/brute-force", bruteForce);
 app.route("/api/labs/default-credentials", defaultCredentials);
 app.route("/api/labs/weak-password-policy", weakPasswordPolicy);
+
+// ========================================
+// Step04: Session（セッション）ラボ
+// ========================================
+app.route("/api/labs/cookie-manipulation", cookieManipulation);
+app.route("/api/labs/session-fixation", sessionFixation);
+app.route("/api/labs/session-hijacking", sessionHijacking);
+app.route("/api/labs/csrf", csrf);
 
 // ラボ一覧API
 app.get("/api/labs", (c) => {
@@ -175,6 +189,34 @@ app.get("/api/labs", (c) => {
         category: "step03-auth",
         difficulty: 1,
         path: "/labs/weak-password-policy",
+      },
+      {
+        id: "cookie-manipulation",
+        name: "Cookie属性の不備",
+        category: "step04-session",
+        difficulty: 1,
+        path: "/labs/cookie-manipulation",
+      },
+      {
+        id: "session-fixation",
+        name: "セッション固定攻撃",
+        category: "step04-session",
+        difficulty: 2,
+        path: "/labs/session-fixation",
+      },
+      {
+        id: "session-hijacking",
+        name: "セッションハイジャック",
+        category: "step04-session",
+        difficulty: 2,
+        path: "/labs/session-hijacking",
+      },
+      {
+        id: "csrf",
+        name: "クロスサイトリクエストフォージェリ (CSRF)",
+        category: "step04-session",
+        difficulty: 2,
+        path: "/labs/csrf",
       },
     ],
   });
