@@ -28,6 +28,11 @@ import cookieManipulation from "./labs/step04-session/cookie-manipulation.js";
 import sessionFixation from "./labs/step04-session/session-fixation.js";
 import sessionHijacking from "./labs/step04-session/session-hijacking.js";
 import csrf from "./labs/step04-session/csrf.js";
+// Step05: Access Control（アクセス制御）ラボ
+import idor from "./labs/step05-access-control/idor.js";
+import pathTraversal from "./labs/step05-access-control/path-traversal.js";
+import privilegeEscalation from "./labs/step05-access-control/privilege-escalation.js";
+import massAssignment from "./labs/step05-access-control/mass-assignment.js";
 
 const app = new Hono();
 
@@ -87,6 +92,12 @@ app.route("/api/labs/cookie-manipulation", cookieManipulation);
 app.route("/api/labs/session-fixation", sessionFixation);
 app.route("/api/labs/session-hijacking", sessionHijacking);
 app.route("/api/labs/csrf", csrf);
+// Step05: Access Control（アクセス制御）ラボ
+// ========================================
+app.route("/api/labs/idor", idor);
+app.route("/api/labs/path-traversal", pathTraversal);
+app.route("/api/labs/privilege-escalation", privilegeEscalation);
+app.route("/api/labs/mass-assignment", massAssignment);
 
 // ラボ一覧API
 app.get("/api/labs", (c) => {
@@ -217,6 +228,32 @@ app.get("/api/labs", (c) => {
         category: "step04-session",
         difficulty: 2,
         path: "/labs/csrf",
+        id: "idor",
+        name: "IDOR (安全でない直接オブジェクト参照)",
+        category: "step05-access-control",
+        difficulty: 1,
+        path: "/labs/idor",
+      },
+      {
+        id: "path-traversal",
+        name: "パストラバーサル",
+        category: "step05-access-control",
+        difficulty: 1,
+        path: "/labs/path-traversal",
+      },
+      {
+        id: "privilege-escalation",
+        name: "権限昇格",
+        category: "step05-access-control",
+        difficulty: 2,
+        path: "/labs/privilege-escalation",
+      },
+      {
+        id: "mass-assignment",
+        name: "Mass Assignment",
+        category: "step05-access-control",
+        difficulty: 2,
+        path: "/labs/mass-assignment",
       },
     ],
   });

@@ -30,6 +30,13 @@ import {
   SessionHijacking,
   Csrf,
 } from "./labs/step04-session";
+import { 
+  Step05Index,
+  Idor,
+  PathTraversal,
+  PrivilegeEscalation,
+  MassAssignment,
+} from "./labs/step05-access-control";
 
 export function App() {
   return (
@@ -52,6 +59,8 @@ export function App() {
             <Link to="/step03">Step03: Auth</Link>
             <span className="text-[#ccc]">|</span>
             <Link to="/step04">Step04: Session</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step05">Step05: Access Control</Link>
           </nav>
           <hr />
         </header>
@@ -89,6 +98,12 @@ export function App() {
             <Route path="/step04/session-fixation" element={<SessionFixation />} />
             <Route path="/step04/session-hijacking" element={<SessionHijacking />} />
             <Route path="/step04/csrf" element={<Csrf />} />
+            {/* Step05: Access Control（アクセス制御） */}
+            <Route path="/step05" element={<Step05Index />} />
+            <Route path="/step05/idor" element={<Idor />} />
+            <Route path="/step05/path-traversal" element={<PathTraversal />} />
+            <Route path="/step05/privilege-escalation" element={<PrivilegeEscalation />} />
+            <Route path="/step05/mass-assignment" element={<MassAssignment />} />
           </Routes>
         </main>
       </div>
