@@ -23,6 +23,12 @@ import bruteForce from "./labs/step03-auth/brute-force.js";
 import defaultCredentials from "./labs/step03-auth/default-credentials.js";
 import weakPasswordPolicy from "./labs/step03-auth/weak-password-policy.js";
 
+// Step05: Access Control（アクセス制御）ラボ
+import idor from "./labs/step05-access-control/idor.js";
+import pathTraversal from "./labs/step05-access-control/path-traversal.js";
+import privilegeEscalation from "./labs/step05-access-control/privilege-escalation.js";
+import massAssignment from "./labs/step05-access-control/mass-assignment.js";
+
 const app = new Hono();
 
 app.use("*", logger());
@@ -73,6 +79,14 @@ app.route("/api/labs/weak-hash", weakHash);
 app.route("/api/labs/brute-force", bruteForce);
 app.route("/api/labs/default-credentials", defaultCredentials);
 app.route("/api/labs/weak-password-policy", weakPasswordPolicy);
+
+// ========================================
+// Step05: Access Control（アクセス制御）ラボ
+// ========================================
+app.route("/api/labs/idor", idor);
+app.route("/api/labs/path-traversal", pathTraversal);
+app.route("/api/labs/privilege-escalation", privilegeEscalation);
+app.route("/api/labs/mass-assignment", massAssignment);
 
 // ラボ一覧API
 app.get("/api/labs", (c) => {
@@ -175,6 +189,34 @@ app.get("/api/labs", (c) => {
         category: "step03-auth",
         difficulty: 1,
         path: "/labs/weak-password-policy",
+      },
+      {
+        id: "idor",
+        name: "IDOR (安全でない直接オブジェクト参照)",
+        category: "step05-access-control",
+        difficulty: 1,
+        path: "/labs/idor",
+      },
+      {
+        id: "path-traversal",
+        name: "パストラバーサル",
+        category: "step05-access-control",
+        difficulty: 1,
+        path: "/labs/path-traversal",
+      },
+      {
+        id: "privilege-escalation",
+        name: "権限昇格",
+        category: "step05-access-control",
+        difficulty: 2,
+        path: "/labs/privilege-escalation",
+      },
+      {
+        id: "mass-assignment",
+        name: "Mass Assignment",
+        category: "step05-access-control",
+        difficulty: 2,
+        path: "/labs/mass-assignment",
       },
     ],
   });
