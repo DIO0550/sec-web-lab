@@ -10,6 +10,19 @@
 
 ---
 
+## 基礎知識ドキュメント
+
+> ラボに取り組む前に理解しておくべき基礎概念をまとめたドキュメントです。
+> 手を動かすラボではなく、読み物として各ステップの前提知識を補います。
+
+| # | トピック | 関連ステップ | ドキュメント |
+|---|---------|-------------|-------------|
+| F-1 | HTTPの仕組みとセッション管理 | Step 1〜4 の前提 | [http-and-sessions](foundations/http-and-sessions.md) |
+| F-2 | 同一オリジンポリシーとCORS | Step 2, 4, 6 の前提 | [same-origin-policy](foundations/same-origin-policy.md) |
+| F-3 | 文字エンコーディングとセキュリティ | Step 2 の補足 | [character-encoding](foundations/character-encoding.md) |
+
+---
+
 ## Step 1: 偵察フェーズ — Webアプリの情報を集めよう
 
 > まずは攻撃の前段階。Webアプリが意図せず公開している情報を見つける練習です。
@@ -38,6 +51,7 @@
 | 9 | Stored XSS | ★★☆ | 未実装 | [xss](step02-injection/xss.md) |
 | 10 | DOM-based XSS | ★★☆ | 未実装 | [xss](step02-injection/xss.md) |
 | 11 | OSコマンドインジェクション | ★★☆ | 未実装 | [command-injection](step02-injection/command-injection.md) |
+| 12 | メールヘッダインジェクション | ★★☆ | 未実装 | [mail-header-injection](step02-injection/mail-header-injection.md) |
 
 ---
 
@@ -48,11 +62,11 @@
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 12 | デフォルト認証情報 | ★☆☆ | 未実装 | [default-credentials](step03-auth/default-credentials.md) |
-| 13 | 弱いパスワードポリシー | ★☆☆ | 未実装 | [weak-password-policy](step03-auth/weak-password-policy.md) |
-| 14 | ブルートフォース攻撃 | ★☆☆ | 未実装 | [brute-force](step03-auth/brute-force.md) |
-| 15 | 平文パスワード保存 | ★☆☆ | 未実装 | [plaintext-password](step03-auth/plaintext-password.md) |
-| 16 | 弱いハッシュ (MD5/SHA1) | ★★☆ | 未実装 | [weak-hash](step03-auth/weak-hash.md) |
+| 13 | デフォルト認証情報 | ★☆☆ | 未実装 | [default-credentials](step03-auth/default-credentials.md) |
+| 14 | 弱いパスワードポリシー | ★☆☆ | 未実装 | [weak-password-policy](step03-auth/weak-password-policy.md) |
+| 15 | ブルートフォース攻撃 | ★☆☆ | 未実装 | [brute-force](step03-auth/brute-force.md) |
+| 16 | 平文パスワード保存 | ★☆☆ | 未実装 | [plaintext-password](step03-auth/plaintext-password.md) |
+| 17 | 弱いハッシュ (MD5/SHA1) | ★★☆ | 未実装 | [weak-hash](step03-auth/weak-hash.md) |
 
 ---
 
@@ -63,10 +77,10 @@
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 17 | Cookie操作 | ★☆☆ | 未実装 | [cookie-manipulation](step04-session/cookie-manipulation.md) |
-| 18 | セッション固定攻撃 | ★★☆ | 未実装 | [session-fixation](step04-session/session-fixation.md) |
-| 19 | セッションハイジャック | ★★☆ | 未実装 | [session-hijacking](step04-session/session-hijacking.md) |
-| 20 | CSRF | ★★☆ | 未実装 | [csrf](step04-session/csrf.md) |
+| 18 | Cookie操作 | ★☆☆ | 未実装 | [cookie-manipulation](step04-session/cookie-manipulation.md) |
+| 19 | セッション固定攻撃 | ★★☆ | 未実装 | [session-fixation](step04-session/session-fixation.md) |
+| 20 | セッションハイジャック | ★★☆ | 未実装 | [session-hijacking](step04-session/session-hijacking.md) |
+| 21 | CSRF | ★★☆ | 未実装 | [csrf](step04-session/csrf.md) |
 
 ---
 
@@ -77,10 +91,10 @@
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 21 | IDOR (他ユーザーデータ参照) | ★☆☆ | 未実装 | [idor](step05-access-control/idor.md) |
-| 22 | パストラバーサル | ★☆☆ | 未実装 | [path-traversal](step05-access-control/path-traversal.md) |
-| 23 | 権限昇格 | ★★☆ | 未実装 | [privilege-escalation](step05-access-control/privilege-escalation.md) |
-| 24 | Mass Assignment | ★★☆ | 未実装 | [mass-assignment](step05-access-control/mass-assignment.md) |
+| 22 | IDOR (他ユーザーデータ参照) | ★☆☆ | 未実装 | [idor](step05-access-control/idor.md) |
+| 23 | パストラバーサル | ★☆☆ | 未実装 | [path-traversal](step05-access-control/path-traversal.md) |
+| 24 | 権限昇格 | ★★☆ | 未実装 | [privilege-escalation](step05-access-control/privilege-escalation.md) |
+| 25 | Mass Assignment | ★★☆ | 未実装 | [mass-assignment](step05-access-control/mass-assignment.md) |
 
 ---
 
@@ -91,11 +105,12 @@
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 25 | SSRF | ★★☆ | 未実装 | [ssrf](step06-server-side/ssrf.md) |
-| 26 | XXE | ★★☆ | 未実装 | [xxe](step06-server-side/xxe.md) |
-| 27 | ファイルアップロード攻撃 | ★★☆ | 未実装 | [file-upload](step06-server-side/file-upload.md) |
-| 28 | CRLFインジェクション | ★★☆ | 未実装 | [crlf-injection](step06-server-side/crlf-injection.md) |
-| 29 | CORS設定ミス | ★★☆ | 未実装 | [cors-misconfiguration](step06-server-side/cors-misconfiguration.md) |
+| 26 | SSRF | ★★☆ | 未実装 | [ssrf](step06-server-side/ssrf.md) |
+| 27 | XXE | ★★☆ | 未実装 | [xxe](step06-server-side/xxe.md) |
+| 28 | ファイルアップロード攻撃 | ★★☆ | 未実装 | [file-upload](step06-server-side/file-upload.md) |
+| 29 | CRLFインジェクション | ★★☆ | 未実装 | [crlf-injection](step06-server-side/crlf-injection.md) |
+| 30 | CORS設定ミス | ★★☆ | 未実装 | [cors-misconfiguration](step06-server-side/cors-misconfiguration.md) |
+| 31 | evalインジェクション | ★★☆ | 未実装 | [eval-injection](step06-server-side/eval-injection.md) |
 
 ---
 
@@ -106,13 +121,16 @@
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 30 | レート制限なし | ★☆☆ | 未実装 | [rate-limiting](step07-design/rate-limiting.md) |
-| 31 | クリックジャッキング | ★☆☆ | 未実装 | [clickjacking](step07-design/clickjacking.md) |
-| 32 | HTTPでの機密データ送信 | ★☆☆ | 未実装 | [sensitive-data-http](step07-design/sensitive-data-http.md) |
-| 33 | 不要なHTTPメソッド許可 | ★☆☆ | 未実装 | [http-methods](step07-design/http-methods.md) |
-| 34 | 推測可能なパスワードリセット | ★★☆ | 未実装 | [password-reset](step07-design/password-reset.md) |
-| 35 | ビジネスロジックの欠陥 | ★★☆ | 未実装 | [business-logic](step07-design/business-logic.md) |
-| 36 | 署名なしデータの信頼 | ★★☆ | 未実装 | [unsigned-data](step07-design/unsigned-data.md) |
+| 32 | レート制限なし | ★☆☆ | 未実装 | [rate-limiting](step07-design/rate-limiting.md) |
+| 33 | クリックジャッキング | ★☆☆ | 未実装 | [clickjacking](step07-design/clickjacking.md) |
+| 34 | HTTPでの機密データ送信 | ★☆☆ | 未実装 | [sensitive-data-http](step07-design/sensitive-data-http.md) |
+| 35 | 不要なHTTPメソッド許可 | ★☆☆ | 未実装 | [http-methods](step07-design/http-methods.md) |
+| 36 | 推測可能なパスワードリセット | ★★☆ | 未実装 | [password-reset](step07-design/password-reset.md) |
+| 37 | ビジネスロジックの欠陥 | ★★☆ | 未実装 | [business-logic](step07-design/business-logic.md) |
+| 38 | 署名なしデータの信頼 | ★★☆ | 未実装 | [unsigned-data](step07-design/unsigned-data.md) |
+| 39 | セキュリティレスポンスヘッダ未設定 | ★☆☆ | 未実装 | [security-headers](step07-design/security-headers.md) |
+| 40 | キャッシュ制御の不備 | ★★☆ | 未実装 | [cache-control](step07-design/cache-control.md) |
+| 41 | Web Storageの不適切な使用 | ★★☆ | 未実装 | [web-storage-abuse](step07-design/web-storage-abuse.md) |
 
 ---
 
@@ -123,26 +141,31 @@
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 37 | JWT改ざん | ★★★ | 未実装 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities.md) |
-| 38 | JWT alg=none / 弱い鍵 | ★★★ | 未実装 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities.md) |
-| 39 | SSTI | ★★★ | 未実装 | [ssti](step08-advanced/ssti.md) |
-| 40 | レースコンディション | ★★★ | 未実装 | [race-condition](step08-advanced/race-condition.md) |
-| 41 | 安全でないデシリアライゼーション | ★★★ | 未実装 | [deserialization](step08-advanced/deserialization.md) |
+| 42 | JWT改ざん | ★★★ | 未実装 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities.md) |
+| 43 | JWT alg=none / 弱い鍵 | ★★★ | 未実装 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities.md) |
+| 44 | SSTI | ★★★ | 未実装 | [ssti](step08-advanced/ssti.md) |
+| 45 | レースコンディション | ★★★ | 未実装 | [race-condition](step08-advanced/race-condition.md) |
+| 46 | 安全でないデシリアライゼーション | ★★★ | 未実装 | [deserialization](step08-advanced/deserialization.md) |
+| 47 | Prototype Pollution | ★★★ | 未実装 | [prototype-pollution](step08-advanced/prototype-pollution.md) |
+| 48 | ReDoS (正規表現DoS) | ★★★ | 未実装 | [redos](step08-advanced/redos.md) |
+| 49 | postMessage脆弱性 | ★★★ | 未実装 | [postmessage](step08-advanced/postmessage.md) |
 
 ---
 
-## Step 9: 守りを固める — ログと例外処理
+## Step 9: 守りを固める — ログ・例外処理・防御設計
 
 > 攻撃を学んだ最後に、防御側の視点を強化します。
 > 適切なエラーハンドリングとログ記録がなぜ重要なのかを、攻撃者の視点から理解します。
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 42 | 詳細エラーメッセージ露出 | ★☆☆ | 未実装 | [error-messages](step09-defense/error-messages.md) |
-| 43 | スタックトレース漏洩 | ★☆☆ | 未実装 | [stack-trace](step09-defense/stack-trace.md) |
-| 44 | ログなし / 不十分なログ | ★☆☆ | 未実装 | [logging](step09-defense/logging.md) |
-| 45 | ログインジェクション | ★★☆ | 未実装 | [log-injection](step09-defense/log-injection.md) |
-| 46 | Fail-Open | ★★☆ | 未実装 | [fail-open](step09-defense/fail-open.md) |
+| 50 | 詳細エラーメッセージ露出 | ★☆☆ | 未実装 | [error-messages](step09-defense/error-messages.md) |
+| 51 | スタックトレース漏洩 | ★☆☆ | 未実装 | [stack-trace](step09-defense/stack-trace.md) |
+| 52 | ログなし / 不十分なログ | ★☆☆ | 未実装 | [logging](step09-defense/logging.md) |
+| 53 | ログインジェクション | ★★☆ | 未実装 | [log-injection](step09-defense/log-injection.md) |
+| 54 | Fail-Open | ★★☆ | 未実装 | [fail-open](step09-defense/fail-open.md) |
+| 55 | CSP (Content Security Policy) 導入 | ★★☆ | 未実装 | [csp](step09-defense/csp.md) |
+| 56 | 入力バリデーション設計 | ★★☆ | 未実装 | [input-validation](step09-defense/input-validation.md) |
 
 ---
 
@@ -160,3 +183,5 @@
 | GraphQLインジェクション | GraphQLサーバーが必要 (将来追加可能) |
 | WebSocketハイジャック | WebSocket構成が別途必要 (将来追加可能) |
 | Software Supply Chain Failures | 概念的でローカル攻撃体験が困難 |
+| OAuth/OIDC 認証フローの脆弱性 | 外部 IdP 連携が必要 (将来追加可能) |
+| HTTP/2 固有の脆弱性 | HTTP/2 対応リバースプロキシが必要 |
