@@ -51,39 +51,32 @@ function UsersPanel({
       </FetchButton>
 
       {result?.error && (
-        <pre style={{ fontSize: 11, color: "#c00", marginTop: 8 }}>{result.error}</pre>
+        <pre className="text-[11px] text-[#c00] mt-2">{result.error}</pre>
       )}
 
       {result?.users && (
-        <div style={{ marginTop: 12 }}>
-          <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
+        <div className="mt-3">
+          <table className="w-full text-xs border-collapse">
             <thead>
-              <tr style={{ background: "#f5f5f5" }}>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>username</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>password (hash)</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>algorithm</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>action</th>
+              <tr className="bg-[#f5f5f5]">
+                <th className="p-1 border border-[#ddd] text-left">username</th>
+                <th className="p-1 border border-[#ddd] text-left">password (hash)</th>
+                <th className="p-1 border border-[#ddd] text-left">algorithm</th>
+                <th className="p-1 border border-[#ddd] text-left">action</th>
               </tr>
             </thead>
             <tbody>
               {result.users.map((u) => (
                 <tr key={u.id}>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{u.username}</td>
-                  <td style={{
-                    padding: 4,
-                    border: "1px solid #ddd",
-                    fontFamily: "monospace",
-                    fontSize: 10,
-                    wordBreak: "break-all",
-                    background: mode === "vulnerable" ? "#fff8e1" : "#e8f5e9",
-                  }}>
+                  <td className="p-1 border border-[#ddd]">{u.username}</td>
+                  <td className={`p-1 border border-[#ddd] font-mono text-[10px] break-all ${mode === "vulnerable" ? "bg-[#fff8e1]" : "bg-[#e8f5e9]"}`}>
                     {u.password}
                   </td>
-                  <td style={{ padding: 4, border: "1px solid #ddd", fontSize: 11 }}>{u.hashAlgorithm}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>
+                  <td className="p-1 border border-[#ddd] text-[11px]">{u.hashAlgorithm}</td>
+                  <td className="p-1 border border-[#ddd]">
                     <button
                       onClick={() => onCrack(u.password)}
-                      style={{ fontSize: 10, padding: "2px 6px", cursor: "pointer" }}
+                      className="text-[10px] py-0.5 px-1.5 cursor-pointer"
                     >
                       逆引き
                     </button>
@@ -93,7 +86,7 @@ function UsersPanel({
             </tbody>
           </table>
           {result._debug && (
-            <div style={{ marginTop: 8, fontSize: 12, color: "#888", fontStyle: "italic" }}>
+            <div className="mt-2 text-xs text-[#888] italic">
               {result._debug.message}
             </div>
           )}
@@ -112,27 +105,21 @@ function CrackPanel({
   if (!result) return null;
 
   return (
-    <div style={{
-      marginTop: 12,
-      padding: 12,
-      borderRadius: 4,
-      background: result.success ? "#ffebee" : "#e8f5e9",
-      border: `1px solid ${result.success ? "#f44336" : "#4caf50"}`,
-    }}>
-      <div style={{ fontWeight: "bold", color: result.success ? "#c62828" : "#2e7d32" }}>
+    <div className={`mt-3 p-3 rounded ${result.success ? "bg-[#ffebee] border border-[#f44336]" : "bg-[#e8f5e9] border border-[#4caf50]"}`}>
+      <div className={`font-bold ${result.success ? "text-[#c62828]" : "text-[#2e7d32]"}`}>
         {result.success ? "逆引き成功（パスワード判明）" : "逆引き失敗（パスワード保護）"}
       </div>
-      <div style={{ fontSize: 12, marginTop: 4 }}>
-        <div>ハッシュ: <code style={{ fontSize: 10, wordBreak: "break-all" }}>{result.hash}</code></div>
+      <div className="text-xs mt-1">
+        <div>ハッシュ: <code className="text-[10px] break-all">{result.hash}</code></div>
         {result.password && (
-          <div style={{ marginTop: 4 }}>
-            パスワード: <strong style={{ color: "#c00" }}>{result.password}</strong>
+          <div className="mt-1">
+            パスワード: <strong className="text-[#c00]">{result.password}</strong>
           </div>
         )}
-        {result.method && <div style={{ marginTop: 4 }}>手法: {result.method}</div>}
-        {result.message && <div style={{ marginTop: 4, color: "#666" }}>{result.message}</div>}
+        {result.method && <div className="mt-1">手法: {result.method}</div>}
+        {result.message && <div className="mt-1 text-[#666]">{result.message}</div>}
         {result._debug?.reasons && (
-          <ul style={{ marginTop: 8, fontSize: 11, color: "#666" }}>
+          <ul className="mt-2 text-[11px] text-[#666]">
             {result._debug.reasons.map((r, i) => <li key={i}>{r}</li>)}
           </ul>
         )}
@@ -185,8 +172,8 @@ export function WeakHash() {
       subtitle="MD5/SHA1 でハッシュしても安全ではない理由"
       description="MD5やSHA1でハッシュ化しても、レインボーテーブル（事前計算済みハッシュ対応表）を使えば数秒で元のパスワードに戻せてしまいます。"
     >
-      <h3 style={{ marginTop: 24 }}>Lab 1: ハッシュ値の確認と逆引き</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: ハッシュ値の確認と逆引き</h3>
+      <p className="text-sm text-[#666]">
         ユーザー一覧を取得し、各ユーザーのパスワードハッシュを確認してください。
         「逆引き」ボタンでレインボーテーブルによるハッシュ解読を体験できます。
       </p>

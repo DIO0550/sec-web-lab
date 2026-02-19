@@ -20,9 +20,8 @@ export function FetchButton({
   children,
   size = "normal",
 }: Props) {
-  const style = size === "small" ? { fontSize: 12 } : {};
   return (
-    <button onClick={onClick} disabled={disabled} style={style}>
+    <button onClick={onClick} disabled={disabled} className={size === "small" ? "text-xs" : ""}>
       {isLoading && loadingText ? loadingText : children}
     </button>
   );

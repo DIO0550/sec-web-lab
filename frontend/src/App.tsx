@@ -27,21 +27,21 @@ import {
 export function App() {
   return (
     <BrowserRouter>
-      <div style={{ fontFamily: "sans-serif", maxWidth: 960, margin: "0 auto", padding: 20 }}>
+      <div className="font-sans max-w-[960px] mx-auto p-5">
         <header>
           <h1>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <Link to="/" className="no-underline text-inherit">
               sec-web-lab
             </Link>
           </h1>
           <p>Web Security Hands-on Laboratory</p>
-          <nav style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <nav className="flex gap-4 flex-wrap">
             <Link to="/">Home</Link>
-            <span style={{ color: "#ccc" }}>|</span>
+            <span className="text-[#ccc]">|</span>
             <Link to="/step01">Step01: Recon</Link>
-            <span style={{ color: "#ccc" }}>|</span>
+            <span className="text-[#ccc]">|</span>
             <Link to="/step02">Step02: Injection</Link>
-            <span style={{ color: "#ccc" }}>|</span>
+            <span className="text-[#ccc]">|</span>
             <Link to="/step03">Step03: Auth</Link>
           </nav>
           <hr />

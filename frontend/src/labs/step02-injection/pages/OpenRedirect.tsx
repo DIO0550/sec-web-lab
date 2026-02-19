@@ -37,15 +37,15 @@ function RedirectTest({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <label style={{ fontSize: 13, display: "block" }}>リダイレクト先URL:</label>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-3">
+        <label className="text-[13px] block">リダイレクト先URL:</label>
+        <div className="flex gap-2">
           <input
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="/dashboard"
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, flex: 1 }}
+            className="py-1 px-2 border border-[#ccc] rounded flex-1"
           />
           <FetchButton onClick={() => onCheck(mode, url)} disabled={isLoading}>
             検証
@@ -53,14 +53,14 @@ function RedirectTest({
         </div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
               onClick={() => setUrl(p.url)}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -69,45 +69,42 @@ function RedirectTest({
       </div>
 
       {result && (
-        <div style={{ marginTop: 8 }}>
-          <table style={{ fontSize: 13, borderCollapse: "collapse", width: "100%" }}>
+        <div className="mt-2">
+          <table className="text-[13px] border-collapse w-full">
             <tbody>
               <tr>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd", fontWeight: "bold", width: 140 }}>
+                <td className="p-1 px-2 border border-[#ddd] font-bold w-[140px]">
                   入力URL
                 </td>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>
+                <td className="p-1 px-2 border border-[#ddd]">
                   <code>{result.input}</code>
                 </td>
               </tr>
               <tr>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd", fontWeight: "bold" }}>
+                <td className="p-1 px-2 border border-[#ddd] font-bold">
                   リダイレクト先
                 </td>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>
+                <td className="p-1 px-2 border border-[#ddd]">
                   <code>{result.wouldRedirectTo ?? "(なし)"}</code>
                 </td>
               </tr>
               <tr>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd", fontWeight: "bold" }}>
+                <td className="p-1 px-2 border border-[#ddd] font-bold">
                   外部URL
                 </td>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>
-                  <span style={{ color: result.isExternal ? "#c00" : "#080" }}>
+                <td className="p-1 px-2 border border-[#ddd]">
+                  <span className={result.isExternal ? "text-[#c00]" : "text-[#080]"}>
                     {result.isExternal ? "はい" : "いいえ"}
                   </span>
                 </td>
               </tr>
               <tr>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd", fontWeight: "bold" }}>
+                <td className="p-1 px-2 border border-[#ddd] font-bold">
                   ブロック
                 </td>
-                <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>
+                <td className="p-1 px-2 border border-[#ddd]">
                   <span
-                    style={{
-                      color: result.blocked ? "#080" : "#c00",
-                      fontWeight: "bold",
-                    }}
+                    className={`font-bold ${result.blocked ? "text-[#080]" : "text-[#c00]"}`}
                   >
                     {result.blocked ? "ブロック済み" : "ブロックなし"}
                   </span>
@@ -115,10 +112,10 @@ function RedirectTest({
               </tr>
               {result.reason && (
                 <tr>
-                  <td style={{ padding: "4px 8px", border: "1px solid #ddd", fontWeight: "bold" }}>
+                  <td className="p-1 px-2 border border-[#ddd] font-bold">
                     理由
                   </td>
-                  <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>
+                  <td className="p-1 px-2 border border-[#ddd]">
                     {result.reason}
                   </td>
                 </tr>
@@ -127,17 +124,17 @@ function RedirectTest({
           </table>
 
           {/* 実際のリダイレクトリンク */}
-          <div style={{ marginTop: 8, fontSize: 12, color: "#888" }}>
+          <div className="mt-2 text-xs text-[#888]">
             実際のリダイレクトURL:
             <a
               href={`${BASE}/${mode}/redirect?url=${encodeURIComponent(result.input)}`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ marginLeft: 4, color: mode === "vulnerable" ? "#c00" : "#080" }}
+              className={`ml-1 ${mode === "vulnerable" ? "text-[#c00]" : "text-[#080]"}`}
             >
               {`${BASE}/${mode}/redirect?url=${result.input}`}
             </a>
-            <span style={{ marginLeft: 8, color: "#888" }}>(新しいタブで開きます)</span>
+            <span className="ml-2 text-[#888]">(新しいタブで開きます)</span>
           </div>
         </div>
       )}
@@ -171,8 +168,8 @@ export function OpenRedirect() {
       subtitle="オープンリダイレクト — 信頼されたURLからフィッシングサイトへ誘導"
       description="リダイレクト先URLの検証不備を悪用して、正規サイトのURLからユーザーを外部のフィッシングサイトへ誘導する脆弱性です。"
     >
-      <h3 style={{ marginTop: 24 }}>リダイレクト検証テスト</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">リダイレクト検証テスト</h3>
+      <p className="text-sm text-[#666]">
         リダイレクト先URLを指定して、脆弱版と安全版でリダイレクトの挙動を比較します。
         外部URLが指定された場合に、サーバーがそのままリダイレクトするか、ブロックするかを確認してください。
       </p>
@@ -187,13 +184,13 @@ export function OpenRedirect() {
       />
 
       <CheckpointBox variant="warning" title="攻撃シナリオ">
-        <p style={{ fontSize: 13, color: "#666" }}>
+        <p className="text-[13px] text-[#666]">
           攻撃者は以下のようなURLを作成し、被害者にメールやSNSで送信します:
         </p>
-        <pre style={{ fontSize: 12, background: "#fff", padding: 8, borderRadius: 4, overflow: "auto" }}>
+        <pre className="text-xs bg-white p-2 rounded overflow-auto">
           {`https://trusted-site.com/redirect?url=https://evil-site.com/login`}
         </pre>
-        <p style={{ fontSize: 13, color: "#666" }}>
+        <p className="text-[13px] text-[#666]">
           URLの冒頭が正規のドメインであるため、被害者は不審に思わずクリックし、
           フィッシングサイトのログインフォームに認証情報を入力してしまいます。
         </p>

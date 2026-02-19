@@ -68,53 +68,35 @@ export function Home() {
         <strong>安全バージョン</strong>の両方を試せます。
       </p>
 
-      <div style={{ marginTop: 24 }}>
+      <div className="mt-6">
         {STEPS.map((step) => {
           const isAvailable = !step.comingSoon;
           return (
             <div
               key={step.id}
-              style={{
-                border: `1px solid ${isAvailable ? "#333" : "#ddd"}`,
-                borderRadius: 4,
-                padding: 16,
-                marginBottom: 12,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                opacity: isAvailable ? 1 : 0.5,
-              }}
+              className={`border rounded p-4 mb-3 flex justify-between items-center ${isAvailable ? "border-[#333]" : "border-[#ddd] opacity-50"}`}
             >
               <div>
-                <h3 style={{ margin: "0 0 4px 0" }}>
+                <h3 className="m-0 mb-1">
                   {isAvailable ? (
-                    <Link to={step.path} style={{ textDecoration: "none" }}>
+                    <Link to={step.path} className="no-underline">
                       {step.name}
                     </Link>
                   ) : (
                     step.name
                   )}
                 </h3>
-                <p style={{ margin: 0, color: "#666", fontSize: 14 }}>{step.description}</p>
+                <p className="m-0 text-[#666] text-sm">{step.description}</p>
               </div>
-              <div style={{ textAlign: "right", minWidth: 100 }}>
-                <span style={{ fontSize: 12, color: "#888" }}>
+              <div className="text-right min-w-[100px]">
+                <span className="text-xs text-[#888]">
                   {step.labCount > 0 ? `${step.labCount} labs` : "coming soon"}
                 </span>
                 <br />
                 {isAvailable && (
                   <Link
                     to={step.path}
-                    style={{
-                      display: "inline-block",
-                      marginTop: 4,
-                      padding: "4px 12px",
-                      background: "#333",
-                      color: "#fff",
-                      borderRadius: 4,
-                      textDecoration: "none",
-                      fontSize: 13,
-                    }}
+                    className="inline-block mt-1 px-3 py-1 bg-[#333] text-white rounded no-underline text-[13px]"
                   >
                     Start
                   </Link>
@@ -125,10 +107,10 @@ export function Home() {
         })}
       </div>
 
-      <h3 style={{ marginTop: 32 }}>Server Status</h3>
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      <h3 className="mt-8">Server Status</h3>
+      {error && <p className="text-red-600">Error: {error}</p>}
       {health ? (
-        <pre style={{ background: "#f5f5f5", padding: 12, borderRadius: 4 }}>
+        <pre className="bg-[#f5f5f5] p-3 rounded">
           {JSON.stringify(health, null, 2)}
         </pre>
       ) : (

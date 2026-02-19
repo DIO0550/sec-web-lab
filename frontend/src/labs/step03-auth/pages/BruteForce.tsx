@@ -44,23 +44,23 @@ function LoginForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>ユーザー名:</label>
+      <div className="mb-3">
+        <div className="mb-1">
+          <label className="text-[13px] block">ユーザー名:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>パスワード:</label>
+        <div className="mb-1">
+          <label className="text-[13px] block">パスワード:</label>
           <input
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
@@ -69,19 +69,13 @@ function LoginForm({
       </div>
 
       {result && (
-        <div style={{
-          marginTop: 8,
-          padding: 12,
-          borderRadius: 4,
-          background: result.success ? "#e8f5e9" : result.locked ? "#fff3e0" : "#ffebee",
-          border: `1px solid ${result.success ? "#4caf50" : result.locked ? "#ff9800" : "#f44336"}`,
-        }}>
-          <div style={{ fontWeight: "bold", color: result.success ? "#2e7d32" : result.locked ? "#e65100" : "#c62828" }}>
+        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : result.locked ? "bg-[#fff3e0] border border-[#ff9800]" : "bg-[#ffebee] border border-[#f44336]"}`}>
+          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : result.locked ? "text-[#e65100]" : "text-[#c62828]"}`}>
             {result.success ? "ログイン成功" : result.locked ? "アカウントロック" : "ログイン失敗"}
           </div>
-          <div style={{ fontSize: 13 }}>{result.message}</div>
+          <div className="text-[13px]">{result.message}</div>
           {result.attemptsUsed !== undefined && (
-            <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>
+            <div className="text-xs text-[#888] mt-1">
               試行回数: {result.attemptsUsed} / {result.maxAttempts}
             </div>
           )}
@@ -107,50 +101,48 @@ function DictionaryAttack({
 }) {
   return (
     <div>
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="flex gap-2">
         <FetchButton onClick={() => onStart(mode)} disabled={isRunning}>
           辞書攻撃を開始
         </FetchButton>
         {mode === "secure" && onReset && (
           <button
             onClick={onReset}
-            style={{ fontSize: 12, padding: "4px 8px", cursor: "pointer" }}
+            className="text-xs p-1 px-2 cursor-pointer"
           >
             リセット
           </button>
         )}
       </div>
 
-      <div style={{ fontSize: 11, color: "#888", marginTop: 4 }}>
+      <div className="text-[11px] text-[#888] mt-1">
         辞書: [{PASSWORD_DICTIONARY.join(", ")}]
       </div>
 
       {logs.length > 0 && (
-        <div style={{ marginTop: 12, maxHeight: 300, overflow: "auto" }}>
-          <table style={{ width: "100%", fontSize: 11, borderCollapse: "collapse" }}>
+        <div className="mt-3 max-h-[300px] overflow-auto">
+          <table className="w-full text-[11px] border-collapse">
             <thead>
-              <tr style={{ background: "#f5f5f5" }}>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>#</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>パスワード</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>結果</th>
+              <tr className="bg-[#f5f5f5]">
+                <th className="p-1 border border-[#ddd] text-left">#</th>
+                <th className="p-1 border border-[#ddd] text-left">パスワード</th>
+                <th className="p-1 border border-[#ddd] text-left">結果</th>
               </tr>
             </thead>
             <tbody>
               {logs.map((log, i) => (
-                <tr key={i} style={{
-                  background: log.result.success ? "#e8f5e9" : log.result.locked ? "#fff3e0" : "transparent",
-                }}>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{i + 1}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd", fontFamily: "monospace" }}>
+                <tr key={i} className={log.result.success ? "bg-[#e8f5e9]" : log.result.locked ? "bg-[#fff3e0]" : ""}>
+                  <td className="p-1 border border-[#ddd]">{i + 1}</td>
+                  <td className="p-1 border border-[#ddd] font-mono">
                     {log.password}
                   </td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>
+                  <td className="p-1 border border-[#ddd]">
                     {log.result.success ? (
-                      <span style={{ color: "#c00", fontWeight: "bold" }}>突破成功!</span>
+                      <span className="text-[#c00] font-bold">突破成功!</span>
                     ) : log.result.locked ? (
-                      <span style={{ color: "#e65100" }}>ブロック (429)</span>
+                      <span className="text-[#e65100]">ブロック (429)</span>
                     ) : (
-                      <span style={{ color: "#888" }}>失敗</span>
+                      <span className="text-[#888]">失敗</span>
                     )}
                   </td>
                 </tr>
@@ -239,8 +231,8 @@ export function BruteForce() {
       subtitle="パスワード総当たりでログインを突破する"
       description="ログイン試行に回数制限がないアプリケーションに対して、パスワード辞書を使って総当たりで正しいパスワードを見つけ出す攻撃です。"
     >
-      <h3 style={{ marginTop: 24 }}>Lab 1: 手動ログイン試行</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: 手動ログイン試行</h3>
+      <p className="text-sm text-[#666]">
         間違ったパスワードを何度か入力してみてください。
         脆弱版は何度でも試行できますが、安全版は5回で制限されます。
       </p>
@@ -253,8 +245,8 @@ export function BruteForce() {
         }
       />
 
-      <h3 style={{ marginTop: 32 }}>Lab 2: 辞書攻撃シミュレーション</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-8">Lab 2: 辞書攻撃シミュレーション</h3>
+      <p className="text-sm text-[#666]">
         パスワード辞書を使った自動攻撃をシミュレーションします。
         脆弱版では <code>admin123</code> が見つかるまで全候補を試行でき、
         安全版ではレート制限によりブロックされます。

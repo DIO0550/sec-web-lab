@@ -37,15 +37,15 @@ function PingForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <label style={{ fontSize: 13, display: "block" }}>ホスト名 / IPアドレス:</label>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-3">
+        <label className="text-[13px] block">ホスト名 / IPアドレス:</label>
+        <div className="flex gap-2">
           <input
             type="text"
             value={host}
             onChange={(e) => setHost(e.target.value)}
             placeholder="127.0.0.1"
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, flex: 1 }}
+            className="py-1 px-2 border border-[#ccc] rounded flex-1"
           />
           <FetchButton onClick={() => onPing(mode, host)} disabled={isLoading}>
             Ping
@@ -53,14 +53,14 @@ function PingForm({
         </div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
               onClick={() => setHost(p.host)}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -69,14 +69,9 @@ function PingForm({
       </div>
 
       {result && (
-        <div style={{ marginTop: 8 }}>
+        <div className="mt-2">
           <div
-            style={{
-              fontSize: 13,
-              fontWeight: "bold",
-              color: result.success ? "#080" : "#c00",
-              marginBottom: 4,
-            }}
+            className={`text-[13px] font-bold mb-1 ${result.success ? "text-[#080]" : "text-[#c00]"}`}
           >
             {result.success ? "実行成功" : "実行失敗"}
             {result.message && ` — ${result.message}`}
@@ -84,16 +79,7 @@ function PingForm({
 
           {result.output && (
             <pre
-              style={{
-                background: "#1a1a2e",
-                color: mode === "vulnerable" ? "#e94560" : "#4ecdc4",
-                padding: 12,
-                borderRadius: 4,
-                overflow: "auto",
-                fontSize: 12,
-                maxHeight: 300,
-                whiteSpace: "pre-wrap",
-              }}
+              className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[300px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
             >
               {result.output}
             </pre>
@@ -101,25 +87,16 @@ function PingForm({
 
           {result.stderr && (
             <pre
-              style={{
-                background: "#2e1a1a",
-                color: "#ff6b6b",
-                padding: 8,
-                borderRadius: 4,
-                overflow: "auto",
-                fontSize: 11,
-                maxHeight: 150,
-                marginTop: 4,
-              }}
+              className="bg-error-bg text-error-text p-2 rounded overflow-auto text-[11px] max-h-[150px] mt-1"
             >
               stderr: {result.stderr}
             </pre>
           )}
 
           {result._debug && (
-            <details style={{ marginTop: 8 }}>
-              <summary style={{ fontSize: 12, color: "#888", cursor: "pointer" }}>実行されたコマンド</summary>
-              <pre style={{ fontSize: 11, background: "#1a1a2e", color: "#e94560", padding: 8, borderRadius: 4 }}>
+            <details className="mt-2">
+              <summary className="text-xs text-[#888] cursor-pointer">実行されたコマンド</summary>
+              <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
                 {result._debug.command}
               </pre>
             </details>
@@ -162,8 +139,8 @@ export function CommandInjection() {
       subtitle="OSコマンドインジェクション — サーバー上で任意のコマンドを実行"
       description="ping ツールの入力欄にシェルのメタ文字を注入し、サーバー上で意図しないOSコマンドを実行させる脆弱性です。"
     >
-      <h3 style={{ marginTop: 24 }}>ネットワーク診断ツール (ping)</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">ネットワーク診断ツール (ping)</h3>
+      <p className="text-sm text-[#666]">
         ホスト名に <code>127.0.0.1; cat /etc/passwd</code> を入力して、
         <code>;</code> でコマンドを連結することでサーバー上のファイルを読み取れることを確認してください。
       </p>
@@ -178,39 +155,39 @@ export function CommandInjection() {
       />
 
       <CheckpointBox variant="warning" title="シェルメタ文字の一覧">
-        <table style={{ fontSize: 13, borderCollapse: "collapse", width: "100%" }}>
+        <table className="text-[13px] border-collapse w-full">
           <thead>
-            <tr style={{ background: "#f5f5f5" }}>
-              <th style={{ padding: "4px 8px", border: "1px solid #ddd", textAlign: "left" }}>文字</th>
-              <th style={{ padding: "4px 8px", border: "1px solid #ddd", textAlign: "left" }}>意味</th>
-              <th style={{ padding: "4px 8px", border: "1px solid #ddd", textAlign: "left" }}>例</th>
+            <tr className="bg-[#f5f5f5]">
+              <th className="p-1 px-2 border border-[#ddd] text-left">文字</th>
+              <th className="p-1 px-2 border border-[#ddd] text-left">意味</th>
+              <th className="p-1 px-2 border border-[#ddd] text-left">例</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>;</code></td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>コマンド区切り</td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>ping 127.0.0.1; cat /etc/passwd</code></td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>;</code></td>
+              <td className="p-1 px-2 border border-[#ddd]">コマンド区切り</td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>ping 127.0.0.1; cat /etc/passwd</code></td>
             </tr>
             <tr>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>&&</code></td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>前のコマンドが成功したら実行</td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>ping 127.0.0.1 && whoami</code></td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>&&</code></td>
+              <td className="p-1 px-2 border border-[#ddd]">前のコマンドが成功したら実行</td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>ping 127.0.0.1 && whoami</code></td>
             </tr>
             <tr>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>||</code></td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>前のコマンドが失敗したら実行</td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>ping invalid || whoami</code></td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>||</code></td>
+              <td className="p-1 px-2 border border-[#ddd]">前のコマンドが失敗したら実行</td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>ping invalid || whoami</code></td>
             </tr>
             <tr>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>|</code></td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>パイプ</td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>ping 127.0.0.1 | head -1</code></td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>|</code></td>
+              <td className="p-1 px-2 border border-[#ddd]">パイプ</td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>ping 127.0.0.1 | head -1</code></td>
             </tr>
             <tr>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>$()</code></td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}>コマンド置換</td>
-              <td style={{ padding: "4px 8px", border: "1px solid #ddd" }}><code>ping $(whoami)</code></td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>$()</code></td>
+              <td className="p-1 px-2 border border-[#ddd]">コマンド置換</td>
+              <td className="p-1 px-2 border border-[#ddd]"><code>ping $(whoami)</code></td>
             </tr>
           </tbody>
         </table>

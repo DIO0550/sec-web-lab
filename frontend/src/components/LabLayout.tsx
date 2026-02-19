@@ -16,7 +16,7 @@ export function LabLayout({ title, subtitle, description, children }: Props) {
     <div>
       <h2>{title}</h2>
       <p>{subtitle}</p>
-      <p style={{ color: "#666" }}>{description}</p>
+      <p className="text-[#666]">{description}</p>
       {children}
     </div>
   );

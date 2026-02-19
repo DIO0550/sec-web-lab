@@ -49,18 +49,18 @@ export function DirectoryListing() {
     return (
       <>
         <h4>1. ディレクトリ一覧の取得</h4>
-        <p style={{ fontSize: 13 }}><code>GET {BASE}/{mode}/static/</code></p>
+        <p className="text-[13px]"><code>GET {BASE}/{mode}/static/</code></p>
         <FetchButton onClick={() => handleFetchListing(mode)} disabled={isLoading}>
           ディレクトリ一覧を取得
         </FetchButton>
         {listing && (
-          <div style={{ marginTop: 8 }}>
-            <div style={{ fontSize: 13 }}>
-              Status: <span style={{ color: listing.status >= 400 ? "#c00" : "#080", fontWeight: "bold" }}>{listing.status}</span>
+          <div className="mt-2">
+            <div className="text-[13px]">
+              Status: <span className={`${listing.status >= 400 ? "text-[#c00]" : "text-[#080]"} font-bold`}>{listing.status}</span>
             </div>
             {isHtml ? (
               <div
-                style={{ background: "#fff", border: "1px solid #ccc", padding: 12, borderRadius: 4, marginTop: 4, maxHeight: 300, overflow: "auto" }}
+                className="bg-white border border-[#ccc] p-3 rounded mt-1 max-h-[300px] overflow-auto"
                 dangerouslySetInnerHTML={{ __html: listing.body }}
               />
             ) : (
@@ -69,11 +69,11 @@ export function DirectoryListing() {
           </div>
         )}
 
-        <h4 style={{ marginTop: 16 }}>2. 機密ファイルの取得</h4>
-        <p style={{ fontSize: 13 }}>
+        <h4 className="mt-4">2. 機密ファイルの取得</h4>
+        <p className="text-[13px]">
           {mode === "vulnerable" ? "一覧で見つけたファイルにアクセス:" : "機密ファイルへのアクセスを試行:"}
         </p>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="flex gap-2 flex-wrap">
           {SENSITIVE_FILES.map((f) => (
             <FetchButton key={f} onClick={() => handleFetchFile(mode, f)} disabled={isLoading} size="small">
               {f}
@@ -83,8 +83,8 @@ export function DirectoryListing() {
         <TextViewer result={fileResults[`${mode}-${SENSITIVE_FILES.find((f) => fileResults[`${mode}-${f}`])}`] ?? null} />
         {/* 全ファイル結果を表示 */}
         {SENSITIVE_FILES.filter((f) => fileResults[`${mode}-${f}`]).map((f) => (
-          <div key={f} style={{ marginTop: 8 }}>
-            <code style={{ fontSize: 12 }}>{f}</code>
+          <div key={f} className="mt-2">
+            <code className="text-xs">{f}</code>
             <TextViewer result={fileResults[`${mode}-${f}`] ?? null} />
           </div>
         ))}

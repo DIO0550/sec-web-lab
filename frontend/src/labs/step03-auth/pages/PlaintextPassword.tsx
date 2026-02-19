@@ -45,42 +45,35 @@ function UsersPanel({
       </FetchButton>
 
       {result?.error && (
-        <pre style={{ fontSize: 11, color: "#c00", marginTop: 8 }}>{result.error}</pre>
+        <pre className="text-[11px] text-[#c00] mt-2">{result.error}</pre>
       )}
 
       {result?.users && (
-        <div style={{ marginTop: 12 }}>
-          <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
+        <div className="mt-3">
+          <table className="w-full text-xs border-collapse">
             <thead>
-              <tr style={{ background: "#f5f5f5" }}>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>username</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>password</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>email</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>role</th>
+              <tr className="bg-[#f5f5f5]">
+                <th className="p-1 border border-[#ddd] text-left">username</th>
+                <th className="p-1 border border-[#ddd] text-left">password</th>
+                <th className="p-1 border border-[#ddd] text-left">email</th>
+                <th className="p-1 border border-[#ddd] text-left">role</th>
               </tr>
             </thead>
             <tbody>
               {result.users.map((u) => (
                 <tr key={u.id}>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{u.username}</td>
-                  <td style={{
-                    padding: 4,
-                    border: "1px solid #ddd",
-                    fontFamily: "monospace",
-                    fontSize: 11,
-                    background: mode === "vulnerable" ? "#ffebee" : "#e8f5e9",
-                    wordBreak: "break-all",
-                  }}>
+                  <td className="p-1 border border-[#ddd]">{u.username}</td>
+                  <td className={`p-1 border border-[#ddd] font-mono text-[11px] break-all ${mode === "vulnerable" ? "bg-[#ffebee]" : "bg-[#e8f5e9]"}`}>
                     {u.password}
                   </td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{u.email}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{u.role}</td>
+                  <td className="p-1 border border-[#ddd]">{u.email}</td>
+                  <td className="p-1 border border-[#ddd]">{u.role}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           {result._debug && (
-            <div style={{ marginTop: 8, fontSize: 12, color: "#888", fontStyle: "italic" }}>
+            <div className="mt-2 text-xs text-[#888] italic">
               {result._debug.message}
             </div>
           )}
@@ -112,23 +105,23 @@ function LoginForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>ユーザー名:</label>
+      <div className="mb-3">
+        <div className="mb-1">
+          <label className="text-[13px] block">ユーザー名:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>パスワード:</label>
+        <div className="mb-1">
+          <label className="text-[13px] block">パスワード:</label>
           <input
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
@@ -136,14 +129,14 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>プリセット:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">プリセット:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
               onClick={() => { setUsername(p.username); setPassword(p.password); }}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -152,19 +145,13 @@ function LoginForm({
       </div>
 
       {result && (
-        <div style={{
-          marginTop: 8,
-          padding: 12,
-          borderRadius: 4,
-          background: result.success ? "#e8f5e9" : "#ffebee",
-          border: `1px solid ${result.success ? "#4caf50" : "#f44336"}`,
-        }}>
-          <div style={{ fontWeight: "bold", color: result.success ? "#2e7d32" : "#c62828" }}>
+        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
+          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
             {result.success ? "ログイン成功" : "ログイン失敗"}
           </div>
-          <div style={{ fontSize: 13 }}>{result.message}</div>
+          <div className="text-[13px]">{result.message}</div>
           {result.user && (
-            <pre style={{ fontSize: 12, background: "#f5f5f5", padding: 8, borderRadius: 4, marginTop: 8 }}>
+            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}
@@ -222,8 +209,8 @@ export function PlaintextPassword() {
       subtitle="パスワードを平文で保存する危険性"
       description="パスワードをハッシュ化せず平文でDBに保存していると、データベースが漏洩した瞬間に全ユーザーのパスワードが丸見えになります。"
     >
-      <h3 style={{ marginTop: 24 }}>Lab 1: DB内のパスワード確認</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: DB内のパスワード確認</h3>
+      <p className="text-sm text-[#666]">
         ユーザー一覧を取得して、パスワードの保存形式を比較してください。
         脆弱版では平文、安全版ではbcryptハッシュが表示されます。
       </p>
@@ -236,8 +223,8 @@ export function PlaintextPassword() {
         }
       />
 
-      <h3 style={{ marginTop: 32 }}>Lab 2: パスワードでログイン</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-8">Lab 2: パスワードでログイン</h3>
+      <p className="text-sm text-[#666]">
         上で確認したパスワードを使ってログインしてみてください。
         平文保存の場合、漏洩したパスワードでそのままログインできます。
       </p>

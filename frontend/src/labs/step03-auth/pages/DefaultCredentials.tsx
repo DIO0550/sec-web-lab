@@ -53,23 +53,23 @@ function LoginForm({
 
   return (
     <div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>ユーザー名:</label>
+      <div className="mb-3">
+        <div className="mb-1">
+          <label className="text-[13px] block">ユーザー名:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
-        <div style={{ marginBottom: 4 }}>
-          <label style={{ fontSize: 13, display: "block" }}>パスワード:</label>
+        <div className="mb-1">
+          <label className="text-[13px] block">パスワード:</label>
           <input
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%" }}
+            className="py-1 px-2 border border-[#ccc] rounded w-full"
           />
         </div>
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
@@ -77,14 +77,14 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 12, color: "#888" }}>よくあるデフォルト認証情報:</span>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 4 }}>
+      <div className="mb-3">
+        <span className="text-xs text-[#888]">よくあるデフォルト認証情報:</span>
+        <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
             <button
               key={p.label}
               onClick={() => { setUsername(p.username); setPassword(p.password); }}
-              style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer" }}
+              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
             </button>
@@ -93,27 +93,18 @@ function LoginForm({
       </div>
 
       {result && (
-        <div style={{
-          marginTop: 8,
-          padding: 12,
-          borderRadius: 4,
-          background: result.success ? "#e8f5e9" : result.requirePasswordChange ? "#fff3e0" : "#ffebee",
-          border: `1px solid ${result.success ? "#4caf50" : result.requirePasswordChange ? "#ff9800" : "#f44336"}`,
-        }}>
-          <div style={{
-            fontWeight: "bold",
-            color: result.success ? "#2e7d32" : result.requirePasswordChange ? "#e65100" : "#c62828",
-          }}>
+        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : result.requirePasswordChange ? "bg-[#fff3e0] border border-[#ff9800]" : "bg-[#ffebee] border border-[#f44336]"}`}>
+          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : result.requirePasswordChange ? "text-[#e65100]" : "text-[#c62828]"}`}>
             {result.success ? "ログイン成功" : result.requirePasswordChange ? "パスワード変更が必要" : "ログイン失敗"}
           </div>
-          <div style={{ fontSize: 13 }}>{result.message}</div>
+          <div className="text-[13px]">{result.message}</div>
           {result.user && (
-            <pre style={{ fontSize: 12, background: "#f5f5f5", padding: 8, borderRadius: 4, marginTop: 8 }}>
+            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}
           {result._debug && (
-            <div style={{ marginTop: 8, fontSize: 12, color: "#888", fontStyle: "italic" }}>
+            <div className="mt-2 text-xs text-[#888] italic">
               {result._debug.message}
             </div>
           )}
@@ -138,33 +129,33 @@ function ChangePasswordForm({
   const [newPassword, setNewPassword] = useState("");
 
   return (
-    <div style={{ marginTop: 12, padding: 12, border: "1px solid #e0e0e0", borderRadius: 4, background: "#fafafa" }}>
-      <h4 style={{ margin: "0 0 8px 0", fontSize: 14 }}>パスワード変更</h4>
-      <div style={{ marginBottom: 4 }}>
-        <label style={{ fontSize: 12, display: "block" }}>ユーザー名:</label>
+    <div className="mt-3 p-3 border border-[#e0e0e0] rounded bg-[#fafafa]">
+      <h4 className="m-0 mb-2 text-sm">パスワード変更</h4>
+      <div className="mb-1">
+        <label className="text-xs block">ユーザー名:</label>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%", fontSize: 12 }}
+          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
         />
       </div>
-      <div style={{ marginBottom: 4 }}>
-        <label style={{ fontSize: 12, display: "block" }}>現在のパスワード:</label>
+      <div className="mb-1">
+        <label className="text-xs block">現在のパスワード:</label>
         <input
           type="text"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%", fontSize: 12 }}
+          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
         />
       </div>
-      <div style={{ marginBottom: 4 }}>
-        <label style={{ fontSize: 12, display: "block" }}>新しいパスワード:</label>
+      <div className="mb-1">
+        <label className="text-xs block">新しいパスワード:</label>
         <input
           type="text"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, width: "100%", fontSize: 12 }}
+          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
         />
       </div>
       <FetchButton
@@ -176,13 +167,7 @@ function ChangePasswordForm({
       </FetchButton>
 
       {changeResult && (
-        <div style={{
-          marginTop: 8,
-          padding: 8,
-          borderRadius: 4,
-          background: changeResult.success ? "#e8f5e9" : "#ffebee",
-          fontSize: 12,
-        }}>
+        <div className={`mt-2 p-2 rounded text-xs ${changeResult.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
           {changeResult.message}
         </div>
       )}
@@ -261,29 +246,29 @@ export function DefaultCredentials() {
       subtitle="初期パスワードのまま運用されたシステムに侵入する"
       description="admin/admin123 等のデフォルト認証情報が変更されないまま運用されていると、攻撃者が公開情報からパスワードを入手して即座に管理者権限を取得できます。"
     >
-      <h3 style={{ marginTop: 24 }}>Lab 1: デフォルト認証情報の確認</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 1: デフォルト認証情報の確認</h3>
+      <p className="text-sm text-[#666]">
         まず、攻撃者が入手可能なデフォルト認証情報のリストを確認してください。
       </p>
-      <div style={{ marginBottom: 16 }}>
+      <div className="mb-4">
         <FetchButton onClick={fetchDefaults} disabled={loading}>
           デフォルト認証情報を表示
         </FetchButton>
         {defaults && (
-          <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", marginTop: 12 }}>
+          <table className="w-full text-xs border-collapse mt-3">
             <thead>
-              <tr style={{ background: "#f5f5f5" }}>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>username</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>password</th>
-                <th style={{ padding: 4, border: "1px solid #ddd", textAlign: "left" }}>情報源</th>
+              <tr className="bg-[#f5f5f5]">
+                <th className="p-1 border border-[#ddd] text-left">username</th>
+                <th className="p-1 border border-[#ddd] text-left">password</th>
+                <th className="p-1 border border-[#ddd] text-left">情報源</th>
               </tr>
             </thead>
             <tbody>
               {defaults.credentials.map((cred, i) => (
                 <tr key={i}>
-                  <td style={{ padding: 4, border: "1px solid #ddd" }}>{cred.username}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd", fontFamily: "monospace" }}>{cred.password}</td>
-                  <td style={{ padding: 4, border: "1px solid #ddd", fontSize: 11 }}>{cred.source}</td>
+                  <td className="p-1 border border-[#ddd]">{cred.username}</td>
+                  <td className="p-1 border border-[#ddd] font-mono">{cred.password}</td>
+                  <td className="p-1 border border-[#ddd] text-[11px]">{cred.source}</td>
                 </tr>
               ))}
             </tbody>
@@ -291,8 +276,8 @@ export function DefaultCredentials() {
         )}
       </div>
 
-      <h3 style={{ marginTop: 24 }}>Lab 2: デフォルトパスワードでログイン</h3>
-      <p style={{ fontSize: 14, color: "#666" }}>
+      <h3 className="mt-6">Lab 2: デフォルトパスワードでログイン</h3>
+      <p className="text-sm text-[#666]">
         デフォルトパスワード <code>admin123</code> でログインを試みてください。
         脆弱版ではそのままログインでき、安全版ではパスワード変更を求められます。
       </p>
@@ -310,10 +295,10 @@ export function DefaultCredentials() {
                 onChangePassword={handleChangePassword}
               />
             )}
-            <div style={{ marginTop: 8 }}>
+            <div className="mt-2">
               <button
                 onClick={resetSecure}
-                style={{ fontSize: 11, padding: "2px 8px", cursor: "pointer", color: "#888" }}
+                className="text-[11px] py-0.5 px-2 cursor-pointer text-[#888]"
               >
                 デモ状態をリセット
               </button>

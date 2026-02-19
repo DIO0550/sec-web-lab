@@ -41,12 +41,12 @@ const SECURITY_HEADERS = [
 function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
   if (!result) return null;
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, marginTop: 8 }}>
+    <table className="w-full border-collapse text-[13px] mt-2">
       <thead>
-        <tr style={{ background: "#333", color: "#fff" }}>
-          <th style={{ padding: "6px 8px", textAlign: "left" }}>ヘッダー</th>
-          <th style={{ padding: "6px 8px", textAlign: "left" }}>値</th>
-          <th style={{ padding: "6px 8px", textAlign: "center", width: 60 }}>状態</th>
+        <tr className="bg-[#333] text-white">
+          <th className="py-1.5 px-2 text-left">ヘッダー</th>
+          <th className="py-1.5 px-2 text-left">値</th>
+          <th className="py-1.5 px-2 text-center w-[60px]">状態</th>
         </tr>
       </thead>
       <tbody>
@@ -54,24 +54,24 @@ function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
           const value = result.headers[header.name.toLowerCase()];
           const isPresent = !!value;
           return (
-            <tr key={header.name} style={{ borderBottom: "1px solid #ddd" }}>
-              <td style={{ padding: "6px 8px" }}>
+            <tr key={header.name} className="border-b border-[#ddd]">
+              <td className="py-1.5 px-2">
                 <code>{header.name}</code>
                 <br />
-                <span style={{ fontSize: 11, color: "#888" }}>{header.description}</span>
+                <span className="text-[11px] text-[#888]">{header.description}</span>
               </td>
-              <td style={{ padding: "6px 8px" }}>
+              <td className="py-1.5 px-2">
                 {isPresent ? (
-                  <code style={{ color: "#080" }}>{value}</code>
+                  <code className="text-[#080]">{value}</code>
                 ) : (
-                  <span style={{ color: "#c00", fontStyle: "italic" }}>未設定</span>
+                  <span className="text-[#c00] italic">未設定</span>
                 )}
               </td>
-              <td style={{ padding: "6px 8px", textAlign: "center" }}>
+              <td className="py-1.5 px-2 text-center">
                 {isPresent ? (
-                  <span style={{ color: "#080", fontSize: 18 }}>OK</span>
+                  <span className="text-[#080] text-[18px]">OK</span>
                 ) : (
-                  <span style={{ color: "#c00", fontSize: 18 }}>NG</span>
+                  <span className="text-[#c00] text-[18px]">NG</span>
                 )}
               </td>
             </tr>
@@ -125,18 +125,18 @@ export function HeaderExposure() {
 
       {/* セキュリティヘッダー解説 */}
       <CheckpointBox title="各ヘッダーの役割" variant="warning">
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+        <table className="w-full border-collapse text-[13px]">
           <thead>
-            <tr style={{ background: "#f5f5f5" }}>
-              <th style={{ padding: "6px 8px", textAlign: "left" }}>ヘッダー</th>
-              <th style={{ padding: "6px 8px", textAlign: "left" }}>欠如した場合のリスク</th>
+            <tr className="bg-[#f5f5f5]">
+              <th className="py-1.5 px-2 text-left">ヘッダー</th>
+              <th className="py-1.5 px-2 text-left">欠如した場合のリスク</th>
             </tr>
           </thead>
           <tbody>
             {SECURITY_HEADERS.map((header) => (
-              <tr key={header.name} style={{ borderBottom: "1px solid #ddd" }}>
-                <td style={{ padding: "6px 8px" }}><code>{header.name}</code></td>
-                <td style={{ padding: "6px 8px" }}>{header.attack}</td>
+              <tr key={header.name} className="border-b border-[#ddd]">
+                <td className="py-1.5 px-2"><code>{header.name}</code></td>
+                <td className="py-1.5 px-2">{header.attack}</td>
               </tr>
             ))}
           </tbody>
