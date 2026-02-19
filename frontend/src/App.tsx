@@ -24,6 +24,13 @@ import {
   WeakPasswordPolicy,
 } from "./labs/step03-auth";
 import {
+  Step04Index,
+  CookieManipulation,
+  SessionFixation,
+  SessionHijacking,
+  Csrf,
+} from "./labs/step04-session";
+import { 
   Step05Index,
   Idor,
   PathTraversal,
@@ -50,6 +57,8 @@ export function App() {
             <Link to="/step02">Step02: Injection</Link>
             <span className="text-[#ccc]">|</span>
             <Link to="/step03">Step03: Auth</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step04">Step04: Session</Link>
             <span className="text-[#ccc]">|</span>
             <Link to="/step05">Step05: Access Control</Link>
           </nav>
@@ -83,6 +92,12 @@ export function App() {
             <Route path="/step03/default-credentials" element={<DefaultCredentials />} />
             <Route path="/step03/weak-password-policy" element={<WeakPasswordPolicy />} />
 
+            {/* Step04: Session（セッション管理） */}
+            <Route path="/step04" element={<Step04Index />} />
+            <Route path="/step04/cookie-manipulation" element={<CookieManipulation />} />
+            <Route path="/step04/session-fixation" element={<SessionFixation />} />
+            <Route path="/step04/session-hijacking" element={<SessionHijacking />} />
+            <Route path="/step04/csrf" element={<Csrf />} />
             {/* Step05: Access Control（アクセス制御） */}
             <Route path="/step05" element={<Step05Index />} />
             <Route path="/step05/idor" element={<Idor />} />

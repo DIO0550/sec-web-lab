@@ -23,6 +23,11 @@ import bruteForce from "./labs/step03-auth/brute-force.js";
 import defaultCredentials from "./labs/step03-auth/default-credentials.js";
 import weakPasswordPolicy from "./labs/step03-auth/weak-password-policy.js";
 
+// Step04: Session（セッション）ラボ
+import cookieManipulation from "./labs/step04-session/cookie-manipulation.js";
+import sessionFixation from "./labs/step04-session/session-fixation.js";
+import sessionHijacking from "./labs/step04-session/session-hijacking.js";
+import csrf from "./labs/step04-session/csrf.js";
 // Step05: Access Control（アクセス制御）ラボ
 import idor from "./labs/step05-access-control/idor.js";
 import pathTraversal from "./labs/step05-access-control/path-traversal.js";
@@ -81,6 +86,12 @@ app.route("/api/labs/default-credentials", defaultCredentials);
 app.route("/api/labs/weak-password-policy", weakPasswordPolicy);
 
 // ========================================
+// Step04: Session（セッション）ラボ
+// ========================================
+app.route("/api/labs/cookie-manipulation", cookieManipulation);
+app.route("/api/labs/session-fixation", sessionFixation);
+app.route("/api/labs/session-hijacking", sessionHijacking);
+app.route("/api/labs/csrf", csrf);
 // Step05: Access Control（アクセス制御）ラボ
 // ========================================
 app.route("/api/labs/idor", idor);
@@ -191,6 +202,32 @@ app.get("/api/labs", (c) => {
         path: "/labs/weak-password-policy",
       },
       {
+        id: "cookie-manipulation",
+        name: "Cookie属性の不備",
+        category: "step04-session",
+        difficulty: 1,
+        path: "/labs/cookie-manipulation",
+      },
+      {
+        id: "session-fixation",
+        name: "セッション固定攻撃",
+        category: "step04-session",
+        difficulty: 2,
+        path: "/labs/session-fixation",
+      },
+      {
+        id: "session-hijacking",
+        name: "セッションハイジャック",
+        category: "step04-session",
+        difficulty: 2,
+        path: "/labs/session-hijacking",
+      },
+      {
+        id: "csrf",
+        name: "クロスサイトリクエストフォージェリ (CSRF)",
+        category: "step04-session",
+        difficulty: 2,
+        path: "/labs/csrf",
         id: "idor",
         name: "IDOR (安全でない直接オブジェクト参照)",
         category: "step05-access-control",
