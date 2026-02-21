@@ -30,13 +30,55 @@ import {
   SessionHijacking,
   Csrf,
 } from "./labs/step04-session";
-import { 
+import {
   Step05Index,
   Idor,
   PathTraversal,
   PrivilegeEscalation,
   MassAssignment,
 } from "./labs/step05-access-control";
+import {
+  Step06Index,
+  Ssrf,
+  Xxe,
+  FileUpload,
+  CrlfInjection,
+  CorsMisconfiguration,
+  EvalInjection,
+} from "./labs/step06-server-side";
+import {
+  Step07Index,
+  RateLimiting,
+  Clickjacking,
+  SensitiveDataHttp,
+  HttpMethods,
+  PasswordReset,
+  BusinessLogic,
+  UnsignedData,
+  SecurityHeaders,
+  CacheControl,
+  WebStorageAbuse,
+} from "./labs/step07-design";
+import {
+  Step08Index,
+  JwtVulnerabilities,
+  Ssti,
+  RaceCondition,
+  Deserialization,
+  PrototypePollution,
+  Redos,
+  Postmessage,
+} from "./labs/step08-advanced";
+import {
+  Step09Index,
+  ErrorMessages,
+  StackTrace,
+  Logging,
+  LogInjection,
+  FailOpen,
+  Csp,
+  InputValidation,
+} from "./labs/step09-defense";
 
 export function App() {
   return (
@@ -52,15 +94,23 @@ export function App() {
           <nav className="flex gap-4 flex-wrap">
             <Link to="/">Home</Link>
             <span className="text-[#ccc]">|</span>
-            <Link to="/step01">Step01: Recon</Link>
+            <Link to="/step01">Step01</Link>
             <span className="text-[#ccc]">|</span>
-            <Link to="/step02">Step02: Injection</Link>
+            <Link to="/step02">Step02</Link>
             <span className="text-[#ccc]">|</span>
-            <Link to="/step03">Step03: Auth</Link>
+            <Link to="/step03">Step03</Link>
             <span className="text-[#ccc]">|</span>
-            <Link to="/step04">Step04: Session</Link>
+            <Link to="/step04">Step04</Link>
             <span className="text-[#ccc]">|</span>
-            <Link to="/step05">Step05: Access Control</Link>
+            <Link to="/step05">Step05</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step06">Step06</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step07">Step07</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step08">Step08</Link>
+            <span className="text-[#ccc]">|</span>
+            <Link to="/step09">Step09</Link>
           </nav>
           <hr />
         </header>
@@ -98,12 +148,55 @@ export function App() {
             <Route path="/step04/session-fixation" element={<SessionFixation />} />
             <Route path="/step04/session-hijacking" element={<SessionHijacking />} />
             <Route path="/step04/csrf" element={<Csrf />} />
+
             {/* Step05: Access Control（アクセス制御） */}
             <Route path="/step05" element={<Step05Index />} />
             <Route path="/step05/idor" element={<Idor />} />
             <Route path="/step05/path-traversal" element={<PathTraversal />} />
             <Route path="/step05/privilege-escalation" element={<PrivilegeEscalation />} />
             <Route path="/step05/mass-assignment" element={<MassAssignment />} />
+
+            {/* Step06: Server-Side Attacks（サーバーサイド攻撃） */}
+            <Route path="/step06" element={<Step06Index />} />
+            <Route path="/step06/ssrf" element={<Ssrf />} />
+            <Route path="/step06/xxe" element={<Xxe />} />
+            <Route path="/step06/file-upload" element={<FileUpload />} />
+            <Route path="/step06/crlf-injection" element={<CrlfInjection />} />
+            <Route path="/step06/cors-misconfiguration" element={<CorsMisconfiguration />} />
+            <Route path="/step06/eval-injection" element={<EvalInjection />} />
+
+            {/* Step07: Design & Logic（設計とロジックの問題） */}
+            <Route path="/step07" element={<Step07Index />} />
+            <Route path="/step07/rate-limiting" element={<RateLimiting />} />
+            <Route path="/step07/clickjacking" element={<Clickjacking />} />
+            <Route path="/step07/sensitive-data-http" element={<SensitiveDataHttp />} />
+            <Route path="/step07/http-methods" element={<HttpMethods />} />
+            <Route path="/step07/password-reset" element={<PasswordReset />} />
+            <Route path="/step07/business-logic" element={<BusinessLogic />} />
+            <Route path="/step07/unsigned-data" element={<UnsignedData />} />
+            <Route path="/step07/security-headers" element={<SecurityHeaders />} />
+            <Route path="/step07/cache-control" element={<CacheControl />} />
+            <Route path="/step07/web-storage-abuse" element={<WebStorageAbuse />} />
+
+            {/* Step08: Advanced Techniques（高度な攻撃テクニック） */}
+            <Route path="/step08" element={<Step08Index />} />
+            <Route path="/step08/jwt-vulnerabilities" element={<JwtVulnerabilities />} />
+            <Route path="/step08/ssti" element={<Ssti />} />
+            <Route path="/step08/race-condition" element={<RaceCondition />} />
+            <Route path="/step08/deserialization" element={<Deserialization />} />
+            <Route path="/step08/prototype-pollution" element={<PrototypePollution />} />
+            <Route path="/step08/redos" element={<Redos />} />
+            <Route path="/step08/postmessage" element={<Postmessage />} />
+
+            {/* Step09: Defense（守りを固める） */}
+            <Route path="/step09" element={<Step09Index />} />
+            <Route path="/step09/error-messages" element={<ErrorMessages />} />
+            <Route path="/step09/stack-trace" element={<StackTrace />} />
+            <Route path="/step09/logging" element={<Logging />} />
+            <Route path="/step09/log-injection" element={<LogInjection />} />
+            <Route path="/step09/fail-open" element={<FailOpen />} />
+            <Route path="/step09/csp" element={<Csp />} />
+            <Route path="/step09/input-validation" element={<InputValidation />} />
           </Routes>
         </main>
       </div>
