@@ -1,0 +1,11 @@
+export { Step07Index } from "./pages/Step07Index";
+export { RateLimiting } from "./pages/RateLimiting";
+export { Clickjacking } from "./pages/Clickjacking";
+export { SensitiveDataHttp } from "./pages/SensitiveDataHttp";
+export { HttpMethods } from "./pages/HttpMethods";
+export { PasswordReset } from "./pages/PasswordReset";
+export { BusinessLogic } from "./pages/BusinessLogic";
+export { UnsignedData } from "./pages/UnsignedData";
+export { SecurityHeaders } from "./pages/SecurityHeaders";
+export { CacheControl } from "./pages/CacheControl";
+export { WebStorageAbuse } from "./pages/WebStorageAbuse";
