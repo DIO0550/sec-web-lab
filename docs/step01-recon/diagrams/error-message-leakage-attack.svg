@@ -86,7 +86,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (malicious input, upper curve) -->
-  <path d="M 170 220 Q 250 150 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 250 150 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="250" cy="166" r="16" fill="#ef4444"/>
   <text x="250" y="171" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -106,7 +106,7 @@
   <text x="250" y="361" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Attacker → targeted attack (bottom curve) -->
-  <path d="M 170 345 C 120 580, 600 580, 645 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 345 C 120 580, 600 580, 645 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="370" cy="564" r="16" fill="#ef4444"/>
   <text x="370" y="569" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 
