@@ -95,16 +95,16 @@
 
   <!-- ===== Leaked files box (below server) ===== -->
   <g transform="translate(550, 450)" filter="url(#shadow)">
-    <rect x="-130" y="-22" width="260" height="105" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <rect x="-155" y="-22" width="310" height="108" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
     <text x="0" y="-4" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ 公開された機密ファイル</text>
-    <line x1="-116" y1="6" x2="116" y2="6" stroke="#f97316" stroke-width="0.5" opacity="0.4"/>
-    <text x="-100" y="24" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">/.env</text>
-    <text x="30" y="24" fill="#fed7aa" font-size="8.5">→ DB_PASSWORD=secret123</text>
-    <text x="-100" y="41" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">/.git/HEAD</text>
-    <text x="30" y="41" fill="#fed7aa" font-size="8.5">→ ref: refs/heads/main</text>
-    <text x="-100" y="58" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">/robots.txt</text>
-    <text x="30" y="58" fill="#fed7aa" font-size="8.5">→ Disallow: /admin/</text>
-    <text x="0" y="76" text-anchor="middle" fill="#fed7aa" font-size="8.5">認証情報・ソースコード・隠しパスが丸見え</text>
+    <line x1="-141" y1="6" x2="141" y2="6" stroke="#f97316" stroke-width="0.5" opacity="0.4"/>
+    <text x="-125" y="24" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">/.env</text>
+    <text x="5" y="24" fill="#fed7aa" font-size="8.5">→ DB_PASSWORD=secret123</text>
+    <text x="-125" y="41" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">/.git/HEAD</text>
+    <text x="5" y="41" fill="#fed7aa" font-size="8.5">→ ref: refs/heads/main</text>
+    <text x="-125" y="58" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">/robots.txt</text>
+    <text x="5" y="58" fill="#fed7aa" font-size="8.5">→ Disallow: /admin/</text>
+    <text x="0" y="78" text-anchor="middle" fill="#fed7aa" font-size="8.5">認証情報・ソースコード・隠しパスが丸見え</text>
   </g>
 
   <!-- ===== Attacker analysis box ===== -->
