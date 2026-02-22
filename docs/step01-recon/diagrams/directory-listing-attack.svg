@@ -106,10 +106,11 @@
     <text x="0" y="24" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="'Fira Code', monospace">backup.sql, admin-key.pem</text>
   </g>
 
-  <!-- Step 4: Attacker → Server: request hidden files (rendered after boxes for z-order) -->
-  <path d="M 310 450 L 425 450" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
-  <circle cx="367" cy="430" r="16" fill="#ef4444"/>
-  <text x="367" y="435" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+  <!-- Step 4: Attacker downloads identified files (arrows point to specific files) -->
+  <path d="M 305 456 L 456 474" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 305 466 L 456 488" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="367" cy="438" r="16" fill="#ef4444"/>
+  <text x="367" y="443" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Server → Attacker: sensitive data (rendered after boxes for z-order) -->
   <path d="M 425 475 L 310 475" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
