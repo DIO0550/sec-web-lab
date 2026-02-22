@@ -133,21 +133,67 @@ SQL Injection等で使用。
 
 ### 曲線矢印
 
+> **⚠ 重要**: 矢印の `<path>` に `filter="url(#glow)"` を適用してはならない。一部のSVGレンダリング環境で矢印が完全に消える不具合が確認されている。glowはアクターカード等の装飾にのみ使用すること。
+
 ```xml
 <!-- 上カーブ (例: Attacker → Victim, Step 1) -->
-<path d="M {x1} {y1} Q {ctrlX} {ctrlY} {x2} {y2}" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+<path d="M {x1} {y1} Q {ctrlX} {ctrlY} {x2} {y2}" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
 
 <!-- 下カーブ (例: Victim → Attacker, Step 5) — Cubic Bezier推奨 -->
-<path d="M {x1} {y1} C {cp1x} {cp1y}, {cp2x} {cp2y}, {x2} {y2}" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+<path d="M {x1} {y1} C {cp1x} {cp1y}, {cp2x} {cp2y}, {x2} {y2}" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
 ```
 
 下カーブの制御点は、脆弱性ボックスやコード例より**60px以上下**に設定すること。
+
+### L字矢印
+
+テキストやボックスを横切るリスクがある場合、斜め線や曲線の代わりにL字パスを使用する。直角に折れ曲がることで要素との重なりを確実に回避できる。
+
+```xml
+<!-- 水平→垂直のL字 (例: Analysis box → Server, request) -->
+<path d="M {x1} {y1} L {x2} {y1} L {x2} {y2}" fill="none" stroke="#ef4444" stroke-linejoin="round" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+
+<!-- 垂直→水平のL字 (例: Server → Analysis box, response) -->
+<path d="M {x1} {y1} L {x1} {y2} L {x2} {y2}" fill="none" stroke="#3b82f6" stroke-linejoin="round" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+```
+
+`stroke-linejoin="round"` を使用して角を丸くすること。L字パスは特に以下のケースで有効:
+- アクターの下部ボックスからサーバーへの往復（Step 4, 5など）
+- 対向するリクエスト/レスポンスを上下に分離して配置する場合
 
 ### 縦矢印
 
 ```xml
 <!-- 例: Victim → Browser box (Step 4) -->
 <path d="M {X} {startY} L {X} {endY}" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowRed)"/>
+```
+
+### 矢印の方向ルール
+
+矢印の方向は必ず論理的なアクションの意味と一致させること:
+
+| アクション | 矢印の方向 |
+|-----------|-----------|
+| リクエスト送信 | 要求元 → サーバー |
+| ダウンロード要求 | ダウンロード者 → サーバー |
+| レスポンス返却 | サーバー → 要求元 |
+| データ窃取（受信） | サーバー → 攻撃者 |
+| 攻撃ペイロード送信 | 攻撃者 → ターゲット |
+
+### 結節点の等間隔配置
+
+1つのアクターの辺から複数の矢印が出る場合、アクター中心を軸に等間隔で配置すること。
+
+```
+例: Webサーバー (中心x=600) の底辺 (y=335) から3本の矢印が出る場合
+  → x=560 (左寄り)、x=600 (中央)、x=640 (右寄り) — 間隔40px
+
+    ┌──────────────┐
+    │  Webサーバー   │
+    │   x=600      │
+    └──┬───┬───┬──┘
+       │   │   │
+     x=560 600 640  ← 中心から±40pxで等間隔
 ```
 
 ---
