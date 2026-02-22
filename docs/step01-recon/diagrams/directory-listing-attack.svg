@@ -84,14 +84,14 @@
   <text x="224" y="378" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 
   <!-- Step 4: Attacker → Server: request hidden files -->
-  <path d="M 258 455 L 492 455" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
-  <circle cx="375" cy="433" r="16" fill="#ef4444"/>
-  <text x="375" y="438" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+  <path d="M 258 545 L 492 545" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <circle cx="375" cy="523" r="16" fill="#ef4444"/>
+  <text x="375" y="528" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Server → Attacker: sensitive data -->
-  <path d="M 492 480 L 258 480" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
-  <circle cx="375" cy="502" r="16" fill="#3b82f6"/>
-  <text x="375" y="507" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+  <path d="M 492 575 L 258 575" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="375" cy="597" r="16" fill="#3b82f6"/>
+  <text x="375" y="602" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 
   <!-- ===== Directory listing box (right of server) ===== -->
   <g transform="translate(550, 420)" filter="url(#shadow)">
