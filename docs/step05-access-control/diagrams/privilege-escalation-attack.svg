@@ -91,12 +91,12 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker inspects JS/Network tab (self-loop arrow above attacker) -->
-  <path d="M 80 195 Q 80 170 115 170 Q 150 170 150 195" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 80 195 Q 80 170 115 170 Q 150 170 150 195" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="115" cy="155" r="16" fill="#ef4444"/>
   <text x="115" y="160" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
   <!-- Step 2: Attacker → Server (admin endpoint request) Y=240 -->
-  <path d="M 171 240 L 342 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 240 L 342 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="256" cy="218" r="16" fill="#ef4444"/>
   <text x="256" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 
@@ -107,7 +107,7 @@
 
   <!-- Step 4: Admin API → Server → Attacker (admin data returned) -->
   <path d="M 587 275 L 458 275" fill="none" stroke="#f59e0b" stroke-width="2.2" marker-end="url(#arrowYellow)"/>
-  <path d="M 342 290 L 171 290" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 342 290 L 171 290" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="522" cy="297" r="16" fill="#f59e0b"/>
   <text x="522" y="302" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 

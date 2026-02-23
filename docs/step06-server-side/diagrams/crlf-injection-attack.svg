@@ -84,7 +84,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Victim (send crafted URL, big curve above) -->
-  <path d="M 170 220 Q 380 115 590 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 380 115 590 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="380" cy="136" r="16" fill="#ef4444"/>
   <text x="380" y="141" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 

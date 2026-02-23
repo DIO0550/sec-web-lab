@@ -17,23 +17,21 @@
     <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
     </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
   </defs>
 
-  <!-- Background -->
   <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
 
-  <!-- ===== Title ===== -->
-  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">postMessage &#8212; Defense Strategy</text>
-  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">postMessage&#33030;&#24369;&#24615;&#12395;&#23550;&#12377;&#12427;&#22810;&#23652;&#38450;&#24481;</text>
+  <!-- Title -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">postMessage — Defense Strategy</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">postMessage脆弱性に対する多層防御</text>
   <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
   <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
 
-  <!-- ====================================================== -->
-  <!--  ACTORS                                                 -->
-  <!-- ====================================================== -->
-
   <!-- Attacker (dimmed) -->
-  <g transform="translate(115, 280)" filter="url(#shadow)">
+  <g transform="translate(115, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
     <g transform="translate(0, 10)" opacity="0.45">
       <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
@@ -42,12 +40,12 @@
       <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
       <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
     </g>
-    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">&#25915;&#25731;&#32773;</text>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" opacity="0.5">攻撃者</text>
     <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Attacker</text>
   </g>
 
   <!-- Victim Browser (protected) -->
-  <g transform="translate(380, 280)" filter="url(#shadow)">
+  <g transform="translate(400, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 10)">
       <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
@@ -61,12 +59,12 @@
       <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
       <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
     </g>
-    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">&#34987;&#23475;&#32773;&#12502;&#12521;&#12454;&#12470;</text>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">被害者ブラウザ</text>
     <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected</text>
   </g>
 
   <!-- Target App (protected) -->
-  <g transform="translate(645, 280)" filter="url(#shadow)">
+  <g transform="translate(645, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
       <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -80,171 +78,131 @@
       <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
       <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
     </g>
-    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">&#27491;&#35215;&#12450;&#12503;&#12522;</text>
+    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">正規アプリ</text>
     <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  BLOCKED ARROWS                                         -->
-  <!-- ====================================================== -->
-
   <!-- Dimmed attack: Attacker → Victim -->
-  <path d="M 171 270 L 300 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.2"/>
+  <path d="M 171 220 L 300 220" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.2"/>
 
   <!-- Block mark: postMessage blocked by origin check -->
-  <g transform="translate(310, 270)">
+  <g transform="translate(310, 220)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
-  <text x="310" y="298" text-anchor="middle" fill="#86efac" font-size="8">origin&#26908;&#35388;&#12391;&#25298;&#21542;</text>
-
-  <!-- Dimmed attack: Attacker → Target (lower) -->
-  <path d="M 171 300 Q 260 360 310 300" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
-
-  <!-- Dimmed data leak path -->
-  <path d="M 580 500 C 520 680, 200 680, 115 380" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
-  <g transform="translate(340, 670)">
-    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
-    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-  </g>
+  <text x="310" y="248" text-anchor="middle" fill="#86efac" font-size="8">origin検証で拒否</text>
 
   <!-- Safe arrow: Trusted communication -->
-  <path d="M 436 280 L 583 280" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
-  <text x="510" y="272" text-anchor="middle" fill="#86efac" font-size="8.5">&#26908;&#35388;&#28168;&#12415;&#12513;&#12483;&#12475;&#12540;&#12472;&#12398;&#12415;</text>
+  <path d="M 458 240 L 583 240" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <text x="520" y="232" text-anchor="middle" fill="#86efac" font-size="8.5">検証済みメッセージのみ</text>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE CARDS (2x2 grid, 250x120px)                    -->
-  <!-- ====================================================== -->
+  <!-- Section divider + 防御テクニック pill -->
+  <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
+  <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 
-  <!-- Defense 1: origin&#26908;&#35388; (top-left) -->
-  <g transform="translate(255, 440)" filter="url(#shadow)">
-    <rect x="-125" y="-20" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-88, 16)">
-      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">origin&#26908;&#35388;</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">&#20449;&#38972;&#12391;&#12365;&#12427;origin&#20197;&#22806;&#12434;&#25298;&#21542;</text>
-    <line x1="-110" y1="24" x2="110" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (e.origin !==</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  'https://trusted.com') return</text>
-    <line x1="-110" y1="66" x2="110" y2="66" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">&#26681;&#26412;&#23550;&#31574;: &#19981;&#27491;&#12394;origin&#12363;&#12425;&#12398;&#12513;&#12483;&#12475;&#12540;&#12472;&#12434;&#28961;&#35222;</text>
+  <!-- Defense Card 1: origin検証 (top-left) -->
+  <g transform="translate(200, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">origin検証</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">信頼できるorigin以外を拒否</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (e.origin !==</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  'https://trusted.com') return</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">根本対策: 不正なoriginからのメッセージを無視</text>
   </g>
 
-  <!-- Defense 2: targetOrigin&#25351;&#23450; (top-right) -->
-  <g transform="translate(535, 440)" filter="url(#shadow)">
-    <rect x="-125" y="-20" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-88, 16)">
-      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">targetOrigin&#25351;&#23450;</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">&#36865;&#20449;&#20808;&#12434;&#26126;&#31034;&#30340;&#12395;&#25351;&#23450;</text>
-    <line x1="-110" y1="24" x2="110" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">postMessage(data,</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  'https://app.com')</text>
-    <line x1="-110" y1="66" x2="110" y2="66" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">'*'&#12434;&#20351;&#12431;&#12378;&#23550;&#35937;origin&#12434;&#38480;&#23450;</text>
+  <!-- Defense Card 2: targetOrigin指定 (top-right) -->
+  <g transform="translate(540, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">targetOrigin指定</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">送信先を明示的に指定</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">postMessage(data,</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  'https://app.com')</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">'*'を使わず対象originを限定</text>
   </g>
 
-  <!-- Defense 3: &#12513;&#12483;&#12475;&#12540;&#12472;&#12398;&#12496;&#12522;&#12487;&#12540;&#12471;&#12519;&#12531; (bottom-left) -->
-  <g transform="translate(255, 590)" filter="url(#shadow)">
-    <rect x="-125" y="-20" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-88, 14)">
-      <rect x="-9" y="-8" width="18" height="16" rx="2" fill="none" stroke="#22c55e" stroke-width="1.2"/>
-      <polyline points="-4,-2 -2,2 4,-4" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">&#12513;&#12483;&#12475;&#12540;&#12472;&#12398;&#12496;&#12522;&#12487;&#12540;&#12471;&#12519;&#12531;</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">&#21463;&#20449;&#12487;&#12540;&#12479;&#12398;&#27083;&#36896;&#12434;&#26908;&#35388;</text>
-    <line x1="-110" y1="24" x2="110" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (!isValidSchema(e.data))</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  return</text>
-    <line x1="-110" y1="66" x2="110" y2="66" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">&#26399;&#24453;&#12375;&#12394;&#12356;&#12487;&#12540;&#12479;&#24418;&#24335;&#12434;&#25298;&#21542;&#12377;&#12427;</text>
+  <!-- Defense Card 3: メッセージのバリデーション (bottom-left) -->
+  <g transform="translate(200, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">メッセージのバリデーション</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">受信データの構造を検証</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (!isValidSchema(e.data))</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  return</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">期待しないデータ形式を拒否する</text>
   </g>
 
-  <!-- Defense 4: sandbox&#23646;&#24615; (bottom-right) -->
-  <g transform="translate(535, 590)" filter="url(#shadow)">
-    <rect x="-125" y="-20" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-88, 14)">
-      <rect x="-10" y="-7" width="20" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.2"/>
-      <line x1="-10" y1="0" x2="10" y2="0" stroke="#22c55e" stroke-width="1.0"/>
-      <line x1="0" y1="-7" x2="0" y2="7" stroke="#22c55e" stroke-width="1.0"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">sandbox&#23646;&#24615;</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">iframe&#12398;&#27177;&#38480;&#12434;&#26368;&#23567;&#38480;&#12395;&#21046;&#38480;</text>
-    <line x1="-110" y1="24" x2="110" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt;iframe sandbox=</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  "allow-scripts"&gt;</text>
-    <line x1="-110" y1="66" x2="110" y2="66" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">&#19981;&#35201;&#12394;&#27231;&#33021;(&#12501;&#12457;&#12540;&#12512;&#31561;)&#12434;&#28961;&#21177;&#21270;</text>
+  <!-- Defense Card 4: sandbox属性 (bottom-right) -->
+  <g transform="translate(540, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">sandbox属性</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">iframeの権限を最小限に制限</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt;iframe sandbox=</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  "allow-scripts"&gt;</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">不要な機能(フォーム等)を無効化</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE SIDEBAR                                        -->
-  <!-- ====================================================== -->
+  <!-- Defense Sidebar -->
   <g transform="translate(785, 100)">
     <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
-    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">&#38450;&#24481;&#12524;&#12452;&#12516;&#12540;&#19968;&#35239;</text>
+    <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
     <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-
-    <!-- Layer 1 -->
     <g transform="translate(18, 64)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">origin&#26908;&#35388;</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">e.origin&#12434;&#12507;&#12527;&#12452;&#12488;&#12522;&#12473;&#12488;&#12391;</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">&#26908;&#35388;&#12375;&#12289;&#19981;&#27491;&#12394;origin&#12434;&#25298;&#21542;</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">origin検証</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">e.originをホワイトリストで</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">検証し、不正なoriginを拒否</text>
     </g>
-
-    <!-- Layer 2 -->
     <g transform="translate(18, 130)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">targetOrigin&#25351;&#23450;</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">'*'&#12434;&#20351;&#12431;&#12378;&#12289;&#36865;&#20449;&#20808;&#12398;</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">origin&#12434;&#26126;&#31034;&#30340;&#12395;&#25351;&#23450;&#12377;&#12427;</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">targetOrigin指定</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">'*'を使わず、送信先の</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">originを明示的に指定する</text>
     </g>
-
-    <!-- Layer 3 -->
     <g transform="translate(18, 196)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">&#12513;&#12483;&#12475;&#12540;&#12472;&#12496;&#12522;&#12487;&#12540;&#12471;&#12519;&#12531;</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">&#21463;&#20449;&#12487;&#12540;&#12479;&#12398;&#22411;&#12539;&#27083;&#36896;&#12434;</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">&#12473;&#12461;&#12540;&#12510;&#12391;&#26908;&#35388;&#12375;&#19981;&#27491;&#12434;&#38450;&#27490;</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">メッセージバリデーション</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">受信データの型・構造を</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">スキーマで検証し不正を防止</text>
     </g>
-
-    <!-- Layer 4 -->
     <g transform="translate(18, 262)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">sandbox&#23646;&#24615;</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">iframe&#12395;sandbox&#12434;&#25351;&#23450;&#12375;</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">&#19981;&#35201;&#12394;&#27177;&#38480;&#12434;&#21046;&#38480;&#12377;&#12427;</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">sandbox属性</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">iframeにsandboxを指定し</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">不要な権限を制限する</text>
     </g>
-
     <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">&#128274; &#22810;&#23652;&#38450;&#24481; (Defense in Depth)</text>
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
   </g>
 
-  <!-- ===== Legend ===== -->
+  <!-- Legend -->
   <g transform="translate(30, 730)">
     <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
-    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">&#36974;&#26029;&#12373;&#12428;&#12383;&#25915;&#25731;</text>
+    <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
     <g transform="translate(172, 18)">
       <circle cx="0" cy="0" r="8" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
       <line x1="-3" y1="-3" x2="3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
       <line x1="3" y1="-3" x2="-3" y2="3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
     </g>
-    <text x="188" y="22" fill="#86efac" font-size="9">&#12502;&#12525;&#12483;&#12463;&#12509;&#12452;&#12531;&#12488;</text>
+    <text x="188" y="22" fill="#86efac" font-size="9">ブロックポイント</text>
     <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
-    <text x="304" y="22" fill="#86efac" font-size="9">&#38450;&#24481;&#27231;&#27083;</text>
+    <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
   </g>
-
 </svg>

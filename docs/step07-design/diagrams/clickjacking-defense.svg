@@ -14,6 +14,9 @@
     <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
     </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
     <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
     </marker>
@@ -29,11 +32,11 @@
   <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
 
   <!-- ====================================================== -->
-  <!--  ACTORS                                                 -->
+  <!--  ACTORS (3-actor layout)                                -->
   <!-- ====================================================== -->
 
   <!-- Attacker (dimmed) -->
-  <g transform="translate(115, 280)" filter="url(#shadow)">
+  <g transform="translate(115, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
     <g transform="translate(0, 10)" opacity="0.45">
       <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
@@ -47,7 +50,7 @@
   </g>
 
   <!-- Victim (protected) -->
-  <g transform="translate(380, 280)" filter="url(#shadow)">
+  <g transform="translate(400, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 10)">
       <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
@@ -66,7 +69,7 @@
   </g>
 
   <!-- Legitimate Server (protected) -->
-  <g transform="translate(645, 280)" filter="url(#shadow)">
+  <g transform="translate(645, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
       <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -88,89 +91,86 @@
   <!--  BLOCKED ARROWS                                         -->
   <!-- ====================================================== -->
 
-  <!-- Step 1: Attacker → Victim (dimmed, still happens) -->
-  <path d="M 170 250 Q 250 155 324 250" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
+  <!-- Attacker → Victim (dimmed) -->
+  <path d="M 170 200 Q 260 120 344 200" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
 
-  <!-- Step 2: iframe load attempt BLOCKED -->
-  <path d="M 436 270 L 550 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
-  <g transform="translate(562, 270)">
+  <!-- iframe load attempt BLOCKED -->
+  <path d="M 456 220 L 560 220" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
+  <g transform="translate(572, 220)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
-  <!-- Step 5: Action blocked -->
-  <path d="M 580 500 C 520 680, 200 680, 115 380" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
-  <g transform="translate(340, 670)">
+  <!-- Action blocked -->
+  <path d="M 600 340 C 520 410, 250 410, 150 330" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
+  <g transform="translate(380, 405)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
   <!-- ====================================================== -->
-  <!--  DEFENSE POINT 1: X-Frame-Options                       -->
+  <!--  Section Divider + 防御テクニック pill                   -->
   <!-- ====================================================== -->
-  <g transform="translate(260, 210)" filter="url(#shadow)">
-    <rect x="-52" y="-58" width="104" height="175" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(0, -28)">
-      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <text x="0" y="18" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">X-Frame-Options</text>
-    <text x="0" y="32" text-anchor="middle" fill="#bbf7d0" font-size="8">iframe埋め込みを</text>
-    <text x="0" y="43" text-anchor="middle" fill="#bbf7d0" font-size="8">サーバー側で拒否</text>
-    <line x1="-38" y1="52" x2="38" y2="52" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="66" text-anchor="middle" fill="#4ade80" font-size="8">ブラウザがiframe</text>
-    <text x="0" y="78" text-anchor="middle" fill="#4ade80" font-size="8">読み込みを拒否</text>
-    <text x="0" y="100" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">DENY / SAMEORIGIN</text>
-  </g>
+  <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
+  <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 
   <!-- ====================================================== -->
-  <!--  DEFENSE POINT 2: CSP frame-ancestors                   -->
+  <!--  DEFENSE TECHNIQUE CARDS (2x2 grid, 250x120px)          -->
   <!-- ====================================================== -->
-  <g transform="translate(400, 460)" filter="url(#shadow)">
-    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-60, 22)">
-      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">CSP frame-ancestors</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">iframe許可元を厳密に制限</text>
-    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Content-Security-Policy:</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">frame-ancestors 'self'</text>
+
+  <!-- Card 1: X-Frame-Options (top-left) -->
+  <g transform="translate(200, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">X-Frame-Options</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">iframe埋め込みをサーバー側で拒否</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">X-Frame-Options: DENY</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">X-Frame-Options: SAMEORIGIN</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">ブラウザがiframe読み込みを拒否</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE POINT 3: SameSite Cookie                       -->
-  <!-- ====================================================== -->
-  <g transform="translate(645, 460)" filter="url(#shadow)">
-    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-60, 20)">
-      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">SameSite Cookie</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">iframe内のCookie送信を防止</text>
-    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Set-Cookie: sid=xxx;</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">SameSite=Lax; Secure</text>
+  <!-- Card 2: CSP frame-ancestors (top-right) -->
+  <g transform="translate(540, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">CSP frame-ancestors</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">iframe許可元を厳密に制限</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Content-Security-Policy:</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">frame-ancestors 'self'</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">X-Frame-Optionsの後継で柔軟な指定</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE POINT 4: Frame-busting JS                      -->
-  <!-- ====================================================== -->
-  <g transform="translate(520, 600)" filter="url(#shadow)">
-    <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-112, 14)">
-      <rect x="-9" y="-8" width="18" height="16" rx="2" fill="none" stroke="#22c55e" stroke-width="1.2"/>
-      <text x="0" y="4" text-anchor="middle" fill="#22c55e" font-size="8" font-family="'Fira Code', monospace">JS</text>
-    </g>
-    <text x="10" y="-2" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Frame-busting Script</text>
-    <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">iframeでの読み込みを検知してリダイレクト</text>
-    <line x1="-136" y1="24" x2="136" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="10" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (top !== self) top.location = self.location</text>
+  <!-- Card 3: SameSite Cookie (bottom-left) -->
+  <g transform="translate(200, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">SameSite Cookie</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">iframe内のCookie送信を防止</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Set-Cookie: sid=xxx;</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">SameSite=Lax; Secure</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">iframe内からの認証操作を阻止</text>
+  </g>
+
+  <!-- Card 4: Frame-busting Script (bottom-right) -->
+  <g transform="translate(540, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">Frame-busting Script</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">iframeでの読み込みを検知してリダイレクト</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (top !== self)</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  top.location = self.location</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">補助的な防御 (JSで検知・脱出)</text>
   </g>
 
   <!-- ====================================================== -->

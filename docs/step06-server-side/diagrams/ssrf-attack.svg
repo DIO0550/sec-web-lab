@@ -93,7 +93,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (内部URLを指定) -->
-  <path d="M 171 240 L 322 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 240 L 322 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="247" cy="218" r="16" fill="#ef4444"/>
   <text x="247" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -113,7 +113,7 @@
   <text x="247" y="309" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Attacker exploits (big curve below) — data exfiltration complete -->
-  <path d="M 115 345 C 115 580, 645 580, 645 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)" opacity="0.5"/>
+  <path d="M 115 345 C 115 580, 645 580, 645 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.5"/>
   <circle cx="380" cy="560" r="16" fill="#ef4444"/>
   <text x="380" y="565" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

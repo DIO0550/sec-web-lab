@@ -100,7 +100,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Hash DB (upper curve) — ハッシュ値を取得 -->
-  <path d="M 171 230 Q 280 190 324 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 230 Q 280 190 324 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="192" r="16" fill="#ef4444"/>
   <text x="248" y="197" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="248" y="180" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ハッシュ値を取得</text>
@@ -112,7 +112,7 @@
   <text x="248" y="314" text-anchor="middle" fill="#fcd34d" font-size="9.5" font-weight="600">MD5ハッシュ値返却</text>
 
   <!-- Step 3: Attacker → Rainbow Table (horizontal, Y=282) — ハッシュ値で検索 -->
-  <path d="M 171 280 Q 400 282 589 280" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 280 Q 400 282 589 280" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="400" cy="268" r="16" fill="#ef4444"/>
   <text x="400" y="273" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
   <text x="400" y="256" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ハッシュ値で検索</text>
@@ -124,7 +124,7 @@
   <text x="645" y="420" text-anchor="middle" fill="#d8b4fe" font-size="9.5" font-weight="600">一致するパスワード発見</text>
 
   <!-- Step 5: Lower curve back to Attacker — 平文パスワード取得 -->
-  <path d="M 620 410 Q 380 430 140 375" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowPurple)" filter="url(#glow)"/>
+  <path d="M 620 410 Q 380 430 140 375" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowPurple)"/>
   <circle cx="380" cy="432" r="16" fill="#a855f7"/>
   <text x="380" y="437" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
   <text x="380" y="455" text-anchor="middle" fill="#d8b4fe" font-size="9.5" font-weight="600">平文パスワード取得</text>

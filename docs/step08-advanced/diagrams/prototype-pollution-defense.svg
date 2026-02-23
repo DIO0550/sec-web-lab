@@ -17,6 +17,9 @@
     <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
     </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
   </defs>
 
   <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
@@ -28,7 +31,7 @@
   <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
 
   <!-- Attacker (dimmed) -->
-  <g transform="translate(115, 280)" filter="url(#shadow)">
+  <g transform="translate(115, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
     <g transform="translate(0, 10)" opacity="0.45">
       <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
@@ -42,7 +45,7 @@
   </g>
 
   <!-- Web Server (protected) -->
-  <g transform="translate(400, 280)" filter="url(#shadow)">
+  <g transform="translate(400, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
       <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -61,7 +64,7 @@
   </g>
 
   <!-- Application State (protected) -->
-  <g transform="translate(645, 280)" filter="url(#shadow)">
+  <g transform="translate(645, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 8)">
       <text x="0" y="-6" text-anchor="middle" fill="#f97316" font-size="11" font-family="'Fira Code', monospace">{__proto__}</text>
@@ -77,90 +80,75 @@
   </g>
 
   <!-- Dimmed attack arrow -->
-  <path d="M 171 270 L 290 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
+  <path d="M 171 220 L 290 220" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
 
   <!-- Block mark -->
-  <g transform="translate(310, 270)">
+  <g transform="translate(310, 220)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
-  <text x="310" y="298" text-anchor="middle" fill="#86efac" font-size="8">__proto__除外</text>
+  <text x="310" y="248" text-anchor="middle" fill="#86efac" font-size="8">__proto__除外</text>
 
-  <!-- Safe arrow: Server sanitizes input -->
-  <path d="M 458 290 L 583 290" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
-  <text x="520" y="282" text-anchor="middle" fill="#86efac" font-size="8.5">サニタイズ済みデータのみ</text>
+  <!-- Safe arrow -->
+  <path d="M 458 240 L 583 240" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <text x="520" y="232" text-anchor="middle" fill="#86efac" font-size="8.5">サニタイズ済みデータのみ</text>
 
-  <!-- Safe result box -->
-  <g transform="translate(400, 420)" filter="url(#shadow)">
-    <rect x="-150" y="-22" width="300" height="60" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <text x="0" y="-4" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">✅ __proto__キーは除外済み</text>
-    <text x="0" y="14" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (key === '__proto__') continue;</text>
-    <text x="0" y="30" text-anchor="middle" fill="#bbf7d0" font-size="9">Object.prototype は汚染されない — 権限チェック維持</text>
+  <!-- Section divider + 防御テクニック pill -->
+  <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
+  <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
+
+  <!-- Defense Card 1: __proto__キーの除外 (top-left) -->
+  <g transform="translate(200, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">__proto__キーの除外</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">マージ時に危険なキーをスキップ</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (key === '__proto__')</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  continue;</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">根本対策: constructor もスキップ</text>
   </g>
 
-  <!-- Defense Cards 2x2 layout -->
-  <!-- Card 1: __proto__キーの除外 -->
-  <g transform="translate(195, 530)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-90, 30)">
-      <polygon points="-11,-13 11,-13 4,2 4,10 -4,10 -4,2" fill="none" stroke="#22c55e" stroke-width="1.4" stroke-linejoin="round"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">__proto__キーの除外</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">マージ時に危険なキーをスキップ</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (key === '__proto__')</text>
-    <text x="0" y="66" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  continue;</text>
-    <text x="0" y="82" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (key === 'constructor')</text>
-    <text x="0" y="96" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  continue;</text>
+  <!-- Defense Card 2: Object.create(null) (top-right) -->
+  <g transform="translate(540, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">Object.create(null)</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">プロトタイプなしオブジェクト使用</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">const config =</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  Object.create(null);</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">プロトタイプチェーンを辿れない</text>
   </g>
 
-  <!-- Card 2: Object.create(null) -->
-  <g transform="translate(505, 530)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-90, 30)">
-      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Object.create(null)</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">プロトタイプなしオブジェクト使用</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">const config =</text>
-    <text x="0" y="66" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  Object.create(null);</text>
-    <text x="0" y="82" text-anchor="middle" fill="#bbf7d0" font-size="8">__proto__が存在しないため</text>
-    <text x="0" y="96" text-anchor="middle" fill="#bbf7d0" font-size="8">プロトタイプチェーンを辿れない</text>
+  <!-- Defense Card 3: Object.freeze (bottom-left) -->
+  <g transform="translate(200, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">Object.freeze</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">Object.prototypeを凍結して保護</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Object.freeze(</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  Object.prototype);</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">変更不可にして汚染を防止</text>
   </g>
 
-  <!-- Card 3: Object.freeze -->
-  <g transform="translate(195, 670)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-90, 26)">
-      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Object.freeze</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">Object.prototypeを凍結して保護</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Object.freeze(</text>
-    <text x="0" y="66" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  Object.prototype);</text>
-    <text x="0" y="80" text-anchor="middle" fill="#bbf7d0" font-size="8">変更不可にして汚染を防止</text>
-  </g>
-
-  <!-- Card 4: 安全なマージライブラリ -->
-  <g transform="translate(505, 670)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(-90, 26)">
-      <rect x="-10" y="-10" width="20" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <line x1="-5" y1="0" x2="5" y2="0" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="0" y1="-5" x2="0" y2="5" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">安全なマージライブラリ</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">lodash.merge等のサニタイズ済みライブラリ</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">import merge from</text>
-    <text x="0" y="66" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  'lodash/merge'; // v4.6.2+</text>
-    <text x="0" y="80" text-anchor="middle" fill="#bbf7d0" font-size="8">修正済みバージョンを使用</text>
+  <!-- Defense Card 4: 安全なマージライブラリ (bottom-right) -->
+  <g transform="translate(540, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">安全なマージライブラリ</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">修正済みライブラリを使用</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">import merge from</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  'lodash/merge'; // v4.6.2+</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">サニタイズ済みバージョンを使用</text>
   </g>
 
   <!-- Defense Sidebar -->
@@ -168,7 +156,6 @@
     <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
     <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
     <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-
     <g transform="translate(18, 64)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
@@ -176,7 +163,6 @@
       <text x="28" y="18" fill="#94a3b8" font-size="9">マージ処理で __proto__,</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">constructor をスキップ (根本対策)</text>
     </g>
-
     <g transform="translate(18, 130)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
@@ -184,7 +170,6 @@
       <text x="28" y="18" fill="#94a3b8" font-size="9">プロトタイプなしオブジェクトを</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">使用し、チェーンを断ち切る</text>
     </g>
-
     <g transform="translate(18, 196)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
@@ -192,7 +177,6 @@
       <text x="28" y="18" fill="#94a3b8" font-size="9">Object.prototype を凍結し</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">プロパティ追加を不可にする</text>
     </g>
-
     <g transform="translate(18, 262)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
@@ -200,7 +184,6 @@
       <text x="28" y="18" fill="#94a3b8" font-size="9">lodash v4.6.2+ 等の修正済み</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">マージライブラリを使用</text>
     </g>
-
     <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
     <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
   </g>

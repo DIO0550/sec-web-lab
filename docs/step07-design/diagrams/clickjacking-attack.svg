@@ -84,7 +84,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Victim (upper curve - 罠リンク送信) -->
-  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="150" r="16" fill="#ef4444"/>
   <text x="248" y="155" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -94,7 +94,7 @@
   <text x="404" y="383" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 
   <!-- Step 3: Victim click → Legitimate Server (iframe経由) -->
-  <path d="M 436 240 L 589 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 436 240 L 589 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="514" cy="218" r="16" fill="#ef4444"/>
   <text x="514" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 
@@ -104,7 +104,7 @@
   <text x="669" y="383" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Stolen action → Attacker benefits (lower curve) -->
-  <path d="M 600 480 C 520 620, 200 620, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 600 480 C 520 620, 200 620, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="330" cy="610" r="16" fill="#ef4444"/>
   <text x="330" y="615" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

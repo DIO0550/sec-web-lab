@@ -84,7 +84,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Victim (upper curve) — セッションID入りURL送信 -->
-  <path d="M 170 220 Q 250 130 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 250 130 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="230" cy="148" r="16" fill="#ef4444"/>
   <text x="230" y="153" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="290" y="140" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">固定ID入りURL</text>
@@ -113,7 +113,7 @@
   </g>
 
   <!-- Step 5: Attacker uses same session ID (big curve below) -->
-  <path d="M 567 450 C 500 600, 200 600, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 567 450 C 500 600, 200 600, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="320" cy="590" r="16" fill="#ef4444"/>
   <text x="320" y="595" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
   <text x="380" y="610" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">同じIDでなりすまし</text>

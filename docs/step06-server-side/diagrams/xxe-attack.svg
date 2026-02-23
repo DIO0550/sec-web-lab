@@ -84,12 +84,12 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (send malicious XML) - left side -->
-  <path d="M 354 265 L 354 348" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 354 265 L 354 348" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="330" cy="306" r="16" fill="#ef4444"/>
   <text x="330" y="311" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
   <!-- Step 2: Server → File System (resolve entity) - left side -->
-  <path d="M 354 475 L 354 538" fill="none" stroke="#f97316" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowOrange)" filter="url(#glow)"/>
+  <path d="M 354 475 L 354 538" fill="none" stroke="#f97316" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowOrange)"/>
   <circle cx="330" cy="506" r="16" fill="#f97316"/>
   <text x="330" y="511" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 

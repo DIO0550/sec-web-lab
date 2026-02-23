@@ -95,7 +95,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Victim → Attacker (HTTP login data) -->
-  <path d="M 176 260 L 330 260" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowPurple)" filter="url(#glow)"/>
+  <path d="M 176 260 L 330 260" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowPurple)"/>
   <circle cx="254" cy="238" r="16" fill="#a855f7"/>
   <text x="254" y="243" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -105,7 +105,7 @@
   <text x="414" y="407" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 
   <!-- Step 3: Attacker → Server (forward request) -->
-  <path d="M 446 275 L 600 275" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 446 275 L 600 275" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="524" cy="253" r="16" fill="#ef4444"/>
   <text x="524" y="258" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 
@@ -115,7 +115,7 @@
   <text x="524" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Attacker → Victim (forwarded response, password stolen) -->
-  <path d="M 334 295 L 176 295" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 334 295 L 176 295" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="254" cy="316" r="16" fill="#ef4444"/>
   <text x="254" y="321" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

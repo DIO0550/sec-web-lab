@@ -84,7 +84,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (upper) — XSSスクリプトを投稿 -->
-  <path d="M 171 240 Q 380 160 589 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 240 Q 380 160 589 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="380" cy="170" r="16" fill="#ef4444"/>
   <text x="380" y="175" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="380" y="160" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">XSSスクリプト投稿</text>
@@ -102,13 +102,13 @@
   <text x="514" y="218" text-anchor="middle" fill="#93c5fd" font-size="9.5" font-weight="600">XSS含むHTML返却</text>
 
   <!-- Step 4: Victim → Attacker (lower curve) — Cookie送信 document.cookie -->
-  <path d="M 324 310 Q 250 400 171 310" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 324 310 Q 250 400 171 310" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="380" r="16" fill="#ef4444"/>
   <text x="248" y="385" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
   <text x="200" y="400" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">Cookie窃取・送信</text>
 
   <!-- Step 5: Attacker → Server (bottom large curve) — 盗んだIDでアクセス -->
-  <path d="M 171 345 Q 380 560 589 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 345 Q 380 560 589 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="380" cy="520" r="16" fill="#ef4444"/>
   <text x="380" y="525" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
   <text x="380" y="546" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">盗んだIDでなりすまし</text>

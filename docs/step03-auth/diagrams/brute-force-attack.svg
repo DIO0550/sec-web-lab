@@ -82,7 +82,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker -> Server (upper curve Q 380,115) — ログイン試行 #1 -->
-  <path d="M 170 220 Q 380 115 380 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 380 115 380 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="260" cy="148" r="16" fill="#ef4444"/>
   <text x="260" y="153" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="310" y="138" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ログイン試行 #1</text>
@@ -94,7 +94,7 @@
   <text x="248" y="236" text-anchor="middle" fill="#93c5fd" font-size="9.5" font-weight="600">認証失敗</text>
 
   <!-- Step 3: Attacker -> Server (Y=282) — ログイン試行 #2...#N -->
-  <path d="M 171 282 L 324 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 282 L 324 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="304" r="16" fill="#ef4444"/>
   <text x="248" y="309" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
   <text x="248" y="296" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ログイン試行 #2...#N</text>
@@ -112,7 +112,7 @@
   </g>
 
   <!-- Step 5: Big lower curve — Attacker gains access -->
-  <path d="M 312 446 C 250 520, 160 460, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 312 446 C 250 520, 160 460, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="230" cy="490" r="16" fill="#ef4444"/>
   <text x="230" y="495" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
   <text x="195" y="520" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">不正アクセス成功</text>
