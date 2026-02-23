@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 840" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/>
@@ -8,7 +8,7 @@
     <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/></marker>
     <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/></marker>
   </defs>
-  <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
+  <rect width="1100" height="840" fill="url(#bgGrad)" rx="12"/>
   <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Rate Limiting — Defense Strategy</text>
   <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">レート制限欠如に対する多層防御</text>
   <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
@@ -148,7 +148,7 @@
   </g>
 
   <!-- Legend -->
-  <g transform="translate(30, 730)">
+  <g transform="translate(30, 800)">
     <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
     <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>
