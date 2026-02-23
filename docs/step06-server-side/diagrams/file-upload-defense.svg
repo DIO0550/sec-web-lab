@@ -1,44 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
+      <stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/>
     </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
-    </filter>
-    <filter id="glowGreen">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
-    </marker>
-    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
-    </marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
+    <filter id="glowGreen"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/></marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/></marker>
   </defs>
-
-  <!-- Background -->
   <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
-
-  <!-- ===== Title ===== -->
   <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">File Upload — Defense Strategy</text>
   <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">ファイルアップロード攻撃に対する多層防御</text>
   <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
   <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
-
-  <!-- ====================================================== -->
-  <!--  ACTORS (2-actor layout)                                -->
-  <!-- ====================================================== -->
 
   <!-- Attacker (dimmed) -->
   <g transform="translate(200, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
     <g transform="translate(0, 10)" opacity="0.45">
       <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
-      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
-      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/><circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
       <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
       <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
     </g>
@@ -46,7 +27,7 @@
     <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Attacker</text>
   </g>
 
-  <!-- Web Server (protected) -->
+  <!-- Server (protected) -->
   <g transform="translate(550, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
@@ -65,132 +46,108 @@
     <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  BLOCKED ARROWS                                         -->
-  <!-- ====================================================== -->
-
-  <!-- Attacker → Server upload (dimmed, blocked) -->
-  <path d="M 256 220 L 440 220" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25" marker-end="url(#arrowRed)"/>
-
-  <!-- Block X on upload path -->
-  <g transform="translate(420, 220)">
+  <path d="M 258 215 L 492 215" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
+  <path d="M 492 250 L 258 250" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <g transform="translate(375, 215)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
-  <!-- Server rejects -->
-  <path d="M 460 250 L 256 250" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)" opacity="0.5"/>
-  <text x="358" y="268" text-anchor="middle" fill="#86efac" font-size="9" font-weight="600">400 Bad Request</text>
-
-  <!-- ====================================================== -->
-  <!--  SECTION DIVIDER + 防御テクニック PILL                   -->
-  <!-- ====================================================== -->
   <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
   <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
   <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE TECHNIQUE CARDS (2x2 grid)                     -->
-  <!-- ====================================================== -->
-
-  <!-- Card 1: 拡張子ホワイトリスト (top-left) -->
+  <!-- Card 1: ファイル種別検証 -->
   <g transform="translate(200, 535)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
-    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">拡張子ホワイトリスト</text>
-    <text x="-78" y="22" fill="#bbf7d0" font-size="9">許可形式(.jpg .png .gif)のみ受理</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">ファイル種別検証</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">拡張子+マジックバイトで二重検証</text>
     <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">ALLOWED = ['.jpg','.png','.gif']</text>
-    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">.html .js .php → 拒否</text>
-    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">入口の門番 -- 第1防御層</text>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">['.jpg','.png'].includes(ext)</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&amp;&amp; validMagicBytes(buf)</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">根本対策 — 第1防御層</text>
   </g>
 
-  <!-- Card 2: マジックバイト検証 (top-right) -->
+  <!-- Card 2: ランダムファイル名 -->
   <g transform="translate(540, 535)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
-    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">マジックバイト検証</text>
-    <text x="-78" y="22" fill="#bbf7d0" font-size="9">ファイル先頭バイトで実際の内容を確認</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">ランダムファイル名</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">元のファイル名を使わず推測を防止</text>
     <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">JPG: FF D8 FF</text>
-    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">PNG: 89 50 4E 47</text>
-    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">拡張子偽装を検出</text>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">crypto.randomUUID() + ext</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">// a1b2c3d4.jpg</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">パストラバーサル・推測防止</text>
   </g>
 
-  <!-- Card 3: 別ドメイン配信 (bottom-left) -->
+  <!-- Card 3: 隔離ストレージ -->
   <g transform="translate(200, 690)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
-    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">別ドメイン配信</text>
-    <text x="-78" y="22" fill="#bbf7d0" font-size="9">同一オリジン実行を防止</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">隔離ストレージ</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">別ドメインから配信しXSSを隔離</text>
     <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
     <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">cdn.example.com/uploads/</text>
     <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Content-Disposition: attachment</text>
-    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">XSS影響をオリジン分離で隔離</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">同一オリジン実行の防止</text>
   </g>
 
-  <!-- Card 4: ランダムファイル名 (bottom-right) -->
+  <!-- Card 4: サイズ制限 -->
   <g transform="translate(540, 690)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
-    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">ランダムファイル名</text>
-    <text x="-78" y="22" fill="#bbf7d0" font-size="9">元のファイル名を使わず推測不可能に</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">サイズ制限</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">アップロードファイルサイズを制限</text>
     <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">crypto.randomUUID() + ext</text>
-    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">→ a1b2c3d4.jpg</text>
-    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">パストラバーサルとファイル名推測を防止</text>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">if (file.size &gt; MAX_SIZE)</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">  return 413 Too Large</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">DoS攻撃・リソース枯渇の防止</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE SIDEBAR (right)                                -->
-  <!-- ====================================================== -->
+  <!-- Sidebar -->
   <g transform="translate(785, 100)">
     <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
     <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
     <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-
     <g transform="translate(18, 64)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">拡張子ホワイトリスト</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">許可された拡張子(.jpg等)のみ</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">受け入れる (入口の門番)</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">ファイル種別検証</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">拡張子+マジックバイトで</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">ファイル内容を二重検証</text>
     </g>
-
     <g transform="translate(18, 130)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">マジックバイト検証</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">ファイルの先頭バイト列で</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">実際の内容を検証 (偽装防止)</text>
-    </g>
-
-    <g transform="translate(18, 196)">
-      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
-      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">別ドメイン配信</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">アプリと異なるオリジンから</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">配信しXSS影響を隔離</text>
-    </g>
-
-    <g transform="translate(18, 262)">
-      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
-      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
       <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">ランダムファイル名</text>
       <text x="28" y="18" fill="#94a3b8" font-size="9">UUIDで保存し、パストラバーサル</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">とファイル名推測を防止</text>
     </g>
-
+    <g transform="translate(18, 196)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">隔離ストレージ</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">アプリと異なるオリジンから</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">配信しXSS影響を隔離</text>
+    </g>
+    <g transform="translate(18, 262)">
+      <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
+      <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">サイズ制限</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">最大ファイルサイズを設定し</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">DoS攻撃・リソース枯渇を防止</text>
+    </g>
     <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
     <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">&#x1F512; 多層防御 (Defense in Depth)</text>
   </g>
 
-  <!-- ===== Legend ===== -->
+  <!-- Legend -->
   <g transform="translate(30, 730)">
     <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
@@ -204,5 +161,4 @@
     <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
     <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
   </g>
-
 </svg>

@@ -1,47 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
+      <stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/>
     </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
-    </filter>
-    <filter id="glowGreen">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
-    </marker>
-    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
-    </marker>
-    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
-    </marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
+    <filter id="glowGreen"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/></marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/></marker>
   </defs>
-
-  <!-- Background -->
   <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
-
-  <!-- ===== Title ===== -->
-  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">CSP — Defense Strategy</text>
-  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">Content Security Policy による多層防御</text>
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Content Security Policy — Defense Strategy</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">コンテンツセキュリティポリシーに対する多層防御</text>
   <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
   <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
 
-  <!-- ====================================================== -->
-  <!--  ACTORS                                                 -->
-  <!-- ====================================================== -->
-
   <!-- Attacker (dimmed) -->
-  <g transform="translate(115, 280)" filter="url(#shadow)">
+  <g transform="translate(200, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
     <g transform="translate(0, 10)" opacity="0.45">
       <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
-      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
-      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/><circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
       <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
       <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
     </g>
@@ -49,8 +27,8 @@
     <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Attacker</text>
   </g>
 
-  <!-- Web Server (protected — green border) -->
-  <g transform="translate(400, 280)" filter="url(#shadow)">
+  <!-- Server (protected) -->
+  <g transform="translate(550, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
       <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -60,160 +38,90 @@
       <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
       <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
     </g>
-    <!-- Shield badge -->
     <g transform="translate(42, -22)">
       <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
       <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
     </g>
     <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">Webサーバー</text>
-    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">CSP Enabled</text>
+    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
   </g>
 
-  <!-- Victim Browser (protected — green border) -->
-  <g transform="translate(645, 280)" filter="url(#shadow)">
-    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
-    <g transform="translate(0, 10)">
-      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
-      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
-      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
-      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
-      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
-      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
-    </g>
-    <!-- Shield badge -->
-    <g transform="translate(42, -22)">
-      <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
-      <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
-    </g>
-    <text x="0" y="72" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">被害者</text>
-    <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected Browser</text>
-  </g>
-
-  <!-- ====================================================== -->
-  <!--  BLOCKED ARROWS                                         -->
-  <!-- ====================================================== -->
-
-  <!-- Attacker → Server (dimmed, XSS still attempted) -->
-  <path d="M 171 270 L 342 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
-
-  <!-- Server → Victim with CSP header (green, legitimate) -->
-  <path d="M 458 290 L 589 290" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)" opacity="0.7"/>
-  <text x="524" y="285" text-anchor="middle" fill="#86efac" font-size="8">CSPヘッダー付きレスポンス</text>
-
-  <!-- Script execution BLOCKED at browser -->
-  <path d="M 656 375 L 656 420" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.2"/>
-  <!-- Green block X -->
-  <g transform="translate(656, 430)">
-    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
-    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-  </g>
-  <text x="656" y="458" text-anchor="middle" fill="#86efac" font-size="8">スクリプト実行拒否</text>
-
-  <!-- Data exfil BLOCKED — route FAR below everything -->
-  <path d="M 600 500 C 550 680, 180 680, 115 380" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
-  <!-- Green block X on the curve -->
-  <g transform="translate(350, 672)">
+  <path d="M 258 215 L 492 215" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
+  <path d="M 492 250 L 258 250" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <g transform="translate(375, 215)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE CARDS (2x2 grid, 250x120px each)              -->
-  <!-- ====================================================== -->
+  <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
+  <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 
-  <!-- Card 1: script-src制限 (top-left) -->
-  <g transform="translate(160, 490)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Shield icon -->
-    <g transform="translate(-88, 30)">
-      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">script-src制限</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">自サイトのスクリプトのみ許可</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Content-Security-Policy:</text>
-    <text x="0" y="68" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">script-src 'self'</text>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">外部スクリプトの読込を完全ブロック</text>
-    <text x="0" y="98" text-anchor="middle" fill="#4ade80" font-size="8">インラインスクリプトも禁止</text>
+  <!-- Card 1: CSPヘッダー設定 (200,535) -->
+  <g transform="translate(200, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">CSPヘッダー設定 ★</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">script-srcで実行可能なスクリプトを制限</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Content-Security-Policy:</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">script-src 'self'</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">外部・インラインスクリプトを完全ブロック</text>
   </g>
 
-  <!-- Card 2: nonce/hash方式 (top-right) -->
-  <g transform="translate(440, 490)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Key icon -->
-    <g transform="translate(-88, 30)">
-      <circle cx="0" cy="-4" r="6" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <line x1="0" y1="2" x2="0" y2="14" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/>
-      <line x1="0" y1="8" x2="5" y2="8" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/>
-      <line x1="0" y1="12" x2="4" y2="12" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">nonce/hash方式</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">許可済みスクリプトのみ実行</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">script-src 'nonce-abc123'</text>
-    <text x="0" y="68" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt;script nonce="abc123"&gt;</text>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">リクエスト毎にnonceを生成し</text>
-    <text x="0" y="98" text-anchor="middle" fill="#4ade80" font-size="8">一致するスクリプトのみ許可</text>
+  <!-- Card 2: nonce/hash方式 (540,535) -->
+  <g transform="translate(540, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">nonce/hash方式</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">許可済みスクリプトのみ実行許可</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">script-src 'nonce-abc123'</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt;script nonce="abc123"&gt;</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">リクエスト毎にnonceを生成し一致のみ許可</text>
   </g>
 
-  <!-- Card 3: report-uri設定 (bottom-left) -->
-  <g transform="translate(160, 630)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Eye/monitor icon -->
-    <g transform="translate(-88, 30)">
-      <ellipse cx="0" cy="0" rx="12" ry="7" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <circle cx="0" cy="0" r="4" fill="none" stroke="#22c55e" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="1.5" fill="#22c55e"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">report-uri設定</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">CSP違反をサーバーに報告</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">report-uri /csp-report</text>
-    <text x="0" y="68" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">report-to csp-endpoint</text>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">違反検知でアラートを発報</text>
-    <text x="0" y="98" text-anchor="middle" fill="#4ade80" font-size="8">攻撃の兆候を早期に把握</text>
+  <!-- Card 3: report-uri監視 (200,690) -->
+  <g transform="translate(200, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">report-uri監視</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">CSP違反をサーバーに報告・監視</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">report-uri /csp-report</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">report-to csp-endpoint</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">違反検知でアラートを発報し攻撃兆候を早期把握</text>
   </g>
 
-  <!-- Card 4: default-src設定 (bottom-right) -->
-  <g transform="translate(440, 630)" filter="url(#shadow)">
-    <rect x="-125" y="-10" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Lock icon -->
-    <g transform="translate(-88, 30)">
-      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
-      <line x1="0" y1="7" x2="0" y2="10" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/>
-    </g>
-    <text x="10" y="8" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">default-src設定</text>
-    <text x="10" y="24" text-anchor="middle" fill="#bbf7d0" font-size="9">全リソースのデフォルト制限</text>
-    <line x1="-110" y1="34" x2="110" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">default-src 'self'</text>
-    <text x="0" y="68" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">img-src 'self' data:</text>
-    <text x="0" y="84" text-anchor="middle" fill="#4ade80" font-size="8">明示的に許可されないリソースは</text>
-    <text x="0" y="98" text-anchor="middle" fill="#4ade80" font-size="8">全てブロックされる</text>
+  <!-- Card 4: strict-dynamic (540,690) -->
+  <g transform="translate(540, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">strict-dynamic</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">信頼チェーンでスクリプト許可を伝播</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">script-src 'strict-dynamic'</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">'nonce-xxx'</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">nonce付きスクリプトが読み込む子スクリプトも許可</text>
   </g>
 
-  <!-- ====================================================== -->
-  <!--  DEFENSE SIDEBAR                                        -->
-  <!-- ====================================================== -->
+  <!-- Sidebar -->
   <g transform="translate(785, 100)">
     <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
     <text x="148" y="28" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">防御レイヤー一覧</text>
     <line x1="14" y1="42" x2="281" y2="42" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-
-    <!-- Layer 1 -->
     <g transform="translate(18, 64)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">script-src制限</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">自サイトのスクリプトのみ許可</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">外部・インラインJSを遮断</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">CSPヘッダー設定</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">script-src 'self' で外部スクリプトを遮断</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">インラインスクリプトも禁止</text>
     </g>
-
-    <!-- Layer 2 -->
     <g transform="translate(18, 130)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">2</text>
@@ -221,30 +129,25 @@
       <text x="28" y="18" fill="#94a3b8" font-size="9">リクエスト毎のnonceで</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">正規スクリプトのみ許可</text>
     </g>
-
-    <!-- Layer 3 -->
     <g transform="translate(18, 196)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">3</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">report-uri設定</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">report-uri監視</text>
       <text x="28" y="18" fill="#94a3b8" font-size="9">CSP違反をサーバーに報告</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">攻撃の兆候を早期検知</text>
     </g>
-
-    <!-- Layer 4 -->
     <g transform="translate(18, 262)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">4</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">default-src設定</text>
-      <text x="28" y="18" fill="#94a3b8" font-size="9">全リソースにデフォルトの</text>
-      <text x="28" y="31" fill="#94a3b8" font-size="9">制限を適用 (フォールバック)</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">strict-dynamic</text>
+      <text x="28" y="18" fill="#94a3b8" font-size="9">信頼チェーンでスクリプト許可を</text>
+      <text x="28" y="31" fill="#94a3b8" font-size="9">伝播し柔軟かつ安全に運用</text>
     </g>
-
     <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">&#x1F512; 多層防御 (Defense in Depth)</text>
   </g>
 
-  <!-- ===== Legend ===== -->
+  <!-- Legend -->
   <g transform="translate(30, 730)">
     <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
@@ -258,5 +161,4 @@
     <rect x="282" y="10" width="16" height="16" rx="3" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
     <text x="304" y="22" fill="#86efac" font-size="9">防御機構</text>
   </g>
-
 </svg>
