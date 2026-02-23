@@ -9,8 +9,6 @@
     <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/></marker>
   </defs>
   <rect width="1100" height="780" fill="url(#bgGrad)" rx="12"/>
-
-  <!-- Title -->
   <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Stack Trace Exposure — Defense Strategy</text>
   <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">スタックトレース露出に対する多層防御</text>
   <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
@@ -48,7 +46,6 @@
     <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
   </g>
 
-  <!-- Blocked Arrow + Block Mark -->
   <path d="M 258 215 L 492 215" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
   <path d="M 492 250 L 258 250" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
   <g transform="translate(375, 215)">
@@ -57,12 +54,11 @@
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
-  <!-- Defense Technique Header -->
   <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
   <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
   <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 
-  <!-- Card 1: 本番エラーハンドラ -->
+  <!-- Card 1: 本番エラーハンドラ (200,535) -->
   <g transform="translate(200, 535)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
@@ -75,7 +71,7 @@
     <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">★ 根本対策（最重要）</text>
   </g>
 
-  <!-- Card 2: NODE_ENV=production -->
+  <!-- Card 2: NODE_ENV=production (540,535) -->
   <g transform="translate(540, 535)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
@@ -88,7 +84,7 @@
     <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">フレームワーク組込みの保護</text>
   </g>
 
-  <!-- Card 3: カスタムエラーページ -->
+  <!-- Card 3: カスタムエラーページ (200,690) -->
   <g transform="translate(200, 690)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
@@ -101,7 +97,7 @@
     <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">技術的詳細を一切表示しない</text>
   </g>
 
-  <!-- Card 4: エラー監視 -->
+  <!-- Card 4: エラー監視 (540,690) -->
   <g transform="translate(540, 690)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
@@ -148,7 +144,7 @@
       <text x="28" y="31" fill="#94a3b8" font-size="9">開発チームのみアクセス可能</text>
     </g>
     <line x1="14" y1="306" x2="281" y2="306" stroke="#22c55e" stroke-width="0.5" opacity="0.5"/>
-    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">🔒 多層防御 (Defense in Depth)</text>
+    <text x="148" y="328" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600">&#x1F512; 多層防御 (Defense in Depth)</text>
   </g>
 
   <!-- Legend -->
