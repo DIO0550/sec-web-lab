@@ -274,31 +274,57 @@ SQL Injection等で使用。
 </g>
 ```
 
-### 防御カード（中サイズ）
+### 防御テクニックカード（統一サイズ・グリッド配置）
+
+全防御カードは同一サイズ（250×120px）で統一し、グリッド配置すること。サイズがバラバラだと図の統一感が崩れる。
+
+#### セクションヘッダー
+
+グリッドの上に配置し、攻撃フロー部分と視覚的に分離する。
 
 ```xml
-<g transform="translate({CX}, {Y})" filter="url(#shadow)">
-  <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-  <!-- アイコン: translate(-60, 22) -->
-  <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">{防御名}</text>
-  <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">{説明}</text>
-  <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-  <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">{コード例1}</text>
-  <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">{コード例2}</text>
+<!-- 区切り線 + pill型バッジ -->
+<line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
+<rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+<text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
+```
+
+#### カードテンプレート
+
+```xml
+<g transform="translate({CX}, {CY})" filter="url(#shadow)">
+  <!-- カード背景 (統一: 250x120) -->
+  <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+  <!-- 番号バッジ -->
+  <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+  <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">{N}</text>
+  <!-- タイトル・説明 -->
+  <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">{防御名}</text>
+  <text x="-78" y="22" fill="#bbf7d0" font-size="9">{説明}</text>
+  <!-- 区切り線 -->
+  <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+  <!-- コード例・詳細 (中央揃え) -->
+  <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">{コード例1}</text>
+  <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">{コード例2}</text>
+  <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">{補足テキスト (任意)}</text>
 </g>
 ```
 
-### 防御カード（大サイズ）
+#### グリッド配置例
 
-```xml
-<g transform="translate({CX}, {Y})" filter="url(#shadow)">
-  <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-  <!-- アイコン: translate(-112, 14) -->
-  <text x="10" y="-2" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">{防御名}</text>
-  <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">{説明}</text>
-  <line x1="-136" y1="24" x2="136" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-  <text x="10" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="monospace">{コード例}</text>
-</g>
+```
+2×2グリッド (4枚の場合):
+  Column1: CX=200   Column2: CX=540
+  Row1:    CY=535   Row2:    CY=690
+  列間隔: 340px (カード幅250 + 余白90)
+  行間隔: 155px (カード高120 + 余白35)
+
+2枚横並び:
+  CX=200, CX=540  CY=535
+
+3枚 (2+1):
+  Row1: CX=200, CX=540  CY=535
+  Row2: CX=370          CY=690 (中央寄せ)
 ```
 
 ---
