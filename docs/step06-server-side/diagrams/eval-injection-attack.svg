@@ -1,0 +1,264 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f97316"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">eval() Injection Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">eval()インジェクション — 攻撃の流れ</text>
+  <rect x="295" y="66" width="170" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP A03 — Injection</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker -->
+  <g transform="translate(115, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Web Server -->
+  <g transform="translate(380, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 14)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="86" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">Vulnerable App</text>
+  </g>
+
+  <!-- Server Process (Node.js internal) -->
+  <g transform="translate(645, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#f97316" stroke-width="1.5"/>
+    <g transform="translate(0, 8)">
+      <!-- Terminal window -->
+      <rect x="-22" y="-16" width="44" height="34" rx="4" fill="none" stroke="#f97316" stroke-width="1.5"/>
+      <!-- Title bar dots -->
+      <circle cx="-15" cy="-10" r="1.8" fill="#ef4444" opacity="0.7"/>
+      <circle cx="-9" cy="-10" r="1.8" fill="#f59e0b" opacity="0.7"/>
+      <circle cx="-3" cy="-10" r="1.8" fill="#22c55e" opacity="0.7"/>
+      <!-- Title bar separator -->
+      <line x1="-22" y1="-5" x2="22" y2="-5" stroke="#f97316" stroke-width="0.8" opacity="0.5"/>
+      <!-- eval() text -->
+      <text x="0" y="6" text-anchor="middle" fill="#f97316" font-size="9" font-family="'Fira Code', monospace" font-weight="700">eval()</text>
+      <!-- Second line -->
+      <text x="0" y="16" text-anchor="middle" fill="#fdba74" font-size="7" font-family="'Fira Code', monospace">// RCE</text>
+    </g>
+    <text x="0" y="72" text-anchor="middle" fill="#fdba74" font-size="13" font-weight="700">サーバープロセス</text>
+    <text x="0" y="86" text-anchor="middle" fill="#f97316" font-size="9.5" opacity="0.7">Node.js Process</text>
+  </g>
+
+  <!-- Process boundary (dashed line between server and process) -->
+  <line x1="510" y1="160" x2="510" y2="395" stroke="#f97316" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+  <text x="510" y="150" text-anchor="middle" fill="#f97316" font-size="9" opacity="0.6">プロセス内部</text>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (悪意ある式の送信) -->
+  <path d="M 171 240 L 322 240" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <circle cx="247" cy="218" r="16" fill="#ef4444"/>
+  <text x="247" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+
+  <!-- Step 2: Server → Process (eval()に渡す) -->
+  <path d="M 438 240 L 587 240" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="513" cy="218" r="16" fill="#3b82f6"/>
+  <text x="513" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+
+  <!-- Step 3: Process executes (eval() arrow down to result box) -->
+  <path d="M 656 345 L 656 410" fill="none" stroke="#f97316" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowOrange)"/>
+  <circle cx="680" cy="378" r="16" fill="#f97316"/>
+  <text x="680" y="383" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Step 4: Process → Server (結果返却) -->
+  <path d="M 587 282 L 438 282" fill="none" stroke="#f97316" stroke-width="2.2" marker-end="url(#arrowOrange)"/>
+  <circle cx="513" cy="304" r="16" fill="#f97316"/>
+  <text x="513" y="309" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+
+  <!-- Step 5: Server → Attacker (データ返却 — RCE達成) -->
+  <path d="M 322 282 L 171 282" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="247" cy="304" r="16" fill="#3b82f6"/>
+  <text x="247" y="309" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+
+  <!-- ===== Executed code result box ===== -->
+  <g transform="translate(645, 462)" filter="url(#shadow)">
+    <rect x="-68" y="-28" width="136" height="78" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <rect x="-58" y="-20" width="116" height="13" rx="3" fill="#0f172a"/>
+    <circle cx="-48" cy="-14" r="2.5" fill="#ef4444"/>
+    <circle cx="-40" cy="-14" r="2.5" fill="#f59e0b"/>
+    <circle cx="-32" cy="-14" r="2.5" fill="#22c55e"/>
+    <text x="0" y="4" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">任意コード実行結果</text>
+    <text x="0" y="18" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace">process.env.SECRET</text>
+    <text x="0" y="30" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Fira Code', monospace">→ "sk-4f8a2b..."</text>
+    <text x="0" y="42" text-anchor="middle" fill="#ef4444" font-size="8">環境変数・機密情報が漏洩</text>
+  </g>
+
+  <!-- ===== Vulnerability callout (below server) ===== -->
+  <g transform="translate(380, 420)" filter="url(#shadow)">
+    <rect x="-130" y="-18" width="260" height="68" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ 脆弱性: ユーザー入力をeval()に直接渡す</text>
+    <text x="0" y="16" text-anchor="middle" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">const result = eval(userInput)</text>
+    <text x="0" y="30" text-anchor="middle" fill="#fed7aa" font-size="8.5">ユーザー入力がそのままeval()に渡されている</text>
+    <text x="0" y="42" text-anchor="middle" fill="#fbbf24" font-size="8">任意のJavaScriptコードが実行可能</text>
+  </g>
+
+  <!-- ===== Malicious URL example ===== -->
+  <g transform="translate(380, 518)">
+    <rect x="-220" y="-14" width="440" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
+      <tspan fill="#64748b">GET </tspan><tspan fill="#93c5fd">/api/calc?expr=</tspan><tspan fill="#ef4444">process.env.SECRET</tspan>
+    </text>
+  </g>
+
+  <!-- ===== Additional payload examples ===== -->
+  <g transform="translate(380, 560)">
+    <rect x="-220" y="-14" width="440" height="46" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="2" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace">
+      <tspan fill="#ef4444">require('child_process').execSync('cat /etc/passwd')</tspan>
+    </text>
+    <text x="0" y="18" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="'Fira Code', monospace">
+      <tspan fill="#ef4444">require('fs').readFileSync('/etc/shadow','utf8')</tspan>
+    </text>
+    <text x="0" y="30" text-anchor="middle" fill="#fca5a5" font-size="7.5">eval() により Node.js の全APIにアクセス可能</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="360" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">悪意ある式の送信</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">計算APIのexprパラメータに</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">process.env.SECRET を送信</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="124" r="13" fill="#3b82f6"/>
+    <text x="34" y="129" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="120" fill="#f8fafc" font-size="11.5" font-weight="600">eval()への入力値渡し</text>
+    <text x="56" y="136" fill="#94a3b8" font-size="9.5">サーバーが入力値をそのまま</text>
+    <text x="56" y="149" fill="#94a3b8" font-size="9.5">eval()の引数に渡す（脆弱なコード）</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="180" r="13" fill="#f97316"/>
+    <text x="34" y="185" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="176" fill="#f8fafc" font-size="11.5" font-weight="600">任意コードの実行</text>
+    <text x="56" y="192" fill="#94a3b8" font-size="9.5">eval()がJavaScriptとして解釈・</text>
+    <text x="56" y="205" fill="#94a3b8" font-size="9.5">実行し、環境変数を読み取る</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="236" r="13" fill="#f97316"/>
+    <text x="34" y="241" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="11.5" font-weight="600">実行結果の返却</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9.5">eval()の戻り値がサーバーに返り、</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9.5">レスポンスボディとして構成される</text>
+
+    <!-- Step 5 -->
+    <circle cx="34" cy="292" r="13" fill="#3b82f6"/>
+    <text x="34" y="297" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+    <text x="56" y="288" fill="#f8fafc" font-size="11.5" font-weight="600">RCE達成・機密情報取得</text>
+    <text x="56" y="304" fill="#94a3b8" font-size="9.5">攻撃者が環境変数やファイル内容を</text>
+    <text x="56" y="317" fill="#94a3b8" font-size="9.5">取得し、さらなる攻撃に利用</text>
+
+    <!-- Key insight -->
+    <line x1="16" y1="336" x2="289" y2="336" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="352" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="600">任意のNode.jsコードが実行可能 (RCE)</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="660" x2="1070" y2="660" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="685" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">使用される攻撃テクニック</text>
+
+  <!-- Card: eval()実行 -->
+  <g transform="translate(165, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <text x="-94" y="24" text-anchor="middle" fill="#ef4444" font-size="10" font-family="'Fira Code', monospace" font-weight="700">{ }</text>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">eval()実行</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">任意のJS式をサーバーで実行</text>
+  </g>
+
+  <!-- Card: 環境変数窃取 -->
+  <g transform="translate(465, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <rect x="-8" y="-8" width="16" height="16" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <text x="0" y="4" text-anchor="middle" fill="#ef4444" font-size="7" font-weight="700">ENV</text>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">環境変数窃取</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">process.envからAPIキー等を取得</text>
+  </g>
+
+  <!-- Card: リモートコード実行 -->
+  <g transform="translate(765, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <rect x="-7" y="-6" width="14" height="12" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <text x="0" y="2" text-anchor="middle" fill="#ef4444" font-size="5.5" font-family="'Fira Code', monospace">$</text>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">リモートコード実行</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">child_processでOSコマンド実行</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 485)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">サーバー応答</text>
+    <line x1="14" y1="54" x2="44" y2="54" stroke="#f97316" stroke-width="2"/>
+    <text x="52" y="58" fill="#fdba74" font-size="9.5">プロセス内部通信</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+  </g>
+
+</svg>
