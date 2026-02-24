@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 900" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 840" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0f172a"/>
@@ -20,20 +20,20 @@
   </defs>
 
   <!-- Background -->
-  <rect width="1100" height="900" fill="url(#bgGrad)" rx="12"/>
+  <rect width="1100" height="840" fill="url(#bgGrad)" rx="12"/>
 
   <!-- ===== Title ===== -->
-  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Directory Listing — Defense Strategy</text>
-  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">ディレクトリリスティングに対する多層防御</text>
-  <rect x="310" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
-  <text x="380" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
+  <text x="385" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Directory Listing — Defense Strategy</text>
+  <text x="385" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">ディレクトリリスティングに対する多層防御</text>
+  <rect x="315" y="66" width="140" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="385" y="80" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Multi-Layer Defense</text>
 
   <!-- ====================================================== -->
   <!--  ACTORS                                                 -->
   <!-- ====================================================== -->
 
   <!-- Attacker (dimmed) -->
-  <g transform="translate(200, 200)" filter="url(#shadow)">
+  <g transform="translate(200, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5" opacity="0.45"/>
     <g transform="translate(0, 10)" opacity="0.45">
       <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
@@ -47,7 +47,7 @@
   </g>
 
   <!-- Web Server (protected) -->
-  <g transform="translate(550, 200)" filter="url(#shadow)">
+  <g transform="translate(550, 230)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
       <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -70,26 +70,26 @@
   <!-- ====================================================== -->
 
   <!-- Attacker → Server: request (dimmed) -->
-  <path d="M 258 190 L 449 190" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
+  <path d="M 258 220 L 449 220" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
 
   <!-- Block X -->
-  <g transform="translate(465, 190)">
+  <g transform="translate(465, 220)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
   <!-- Server → Attacker: 403/404 (green safe) -->
-  <path d="M 492 220 L 258 220" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <path d="M 492 250 L 258 250" fill="none" stroke="#22c55e" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
 
   <!-- 403 label -->
-  <g transform="translate(375, 240)">
+  <g transform="translate(375, 270)">
     <rect x="-42" y="-10" width="84" height="20" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
     <text x="0" y="4" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">403 Forbidden</text>
   </g>
 
   <!-- Attacker frustrated -->
-  <g transform="translate(200, 370)" filter="url(#shadow)">
+  <g transform="translate(200, 390)" filter="url(#shadow)">
     <rect x="-95" y="-18" width="190" height="52" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
     <text x="0" y="0" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600" opacity="0.5">ファイル一覧が取得不可</text>
     <text x="0" y="16" text-anchor="middle" fill="#94a3b8" font-size="9" opacity="0.4">ディレクトリリスティング無効</text>
@@ -102,24 +102,24 @@
 
   <!-- Section divider & header -->
   <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
-  <rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
-  <text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
+  <rect x="315" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="385" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 
   <!-- ── Card 1: autoindex 無効化 ── -->
-  <g transform="translate(200, 535)" filter="url(#shadow)">
+  <g transform="translate(215, 525)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
     <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">autoindex 無効化</text>
     <text x="-78" y="22" fill="#bbf7d0" font-size="9">ディレクトリ一覧の生成をサーバー設定で禁止</text>
     <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="54" text-anchor="middle" fill="#4ade80" font-size="8.5">Nginx / Apache で明示的に無効化</text>
-    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">autoindex off;</text>
-    <text x="0" y="88" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Options -Indexes</text>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">autoindex off;</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Options -Indexes</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">★ 根本対策（最重要）</text>
   </g>
 
   <!-- ── Card 2: ファイル拡張子制限 ── -->
-  <g transform="translate(540, 535)" filter="url(#shadow)">
+  <g transform="translate(555, 525)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
@@ -131,7 +131,7 @@
   </g>
 
   <!-- ── Card 3: 静的ファイル分離 ── -->
-  <g transform="translate(200, 690)" filter="url(#shadow)">
+  <g transform="translate(215, 680)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
@@ -144,7 +144,7 @@
   </g>
 
   <!-- ── Card 4: index.html フォールバック ── -->
-  <g transform="translate(540, 690)" filter="url(#shadow)">
+  <g transform="translate(555, 680)" filter="url(#shadow)">
     <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
     <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
     <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
@@ -167,7 +167,7 @@
     <g transform="translate(18, 64)">
       <rect x="0" y="-8" width="18" height="18" rx="4" fill="#22c55e" opacity="0.15"/>
       <text x="9" y="6" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">1</text>
-      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">autoindex 無効化</text>
+      <text x="28" y="2" fill="#f8fafc" font-size="11" font-weight="600">autoindex 無効化 ★根本対策</text>
       <text x="28" y="18" fill="#94a3b8" font-size="9">ディレクトリ一覧の生成を</text>
       <text x="28" y="31" fill="#94a3b8" font-size="9">サーバー設定で明示的に禁止</text>
     </g>
@@ -204,7 +204,7 @@
   </g>
 
   <!-- ===== Legend ===== -->
-  <g transform="translate(30, 852)">
+  <g transform="translate(205, 800)">
     <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
     <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>

@@ -83,14 +83,14 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (down, left side) — 悪意ある入力 -->
-  <path d="M 355 285 L 355 350" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 355 285 L 355 350" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="325" cy="318" r="16" fill="#ef4444"/>
   <text x="325" y="323" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
   <!-- Step 2: Server internal — SQL文構築 (shown as code box) -->
 
   <!-- Step 3: Server → DB (down, left side) — 改ざんクエリ送信 -->
-  <path d="M 355 505 L 355 570" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 355 505 L 355 570" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="325" cy="538" r="16" fill="#ef4444"/>
   <text x="325" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 

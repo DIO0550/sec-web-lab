@@ -74,13 +74,13 @@
   </g>
 
   <!-- Step 1: Request A (upper arrow) -->
-  <path d="M 171 230 L 318 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 230 L 318 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="245" cy="208" r="16" fill="#ef4444"/>
   <text x="245" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="245" y="198" text-anchor="middle" fill="#fca5a5" font-size="8">リクエストA</text>
 
   <!-- Step 1b: Request B (lower arrow, slightly offset) -->
-  <path d="M 171 272 L 318 272" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 272 L 318 272" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="245" cy="294" r="16" fill="#ef4444"/>
   <text x="245" y="299" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="245" y="318" text-anchor="middle" fill="#fca5a5" font-size="8">リクエストB</text>
@@ -98,7 +98,7 @@
   <text x="510" y="324" text-anchor="middle" fill="#fcd34d" font-size="8">→ 100円 (両方同じ値)</text>
 
   <!-- Step 4: Server → DB UPDATE (both decrement) -->
-  <path d="M 438 345 Q 510 390 583 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 438 345 Q 510 390 583 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowRed)"/>
   <circle cx="510" cy="385" r="16" fill="#ef4444"/>
   <text x="510" y="390" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
@@ -113,7 +113,7 @@
   </g>
 
   <!-- Result arrow back to attacker -->
-  <path d="M 260 548 C 200 620, 120 600, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 260 548 C 200 620, 120 600, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="160" cy="600" r="16" fill="#ef4444"/>
   <text x="160" y="605" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

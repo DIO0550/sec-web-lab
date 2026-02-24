@@ -283,10 +283,10 @@ SQL Injection等で使用。
 グリッドの上に配置し、攻撃フロー部分と視覚的に分離する。
 
 ```xml
-<!-- 区切り線 + pill型バッジ -->
+<!-- 区切り線 + pill型バッジ (中心 x=385 に揃える) -->
 <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
-<rect x="305" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
-<text x="375" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
+<rect x="315" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+<text x="385" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
 ```
 
 #### カードテンプレート
@@ -314,17 +314,18 @@ SQL Injection等で使用。
 
 ```
 2×2グリッド (4枚の場合):
-  Column1: CX=200   Column2: CX=540
+  Column1: CX=215   Column2: CX=555
   Row1:    CY=535   Row2:    CY=690
   列間隔: 340px (カード幅250 + 余白90)
   行間隔: 155px (カード高120 + 余白35)
+  グリッド中心: (215+555)/2 = 385 = コンテンツ領域中心
 
 2枚横並び:
-  CX=200, CX=540  CY=535
+  CX=215, CX=555  CY=535
 
 3枚 (2+1):
-  Row1: CX=200, CX=540  CY=535
-  Row2: CX=370          CY=690 (中央寄せ)
+  Row1: CX=215, CX=555  CY=535
+  Row2: CX=385          CY=690 (コンテンツ領域中心)
 ```
 
 ---
@@ -415,7 +416,7 @@ URLやリクエスト例の表示。
 ### 対策図用
 
 ```xml
-<g transform="translate(30, 730)">
+<g transform="translate(205, 800)">
   <rect x="0" y="0" width="360" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
   <line x1="14" y1="18" x2="44" y2="18" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.3"/>
   <text x="52" y="22" fill="#fca5a5" font-size="9" opacity="0.6">遮断された攻撃</text>

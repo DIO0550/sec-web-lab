@@ -84,7 +84,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (upper curve - 辞書攻撃開始) -->
-  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="150" r="16" fill="#ef4444"/>
   <text x="248" y="155" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -99,12 +99,12 @@
   <text x="248" y="265" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 
   <!-- Step 4: Attacker → Server (line Y=282 - 正しいパスワードがヒット) -->
-  <path d="M 171 282 L 324 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 282 L 324 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="298" r="16" fill="#ef4444"/>
   <text x="248" y="303" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Server → Victim (lower curve - 不正ログイン) -->
-  <path d="M 436 310 Q 540 430 589 310" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 436 310 Q 540 430 589 310" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="514" cy="410" r="16" fill="#ef4444"/>
   <text x="514" y="415" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

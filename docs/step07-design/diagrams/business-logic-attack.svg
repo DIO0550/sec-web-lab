@@ -83,7 +83,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (upper curve - 負の数量で注文) -->
-  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 250 135 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="150" r="16" fill="#ef4444"/>
   <text x="248" y="155" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -93,7 +93,7 @@
   <text x="404" y="383" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 
   <!-- Step 3: Server → DB (不正な値が保存される) Y=282 -->
-  <path d="M 436 282 L 589 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 436 282 L 589 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="514" cy="260" r="16" fill="#ef4444"/>
   <text x="514" y="265" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 
@@ -103,7 +103,7 @@
   <text x="514" y="223" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
   <!-- Step 5: Attacker benefits (lower curve back) -->
-  <path d="M 600 480 C 520 620, 200 620, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 600 480 C 520 620, 200 620, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="330" cy="610" r="16" fill="#ef4444"/>
   <text x="330" y="615" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

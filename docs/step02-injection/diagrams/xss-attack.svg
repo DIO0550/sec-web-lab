@@ -84,7 +84,7 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Victim (big curve above) -->
-  <path d="M 170 220 Q 380 115 590 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 170 220 Q 380 115 590 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="380" cy="136" r="16" fill="#ef4444"/>
   <text x="380" y="141" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
@@ -118,7 +118,7 @@
   <!-- Step 5: Stolen data → Attacker
        CRITICAL: Route this arrow FAR below all content boxes
        Start from bottom of browser box, curve down to Y=620, then up to attacker -->
-  <path d="M 600 532 C 550 640, 200 640, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 600 532 C 550 640, 200 640, 115 345" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="340" cy="628" r="16" fill="#ef4444"/>
   <text x="340" y="633" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
 

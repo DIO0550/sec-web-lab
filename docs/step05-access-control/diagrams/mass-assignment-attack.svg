@@ -86,12 +86,12 @@
   <!-- ====================================================== -->
 
   <!-- Step 1: Attacker → Server (DevToolsでフォーム構造を確認) Y=230 -->
-  <path d="M 171 230 L 342 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 230 L 342 230" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="256" cy="208" r="16" fill="#ef4444"/>
   <text x="256" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
   <!-- Step 2: Attacker → Server (role追加リクエスト) Y=265 -->
-  <path d="M 171 265 L 342 265" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 171 265 L 342 265" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="256" cy="287" r="16" fill="#ef4444"/>
   <text x="256" y="292" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 
@@ -102,7 +102,7 @@
 
   <!-- Step 4: Database → Server → Attacker (role=admin保存完了) -->
   <path d="M 587 275 L 458 275" fill="none" stroke="#f59e0b" stroke-width="2.2" marker-end="url(#arrowYellow)"/>
-  <path d="M 342 290 L 171 290" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" filter="url(#glow)"/>
+  <path d="M 342 290 L 171 290" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="522" cy="297" r="16" fill="#f59e0b"/>
   <text x="522" y="302" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
 
