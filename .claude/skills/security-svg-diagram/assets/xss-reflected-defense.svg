@@ -46,7 +46,7 @@
     <text x="0" y="86" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.35">Attacker</text>
   </g>
 
-  <!-- Web Server (protected — green border) -->
+  <!-- Web Server (protected) -->
   <g transform="translate(400, 280)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 14)">
@@ -57,7 +57,6 @@
       <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
       <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
     </g>
-    <!-- Shield badge -->
     <g transform="translate(42, -22)">
       <path d="M0,-9 L9,-4 L9,3 Q9,9 0,12 Q-9,9 -9,3 L-9,-4 Z" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1.2"/>
       <polyline points="-3,2 -1,5 5,-2" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
@@ -66,7 +65,7 @@
     <text x="0" y="86" text-anchor="middle" fill="#22c55e" font-size="9.5" opacity="0.7">Protected App</text>
   </g>
 
-  <!-- Victim (protected — green border) -->
+  <!-- Victim (protected) -->
   <g transform="translate(645, 280)" filter="url(#shadow)">
     <rect x="-56" y="-30" width="112" height="125" rx="12" fill="#1e1b2e" stroke="#22c55e" stroke-width="1.5"/>
     <g transform="translate(0, 10)">
@@ -86,113 +85,86 @@
   </g>
 
   <!-- ====================================================== -->
-  <!--  BLOCKED ARROWS (dimmed attack flow)                    -->
+  <!--  BLOCKED ARROWS                                         -->
   <!-- ====================================================== -->
 
-  <!-- Step 1 arrow: Attacker → Victim (dimmed, still happens) -->
+  <!-- Step 1: Attacker → Victim (dimmed curve — URL still sent) -->
   <path d="M 170 250 Q 380 145 590 250" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowRed)" opacity="0.25"/>
 
-  <!-- Step 2 arrow: Victim → Server (dimmed) -->
+  <!-- Step 2: Victim → Server (dimmed — request still arrives) -->
   <path d="M 589 270 L 458 270" fill="none" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowPurple)" opacity="0.35"/>
 
-  <!-- Step 3: Server response BLOCKED — short dashed line with X -->
+  <!-- Step 3: Server → Victim response BLOCKED -->
   <path d="M 458 300 L 550 300" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.25"/>
-  <!-- Green block X -->
   <g transform="translate(562, 300)">
     <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
     <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
   </g>
 
-  <!-- Step 5: Data exfil BLOCKED — route FAR below everything -->
-  <path d="M 600 500 C 550 700, 180 700, 115 380" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" opacity="0.15"/>
-  <!-- Green block X on the curve -->
-  <g transform="translate(350, 690)">
-    <circle cx="0" cy="0" r="16" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
-    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- ====================================================== -->
+  <!--  DEFENSE TECHNIQUES (grid layout)                       -->
+  <!-- ====================================================== -->
+
+  <!-- Section header -->
+  <line x1="60" y1="448" x2="710" y2="448" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/>
+  <rect x="315" y="435" width="140" height="26" rx="13" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="385" y="453" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">防御テクニック</text>
+
+  <!-- Card 1: WAF -->
+  <g transform="translate(215, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">1</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">WAF (Web Application FW)</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">不正パターンを通信レベルで検知・遮断</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt;script&gt; → 検知 → ブロック</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">// ネットワーク層で遮断</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">アプリ到達前にXSSパターンを排除</text>
+  </g>
+
+  <!-- Card 2: 入力サニタイズ -->
+  <g transform="translate(555, 535)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">入力サニタイズ</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">特殊文字をエスケープ処理</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt; → &amp;lt;  &gt; → &amp;gt;</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">" → &amp;quot;  ' → &amp;#39;</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">サーバー側でHTML特殊文字を無害化</text>
+  </g>
+
+  <!-- Card 3: CSP ヘッダー -->
+  <g transform="translate(215, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">3</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">CSP ヘッダー</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">インラインスクリプト実行を禁止</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Content-Security-Policy:</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">script-src 'self'</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">ブラウザ側で不正スクリプト実行を阻止</text>
+  </g>
+
+  <!-- Card 4: HttpOnly Cookie -->
+  <g transform="translate(555, 690)" filter="url(#shadow)">
+    <rect x="-125" y="-22" width="250" height="120" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="-108" y="-12" width="22" height="22" rx="5" fill="#22c55e" opacity="0.15"/>
+    <text x="-97" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">4</text>
+    <text x="-78" y="4" fill="#86efac" font-size="11" font-weight="700">HttpOnly Cookie</text>
+    <text x="-78" y="22" fill="#bbf7d0" font-size="9">JSからCookieアクセスを完全ブロック</text>
+    <line x1="-108" y1="34" x2="108" y2="34" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
+    <text x="0" y="54" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Set-Cookie: sid=xxx; HttpOnly</text>
+    <text x="0" y="74" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">// document.cookie → 空</text>
+    <text x="0" y="88" text-anchor="middle" fill="#4ade80" font-size="8">XSS成功時もCookie窃取を阻止</text>
   </g>
 
   <!-- ====================================================== -->
-  <!--  DEFENSE POINT 1: WAF                                   -->
-  <!-- ====================================================== -->
-  <g transform="translate(260, 210)" filter="url(#shadow)">
-    <rect x="-52" y="-58" width="104" height="175" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Brick/Firewall icon -->
-    <g transform="translate(0, -28)">
-      <rect x="-18" y="-14" width="36" height="28" rx="2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <line x1="-18" y1="-7" x2="18" y2="-7" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="-18" y1="0" x2="18" y2="0" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="-18" y1="7" x2="18" y2="7" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="0" y1="-14" x2="0" y2="-7" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="-9" y1="-7" x2="-9" y2="0" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="9" y1="-7" x2="9" y2="0" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="0" y1="0" x2="0" y2="7" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="-9" y1="7" x2="-9" y2="14" stroke="#22c55e" stroke-width="0.7"/>
-      <line x1="9" y1="7" x2="9" y2="14" stroke="#22c55e" stroke-width="0.7"/>
-    </g>
-    <text x="0" y="18" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">WAF</text>
-    <text x="0" y="32" text-anchor="middle" fill="#bbf7d0" font-size="8">Web Application</text>
-    <text x="0" y="43" text-anchor="middle" fill="#bbf7d0" font-size="8">Firewall</text>
-    <line x1="-38" y1="52" x2="38" y2="52" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="66" text-anchor="middle" fill="#4ade80" font-size="8">不正パターンを</text>
-    <text x="0" y="78" text-anchor="middle" fill="#4ade80" font-size="8">検知・遮断</text>
-    <text x="0" y="100" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="'Fira Code', monospace">&lt;script&gt; → ✗</text>
-  </g>
-
-  <!-- ====================================================== -->
-  <!--  DEFENSE POINT 2: Input Sanitization                    -->
-  <!-- ====================================================== -->
-  <g transform="translate(400, 460)" filter="url(#shadow)">
-    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Funnel icon -->
-    <g transform="translate(-60, 22)">
-      <polygon points="-11,-13 11,-13 4,2 4,10 -4,10 -4,2" fill="none" stroke="#22c55e" stroke-width="1.4" stroke-linejoin="round"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">入力サニタイズ</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">特殊文字をエスケープ処理</text>
-    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">&lt; → &amp;lt;  &gt; → &amp;gt;</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">" → &amp;quot; ' → &amp;#39;</text>
-  </g>
-
-  <!-- ====================================================== -->
-  <!--  DEFENSE POINT 3: CSP Header                            -->
-  <!-- ====================================================== -->
-  <g transform="translate(645, 460)" filter="url(#shadow)">
-    <rect x="-95" y="-20" width="190" height="90" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Shield icon -->
-    <g transform="translate(-60, 20)">
-      <path d="M0,-13 L12,-6 L12,3 Q12,11 0,15 Q-12,11 -12,3 L-12,-6 Z" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <polyline points="-4,1 -1,5 6,-4" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <text x="12" y="-3" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">CSP ヘッダー</text>
-    <text x="12" y="13" text-anchor="middle" fill="#bbf7d0" font-size="9">インラインスクリプト実行禁止</text>
-    <line x1="-80" y1="22" x2="80" y2="22" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="0" y="40" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">Content-Security-Policy:</text>
-    <text x="0" y="56" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="'Fira Code', monospace">script-src 'self'</text>
-  </g>
-
-  <!-- ====================================================== -->
-  <!--  DEFENSE POINT 4: HttpOnly Cookie                       -->
-  <!-- ====================================================== -->
-  <g transform="translate(520, 600)" filter="url(#shadow)">
-    <rect x="-150" y="-20" width="300" height="72" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
-    <!-- Lock icon -->
-    <g transform="translate(-112, 14)">
-      <rect x="-9" y="-2" width="18" height="14" rx="3" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <path d="M-5,-2 L-5,-7 Q-5,-12 0,-12 Q5,-12 5,-7 L5,-2" fill="none" stroke="#22c55e" stroke-width="1.4"/>
-      <circle cx="0" cy="5" r="2" fill="#22c55e"/>
-      <line x1="0" y1="7" x2="0" y2="10" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/>
-    </g>
-    <text x="10" y="-2" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">HttpOnly Cookie</text>
-    <text x="10" y="14" text-anchor="middle" fill="#bbf7d0" font-size="9">JSからCookieへのアクセスを完全ブロック</text>
-    <line x1="-136" y1="24" x2="136" y2="24" stroke="#22c55e" stroke-width="0.5" opacity="0.4"/>
-    <text x="10" y="42" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Fira Code', monospace">Set-Cookie: sid=xxx; HttpOnly; Secure</text>
-  </g>
-
-  <!-- ====================================================== -->
-  <!--  DEFENSE SIDEBAR (right — fits within viewBox)          -->
+  <!--  DEFENSE SIDEBAR                                        -->
   <!-- ====================================================== -->
   <g transform="translate(785, 100)">
     <rect x="0" y="0" width="295" height="340" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
