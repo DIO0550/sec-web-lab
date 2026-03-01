@@ -81,11 +81,11 @@
   <!--  ARROWS                                                 -->
   <!-- ====================================================== -->
 
-  <!-- Step 1: Attacker -> Server (upper curve Q 380,115) — ログイン試行 #1 -->
-  <path d="M 170 220 Q 380 115 380 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
-  <circle cx="260" cy="148" r="16" fill="#ef4444"/>
-  <text x="260" y="153" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
-  <text x="310" y="138" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ログイン試行 #1</text>
+  <!-- Step 1: Attacker -> Server (symmetric arc) — ログイン試行 #1 -->
+  <path d="M 171 220 Q 248 100 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <circle cx="248" cy="142" r="16" fill="#ef4444"/>
+  <text x="248" y="147" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+  <text x="306" y="135" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ログイン試行 #1</text>
 
   <!-- Step 2: Server -> Attacker (curved upward) — 認証失敗 -->
   <path d="M 324 240 Q 248 205 171 240" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
