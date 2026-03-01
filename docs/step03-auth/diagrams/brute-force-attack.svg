@@ -81,8 +81,8 @@
   <!--  ARROWS                                                 -->
   <!-- ====================================================== -->
 
-  <!-- Step 1: Attacker -> Server (symmetric arc) — ログイン試行 #1 -->
-  <path d="M 171 220 Q 248 100 324 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <!-- Step 1: Attacker top-center -> Server top-center (symmetric arc) — ログイン試行 #1 -->
+  <path d="M 115 220 Q 248 100 380 220" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
   <circle cx="248" cy="142" r="16" fill="#ef4444"/>
   <text x="248" y="147" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
   <text x="306" y="135" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">ログイン試行 #1</text>
