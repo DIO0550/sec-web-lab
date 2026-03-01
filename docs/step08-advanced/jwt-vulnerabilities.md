@@ -26,6 +26,16 @@
 | **難易度** | ★★★ 上級 |
 | **前提知識** | JWT の署名検証の仕組み、HMAC の基本、Base64URL エンコーディング |
 
+### 3. Claim 検証不備（exp/nbf/aud/iss）
+
+| 項目 | 内容 |
+|------|------|
+| **概要** | JWT の `exp`（有効期限）、`nbf`（有効開始）、`aud`（対象者）、`iss`（発行者）などのクレームを検証しないため、期限切れや別サービス用のトークンが受理される |
+| **攻撃例** | 期限切れトークンをそのまま送信 → サーバーが受理 / 別サービスの `aud` を持つトークンで認証突破 |
+| **技術スタック** | Hono API + JWT |
+| **難易度** | ★★★ 上級 |
+| **前提知識** | JWT の構造、署名検証の仕組み、RFC 7519 の標準クレーム |
+
 ---
 
 ## この脆弱性を理解するための前提
@@ -84,6 +94,40 @@ app.use('/api/admin/*', async (c, next) => {
 const SECRET_KEY = 'secret';  // 辞書攻撃で簡単に特定できる
 
 const token = jwt.sign({ user: 'alice', role: 'user' }, SECRET_KEY);
+```
+
+**パターン 3: クレームの検証を行わない**
+
+JWT の RFC 7519 では、以下の標準クレーム（Registered Claims）が定義されている:
+
+| クレーム | 正式名 | 役割 |
+|----------|--------|------|
+| `exp` | Expiration Time | トークンの有効期限。この時刻を過ぎたトークンは無効 |
+| `nbf` | Not Before | トークンの有効開始時刻。この時刻より前のトークンは無効 |
+| `iat` | Issued At | トークンの発行時刻。トークンの年齢を判断するために使用 |
+| `iss` | Issuer | トークンの発行者。信頼する発行者からのトークンのみ受理すべき |
+| `aud` | Audience | トークンの対象者（利用先サービス）。自サービス宛てでないトークンは拒否すべき |
+| `sub` | Subject | トークンの主体（ユーザー識別子） |
+| `jti` | JWT ID | トークンの一意識別子。リプレイ攻撃の防止に使用 |
+
+これらのクレームは署名と同様にセキュリティ上不可欠だが、多くの開発者が署名検証だけで安心し、クレームの検証を省略してしまう:
+
+```typescript
+// ⚠️ この部分が問題 — 署名は検証するが、クレームは一切チェックしない
+app.use('/api/protected/*', async (c, next) => {
+  const token = c.req.header('Authorization')?.replace('Bearer ', '');
+
+  // 署名の検証のみ行い、exp/aud/iss は無視
+  const payload = jwt.verify(token, SECRET_KEY, {
+    algorithms: ['HS256'],
+  });
+
+  // ⚠️ payload.exp が過去でも通過する（ライブラリのデフォルト設定次第）
+  // ⚠️ payload.aud が別サービスでも通過する
+  // ⚠️ payload.iss が想定外の発行者でも通過する
+  c.set('user', payload);
+  await next();
+});
 ```
 
 ---
@@ -145,6 +189,55 @@ const token = jwt.sign({ user: 'alice', role: 'user' }, SECRET_KEY);
 
    秘密鍵が判明すれば、サーバーが受け入れる正規の署名を持つトークンを自由に生成できる。
 
+#### シナリオ 3: Claim 検証不備の悪用
+
+1. **攻撃者** が期限切れのトークンを入手する
+
+   過去にログインした際のトークンや、ログ・ブラウザ履歴から古いトークンを取得する。このトークンの `exp` は既に過去の時刻を示している:
+
+   ```json
+   // ペイロード（期限切れ）
+   {
+     "user": "alice",
+     "role": "admin",
+     "exp": 1700000000,    // 2023-11-14（期限切れ）
+     "iss": "auth-service",
+     "aud": "api-service"
+   }
+   ```
+
+2. **攻撃者** が期限切れトークンをそのまま送信する
+
+   ```bash
+   # 期限切れトークンをそのまま使用
+   curl http://localhost:3000/api/labs/jwt/vulnerable/claim/profile \
+     -H "Authorization: Bearer ${EXPIRED_TOKEN}"
+   ```
+
+   サーバーは署名を検証して正しいことを確認するが、`exp` クレームをチェックしないため、期限切れトークンをそのまま受理してしまう。
+
+3. **攻撃者** が別サービス用のトークンを転用する
+
+   攻撃者がサービス B で取得したトークン（`aud: "service-b"`）を、サービス A に対して送信する:
+
+   ```json
+   // 別サービス用のペイロード
+   {
+     "user": "alice",
+     "role": "admin",
+     "aud": "service-b",   // サービス B 用のトークン
+     "iss": "auth-service"
+   }
+   ```
+
+   ```bash
+   # サービス B 用のトークンをサービス A に送信
+   curl http://localhost:3000/api/labs/jwt/vulnerable/claim/profile \
+     -H "Authorization: Bearer ${OTHER_SERVICE_TOKEN}"
+   ```
+
+   サーバーが `aud` クレームを検証しないため、別サービス用のトークンでも認証に成功する。マイクロサービス環境では、一つのサービスのトークンが他の全サービスで有効になる「トークン横断攻撃」が成立する。
+
 ### なぜ成功するのか
 
 | 条件 | 説明 |
@@ -152,6 +245,8 @@ const token = jwt.sign({ user: 'alice', role: 'user' }, SECRET_KEY);
 | `alg: none` の受け入れ | JWT ライブラリがトークン内の `alg` フィールドを検証時のアルゴリズムとして信頼してしまう。`none` は「署名なし」を意味し、検証がスキップされる |
 | 弱い秘密鍵 | `secret` や `password` のような短く推測可能な鍵は、辞書攻撃やブルートフォースで短時間で特定できる |
 | サーバー側でのアルゴリズム固定がない | 検証時に使用するアルゴリズムをサーバー側で明示的に指定していないため、トークン内の `alg` がそのまま使われる |
+| `exp` クレームの未検証 | トークンの有効期限を検証しないため、漏洩した古いトークンがいつまでも有効。一度流出したトークンは永続的に悪用可能になる |
+| `aud` / `iss` クレームの未検証 | トークンの対象者・発行者を検証しないため、別サービス用や別発行者のトークンが受理される。マイクロサービス環境でのトークン横断攻撃が成立する |
 
 ### 被害の範囲
 
@@ -168,6 +263,8 @@ const token = jwt.sign({ user: 'alice', role: 'user' }, SECRET_KEY);
 ### 根本原因
 
 サーバーが **トークン内に含まれるアルゴリズム指定を信頼してしまう** ことと、**秘密鍵の強度が不十分** であることが根本原因。JWT の `alg` フィールドは攻撃者が自由に書き換えられるクライアント側データであり、検証時にこれを信頼してはならない。
+
+さらに、**署名の検証だけでトークンを信頼してしまい、クレーム（`exp`/`nbf`/`aud`/`iss`）の検証を省略している** ことも根本的な問題。署名が正しいことは「改ざんされていない」ことを保証するが、「このトークンが今・このサービスで使われるべきか」は署名だけでは判断できない。
 
 ### 安全な実装
 
@@ -198,6 +295,53 @@ app.use('/api/admin/*', async (c, next) => {
 
 `algorithms: ['HS256']` を指定することで、トークンの `alg` が `none` や `HS384` 等に書き換えられていても検証に失敗する。サーバーが使うアルゴリズムはサーバー側のコードで決定され、トークン内の値は無視される。
 
+#### クレーム検証を含む安全な実装
+
+署名検証に加えて、`exp`・`aud`・`iss` 等のクレームも検証することで、期限切れや別サービス用のトークンを拒否する:
+
+```typescript
+// ✅ 署名 + クレームの完全な検証
+app.use('/api/protected/*', async (c, next) => {
+  const token = c.req.header('Authorization')?.replace('Bearer ', '');
+  if (!token) return c.json({ error: '認証が必要です' }, 401);
+
+  try {
+    const payload = jwt.verify(token, SECRET_KEY, {
+      algorithms: ['HS256'],       // アルゴリズムを固定
+      audience: 'my-api-service',  // ✅ 自サービスの aud のみ受理
+      issuer: 'my-auth-server',    // ✅ 信頼する発行者のみ受理
+      clockTolerance: 30,          // ✅ 時刻のズレを最大30秒まで許容
+      // exp と nbf は多くのライブラリがデフォルトで検証するが、明示的に確認する
+    });
+
+    // ✅ 追加のクレーム検証（ライブラリが対応しない場合の手動チェック）
+    const now = Math.floor(Date.now() / 1000);
+
+    if (payload.exp && payload.exp < now) {
+      return c.json({ error: 'トークンの有効期限が切れています' }, 401);
+    }
+
+    if (payload.nbf && payload.nbf > now) {
+      return c.json({ error: 'トークンはまだ有効ではありません' }, 401);
+    }
+
+    c.set('user', payload);
+    await next();
+  } catch (err) {
+    // JWT ライブラリが投げるエラーを適切にハンドリング
+    if (err instanceof jwt.TokenExpiredError) {
+      return c.json({ error: 'トークンの有効期限が切れています' }, 401);
+    }
+    if (err instanceof jwt.JsonWebTokenError) {
+      return c.json({ error: '無効なトークンです' }, 401);
+    }
+    return c.json({ error: '認証エラー' }, 401);
+  }
+});
+```
+
+`audience` と `issuer` オプションを指定することで、JWT ライブラリが `aud` と `iss` クレームを自動的に検証する。一致しないトークンは `JsonWebTokenError` が発生して拒否される。`exp` はほとんどのライブラリがデフォルトで検証するが、`clockTolerance` を設定してサーバー間の時刻のズレに対応する。
+
 #### 脆弱 vs 安全: コード比較
 
 ```diff
@@ -214,15 +358,34 @@ app.use('/api/admin/*', async (c, next) => {
 
 2 つの変更点: (1) 秘密鍵を十分な長さのランダム値に変更し、推測を不可能にする。(2) 検証時にアルゴリズムを明示的に指定し、`alg: none` やアルゴリズムのすり替え攻撃を防ぐ。
 
+#### クレーム検証: 脆弱 vs 安全
+
+```diff
+  // JWT 検証
+- const payload = jwt.verify(token, SECRET_KEY, {
+-   algorithms: ['HS256'],
+- });
++ const payload = jwt.verify(token, SECRET_KEY, {
++   algorithms: ['HS256'],
++   audience: 'my-api-service',   // aud を検証
++   issuer: 'my-auth-server',     // iss を検証
++   clockTolerance: 30,           // 時刻のズレを許容
++ });
+```
+
+クレーム検証を追加することで、署名が正しくても (1) 有効期限切れ、(2) 別サービス用、(3) 別発行者のトークンが全て拒否される。署名検証が「改ざん防止」、クレーム検証が「利用条件の確認」を担う。
+
 ### その他の防御策
 
 | 対策 | 種類 | 説明 |
 |------|------|------|
 | アルゴリズムの固定 | 根本対策 | `algorithms: ['HS256']` で許可するアルゴリズムを明示的に指定する。`none` やその他の意図しないアルゴリズムを拒否 |
 | 強い秘密鍵の使用 | 根本対策 | 256 ビット以上のランダムな鍵を使用する。環境変数から読み込み、コードにハードコードしない |
+| クレームの完全検証 | 根本対策 | `exp`・`nbf`・`aud`・`iss` を必ず検証する。署名検証だけでは「このトークンが今・ここで使われるべきか」は判断できない |
 | トークンの有効期限 | 多層防御 | `exp` クレームで短い有効期限（例: 15 分）を設定し、トークンが漏洩した場合の被害期間を限定する |
 | トークンのブラックリスト | 多層防御 | ログアウト時や不正検知時にトークンを無効化する仕組みを用意する |
 | 公開鍵方式（RS256）の採用 | 多層防御 | 非対称鍵を使用し、秘密鍵を検証側に渡す必要をなくす。鍵管理のリスクを低減 |
+| `jti` によるリプレイ検知 | 検知 | トークンに一意の `jti` クレームを含め、使用済みトークンをサーバー側で追跡する。再利用を検知して拒否 |
 
 ---
 
@@ -291,6 +454,63 @@ app.use('/api/admin/*', async (c, next) => {
    - `backend/src/labs/step08-advanced/jwt-vulnerabilities.ts` の脆弱版と安全版を比較
    - **どの行が違いを生んでいるか** に注目: `algorithms` オプションの有無と秘密鍵の強度
 
+### Step 3: Claim 検証不備を体験
+
+**ゴール**: 期限切れトークンや別サービス用のトークンが受理されることを確認し、クレーム検証の重要性を理解する
+
+1. 脆弱なエンドポイントでログインし、トークンを取得する
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/jwt/vulnerable/claim/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "alice", "password": "password123"}'
+   # → { "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYWxpY2UiLCJyb2xlIjoidXNlciIsImV4cCI6...}" }
+   ```
+
+2. 期限切れトークンを作成して送信する
+
+   Base64URL でデコード・エンコードし、`exp` を過去の時刻に変更したトークンを用意する:
+
+   ```bash
+   # exp を 2023-11-14 00:00:00 UTC（過去の日時）に設定した期限切れトークン
+   # ペイロード: {"user":"alice","role":"admin","exp":1700000000,"aud":"other-service","iss":"auth-service"}
+   EXPIRED_TOKEN="eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYWxpY2UiLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3MDAwMDAwMDAsImF1ZCI6Im90aGVyLXNlcnZpY2UiLCJpc3MiOiJhdXRoLXNlcnZpY2UifQ.SIGNATURE"
+
+   # 脆弱バージョンに送信（exp を検証しない）
+   curl http://localhost:3000/api/labs/jwt/vulnerable/claim/profile \
+     -H "Authorization: Bearer ${EXPIRED_TOKEN}"
+   # → 200 OK — 期限切れなのにプロフィールが返される！
+   ```
+
+3. 別サービス用のトークン（`aud` 不一致）を送信する
+
+   ```bash
+   # aud が "other-service"（別サービス用）のトークンを送信
+   curl http://localhost:3000/api/labs/jwt/vulnerable/claim/profile \
+     -H "Authorization: Bearer ${OTHER_SERVICE_TOKEN}"
+   # → 200 OK — 別サービス用なのに認証を通過！
+   ```
+
+4. 安全なエンドポイントで同じ攻撃を試す
+
+   ```bash
+   # 期限切れトークンを安全バージョンに送信
+   curl http://localhost:3000/api/labs/jwt/secure/claim/profile \
+     -H "Authorization: Bearer ${EXPIRED_TOKEN}"
+   # → 401 Unauthorized — { "error": "トークンの有効期限が切れています" }
+
+   # 別サービス用トークンを安全バージョンに送信
+   curl http://localhost:3000/api/labs/jwt/secure/claim/profile \
+     -H "Authorization: Bearer ${OTHER_SERVICE_TOKEN}"
+   # → 401 Unauthorized — { "error": "無効なトークンです" }
+   ```
+
+5. 結果を比較する
+
+   - 脆弱版: 署名が正しければ `exp` や `aud` を無視してトークンを受理する
+   - 安全版: 署名に加えて `exp`・`aud`・`iss` を検証し、条件を満たさないトークンを拒否する
+   - **この結果が意味すること**: 署名検証は「改ざん防止」にすぎず、「このトークンが今・ここで使われるべきか」はクレーム検証が担う。両方が揃って初めてセキュアな JWT 検証となる
+
 ### 確認ポイント
 
 以下を自分の言葉で説明できれば、このラボは完了です:
@@ -299,6 +519,9 @@ app.use('/api/admin/*', async (c, next) => {
 - [ ] `alg: none` 攻撃が成功する条件は何か（なぜサーバーが署名なしトークンを受け入れてしまうのか）
 - [ ] `algorithms: ['HS256']` の指定は「なぜ」この攻撃を無効化するのか
 - [ ] 弱い秘密鍵がなぜ危険なのか（攻撃者が鍵を特定するとどうなるか）
+- [ ] 署名検証とクレーム検証の役割の違いは何か（なぜ署名検証だけでは不十分なのか）
+- [ ] `exp`・`aud`・`iss` それぞれのクレームは、どのような攻撃を防ぐのか
+- [ ] マイクロサービス環境で `aud` を検証しない場合、どのようなリスクがあるか
 
 ---
 
@@ -308,13 +531,19 @@ app.use('/api/admin/*', async (c, next) => {
 |------|------|
 | 脆弱エンドポイント (login) | `/api/labs/jwt/vulnerable/login` |
 | 脆弱エンドポイント (admin) | `/api/labs/jwt/vulnerable/admin/users` |
+| 脆弱エンドポイント (claim login) | `/api/labs/jwt/vulnerable/claim/login` |
+| 脆弱エンドポイント (claim profile) | `/api/labs/jwt/vulnerable/claim/profile` |
 | 安全エンドポイント (login) | `/api/labs/jwt/secure/login` |
 | 安全エンドポイント (admin) | `/api/labs/jwt/secure/admin/users` |
+| 安全エンドポイント (claim login) | `/api/labs/jwt/secure/claim/login` |
+| 安全エンドポイント (claim profile) | `/api/labs/jwt/secure/claim/profile` |
 | バックエンド | `backend/src/labs/step08-advanced/jwt-vulnerabilities.ts` |
 | フロントエンド | `frontend/src/features/step08-advanced/pages/JWTVulnerabilities.tsx` |
 
 - 脆弱版: 弱い秘密鍵 (`secret`) を使用し、`verify` 時にアルゴリズムを指定しない
 - 安全版: 強い秘密鍵 + `algorithms: ['HS256']` でアルゴリズムを固定
+- Claim 脆弱版: 署名は検証するが `exp`/`aud`/`iss` のクレームを検証しない
+- Claim 安全版: 署名検証 + `audience`・`issuer`・`clockTolerance` オプションで全クレームを検証
 - フロントエンドに JWT デコーダーを組み込み、トークンの中身を確認できるようにする
 - jwt.io を使ったペイロード改ざんの手順もガイドに含める
 
@@ -344,3 +573,6 @@ app.use('/api/admin/*', async (c, next) => {
 - [OWASP - JWT Attacks](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management_Testing/10-Testing_JSON_Web_Tokens)
 - [CWE-347: Improper Verification of Cryptographic Signature](https://cwe.mitre.org/data/definitions/347.html)
 - [CWE-327: Use of a Broken or Risky Cryptographic Algorithm](https://cwe.mitre.org/data/definitions/327.html)
+- [CWE-613: Insufficient Session Expiration](https://cwe.mitre.org/data/definitions/613.html)
+- [RFC 7519 - JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519) — 標準クレーム（exp/nbf/aud/iss/sub/iat/jti）の定義
+- [OWASP - JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
