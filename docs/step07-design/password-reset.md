@@ -365,7 +365,7 @@ app.post("/reset-password", async (c) => {
 | 安全エンドポイント (パスワード変更) | `/api/labs/password-reset/secure/reset-password` |
 | バックエンド | `backend/src/labs/step07-design/password-reset.ts` |
 | フロントエンド | `frontend/src/features/step07-design/pages/PasswordReset.tsx` |
-| DB | `docker/db/init.sql` の `users`, `reset_tokens` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users`, `reset_tokens` テーブルを使用 |
 
 - 脆弱版では `++counter` による連番をトークンとして使用し、有効期限を設けない
 - 安全版では `crypto.randomUUID()` による暗号論的に安全なトークンを使用し、30分の有効期限と使用済みフラグを持つ

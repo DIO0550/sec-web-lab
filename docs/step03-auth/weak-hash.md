@@ -255,7 +255,7 @@ MD5 では `createHash('md5').update(password).digest('hex')` が数ナノ秒で
 | 安全エンドポイント (逆引き) | `/api/labs/weak-hash/secure/crack` |
 | バックエンド | `backend/src/labs/weak-hash.ts` |
 | フロントエンド | `frontend/src/pages/WeakHash.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版では `crypto.createHash('md5')` でハッシュ化し、簡易レインボーテーブル（Map）で逆引き機能を実装
 - 安全版では `bcrypt.hash(password, 12)` でハッシュ化

@@ -253,7 +253,7 @@ app.post('/login', async (c) => {
 | 安全エンドポイント | `/api/labs/default-credentials/secure/login` |
 | バックエンド | `backend/src/labs/default-credentials.ts` |
 | フロントエンド | `frontend/src/pages/DefaultCredentials.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブル（`must_change_password` カラムを追加） |
+| DB | `.devcontainer/db/init.sql` の `users` テーブル（`must_change_password` カラムを追加） |
 
 - 脆弱版ではデフォルトパスワードでそのままログインが完了する
 - 安全版では `must_change_password` フラグをチェックし、パスワード変更を強制する

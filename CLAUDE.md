@@ -35,7 +35,9 @@ frontend/src/             → React アプリ
     step01-recon/         → Step 01: 偵察
       pages/              → ラボページコンポーネント
       index.ts            → barrel export
-docker/db/init.sql        → DB スキーマ・初期データ
+.devcontainer/            → Dev Container / Docker 関連設定
+  app/Dockerfile          → 開発コンテナ用イメージ定義
+  db/init.sql             → DB スキーマ・初期データ
 docs/                     → 各ラボの解説ドキュメント
 ```
 
@@ -94,7 +96,7 @@ pnpm typecheck       # 型チェック
 
 ### DB操作
 
-- スキーマ変更は `docker/db/init.sql` に追加
+- スキーマ変更は `.devcontainer/db/init.sql` に追加
 - テストデータは `backend/src/db/seed.ts` に追加
 - 接続は `backend/src/db/pool.ts` の `getPool()` を使用
 

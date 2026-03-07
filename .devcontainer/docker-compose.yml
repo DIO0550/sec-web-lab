@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: ..
-      dockerfile: .devcontainer/Dockerfile
+      dockerfile: .devcontainer/app/Dockerfile
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
@@ -17,11 +17,12 @@ services:
       NODE_ENV: development
 
   db:
-    image: postgres:16
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ../docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_USER: labuser
       POSTGRES_PASSWORD: labpass

@@ -60,7 +60,11 @@ sec-web-lab/
 ├── .devcontainer/       # Dev Container 設定
 │   ├── devcontainer.json
 │   ├── docker-compose.yml
-│   └── Dockerfile
+│   ├── app/
+│   │   └── Dockerfile
+│   └── db/
+│       ├── Dockerfile
+│       └── init.sql     # DB 初期化スクリプト
 ├── backend/             # Hono API サーバー (意図的に脆弱)
 │   └── src/
 │       ├── index.ts     # エントリポイント
@@ -69,9 +73,6 @@ sec-web-lab/
 │   └── src/
 │       ├── App.tsx
 │       └── pages/       # 各ラボのページ
-├── docker/
-│   └── db/
-│       └── init.sql     # DB 初期化スクリプト
 ├── labs/                # 各ラボの解説ドキュメント
 ├── CLAUDE.md            # Claude への指示書
 └── README.md

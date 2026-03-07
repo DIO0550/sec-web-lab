@@ -402,7 +402,7 @@ app.post('/login', async (c) => {
 | 安全エンドポイント | `/api/labs/username-enumeration/secure/login` |
 | バックエンド | `backend/src/labs/step03-auth/username-enumeration.ts` |
 | フロントエンド | `frontend/src/labs/step03-auth/pages/UsernameEnumeration.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版（メッセージ方式）: ユーザーが見つからない場合は「ユーザーが見つかりません」、パスワード不一致の場合は「パスワードが違います」と異なるメッセージを返す
 - 脆弱版（タイミング方式）: ユーザーが見つからない場合は bcrypt 比較をスキップして即座に返す。メッセージは統一しているが、レスポンス時間に差がある

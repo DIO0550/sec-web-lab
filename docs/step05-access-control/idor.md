@@ -273,7 +273,7 @@ app.get('/api/profile', async (c) => {
 | 安全エンドポイント | `/api/labs/idor/secure/users/:id/profile` |
 | バックエンド | `backend/src/labs/step05-access-control/idor.ts` |
 | フロントエンド | `frontend/src/features/step05-access-control/pages/IDOR.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版ではパスパラメータのIDをそのままDBクエリに使用する
 - 安全版ではセッションのユーザーIDとパスパラメータのIDを照合してからデータを返す

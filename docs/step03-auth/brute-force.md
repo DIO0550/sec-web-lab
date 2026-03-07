@@ -286,7 +286,7 @@ app.post('/login', async (c) => {
 | 安全エンドポイント | `/api/labs/brute-force/secure/login` |
 | バックエンド | `backend/src/labs/brute-force.ts` |
 | フロントエンド | `frontend/src/pages/BruteForce.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版ではログイン失敗を一切記録しない
 - 安全版では IP ごとの失敗回数を `Map` で追跡し、閾値超過時に 429 を返す
