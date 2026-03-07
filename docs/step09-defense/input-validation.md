@@ -464,7 +464,7 @@ safeNumber.parse('42');      // → 42（安全に変換）
 | 安全エンドポイント | `/api/labs/input-validation/secure/register` |
 | バックエンド | `backend/src/labs/step09-defense/input-validation.ts` |
 | フロントエンド | `frontend/src/labs/step09-defense/pages/InputValidation.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版では `c.req.json()` で入力を取得し、バリデーションなしで SQL 文に結合する
 - 安全版では `@hono/zod-validator` の `zValidator` でリクエストボディをバリデーションし、パラメータ化クエリで DB に挿入する

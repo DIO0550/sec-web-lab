@@ -290,7 +290,7 @@ app.post('/purchase', async (c) => {
 | 安全エンドポイント | `/api/labs/race-condition/secure/purchase` |
 | バックエンド | `backend/src/labs/step08-advanced/race-condition.ts` |
 | フロントエンド | `frontend/src/features/step08-advanced/pages/RaceCondition.tsx` |
-| DB | `docker/db/init.sql` に `users`（残高）、`purchases`（購入履歴）テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` に `users`（残高）、`purchases`（購入履歴）テーブルを使用 |
 
 - 脆弱版: トランザクションなしで SELECT → チェック → UPDATE を実行
 - 安全版: `BEGIN` + `SELECT FOR UPDATE` + `COMMIT` で排他制御

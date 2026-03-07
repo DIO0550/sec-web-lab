@@ -357,7 +357,7 @@ app.use("*", async (c, next) => {
 | 安全エンドポイント (パスワード変更) | `/api/labs/host-header-injection/secure/reset-password` |
 | バックエンド | `backend/src/labs/step07-design/host-header-injection.ts` |
 | フロントエンド | `frontend/src/labs/step07-design/pages/HostHeaderInjection.tsx` |
-| DB | `docker/db/init.sql` の `users`, `reset_tokens` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users`, `reset_tokens` テーブルを使用 |
 
 - 脆弱版では `c.req.header("host")` の値をそのままリセットリンクのドメインに使用する
 - 安全版では環境変数 `BASE_URL` からドメインを取得し、Host ヘッダ許可リストによる検証ミドルウェアを追加する

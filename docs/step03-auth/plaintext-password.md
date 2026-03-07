@@ -279,7 +279,7 @@ app.post('/login', async (c) => {
 | 安全エンドポイント (ログイン) | `/api/labs/plaintext-password/secure/login` |
 | バックエンド | `backend/src/labs/plaintext-password.ts` |
 | フロントエンド | `frontend/src/pages/PlaintextPassword.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版ではパスワードを平文のまま `INSERT` し、`WHERE password = $1` で直接比較する
 - 安全版では `bcrypt.hash(password, 12)` でハッシュ化してから保存し、`bcrypt.compare()` で検証する

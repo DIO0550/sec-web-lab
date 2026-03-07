@@ -368,7 +368,7 @@ app.post("/order", async (c) => {
 | 安全エンドポイント | `/api/labs/business-logic/secure/order` |
 | バックエンド | `backend/src/labs/step07-design/business-logic.ts` |
 | フロントエンド | `frontend/src/features/step07-design/pages/BusinessLogic.tsx` |
-| DB | `docker/db/init.sql` の `users`, `products` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users`, `products` テーブルを使用 |
 
 - 脆弱版ではクライアントの `quantity` と `price` をそのまま計算に使用し、バリデーションや在庫チェックを一切行わない
 - 安全版では Zod でスキーマバリデーションを行い、価格は DB の商品マスタから取得し、在庫・残高をトランザクション内でチェックする

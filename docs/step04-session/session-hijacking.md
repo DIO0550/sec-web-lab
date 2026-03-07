@@ -261,7 +261,7 @@ setCookie(c, 'session_id', sessionId, {
 | 安全エンドポイント | `/api/labs/session-hijacking/secure/comment`, `/api/labs/session-hijacking/secure/profile` |
 | バックエンド | `backend/src/labs/step04-session/session-hijacking.ts` |
 | フロントエンド | `frontend/src/features/step04-session/pages/SessionHijacking.tsx` |
-| DB | `docker/db/init.sql` の `users`, `comments` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users`, `comments` テーブルを使用 |
 
 - 脆弱版では `setCookie` に `httpOnly` オプションを指定せず、XSS によるCookie 窃取を可能にする
 - 安全版では `httpOnly: true`, `secure: true`, `sameSite: 'Strict'` を全て設定する

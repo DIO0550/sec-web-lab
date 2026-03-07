@@ -268,7 +268,7 @@ app.post('/api/register', async (c) => {
 | 安全エンドポイント (更新) | `/api/labs/mass-assignment/secure/users/:id` |
 | バックエンド | `backend/src/labs/step05-access-control/mass-assignment.ts` |
 | フロントエンド | `frontend/src/features/step05-access-control/pages/MassAssignment.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルに `role` カラムを追加 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルに `role` カラムを追加 |
 
 - 脆弱版では `req.body` の全フィールドをそのまま INSERT/UPDATE に使用する
 - 安全版では許可フィールドのみを明示的に抽出する（ホワイトリスト方式）

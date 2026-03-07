@@ -295,7 +295,7 @@ app.post('/login', async (c) => {
 | 安全エンドポイント | `/api/labs/session-fixation/secure/login` |
 | バックエンド | `backend/src/labs/step04-session/session-fixation.ts` |
 | フロントエンド | `frontend/src/features/step04-session/pages/SessionFixation.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版ではログイン成功時にセッション ID を再生成しない
 - 安全版ではログイン成功時に `crypto.randomBytes()` で新しいセッション ID を生成し、古い ID を `sessions.delete()` で破棄する

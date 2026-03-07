@@ -283,7 +283,7 @@ app.post('/register', async (c) => {
 | 安全エンドポイント (ログイン) | `/api/labs/weak-password-policy/secure/login` |
 | バックエンド | `backend/src/labs/weak-password-policy.ts` |
 | フロントエンド | `frontend/src/pages/WeakPasswordPolicy.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブルを使用 |
 
 - 脆弱版ではパスワードの空チェックのみ（`if (!password)` だけ）
 - 安全版では `validatePassword()` 関数で文字数・文字種・ブラックリストの 3 段階チェック

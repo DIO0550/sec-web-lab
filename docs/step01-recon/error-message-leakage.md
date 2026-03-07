@@ -237,7 +237,7 @@ app.onError((err, c) => {
 | 安全エンドポイント | `/api/labs/error-message-leakage/secure/users/:id` |
 | バックエンド | `backend/src/labs/error-message-leakage.ts` |
 | フロントエンド | `frontend/src/pages/ErrorMessageLeakage.tsx` |
-| DB | `docker/db/init.sql` に `users` テーブルを追加 |
+| DB | `.devcontainer/db/init.sql` に `users` テーブルを追加 |
 
 - A02 (Security Misconfiguration) / CWE-209 に分類される脆弱性
 - 脆弱版: エラー詳細をそのまま返す

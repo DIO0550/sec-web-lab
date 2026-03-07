@@ -274,7 +274,7 @@ React の場合は JSX の `{}` 式がデフォルトでエスケープを行う
 | 安全エンドポイント (Stored) | `/api/labs/xss/secure/posts` |
 | バックエンド | `backend/src/labs/xss.ts` |
 | フロントエンド | `frontend/src/pages/Xss.tsx` |
-| DB | `docker/db/init.sql` の `posts` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `posts` テーブルを使用 |
 
 - Reflected XSS: Hono で `c.html()` を使って HTML を直接返す実装
 - Stored XSS: `posts` テーブルに投稿を保存し、一覧表示時にエスケープなしで HTML に埋め込む

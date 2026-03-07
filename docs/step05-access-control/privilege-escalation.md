@@ -300,7 +300,7 @@ app.route('/api/admin', admin);
 | 安全エンドポイント (設定変更) | `/api/labs/privilege-escalation/secure/admin/settings` |
 | バックエンド | `backend/src/labs/step05-access-control/privilege-escalation.ts` |
 | フロントエンド | `frontend/src/features/step05-access-control/pages/PrivilegeEscalation.tsx` |
-| DB | `docker/db/init.sql` の `users` テーブル（`role` カラム）を使用 |
+| DB | `.devcontainer/db/init.sql` の `users` テーブル（`role` カラム）を使用 |
 
 - 脆弱版では認証のみ行い、ロールの検証を行わない
 - 安全版では `requireAdmin` ミドルウェアで全管理者エンドポイントにロール検証を適用

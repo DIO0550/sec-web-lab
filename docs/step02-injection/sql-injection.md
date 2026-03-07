@@ -265,7 +265,7 @@ const result = await pool.query(
 | 安全エンドポイント (検索) | `/api/labs/sql-injection/secure/search` |
 | バックエンド | `backend/src/labs/sql-injection.ts` |
 | フロントエンド | `frontend/src/pages/SqlInjection.tsx` |
-| DB | `docker/db/init.sql` の `users`, `posts` テーブルを使用 |
+| DB | `.devcontainer/db/init.sql` の `users`, `posts` テーブルを使用 |
 
 - 脆弱版では `pool.query()` に文字列テンプレートリテラルで入力値を結合する
 - 安全版では `pool.query()` の第2引数にパラメータ配列を渡す
