@@ -15,6 +15,9 @@
     "GIT_COMMITTER_NAME": "${localEnv:GIT_COMMITTER_NAME}",
     "GIT_COMMITTER_EMAIL": "${localEnv:GIT_COMMITTER_EMAIL}"
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind,readonly"
+  ],
   "postCreateCommand": "cd /workspace/backend && pnpm install && cd /workspace/frontend && pnpm install",
   "customizations": {
     "vscode": {
