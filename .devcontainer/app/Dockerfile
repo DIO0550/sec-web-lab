@@ -14,6 +14,7 @@ RUN apt-get update \
         ca-certificates \
         gnupg \
         git \
+        jq \
         tmux \
     && useradd -m -s /bin/bash $USERNAME \
     && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
