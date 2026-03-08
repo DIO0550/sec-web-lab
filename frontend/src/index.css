@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* 脆弱バージョンの配色 */
   --color-vuln-bg: #1a1a2e;
@@ -12,4 +14,48 @@
   /* エラー表示の配色 */
   --color-error-bg: #2e1a1a;
   --color-error-text: #ff6b6b;
+
+  /* セマンティックカラー（ライトモード デフォルト） */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-tertiary: #f0f0f0;
+
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-muted: #888888;
+
+  --color-border: #333333;
+  --color-border-light: #dddddd;
+
+  --color-accent: #333333;
+  --color-accent-hover: #555555;
+
+  --color-sidebar-bg: #f8f9fa;
+  --color-sidebar-hover: #e9ecef;
+  --color-sidebar-active: #dee2e6;
+
+  --color-warning-bg: #fff8e1;
+}
+
+/* ダークモード カラー上書き */
+.dark {
+  --color-bg-primary: #1a1a2e;
+  --color-bg-secondary: #16213e;
+  --color-bg-tertiary: #0f3460;
+
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #aaaaaa;
+  --color-text-muted: #888888;
+
+  --color-border: #4a4a6a;
+  --color-border-light: #3a3a5a;
+
+  --color-accent: #4a4a6a;
+  --color-accent-hover: #5a5a7a;
+
+  --color-sidebar-bg: #16213e;
+  --color-sidebar-hover: #1a2744;
+  --color-sidebar-active: #1e2d4d;
+
+  --color-warning-bg: #3d3520;
 }
