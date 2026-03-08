@@ -1,67 +1,7 @@
 import { Link } from "react-router-dom";
+import { getLabsForStep } from "@/data/navigation";
 
-const LABS = [
-  {
-    id: "rate-limiting",
-    name: "レート制限なし",
-    description: "APIにレート制限がなく、無制限にログイン試行（ブルートフォース攻撃）が可能な脆弱性",
-    difficulty: 1,
-  },
-  {
-    id: "clickjacking",
-    name: "クリックジャッキング",
-    description: "透明なiframeでページを重ねて、ユーザーに意図しないクリック操作をさせる攻撃",
-    difficulty: 1,
-  },
-  {
-    id: "sensitive-data-http",
-    name: "HTTPでの機密データ送信",
-    description: "暗号化されていないHTTP通信で、パスワードやセッションが平文で流れる脆弱性",
-    difficulty: 1,
-  },
-  {
-    id: "http-methods",
-    name: "不要なHTTPメソッド許可",
-    description: "PUT/DELETE/TRACE等の不要なメソッドが許可され、リソースの不正操作が可能な脆弱性",
-    difficulty: 1,
-  },
-  {
-    id: "password-reset",
-    name: "推測可能なパスワードリセット",
-    description: "パスワードリセットトークンが連番で推測可能、有効期限なしでアカウント乗っ取りが可能",
-    difficulty: 2,
-  },
-  {
-    id: "business-logic",
-    name: "ビジネスロジックの欠陥",
-    description: "数量を負の値にして残高を増やす、在庫超過注文など、アプリ固有のロジック脆弱性",
-    difficulty: 2,
-  },
-  {
-    id: "unsigned-data",
-    name: "署名なしデータの信頼",
-    description: "CookieやHTTPヘッダーのRole値を署名なしで信頼し、改ざんで権限昇格できる脆弱性",
-    difficulty: 2,
-  },
-  {
-    id: "security-headers",
-    name: "セキュリティヘッダー未設定",
-    description: "CSP, HSTS, X-Content-Type-Options等のセキュリティヘッダーが未設定の脆弱性",
-    difficulty: 1,
-  },
-  {
-    id: "cache-control",
-    name: "キャッシュ制御の不備",
-    description: "機密データを含むレスポンスにCache-Controlが設定されず、キャッシュに残存する脆弱性",
-    difficulty: 1,
-  },
-  {
-    id: "web-storage-abuse",
-    name: "Web Storageの不適切な使用",
-    description: "JWTトークンをlocalStorageに保存し、XSSで窃取可能になる脆弱性",
-    difficulty: 2,
-  },
-];
+const LABS = getLabsForStep("step07");
 
 export function Step07Index() {
   return (
@@ -77,7 +17,7 @@ export function Step07Index() {
         {LABS.map((lab) => (
           <div
             key={lab.id}
-            className="border border-[#ddd] rounded p-4 mb-3 flex justify-between items-center"
+            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -85,16 +25,16 @@ export function Step07Index() {
                   {lab.name}
                 </Link>
               </h3>
-              <p className="m-0 text-[#666] text-sm">{lab.description}</p>
+              <p className="m-0 text-text-secondary dark:text-text-secondary text-sm">{lab.description}</p>
             </div>
             <div className="text-right min-w-[80px]">
-              <span className="text-xs text-[#888]">
+              <span className="text-xs text-text-muted dark:text-text-muted">
                 {"★".repeat(lab.difficulty)}{"☆".repeat(3 - lab.difficulty)}
               </span>
               <br />
               <Link
                 to={`/step07/${lab.id}`}
-                className="inline-block mt-1 px-3 py-1 bg-[#333] text-white rounded no-underline text-[13px]"
+                className="inline-block mt-1 px-3 py-1 bg-accent dark:bg-accent text-white rounded no-underline text-[13px] hover:bg-accent-hover dark:hover:bg-accent-hover"
               >
                 Start
               </Link>

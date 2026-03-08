@@ -1,35 +1,7 @@
 import { Link } from "react-router-dom";
+import { getLabsForStep } from "@/data/navigation";
 
-const LABS = [
-  {
-    id: "cookie-manipulation",
-    name: "Cookie属性の不備",
-    description:
-      "セッションCookieにHttpOnly・Secure・SameSite属性が設定されていないと、XSSでの窃取、HTTP傍受、CSRF攻撃が可能になる",
-    difficulty: 1,
-  },
-  {
-    id: "session-fixation",
-    name: "セッション固定攻撃",
-    description:
-      "ログイン時にセッションIDを再生成しないと、攻撃者が事前に仕込んだIDで被害者のセッションを乗っ取れる",
-    difficulty: 2,
-  },
-  {
-    id: "session-hijacking",
-    name: "セッションハイジャック",
-    description:
-      "XSSでHttpOnlyなしのCookieからセッションIDを盗み出し、他人になりすましてアクセスする",
-    difficulty: 2,
-  },
-  {
-    id: "csrf",
-    name: "CSRF（クロスサイトリクエストフォージェリ）",
-    description:
-      "ログイン中のユーザーが罠ページを開くだけで、パスワード変更などの操作が本人の意図なく実行されてしまう",
-    difficulty: 2,
-  },
-];
+const LABS = getLabsForStep("step04");
 
 /**
  * Step04: Session（セッション管理）のラボ一覧ページ
@@ -50,7 +22,7 @@ export function Step04Index() {
         {LABS.map((lab) => (
           <div
             key={lab.id}
-            className="border border-[#ddd] rounded p-4 mb-3 flex justify-between items-center"
+            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -58,17 +30,17 @@ export function Step04Index() {
                   {lab.name}
                 </Link>
               </h3>
-              <p className="m-0 text-[#666] text-sm">{lab.description}</p>
+              <p className="m-0 text-text-secondary dark:text-text-secondary text-sm">{lab.description}</p>
             </div>
             <div className="text-right min-w-[80px]">
-              <span className="text-xs text-[#888]">
+              <span className="text-xs text-text-muted dark:text-text-muted">
                 {"★".repeat(lab.difficulty)}
                 {"☆".repeat(3 - lab.difficulty)}
               </span>
               <br />
               <Link
                 to={`/step04/${lab.id}`}
-                className="inline-block mt-1 px-3 py-1 bg-[#333] text-white rounded no-underline text-[13px]"
+                className="inline-block mt-1 px-3 py-1 bg-accent dark:bg-accent text-white rounded no-underline text-[13px] hover:bg-accent-hover dark:hover:bg-accent-hover"
               >
                 Start
               </Link>

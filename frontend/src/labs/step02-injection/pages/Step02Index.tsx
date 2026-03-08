@@ -1,31 +1,7 @@
 import { Link } from "react-router-dom";
+import { getLabsForStep } from "@/data/navigation";
 
-const LABS = [
-  {
-    id: "sql-injection",
-    name: "SQLインジェクション",
-    description: "ログインフォームや検索機能でSQLを注入し、認証バイパスやデータ抽出を行う",
-    difficulty: 1,
-  },
-  {
-    id: "xss",
-    name: "クロスサイトスクリプティング (XSS)",
-    description: "Reflected XSS / Stored XSS でユーザーのブラウザ上にスクリプトを実行させる",
-    difficulty: 1,
-  },
-  {
-    id: "command-injection",
-    name: "OSコマンドインジェクション",
-    description: "ping ツールの入力欄からシェルメタ文字を注入し、サーバー上で任意のコマンドを実行する",
-    difficulty: 2,
-  },
-  {
-    id: "open-redirect",
-    name: "オープンリダイレクト",
-    description: "リダイレクト先URLの検証不備を利用して、外部のフィッシングサイトへ誘導する",
-    difficulty: 1,
-  },
-];
+const LABS = getLabsForStep("step02");
 
 /**
  * Step02: Injection（インジェクション）のラボ一覧ページ
@@ -44,7 +20,7 @@ export function Step02Index() {
         {LABS.map((lab) => (
           <div
             key={lab.id}
-            className="border border-[#ddd] rounded p-4 mb-3 flex justify-between items-center"
+            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -52,16 +28,16 @@ export function Step02Index() {
                   {lab.name}
                 </Link>
               </h3>
-              <p className="m-0 text-[#666] text-sm">{lab.description}</p>
+              <p className="m-0 text-text-secondary dark:text-text-secondary text-sm">{lab.description}</p>
             </div>
             <div className="text-right min-w-[80px]">
-              <span className="text-xs text-[#888]">
+              <span className="text-xs text-text-muted dark:text-text-muted">
                 {"★".repeat(lab.difficulty)}{"☆".repeat(3 - lab.difficulty)}
               </span>
               <br />
               <Link
                 to={`/step02/${lab.id}`}
-                className="inline-block mt-1 px-3 py-1 bg-[#333] text-white rounded no-underline text-[13px]"
+                className="inline-block mt-1 px-3 py-1 bg-accent dark:bg-accent text-white rounded no-underline text-[13px] hover:bg-accent-hover dark:hover:bg-accent-hover"
               >
                 Start
               </Link>

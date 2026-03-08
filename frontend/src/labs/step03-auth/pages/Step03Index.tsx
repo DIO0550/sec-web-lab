@@ -1,37 +1,7 @@
 import { Link } from "react-router-dom";
+import { getLabsForStep } from "@/data/navigation";
 
-const LABS = [
-  {
-    id: "plaintext-password",
-    name: "平文パスワード保存",
-    description: "パスワードをハッシュ化せず平文でDBに保存していると、漏洩時に全パスワードが即座に悪用される",
-    difficulty: 1,
-  },
-  {
-    id: "weak-hash",
-    name: "弱いハッシュアルゴリズム",
-    description: "MD5/SHA1でハッシュ化しても、レインボーテーブルで数秒で元のパスワードに戻せてしまう",
-    difficulty: 2,
-  },
-  {
-    id: "brute-force",
-    name: "ブルートフォース攻撃",
-    description: "ログイン試行に回数制限がないと、パスワード辞書を使った総当たりで突破される",
-    difficulty: 1,
-  },
-  {
-    id: "default-credentials",
-    name: "デフォルト認証情報",
-    description: "admin/admin123 等の初期パスワードが変更されないまま運用されると、即座に管理者権限を奪取される",
-    difficulty: 1,
-  },
-  {
-    id: "weak-password-policy",
-    name: "弱いパスワードポリシー",
-    description: "パスワード強度チェックがないと、123456 等の弱いパスワードが登録でき、辞書攻撃で瞬時に突破される",
-    difficulty: 1,
-  },
-];
+const LABS = getLabsForStep("step03");
 
 /**
  * Step03: Auth（認証）のラボ一覧ページ
@@ -50,7 +20,7 @@ export function Step03Index() {
         {LABS.map((lab) => (
           <div
             key={lab.id}
-            className="border border-[#ddd] rounded p-4 mb-3 flex justify-between items-center"
+            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -58,16 +28,16 @@ export function Step03Index() {
                   {lab.name}
                 </Link>
               </h3>
-              <p className="m-0 text-[#666] text-sm">{lab.description}</p>
+              <p className="m-0 text-text-secondary dark:text-text-secondary text-sm">{lab.description}</p>
             </div>
             <div className="text-right min-w-[80px]">
-              <span className="text-xs text-[#888]">
+              <span className="text-xs text-text-muted dark:text-text-muted">
                 {"★".repeat(lab.difficulty)}{"☆".repeat(3 - lab.difficulty)}
               </span>
               <br />
               <Link
                 to={`/step03/${lab.id}`}
-                className="inline-block mt-1 px-3 py-1 bg-[#333] text-white rounded no-underline text-[13px]"
+                className="inline-block mt-1 px-3 py-1 bg-accent dark:bg-accent text-white rounded no-underline text-[13px] hover:bg-accent-hover dark:hover:bg-accent-hover"
               >
                 Start
               </Link>
