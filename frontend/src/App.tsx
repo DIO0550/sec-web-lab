@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { Layout } from "@/components/Layout";
 import { Home } from "./pages/Home";
 import {
   Step01Index,
@@ -83,39 +85,8 @@ import {
 export function App() {
   return (
     <BrowserRouter>
-      <div className="font-sans max-w-[960px] mx-auto p-5">
-        <header>
-          <h1>
-            <Link to="/" className="no-underline text-inherit">
-              sec-web-lab
-            </Link>
-          </h1>
-          <p>Web Security Hands-on Laboratory</p>
-          <nav className="flex gap-4 flex-wrap">
-            <Link to="/">Home</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step01">Step01</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step02">Step02</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step03">Step03</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step04">Step04</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step05">Step05</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step06">Step06</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step07">Step07</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step08">Step08</Link>
-            <span className="text-[#ccc]">|</span>
-            <Link to="/step09">Step09</Link>
-          </nav>
-          <hr />
-        </header>
-
-        <main>
+      <ThemeProvider>
+        <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
 
@@ -197,9 +168,12 @@ export function App() {
             <Route path="/step09/fail-open" element={<FailOpen />} />
             <Route path="/step09/csp" element={<Csp />} />
             <Route path="/step09/input-validation" element={<InputValidation />} />
+
+            {/* 不正なルートはホームにリダイレクト */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </main>
-      </div>
+        </Layout>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
