@@ -22,7 +22,7 @@ export function HeaderViewer({ result, mode }: HeaderViewerProps) {
           .join("\n")}
       </pre>
       <h4>レスポンスボディ</h4>
-      <pre className="bg-[#f5f5f5] p-3 rounded overflow-auto">
+      <pre className="bg-bg-secondary dark:bg-bg-secondary p-3 rounded overflow-auto">
         {JSON.stringify(result.body, null, 2)}
       </pre>
     </div>
@@ -46,7 +46,7 @@ export function TextViewer({ result }: TextViewerProps) {
     <div className="mt-2">
       <div>
         Status:{" "}
-        <span className={`font-bold ${isError ? "text-[#c00]" : "text-[#080]"}`}>
+        <span className={`font-bold ${isError ? "text-error-text" : "text-secure-text"}`}>
           {result.status}
         </span>
       </div>
@@ -80,7 +80,7 @@ export function JsonTextViewer({ result }: JsonTextViewerProps) {
   }
   return (
     <div className="mt-1">
-      <span className={`font-bold text-[13px] ${isError ? "text-[#c00]" : "text-[#080]"}`}>
+      <span className={`font-bold text-[13px] ${isError ? "text-error-text" : "text-secure-text"}`}>
         {result.status}
       </span>
       <pre

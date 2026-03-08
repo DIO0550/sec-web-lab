@@ -7,8 +7,8 @@ type Props = {
 };
 
 const VARIANT_CLASS = {
-  default: "bg-[#f0f0f0]",
-  warning: "bg-[#fff8e1]",
+  default: "bg-bg-tertiary dark:bg-bg-tertiary",
+  warning: "bg-warning-bg dark:bg-warning-bg",
 } as const;
 
 /**
