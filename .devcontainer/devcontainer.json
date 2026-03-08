@@ -18,7 +18,8 @@
   "mounts": [
     "source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind,readonly"
   ],
-  "postCreateCommand": "cd /workspace/backend && pnpm install && cd /workspace/frontend && pnpm install",
+  "initializeCommand": "curl -fsSL https://gist.githubusercontent.com/DIO0550/9030208a4e92984e9a1369f61ca8605e/raw/initialize-command.sh | bash",
+  "postCreateCommand": "curl -fsSL https://gist.githubusercontent.com/DIO0550/b08fa721f2b2e63f3cf708015390d5af/raw/post-create.sh | bash",
   "customizations": {
     "vscode": {
       "extensions": [
