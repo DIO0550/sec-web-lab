@@ -6,6 +6,7 @@ ARG USERNAME=vscode
 
 ENV NODE_VERSION=${NODE_VERSION}
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
 
 # 基本パッケージとNode.jsのインストール
 RUN apt-get update \
