@@ -61,7 +61,7 @@ export function Home() {
       </div>
 
       <h3 className="mt-8">Server Status</h3>
-      {error && <p className="text-red-600">Error: {error}</p>}
+      {error && <p className="text-error-text-light">Error: {error}</p>}
       {health ? (
         <pre className="bg-bg-secondary dark:bg-bg-secondary p-3 rounded">
           {JSON.stringify(health, null, 2)}
