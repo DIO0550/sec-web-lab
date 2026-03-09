@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Card } from "@/components/Card";
 import { getLabsForStep } from "@/data/navigation";
 
 const LABS = getLabsForStep("step08");
@@ -6,7 +7,7 @@ const LABS = getLabsForStep("step08");
 export function Step08Index() {
   return (
     <div>
-      <h2>Step 08: Advanced Techniques (高度な攻撃テクニック)</h2>
+      <h2 className="text-2xl font-bold border-l-4 border-accent pl-3">Step 08: Advanced Techniques (高度な攻撃テクニック)</h2>
       <p>
         より高度な攻撃テクニックを体験します。
         JWT改ざん、テンプレートインジェクション、レースコンディション、
@@ -15,9 +16,10 @@ export function Step08Index() {
 
       <div className="mt-6">
         {LABS.map((lab) => (
-          <div
+          <Card
             key={lab.id}
-            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
+            variant="bordered"
+            className="mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -39,7 +41,7 @@ export function Step08Index() {
                 Start
               </Link>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

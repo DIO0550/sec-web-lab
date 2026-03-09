@@ -14,9 +14,17 @@ type Props = {
 export function LabLayout({ title, subtitle, description, children }: Props) {
   return (
     <div>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
-      <p className="text-text-secondary dark:text-text-secondary">{description}</p>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold border-l-4 border-accent pl-3">
+          {title}
+        </h2>
+        <p className="text-sm text-accent dark:text-accent font-medium mt-1">
+          {subtitle}
+        </p>
+        <p className="mt-1 text-text-secondary dark:text-text-secondary">
+          {description}
+        </p>
+      </div>
       {children}
     </div>
   );
