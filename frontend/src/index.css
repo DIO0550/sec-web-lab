@@ -62,6 +62,34 @@
   --color-input-focus: #06b6d4;
 }
 
+/* サイドバーのカスタムスクロールバー */
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.sidebar-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: var(--color-border-light);
+}
+
+/* Firefox 用スクロールバー */
+.sidebar-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar-scrollbar:hover {
+  scrollbar-color: var(--color-border-light) transparent;
+}
+
 /* ダークモード カラー上書き */
 .dark {
   --color-bg-primary: #1a1a2e;
