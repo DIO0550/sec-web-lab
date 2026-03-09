@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/redos";
 
@@ -36,15 +39,12 @@ function RedosPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">入力文字列:</label>
-        <input type="text" value={input} onChange={(e) => setInput(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm font-mono" />
-      </div>
+      <Input label="入力文字列:" type="text" value={input} onChange={(e) => setInput(e.target.value)} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => setInput(p.value)} className="text-[11px] py-0.5 px-2 cursor-pointer">
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => setInput(p.value)}>
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onValidate(input)} disabled={isLoading}>
@@ -52,18 +52,18 @@ function RedosPanel({
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
+        <Alert variant={result.success ? "success" : "error"} className="mt-2">
           <div className="text-sm font-bold">
             {result.matched ? "マッチ" : "不一致"} — {result.elapsed}
           </div>
           {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
           {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
+            <div className="mt-2 text-xs italic opacity-70">
               {result._debug.message}
               {result._debug.pattern && <div>パターン: {result._debug.pattern}</div>}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );

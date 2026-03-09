@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/input-validation";
 
@@ -22,24 +25,23 @@ function ValidationPanel({ mode, result, isLoading, onRegister }: { mode: "vulne
 
   return (
     <div>
-      <div className="mb-1"><label className="text-[13px] block">ユーザー名:</label><input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm" /></div>
-      <div className="mb-1"><label className="text-[13px] block">メール:</label><input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm" /></div>
-      <div className="mb-1"><label className="text-[13px] block">年齢:</label><input type="text" value={age} onChange={(e) => setAge(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-20 text-sm" /></div>
-      <div className="mb-2"><label className="text-[13px] block">Website:</label><input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm" /></div>
+      <Input label="ユーザー名:" type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="mb-1" />
+      <Input label="メール:" type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="mb-1" />
+      <Input label="年齢:" type="text" value={age} onChange={(e) => setAge(e.target.value)} className="mb-1" />
+      <Input label="Website:" type="text" value={website} onChange={(e) => setWebsite(e.target.value)} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => { setUsername(p.username); setEmail(p.email); setAge(p.age); setWebsite(p.website); }} className="text-[11px] py-0.5 px-2 cursor-pointer">{p.label}</button>
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => { setUsername(p.username); setEmail(p.email); setAge(p.age); setWebsite(p.website); }}>{p.label}</Button>
         ))}
       </div>
       <FetchButton onClick={() => onRegister({ username, email, age: Number(age), website })} disabled={isLoading}>登録</FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className="text-sm font-bold">{result.success ? "登録成功" : "バリデーションエラー"}</div>
-          {result.errors && <ul className="text-xs mt-1">{result.errors.map((e, i) => <li key={i} className="text-[#c62828]">{e}</li>)}</ul>}
-          {result.user && <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.user, null, 2)}</pre>}
-          {result._debug && <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>}
-        </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "登録成功" : "バリデーションエラー"} className="mt-2">
+          {result.errors && <ul className="text-xs mt-1">{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul>}
+          {result.user && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.user, null, 2)}</pre>}
+          {result._debug && <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}</div>}
+        </Alert>
       )}
     </div>
   );

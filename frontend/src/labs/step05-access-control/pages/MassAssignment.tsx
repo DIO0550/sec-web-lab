@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/mass-assignment";
 
@@ -43,35 +46,9 @@ function RegisterForm({
 
   return (
     <div>
-      <div className="mb-1">
-        <label className="text-[13px] block">ユーザー名:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full"
-          placeholder="hacker"
-        />
-      </div>
-      <div className="mb-1">
-        <label className="text-[13px] block">メール:</label>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full"
-          placeholder="hacker@evil.com"
-        />
-      </div>
-      <div className="mb-1">
-        <label className="text-[13px] block">パスワード:</label>
-        <input
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full"
-        />
-      </div>
+      <Input label="ユーザー名:" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="hacker" className="mb-1" />
+      <Input label="メール:" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="hacker@evil.com" className="mb-1" />
+      <Input label="パスワード:" value={password} onChange={(e) => setPassword(e.target.value)} className="mb-1" />
       <div className="mb-2">
         <label className="text-[13px] flex items-center gap-1">
           <input
@@ -96,10 +73,7 @@ function RegisterForm({
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "登録成功" : "登録失敗"}
-          </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "登録成功" : "登録失敗"} className="mt-2">
           <div className="text-[13px]">{result.message}</div>
           {result.user && (
             <div className="mt-2">
@@ -124,7 +98,7 @@ function RegisterForm({
               )}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );
@@ -217,9 +191,9 @@ export function MassAssignment() {
         <FetchButton onClick={fetchUsers} disabled={loading}>
           ユーザー一覧を表示
         </FetchButton>
-        <button onClick={resetData} className="text-[11px] py-0.5 px-2 cursor-pointer text-[#888]">
+        <Button variant="secondary" size="sm" onClick={resetData}>
           デモデータをリセット
-        </button>
+        </Button>
       </div>
       {users && (
         <table className="w-full text-xs border-collapse">

@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/eval-injection";
 
@@ -36,20 +39,12 @@ function CalcPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">数式 / コード:</label>
-        <input
-          type="text"
-          value={expression}
-          onChange={(e) => setExpression(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-sm font-mono"
-        />
-      </div>
+      <Input label="数式 / コード:" value={expression} onChange={(e) => setExpression(e.target.value)} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => setExpression(p.value)} className="text-[11px] py-0.5 px-2 cursor-pointer">
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => setExpression(p.value)}>
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onCalc(expression)} disabled={isLoading}>
@@ -57,10 +52,7 @@ function CalcPanel({
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "実行結果" : "エラー"}
-          </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "実行結果" : "エラー"} className="mt-2">
           {result.expression && <div className="text-xs text-[#666] mt-1">式: {result.expression}</div>}
           {result.result && (
             <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">{result.result}</pre>
@@ -69,7 +61,7 @@ function CalcPanel({
           {result._debug && (
             <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );

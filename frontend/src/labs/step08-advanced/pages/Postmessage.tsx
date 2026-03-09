@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/postmessage";
 
@@ -44,16 +47,13 @@ function MsgPanel({
       <FetchButton onClick={onViewCode} disabled={isLoading}>ハンドラーコードを確認</FetchButton>
 
       {codeResult?.code && (
-        <pre className="text-[10px] bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto max-h-[150px]">{codeResult.code}</pre>
+        <pre className="text-[10px] bg-bg-secondary p-2 rounded mt-2 overflow-auto max-h-[150px]">{codeResult.code}</pre>
       )}
 
-      <div className="mt-3 mb-2">
-        <label className="text-[13px] block">送信元Origin:</label>
-        <input type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm" />
-      </div>
+      <Input label="送信元Origin:" type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} className="mt-3 mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => setOrigin(p.origin)} className="text-[11px] py-0.5 px-2 cursor-pointer">{p.label}</button>
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => setOrigin(p.origin)}>{p.label}</Button>
         ))}
       </div>
       <FetchButton onClick={() => onProcess(origin, { action: "redirect", url: "https://evil.example.com" })} disabled={isLoading}>
@@ -61,14 +61,11 @@ function MsgPanel({
       </FetchButton>
 
       {processResult && (
-        <div className={`mt-2 p-3 rounded ${processResult.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${processResult.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {processResult.success ? "メッセージ処理" : "拒否"}
-          </div>
+        <Alert variant={processResult.success ? "success" : "error"} title={processResult.success ? "メッセージ処理" : "拒否"} className="mt-2">
           {processResult.message && <div className="text-[13px] mt-1">{processResult.message}</div>}
           {processResult.receivedFrom && <div className="text-xs mt-1">From: {processResult.receivedFrom}</div>}
-          {processResult._debug && <div className="mt-2 text-xs text-[#888] italic">{processResult._debug.message}</div>}
-        </div>
+          {processResult._debug && <div className="mt-2 text-xs italic opacity-70">{processResult._debug.message}</div>}
+        </Alert>
       )}
     </div>
   );

@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Textarea } from "@/components/Textarea";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/deserialization";
 
@@ -31,23 +34,19 @@ function DeserPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">JSONデータ:</label>
-        <textarea value={data} onChange={(e) => setData(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-xs font-mono" rows={5} />
-      </div>
+      <Textarea label="JSONデータ:" value={data} onChange={(e) => setData(e.target.value)} mono rows={5} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
-        <button onClick={() => setData(normalJson)} className="text-[11px] py-0.5 px-2 cursor-pointer">通常データ</button>
-        <button onClick={() => setData(maliciousJson)} className="text-[11px] py-0.5 px-2 cursor-pointer">悪意あるオブジェクト</button>
+        <Button variant="ghost" size="sm" onClick={() => setData(normalJson)}>通常データ</Button>
+        <Button variant="ghost" size="sm" onClick={() => setData(maliciousJson)}>悪意あるオブジェクト</Button>
       </div>
       <FetchButton onClick={() => onDeserialize(data)} disabled={isLoading}>デシリアライズ</FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className="text-sm font-bold">{result.message}</div>
-          {result.result && <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">{result.result}</pre>}
-          {result.data && <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
-          {result._debug && <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>}
-        </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.message} className="mt-2">
+          {result.result && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{result.result}</pre>}
+          {result.data && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
+          {result._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
+        </Alert>
       )}
     </div>
   );

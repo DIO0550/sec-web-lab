@@ -5,6 +5,7 @@ import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { JsonTextViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Input } from "@/components/Input";
 
 type FetchResult = { status: number; body: string } | null;
 
@@ -111,12 +112,11 @@ export function ErrorMessageLeakage() {
         </p>
         <div className="flex gap-2 items-center">
           <code>/api/labs/error-message-leakage/[mode]/users/</code>
-          <input
+          <Input
             type="text"
             value={customInput}
             onChange={(e) => setCustomInput(e.target.value)}
             placeholder="入力値"
-            className="py-1 px-2 border border-[#ccc] rounded"
           />
           <FetchButton onClick={handleCustomTest} disabled={isLoading || !customInput.trim()}>
             テスト

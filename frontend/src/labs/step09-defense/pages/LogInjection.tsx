@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Textarea } from "@/components/Textarea";
 
 const BASE = "/api/labs/log-injection";
 
@@ -19,13 +21,10 @@ function LogInjPanel({ mode, logs, isLoading, onLogin, onViewLogs }: { mode: "vu
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">ユーザー名:</label>
-        <textarea value={username} onChange={(e) => setUsername(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm font-mono" rows={2} />
-      </div>
+      <Textarea label="ユーザー名:" value={username} onChange={(e) => setUsername(e.target.value)} mono rows={2} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => setUsername(p.value)} className="text-[11px] py-0.5 px-2 cursor-pointer">{p.label}</button>
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => setUsername(p.value)}>{p.label}</Button>
         ))}
       </div>
       <div className="flex gap-2 mb-2">

@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/path-traversal";
 
@@ -48,24 +51,18 @@ function FileForm({
 
   return (
     <div>
-      <div className="mb-1">
-        <label className="text-[13px] block">ファイル名:</label>
-        <input
-          type="text"
-          value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full font-mono text-sm"
-        />
-      </div>
+      <Input label="ファイル名:" value={fileName} onChange={(e) => setFileName(e.target.value)} className="mb-1" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button
+          <Button
             key={p.value}
+            variant="ghost"
+            size="sm"
             onClick={() => setFileName(p.value)}
-            className={`text-[11px] py-0.5 px-2 cursor-pointer ${p.value.includes("..") ? "text-[#c00]" : ""}`}
+            className={p.value.includes("..") ? "text-[#c00]" : ""}
           >
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onFetch(fileName)} disabled={isLoading}>
@@ -73,10 +70,7 @@ function FileForm({
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "ファイル取得成功" : "取得失敗"}
-          </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "ファイル取得成功" : "取得失敗"} className="mt-2">
           {result.message && <div className="text-[13px]">{result.message}</div>}
           {result.content && (
             <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto max-h-[200px] whitespace-pre-wrap">
@@ -91,7 +85,7 @@ function FileForm({
               {result._debug.check && <div>検証: <code>{result._debug.check}</code></div>}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );

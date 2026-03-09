@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/weak-password-policy";
 
@@ -52,66 +55,67 @@ function RegisterForm({
   return (
     <div>
       <div className="mb-3">
-        <div className="mb-1">
-          <label className="text-[13px] block">ユーザー名:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-            placeholder="testuser"
-          />
-        </div>
-        <div className="mb-1">
-          <label className="text-[13px] block">パスワード:</label>
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
+        <Input
+          label="ユーザー名"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="testuser"
+          className="mb-1"
+        />
+        <Input
+          label="パスワード"
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mb-1"
+        />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           登録
         </FetchButton>
       </div>
 
       <div className="mb-3">
-        <span className="text-xs text-[#888]">弱いパスワード:</span>
+        <span className="text-xs text-text-secondary">弱いパスワード:</span>
         <div className="flex gap-1 flex-wrap mt-1">
           {weakPresets.map((p) => (
-            <button
+            <Button
               key={p.label}
+              variant="ghost"
+              size="sm"
               onClick={() => setPassword(p.password)}
-              className="text-[11px] py-0.5 px-2 cursor-pointer text-[#c00]"
+              className="text-[#c00]"
             >
               {p.label}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="mt-1">
-          <span className="text-xs text-[#888]">強いパスワード:</span>
-          <button
+          <span className="text-xs text-text-secondary">強いパスワード:</span>
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => setPassword(strongPreset.password)}
-            className="text-[11px] py-0.5 px-2 cursor-pointer text-[#080] ml-1"
+            className="text-[#080] ml-1"
           >
             {strongPreset.label}
-          </button>
+          </Button>
         </div>
       </div>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "登録成功" : "登録失敗"}
-          </div>
+        <Alert
+          variant={result.success ? "success" : "error"}
+          title={result.success ? "登録成功" : "登録失敗"}
+          className="mt-2"
+        >
           <div className="text-[13px]">{result.message}</div>
           {result._debug && (
-            <div className="mt-1 text-[11px] text-[#888]">
+            <div className="mt-1 text-[11px] opacity-70">
               {result._debug.message}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );
@@ -137,13 +141,13 @@ function StrengthChecker({
   return (
     <div>
       <div className="mb-3">
-        <label className="text-[13px] block">パスワードを入力:</label>
-        <div className="flex gap-2">
-          <input
+        <div className="flex gap-2 items-end">
+          <Input
+            label="パスワードを入力"
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded flex-1"
+            className="flex-1"
           />
           <FetchButton onClick={() => onCheck(password)} disabled={isLoading}>
             チェック
@@ -152,16 +156,17 @@ function StrengthChecker({
       </div>
 
       <div className="mb-3">
-        <span className="text-xs text-[#888]">テスト用パスワード:</span>
+        <span className="text-xs text-text-secondary">テスト用パスワード:</span>
         <div className="flex gap-1 flex-wrap mt-1">
           {testPasswords.map((p) => (
-            <button
+            <Button
               key={p}
+              variant="ghost"
+              size="sm"
               onClick={() => { setPassword(p); onCheck(p); }}
-              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

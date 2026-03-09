@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/brute-force";
 
@@ -45,41 +48,38 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <div className="mb-1">
-          <label className="text-[13px] block">ユーザー名:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
-        <div className="mb-1">
-          <label className="text-[13px] block">パスワード:</label>
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
+        <Input
+          label="ユーザー名"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="mb-1"
+        />
+        <Input
+          label="パスワード"
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mb-1"
+        />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン
         </FetchButton>
       </div>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : result.locked ? "bg-[#fff3e0] border border-[#ff9800]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : result.locked ? "text-[#e65100]" : "text-[#c62828]"}`}>
-            {result.success ? "ログイン成功" : result.locked ? "アカウントロック" : "ログイン失敗"}
-          </div>
+        <Alert
+          variant={result.success ? "success" : result.locked ? "warning" : "error"}
+          title={result.success ? "ログイン成功" : result.locked ? "アカウントロック" : "ログイン失敗"}
+          className="mt-2"
+        >
           <div className="text-[13px]">{result.message}</div>
           {result.attemptsUsed !== undefined && (
-            <div className="text-xs text-[#888] mt-1">
+            <div className="text-xs opacity-70 mt-1">
               試行回数: {result.attemptsUsed} / {result.maxAttempts}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );
@@ -106,12 +106,9 @@ function DictionaryAttack({
           辞書攻撃を開始
         </FetchButton>
         {mode === "secure" && onReset && (
-          <button
-            onClick={onReset}
-            className="text-xs p-1 px-2 cursor-pointer"
-          >
+          <Button variant="secondary" size="sm" onClick={onReset}>
             リセット
-          </button>
+          </Button>
         )}
       </div>
 

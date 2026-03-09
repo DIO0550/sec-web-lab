@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/crlf-injection";
 
@@ -36,20 +39,12 @@ function CrlfPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">リダイレクト先URL:</label>
-        <input
-          type="text"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-sm"
-        />
-      </div>
+      <Input label="リダイレクト先URL:" value={url} onChange={(e) => setUrl(e.target.value)} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => setUrl(p.value)} className="text-[11px] py-0.5 px-2 cursor-pointer">
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => setUrl(p.value)}>
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onTest(url)} disabled={isLoading}>
@@ -57,8 +52,7 @@ function CrlfPanel({
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className="font-bold text-sm">Locationヘッダー</div>
+        <Alert variant={result.success ? "success" : "error"} title="Locationヘッダー" className="mt-2">
           <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-1 overflow-auto">{result.locationHeader}</pre>
           {result.sanitized !== undefined && (
             <div className="text-xs mt-1">
@@ -76,7 +70,7 @@ function CrlfPanel({
               )}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );

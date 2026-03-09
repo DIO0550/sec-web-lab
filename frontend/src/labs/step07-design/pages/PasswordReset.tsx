@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/password-reset";
 
@@ -39,19 +41,16 @@ function ResetPanel({
         </FetchButton>
       )}
 
-      <div className="mt-2 mb-2">
-        <label className="text-[13px] block">トークン:</label>
-        <input type="text" value={token} onChange={(e) => setToken(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm font-mono" />
-      </div>
+      <Input label="トークン:" type="text" value={token} onChange={(e) => setToken(e.target.value)} className="mt-2 mb-2" />
 
       {results.length > 0 && (
         <div className="mt-2 max-h-[200px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className={`text-xs p-1 mb-1 rounded ${r.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+            <Alert key={i} variant={r.success ? "success" : "error"} className="text-xs mb-1">
               {r.message}
               {r._debug?.token && <span className="font-mono ml-1">[token: {r._debug.token}]</span>}
               {r._demo?.token && <span className="font-mono ml-1">[token: {r._demo.token.substring(0, 8)}...]</span>}
-            </div>
+            </Alert>
           ))}
         </div>
       )}

@@ -3,6 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Select } from "@/components/Select";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/business-logic";
 
@@ -36,29 +40,26 @@ function OrderPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">商品ID:</label>
-        <select value={productId} onChange={(e) => setProductId(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded">
-          <option value="1">ノートPC (¥150,000)</option>
-          <option value="2">マウス (¥3,000)</option>
-          <option value="3">キーボード (¥8,000)</option>
-        </select>
-      </div>
-      <div className="mb-2">
-        <label className="text-[13px] block">数量:</label>
-        <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-24" />
-      </div>
+      <Select
+        label="商品ID:"
+        value={productId}
+        onChange={(e) => setProductId(e.target.value)}
+        options={[
+          { value: "1", label: "ノートPC (¥150,000)" },
+          { value: "2", label: "マウス (¥3,000)" },
+          { value: "3", label: "キーボード (¥8,000)" },
+        ]}
+        className="mb-2"
+      />
+      <Input type="number" label="数量:" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="mb-2" />
       {mode === "vulnerable" && (
-        <div className="mb-2">
-          <label className="text-[13px] block">価格（改ざん用）:</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-24" placeholder="空=サーバー価格" />
-        </div>
+        <Input type="number" label="価格（改ざん用）:" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="空=サーバー価格" className="mb-2" />
       )}
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => { setProductId(p.productId); setQuantity(p.quantity); setPrice(p.price); }} className="text-[11px] py-0.5 px-2 cursor-pointer">
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => { setProductId(p.productId); setQuantity(p.quantity); setPrice(p.price); }}>
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onOrder(productId, Number(quantity), price ? Number(price) : undefined)} disabled={isLoading}>
@@ -68,11 +69,11 @@ function OrderPanel({
       {results.length > 0 && (
         <div className="mt-2 max-h-[250px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className={`text-xs p-2 mb-1 rounded ${r.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+            <Alert key={i} variant={r.success ? "success" : "error"} className="text-xs mb-1">
               <div>{r.message}</div>
               {r.order && <div className="font-mono mt-1">残高: ¥{r.order.balance.toLocaleString()} (合計: ¥{r.order.total.toLocaleString()})</div>}
-              {r._debug && <div className="text-[#888] italic mt-1">{r._debug.message}</div>}
-            </div>
+              {r._debug && <div className="italic mt-1 opacity-70">{r._debug.message}</div>}
+            </Alert>
           ))}
         </div>
       )}

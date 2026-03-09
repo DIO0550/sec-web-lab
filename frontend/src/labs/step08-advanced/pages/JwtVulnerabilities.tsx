@@ -3,6 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Textarea } from "@/components/Textarea";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/jwt-vulnerabilities";
 
@@ -41,27 +45,26 @@ function JwtPanel({
         </FetchButton>
         {loginResult?.token && (
           <div className="mt-1">
-            <div className="text-xs text-[#666]">取得トークン:</div>
-            <input
+            <Input
+              label="取得トークン:"
               type="text"
               value={loginResult.token}
               readOnly
-              className="py-1 px-2 border border-[#ccc] rounded w-full text-[10px] font-mono"
               onClick={() => setToken(loginResult.token || "")}
             />
-            <button onClick={() => setToken(loginResult.token || "")} className="text-[10px] mt-1">
+            <Button variant="ghost" size="sm" onClick={() => setToken(loginResult.token || "")}>
               トークンをコピー
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
       <div className="mb-3">
-        <label className="text-[13px] block">トークン（改ざん可能）:</label>
-        <textarea
+        <Textarea
+          label="トークン（改ざん可能）:"
           value={token}
           onChange={(e) => setToken(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-[10px] font-mono"
+          mono
           rows={3}
         />
         <div className="flex gap-1 mt-1">
@@ -77,18 +80,15 @@ function JwtPanel({
       </div>
 
       {profileResult && (
-        <div className={`mt-2 p-3 rounded ${profileResult.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${profileResult.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {profileResult.success ? "認証成功" : "認証失敗"}
-          </div>
+        <Alert variant={profileResult.success ? "success" : "error"} title={profileResult.success ? "認証成功" : "認証失敗"} className="mt-2">
           <div className="text-[13px] mt-1">{profileResult.message}</div>
           {profileResult.profile && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
+            <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(profileResult.profile, null, 2)}
             </pre>
           )}
-          {profileResult._debug && <div className="mt-2 text-xs text-[#888] italic">{profileResult._debug.message}</div>}
-        </div>
+          {profileResult._debug && <div className="mt-2 text-xs italic opacity-70">{profileResult._debug.message}</div>}
+        </Alert>
       )}
     </div>
   );

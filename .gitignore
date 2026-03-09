@@ -141,3 +141,6 @@ vite.config.ts.timestamp-*
 .pnpm-store
 
 .specs
+# devcontainer init flag
+.devcontainer/.init-done
+.orchestrator
