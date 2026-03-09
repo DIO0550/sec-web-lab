@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Textarea } from "@/components/Textarea";
 
 const BASE = "/api/labs/xss";
 
@@ -42,11 +45,11 @@ function ReflectedXssTest({
       <div className="mb-3">
         <label className="text-[13px] block">検索キーワード:</label>
         <div className="flex gap-2">
-          <input
+          <Input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded flex-1"
+            className="flex-1"
           />
           <FetchButton onClick={() => onSearch(mode, query)} disabled={isLoading}>
             検索
@@ -58,13 +61,14 @@ function ReflectedXssTest({
         <span className="text-xs text-[#888]">プリセット:</span>
         <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
-            <button
+            <Button
               key={p.label}
+              variant="ghost"
+              size="sm"
               onClick={() => setQuery(p.query)}
-              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -126,24 +130,20 @@ function StoredXssTest({
   return (
     <div>
       <div className="mb-3">
-        <div className="mb-1">
-          <label className="text-[13px] block">タイトル:</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
-        <div className="mb-1">
-          <label className="text-[13px] block">内容:</label>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={2}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
+        <Input
+          label="タイトル:"
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="mb-1"
+        />
+        <Textarea
+          label="内容:"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          rows={2}
+          className="mb-1"
+        />
         <div className="flex gap-2">
           <FetchButton onClick={() => onPost(mode, title, content)} disabled={isLoading}>
             投稿
@@ -158,16 +158,17 @@ function StoredXssTest({
         <span className="text-xs text-[#888]">プリセット:</span>
         <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
-            <button
+            <Button
               key={p.label}
+              variant="ghost"
+              size="sm"
               onClick={() => {
                 setTitle(p.title);
                 setContent(p.content);
               }}
-              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

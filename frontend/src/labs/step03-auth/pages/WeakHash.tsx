@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/weak-hash";
 
@@ -74,12 +76,13 @@ function UsersPanel({
                   </td>
                   <td className="p-1 border border-[#ddd] text-[11px]">{u.hashAlgorithm}</td>
                   <td className="p-1 border border-[#ddd]">
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => onCrack(u.password)}
-                      className="text-[10px] py-0.5 px-1.5 cursor-pointer"
                     >
                       逆引き
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -105,10 +108,11 @@ function CrackPanel({
   if (!result) return null;
 
   return (
-    <div className={`mt-3 p-3 rounded ${result.success ? "bg-[#ffebee] border border-[#f44336]" : "bg-[#e8f5e9] border border-[#4caf50]"}`}>
-      <div className={`font-bold ${result.success ? "text-[#c62828]" : "text-[#2e7d32]"}`}>
-        {result.success ? "逆引き成功（パスワード判明）" : "逆引き失敗（パスワード保護）"}
-      </div>
+    <Alert
+      variant={result.success ? "error" : "success"}
+      title={result.success ? "逆引き成功（パスワード判明）" : "逆引き失敗（パスワード保護）"}
+      className="mt-3"
+    >
       <div className="text-xs mt-1">
         <div>ハッシュ: <code className="text-[10px] break-all">{result.hash}</code></div>
         {result.password && (
@@ -117,14 +121,14 @@ function CrackPanel({
           </div>
         )}
         {result.method && <div className="mt-1">手法: {result.method}</div>}
-        {result.message && <div className="mt-1 text-[#666]">{result.message}</div>}
+        {result.message && <div className="mt-1 opacity-70">{result.message}</div>}
         {result._debug?.reasons && (
-          <ul className="mt-2 text-[11px] text-[#666]">
+          <ul className="mt-2 text-[11px] opacity-70">
             {result._debug.reasons.map((r, i) => <li key={i}>{r}</li>)}
           </ul>
         )}
       </div>
-    </div>
+    </Alert>
   );
 }
 

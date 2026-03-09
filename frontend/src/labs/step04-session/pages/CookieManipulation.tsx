@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/cookie-manipulation";
 
@@ -50,40 +52,31 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <div className="mb-1">
-          <label className="text-[13px] block">ユーザー名:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
-        <div className="mb-1">
-          <label className="text-[13px] block">パスワード:</label>
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
+        <Input
+          label="ユーザー名"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="mb-1"
+        />
+        <Input
+          label="パスワード"
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mb-1"
+        />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン
         </FetchButton>
       </div>
 
       {result && (
-        <div
-          className={`mt-2 p-3 rounded ${
-            result.success
-              ? "bg-[#e8f5e9] border border-[#4caf50]"
-              : "bg-[#ffebee] border border-[#f44336]"
-          }`}
+        <Alert
+          variant={result.success ? "success" : "error"}
+          title={result.success ? "ログイン成功" : "ログイン失敗"}
+          className="mt-2"
         >
-          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "ログイン成功" : "ログイン失敗"}
-          </div>
           <div className="text-[13px]">{result.message}</div>
           {result.cookieAttributes && (
             <div className="mt-2 text-xs">
@@ -99,7 +92,7 @@ function LoginForm({
               <div>SameSite: {result.cookieAttributes.sameSite}</div>
             </div>
           )}
-        </div>
+        </Alert>
       )}
 
       {result?.success && (

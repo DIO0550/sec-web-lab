@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/csrf";
 
@@ -82,15 +85,12 @@ function VulnerableDemo() {
       </FetchButton>
 
       {loginResult && (
-        <div
-          className={`mt-2 p-2 rounded text-xs ${
-            loginResult.success
-              ? "bg-[#e8f5e9] border border-[#4caf50]"
-              : "bg-[#ffebee] border border-[#f44336]"
-          }`}
+        <Alert
+          variant={loginResult.success ? "success" : "error"}
+          className="mt-2 text-xs"
         >
           {loginResult.message}
-        </div>
+        </Alert>
       )}
 
       {loginResult?.success && (
@@ -100,7 +100,7 @@ function VulnerableDemo() {
               プロフィール確認
             </FetchButton>
             {profileResult && (
-              <div className="mt-1 p-2 bg-[#f5f5f5] rounded text-xs">
+              <div className="mt-1 p-2 bg-bg-secondary rounded text-xs">
                 <div>ユーザー: {profileResult.username}</div>
                 <div>メール: {profileResult.email}</div>
                 <div>現在のパスワード: <code>{profileResult.currentPassword}</code></div>
@@ -108,38 +108,31 @@ function VulnerableDemo() {
             )}
           </div>
 
-          <div className="mt-3 p-3 bg-[#fff3e0] border border-[#ff9800] rounded">
-            <div className="text-xs font-bold text-[#e65100] mb-1">
+          <Alert variant="warning" className="mt-3">
+            <div className="text-xs font-bold mb-1">
               CSRF攻撃シミュレーション（罠ページからのリクエスト）
             </div>
-            <div className="mb-2">
-              <label className="text-[11px] block">攻撃者が変更するパスワード:</label>
-              <input
-                type="text"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
-              />
-            </div>
+            <Input
+              label="攻撃者が変更するパスワード"
+              type="text"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="mb-2"
+            />
             <FetchButton onClick={handleCsrfAttack} disabled={loading} size="small">
               CSRF攻撃を実行（CSRFトークンなし）
             </FetchButton>
 
             {changeResult && (
-              <div
-                className={`mt-2 p-2 rounded text-xs ${
-                  changeResult.success
-                    ? "bg-[#ffebee] border border-[#f44336]"
-                    : "bg-[#e8f5e9] border border-[#4caf50]"
-                }`}
+              <Alert
+                variant={changeResult.success ? "error" : "success"}
+                title={changeResult.success ? "攻撃成功!" : "攻撃失敗"}
+                className="mt-2 text-xs"
               >
-                <div className="font-bold">
-                  {changeResult.success ? "攻撃成功!" : "攻撃失敗"}
-                </div>
-                <div>{changeResult.message}</div>
-              </div>
+                {changeResult.message}
+              </Alert>
             )}
-          </div>
+          </Alert>
         </>
       )}
     </div>
@@ -230,22 +223,19 @@ function SecureDemo() {
       </FetchButton>
 
       {loginResult && (
-        <div
-          className={`mt-2 p-2 rounded text-xs ${
-            loginResult.success
-              ? "bg-[#e8f5e9] border border-[#4caf50]"
-              : "bg-[#ffebee] border border-[#f44336]"
-          }`}
+        <Alert
+          variant={loginResult.success ? "success" : "error"}
+          className="mt-2 text-xs"
         >
           {loginResult.message}
-        </div>
+        </Alert>
       )}
 
       {loginResult?.success && (
         <>
           {/* 正規のパスワード変更フロー */}
-          <div className="mt-3 p-3 bg-[#e8f5e9] border border-[#4caf50] rounded">
-            <div className="text-xs font-bold text-[#2e7d32] mb-1">
+          <Alert variant="success" className="mt-3">
+            <div className="text-xs font-bold mb-1">
               正規のパスワード変更（CSRFトークン付き）
             </div>
             <div className="flex gap-2 mb-2">
@@ -254,19 +244,17 @@ function SecureDemo() {
               </FetchButton>
             </div>
             {csrfToken && (
-              <div className="p-1 bg-[#f5f5f5] rounded text-[11px] font-mono mb-2 break-all">
+              <div className="p-1 bg-bg-secondary rounded text-[11px] font-mono mb-2 break-all">
                 Token: {csrfToken}
               </div>
             )}
-            <div className="mb-2">
-              <label className="text-[11px] block">新しいパスワード:</label>
-              <input
-                type="text"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
-              />
-            </div>
+            <Input
+              label="新しいパスワード"
+              type="text"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="mb-2"
+            />
             <FetchButton
               onClick={handleLegitChange}
               disabled={loading || !csrfToken}
@@ -275,41 +263,33 @@ function SecureDemo() {
               パスワード変更（トークン付き）
             </FetchButton>
             {changeResult && (
-              <div
-                className={`mt-2 p-2 rounded text-xs ${
-                  changeResult.success
-                    ? "bg-[#e8f5e9] border border-[#4caf50]"
-                    : "bg-[#ffebee] border border-[#f44336]"
-                }`}
+              <Alert
+                variant={changeResult.success ? "success" : "error"}
+                className="mt-2 text-xs"
               >
                 {changeResult.message}
-              </div>
+              </Alert>
             )}
-          </div>
+          </Alert>
 
           {/* CSRF攻撃の試行 */}
-          <div className="mt-3 p-3 bg-[#fff3e0] border border-[#ff9800] rounded">
-            <div className="text-xs font-bold text-[#e65100] mb-1">
+          <Alert variant="warning" className="mt-3">
+            <div className="text-xs font-bold mb-1">
               CSRF攻撃シミュレーション（トークンなし）
             </div>
             <FetchButton onClick={handleCsrfAttack} disabled={loading} size="small">
               CSRF攻撃を実行（トークンなしで送信）
             </FetchButton>
             {attackResult && (
-              <div
-                className={`mt-2 p-2 rounded text-xs ${
-                  attackResult.success
-                    ? "bg-[#ffebee] border border-[#f44336]"
-                    : "bg-[#e8f5e9] border border-[#4caf50]"
-                }`}
+              <Alert
+                variant={attackResult.success ? "error" : "success"}
+                title={attackResult.success ? "攻撃成功（問題あり）" : "攻撃失敗（防御成功）"}
+                className="mt-2 text-xs"
               >
-                <div className="font-bold">
-                  {attackResult.success ? "攻撃成功（問題あり）" : "攻撃失敗（防御成功）"}
-                </div>
-                <div>{attackResult.message}</div>
-              </div>
+                {attackResult.message}
+              </Alert>
             )}
-          </div>
+          </Alert>
         </>
       )}
     </div>
@@ -334,9 +314,9 @@ export function Csrf() {
       description="ログイン中のユーザーが攻撃者の用意した罠ページを開くだけで、パスワード変更などの操作が本人の意図なく実行されてしまう脆弱性です。CSRFトークンによるリクエスト検証で防御します。"
     >
       <div className="mt-2">
-        <button onClick={handleReset} className="text-xs p-1 cursor-pointer">
+        <Button variant="secondary" size="sm" onClick={handleReset}>
           全データリセット
-        </button>
+        </Button>
       </div>
 
       <h3 className="mt-4">Lab: CSRF攻撃によるパスワード変更</h3>

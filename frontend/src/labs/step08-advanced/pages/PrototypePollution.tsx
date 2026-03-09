@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Textarea } from "@/components/Textarea";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/prototype-pollution";
 
@@ -34,13 +37,10 @@ function PollutionPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">マージするデータ:</label>
-        <textarea value={data} onChange={(e) => setData(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-xs font-mono" rows={4} />
-      </div>
+      <Textarea label="マージするデータ:" value={data} onChange={(e) => setData(e.target.value)} mono rows={4} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
-        <button onClick={() => setData(normalJson)} className="text-[11px] py-0.5 px-2 cursor-pointer">通常データ</button>
-        <button onClick={() => setData(pollutionJson)} className="text-[11px] py-0.5 px-2 cursor-pointer">__proto__ 汚染</button>
+        <Button variant="ghost" size="sm" onClick={() => setData(normalJson)}>通常データ</Button>
+        <Button variant="ghost" size="sm" onClick={() => setData(pollutionJson)}>__proto__ 汚染</Button>
       </div>
       <div className="flex gap-2 mb-2">
         <FetchButton onClick={() => onMerge(data)} disabled={isLoading}>マージ実行</FetchButton>
@@ -48,11 +48,10 @@ function PollutionPanel({
       </div>
 
       {mergeResult && (
-        <div className={`mt-2 p-3 rounded bg-[#f5f5f5] border`}>
-          <div className="text-xs font-bold">マージ結果:</div>
+        <Alert variant="info" title="マージ結果:" className="mt-2">
           {mergeResult.config && <pre className="text-xs mt-1 overflow-auto">{JSON.stringify(mergeResult.config, null, 2)}</pre>}
           {mergeResult._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
+            <div className="mt-2 text-xs italic opacity-70">
               {mergeResult._debug.message}
               {mergeResult._debug.prototypeCheck && (
                 <div className="mt-1">
@@ -61,16 +60,13 @@ function PollutionPanel({
               )}
             </div>
           )}
-        </div>
+        </Alert>
       )}
 
       {adminResult && (
-        <div className={`mt-2 p-3 rounded ${adminResult.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${adminResult.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {adminResult.success ? "管理者アクセス成功（プロトタイプ汚染）" : "アクセス拒否"}
-          </div>
+        <Alert variant={adminResult.success ? "success" : "error"} title={adminResult.success ? "管理者アクセス成功（プロトタイプ汚染）" : "アクセス拒否"} className="mt-2">
           <div className="text-[13px] mt-1">{adminResult.message}</div>
-        </div>
+        </Alert>
       )}
     </div>
   );

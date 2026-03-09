@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/default-credentials";
 
@@ -54,61 +57,59 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <div className="mb-1">
-          <label className="text-[13px] block">ユーザー名:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
-        <div className="mb-1">
-          <label className="text-[13px] block">パスワード:</label>
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full"
-          />
-        </div>
+        <Input
+          label="ユーザー名"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="mb-1"
+        />
+        <Input
+          label="パスワード"
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mb-1"
+        />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン
         </FetchButton>
       </div>
 
       <div className="mb-3">
-        <span className="text-xs text-[#888]">よくあるデフォルト認証情報:</span>
+        <span className="text-xs text-text-secondary">よくあるデフォルト認証情報:</span>
         <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
-            <button
+            <Button
               key={p.label}
+              variant="ghost"
+              size="sm"
               onClick={() => { setUsername(p.username); setPassword(p.password); }}
-              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : result.requirePasswordChange ? "bg-[#fff3e0] border border-[#ff9800]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold ${result.success ? "text-[#2e7d32]" : result.requirePasswordChange ? "text-[#e65100]" : "text-[#c62828]"}`}>
-            {result.success ? "ログイン成功" : result.requirePasswordChange ? "パスワード変更が必要" : "ログイン失敗"}
-          </div>
+        <Alert
+          variant={result.success ? "success" : result.requirePasswordChange ? "warning" : "error"}
+          title={result.success ? "ログイン成功" : result.requirePasswordChange ? "パスワード変更が必要" : "ログイン失敗"}
+          className="mt-2"
+        >
           <div className="text-[13px]">{result.message}</div>
           {result.user && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2">
+            <pre className="text-xs bg-bg-secondary p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}
           {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
+            <div className="mt-2 text-xs opacity-70 italic">
               {result._debug.message}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );
@@ -129,35 +130,29 @@ function ChangePasswordForm({
   const [newPassword, setNewPassword] = useState("");
 
   return (
-    <div className="mt-3 p-3 border border-[#e0e0e0] rounded bg-[#fafafa]">
+    <div className="mt-3 p-3 border border-border-light rounded bg-bg-secondary">
       <h4 className="m-0 mb-2 text-sm">パスワード変更</h4>
-      <div className="mb-1">
-        <label className="text-xs block">ユーザー名:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
-        />
-      </div>
-      <div className="mb-1">
-        <label className="text-xs block">現在のパスワード:</label>
-        <input
-          type="text"
-          value={currentPassword}
-          onChange={(e) => setCurrentPassword(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
-        />
-      </div>
-      <div className="mb-1">
-        <label className="text-xs block">新しいパスワード:</label>
-        <input
-          type="text"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs"
-        />
-      </div>
+      <Input
+        label="ユーザー名"
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className="mb-1"
+      />
+      <Input
+        label="現在のパスワード"
+        type="text"
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
+        className="mb-1"
+      />
+      <Input
+        label="新しいパスワード"
+        type="text"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+        className="mb-1"
+      />
       <FetchButton
         onClick={() => onChangePassword(username, currentPassword, newPassword)}
         disabled={isLoading}
@@ -167,9 +162,12 @@ function ChangePasswordForm({
       </FetchButton>
 
       {changeResult && (
-        <div className={`mt-2 p-2 rounded text-xs ${changeResult.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+        <Alert
+          variant={changeResult.success ? "success" : "error"}
+          className="mt-2 text-xs"
+        >
           {changeResult.message}
-        </div>
+        </Alert>
       )}
     </div>
   );
@@ -296,12 +294,9 @@ export function DefaultCredentials() {
               />
             )}
             <div className="mt-2">
-              <button
-                onClick={resetSecure}
-                className="text-[11px] py-0.5 px-2 cursor-pointer text-[#888]"
-              >
+              <Button variant="secondary" size="sm" onClick={resetSecure}>
                 デモ状態をリセット
-              </button>
+              </Button>
             </div>
           </div>
         }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { NAVIGATION } from "@/data/navigation";
+import { Card } from "@/components/Card";
 
 type HealthStatus = {
   status: string;
@@ -30,9 +31,10 @@ export function Home() {
 
       <div className="mt-6">
         {NAVIGATION.map((step) => (
-            <div
+            <Card
               key={step.id}
-              className="border rounded p-4 mb-3 flex justify-between items-center border-border dark:border-border"
+              variant="bordered"
+              className="mb-3 flex justify-between items-center"
             >
               <div>
                 <h3 className="m-0 mb-1">
@@ -54,7 +56,7 @@ export function Home() {
                   Start
                 </Link>
               </div>
-            </div>
+            </Card>
         ))}
       </div>
 

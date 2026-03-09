@@ -3,6 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Textarea } from "@/components/Textarea";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/ssti";
 
@@ -36,24 +40,13 @@ function SstiPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">テンプレート:</label>
-        <textarea
-          value={template}
-          onChange={(e) => setTemplate(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-sm font-mono"
-          rows={3}
-        />
-      </div>
-      <div className="mb-2">
-        <label className="text-[13px] block">name変数:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full" />
-      </div>
+      <Textarea label="テンプレート:" value={template} onChange={(e) => setTemplate(e.target.value)} mono rows={3} className="mb-2" />
+      <Input label="name変数:" type="text" value={name} onChange={(e) => setName(e.target.value)} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => { setTemplate(p.template); setName(p.name); }} className="text-[11px] py-0.5 px-2 cursor-pointer">
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => { setTemplate(p.template); setName(p.name); }}>
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onRender(template, name)} disabled={isLoading}>
@@ -61,17 +54,17 @@ function SstiPanel({
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
+        <Alert variant={result.success ? "success" : "error"} className="mt-2">
           {result.rendered && (
             <div>
               <div className="text-xs font-bold">レンダリング結果:</div>
-              <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-1 overflow-auto">{result.rendered}</pre>
+              <pre className="text-xs bg-bg-secondary p-2 rounded mt-1 overflow-auto">{result.rendered}</pre>
             </div>
           )}
-          {result.warning && <div className="text-xs text-[#ff6600] mt-1">{result.warning}</div>}
+          {result.warning && <div className="text-xs mt-1">{result.warning}</div>}
           {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
-          {result._debug && <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>}
-        </div>
+          {result._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
+        </Alert>
       )}
     </div>
   );

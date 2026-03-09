@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/idor";
 
@@ -50,43 +53,28 @@ function LoginForm({
 
   return (
     <div className="mb-3">
-      <div className="mb-1">
-        <label className="text-[13px] block">ユーザー名:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full"
-        />
-      </div>
-      <div className="mb-1">
-        <label className="text-[13px] block">パスワード:</label>
-        <input
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full"
-        />
-      </div>
+      <Input label="ユーザー名:" value={username} onChange={(e) => setUsername(e.target.value)} className="mb-1" />
+      <Input label="パスワード:" value={password} onChange={(e) => setPassword(e.target.value)} className="mb-1" />
       <FetchButton onClick={() => onLogin(mode, username, password)} disabled={isLoading}>
         ログイン
       </FetchButton>
       <div className="flex gap-1 flex-wrap mt-1">
         {presets.map((p) => (
-          <button
+          <Button
             key={p.label}
+            variant="ghost"
+            size="sm"
             onClick={() => { setUsername(p.username); setPassword(p.password); }}
-            className="text-[11px] py-0.5 px-2 cursor-pointer"
           >
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
       {loginResult && (
-        <div className={`mt-2 p-2 rounded text-xs ${loginResult.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+        <Alert variant={loginResult.success ? "success" : "error"} className="mt-2 text-xs">
           {loginResult.message}
           {loginResult.user && <span className="ml-1">(ID: {loginResult.user.id})</span>}
-        </div>
+        </Alert>
       )}
     </div>
   );
@@ -108,25 +96,12 @@ function ProfileForm({
 
   return (
     <div className="mb-3">
-      <div className="mb-1">
-        <label className="text-[13px] block">取得するユーザーID:</label>
-        <input
-          type="number"
-          value={targetId}
-          onChange={(e) => setTargetId(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-20"
-          min="1"
-        />
-      </div>
+      <Input label="取得するユーザーID:" type="number" value={targetId} onChange={(e) => setTargetId(e.target.value)} min="1" className="mb-1" />
       <div className="flex gap-1 mb-1">
         {["1", "2", "3"].map((id) => (
-          <button
-            key={id}
-            onClick={() => setTargetId(id)}
-            className="text-[11px] py-0.5 px-2 cursor-pointer"
-          >
+          <Button key={id} variant="ghost" size="sm" onClick={() => setTargetId(id)}>
             ID={id}
-          </button>
+          </Button>
         ))}
       </div>
       <FetchButton onClick={() => onFetch(targetId)} disabled={isLoading || !sessionId}>
@@ -135,10 +110,7 @@ function ProfileForm({
       {!sessionId && <p className="text-xs text-[#888] mt-1">先にログインしてください</p>}
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "データ取得成功" : "アクセス拒否"}
-          </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
           {result.message && <div className="text-[13px]">{result.message}</div>}
           {result.profile && (
             <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
@@ -152,7 +124,7 @@ function ProfileForm({
               ログインユーザーID: {result._debug.currentUserId} / リクエストID: {result._debug.requestedId}
             </div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );

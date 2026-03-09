@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/session-fixation";
 
@@ -98,15 +101,13 @@ function VulnerableDemo() {
 
   return (
     <div>
-      <div className="mb-3">
-        <label className="text-[13px] block">攻撃者が仕込むセッションID:</label>
-        <input
-          type="text"
-          value={fixedSessionId}
-          onChange={(e) => setFixedSessionId(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full font-mono text-xs"
-        />
-      </div>
+      <Input
+        label="攻撃者が仕込むセッションID"
+        type="text"
+        value={fixedSessionId}
+        onChange={(e) => setFixedSessionId(e.target.value)}
+        className="mb-3 font-mono text-xs"
+      />
 
       <div className="flex flex-col gap-2">
         <FetchButton onClick={handleSetSession} disabled={loading || step >= 1}>
@@ -118,23 +119,22 @@ function VulnerableDemo() {
         <FetchButton onClick={handleAttackerAccess} disabled={loading || step < 2 || step >= 3}>
           Step 3: 攻撃者がアクセス
         </FetchButton>
-        <button onClick={handleReset} className="text-xs p-1 cursor-pointer">
+        <Button variant="secondary" size="sm" onClick={handleReset}>
           リセット
-        </button>
+        </Button>
       </div>
 
       {results.length > 0 && (
         <div className="mt-3">
           {results.map((r, i) => (
-            <div
+            <Alert
               key={i}
-              className={`p-2 mb-1 rounded text-xs ${
-                r.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"
-              }`}
+              variant={r.success ? "success" : "error"}
+              className="mb-1 text-xs"
             >
               <div className="font-bold">{r.message}</div>
               {r.sessionId && (
-                <div className="font-mono text-[11px] text-[#666]">
+                <div className="font-mono text-[11px] opacity-70">
                   SessionID: {r.sessionId}
                 </div>
               )}
@@ -144,7 +144,7 @@ function VulnerableDemo() {
                   セッション乗っ取り成功! {r.username} としてアクセスできました
                 </div>
               )}
-            </div>
+            </Alert>
           ))}
         </div>
       )}
@@ -223,31 +223,30 @@ function SecureDemo() {
         <FetchButton onClick={handleProfile} disabled={loading || step < 1 || step >= 2}>
           Step 2: プロフィールを確認
         </FetchButton>
-        <button onClick={handleReset} className="text-xs p-1 cursor-pointer">
+        <Button variant="secondary" size="sm" onClick={handleReset}>
           リセット
-        </button>
+        </Button>
       </div>
 
       {results.length > 0 && (
         <div className="mt-3">
           {results.map((r, i) => (
-            <div
+            <Alert
               key={i}
-              className={`p-2 mb-1 rounded text-xs ${
-                r.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"
-              }`}
+              variant={r.success ? "success" : "error"}
+              className="mb-1 text-xs"
             >
               <div className="font-bold">{r.message}</div>
               {r.info && <div className="text-[#080]">{r.info}</div>}
-            </div>
+            </Alert>
           ))}
         </div>
       )}
 
-      <div className="mt-3 p-2 bg-[#f5f5f5] rounded text-xs">
+      <Alert variant="info" className="mt-3 text-xs">
         <strong>ポイント:</strong> ログイン時に新しいセッションIDが生成され、古いIDは無効化されます。
         攻撃者が事前に仕込んだセッションIDは、ログイン後に使えなくなります。
-      </div>
+      </Alert>
     </div>
   );
 }

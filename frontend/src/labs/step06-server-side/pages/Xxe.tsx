@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Textarea } from "@/components/Textarea";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/xxe";
 
@@ -43,32 +46,21 @@ function XxePanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">XMLデータ:</label>
-        <textarea
-          value={xml}
-          onChange={(e) => setXml(e.target.value)}
-          className="py-1 px-2 border border-[#ccc] rounded w-full text-xs font-mono"
-          rows={8}
-        />
-      </div>
+      <Textarea label="XMLデータ:" value={xml} onChange={(e) => setXml(e.target.value)} rows={8} mono className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
-        <button onClick={() => setXml(normalXml)} className="text-[11px] py-0.5 px-2 cursor-pointer">
+        <Button variant="ghost" size="sm" onClick={() => setXml(normalXml)}>
           通常XML
-        </button>
-        <button onClick={() => setXml(maliciousXml)} className="text-[11px] py-0.5 px-2 cursor-pointer">
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => setXml(maliciousXml)}>
           XXEペイロード
-        </button>
+        </Button>
       </div>
       <FetchButton onClick={() => onSubmit(xml)} disabled={isLoading}>
         XMLインポート
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "パース成功" : "拒否"}
-          </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "パース成功" : "拒否"} className="mt-2">
           {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
           {result.parsed && (
             <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
@@ -78,7 +70,7 @@ function XxePanel({
           {result._debug && (
             <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>
           )}
-        </div>
+        </Alert>
       )}
     </div>
   );

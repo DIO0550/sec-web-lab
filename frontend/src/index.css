@@ -35,6 +35,31 @@
   --color-sidebar-active: #dee2e6;
 
   --color-warning-bg: #fff8e1;
+  --color-warning-border: #ffb300;
+  --color-warning-text: #7a5d00;
+
+  /* Alert success 用 */
+  --color-success-bg: #e8f5e9;
+  --color-success-border: #4caf50;
+  --color-success-text: #2e7d32;
+
+  /* Alert error 用（ライト系） */
+  --color-error-bg-light: #ffebee;
+  --color-error-border: #f44336;
+  --color-error-text-light: #c62828;
+
+  /* Alert info 用 */
+  --color-info-bg: #e3f2fd;
+  --color-info-border: #2196f3;
+  --color-info-text: #1565c0;
+
+  /* Button danger バリアント用 */
+  --color-danger: #d32f2f;
+  --color-danger-hover: #b71c1c;
+
+  /* Input フォーカスリング用 */
+  --color-input-border: #cccccc;
+  --color-input-focus: #555555;
 }
 
 /* ダークモード カラー上書き */
@@ -58,4 +83,29 @@
   --color-sidebar-active: #1e2d4d;
 
   --color-warning-bg: #3d3520;
+  --color-warning-border: #b37a00;
+  --color-warning-text: #ffd54f;
+
+  /* Alert success 用 */
+  --color-success-bg: #1b3d1b;
+  --color-success-border: #388e3c;
+  --color-success-text: #81c784;
+
+  /* Alert error 用（ライト系） */
+  --color-error-bg-light: #3d1b1b;
+  --color-error-border: #d32f2f;
+  --color-error-text-light: #ef9a9a;
+
+  /* Alert info 用 */
+  --color-info-bg: #1a2a3d;
+  --color-info-border: #1976d2;
+  --color-info-text: #90caf9;
+
+  /* Button danger バリアント用 */
+  --color-danger: #c62828;
+  --color-danger-hover: #e53935;
+
+  /* Input フォーカスリング用 */
+  --color-input-border: #4a4a6a;
+  --color-input-focus: #7a7aaa;
 }

@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 
 const BASE = "/api/labs/csp";
 
@@ -19,19 +21,16 @@ function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "s
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">名前（入力値）:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full text-sm" />
-      </div>
+      <Input label="名前（入力値）:" type="text" value={name} onChange={(e) => setName(e.target.value)} className="mb-2" />
       <div className="flex gap-1 flex-wrap mb-2">
         {presets.map((p) => (
-          <button key={p.label} onClick={() => setName(p.value)} className="text-[11px] py-0.5 px-2 cursor-pointer">{p.label}</button>
+          <Button key={p.label} variant="ghost" size="sm" onClick={() => setName(p.value)}>{p.label}</Button>
         ))}
       </div>
       <FetchButton onClick={() => onTest(name)} disabled={isLoading}>ページ取得</FetchButton>
 
       {result && (
-        <div className="mt-2 p-3 rounded bg-[#f5f5f5] border">
+        <div className="mt-2 p-3 rounded bg-bg-secondary border">
           {result.html && (
             <div>
               <div className="text-xs font-bold">生成HTML:</div>
@@ -43,7 +42,7 @@ function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "s
             <pre className="text-[10px] bg-white p-2 rounded mt-1 overflow-auto break-all">{result.cspHeader || "(未設定)"}</pre>
           </div>
           {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}
+            <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}
               {result._debug.risks && <ul className="mt-1">{result._debug.risks.map((r, i) => <li key={i}>{r}</li>)}</ul>}
             </div>
           )}

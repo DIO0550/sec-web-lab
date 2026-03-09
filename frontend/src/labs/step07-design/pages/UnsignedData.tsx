@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Select } from "@/components/Select";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/unsigned-data";
 
@@ -30,40 +32,43 @@ function UnsignedPanel({
   return (
     <div>
       {mode === "vulnerable" ? (
-        <div className="mb-2">
-          <label className="text-[13px] block">X-User-Role ヘッダー:</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded">
-            <option value="user">user</option>
-            <option value="admin">admin（改ざん）</option>
-          </select>
-        </div>
+        <Select
+          label="X-User-Role ヘッダー:"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          options={[
+            { value: "user", label: "user" },
+            { value: "admin", label: "admin（改ざん）" },
+          ]}
+          className="mb-2"
+        />
       ) : (
-        <div className="mb-2">
-          <label className="text-[13px] block">セッションID:</label>
-          <select value={sessionId} onChange={(e) => setSessionId(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded">
-            <option value="demo-user-session">一般ユーザー</option>
-            <option value="demo-admin-session">管理者</option>
-            <option value="invalid">無効なセッション</option>
-          </select>
-        </div>
+        <Select
+          label="セッションID:"
+          value={sessionId}
+          onChange={(e) => setSessionId(e.target.value)}
+          options={[
+            { value: "demo-user-session", label: "一般ユーザー" },
+            { value: "demo-admin-session", label: "管理者" },
+            { value: "invalid", label: "無効なセッション" },
+          ]}
+          className="mb-2"
+        />
       )}
       <FetchButton onClick={() => onTest(role, mode === "secure" ? sessionId : undefined)} disabled={isLoading}>
         管理者ページにアクセス
       </FetchButton>
 
       {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "アクセス成功" : "アクセス拒否"}
-          </div>
+        <Alert variant={result.success ? "success" : "error"} title={result.success ? "アクセス成功" : "アクセス拒否"} className="mt-2">
           <div className="text-[13px] mt-1">{result.message}</div>
           {result.adminData && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
+            <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result.adminData, null, 2)}
             </pre>
           )}
-          {result._debug && <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>}
-        </div>
+          {result._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
+        </Alert>
       )}
     </div>
   );

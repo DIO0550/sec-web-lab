@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 
 const BASE = "/api/labs/command-injection";
 
@@ -40,12 +42,12 @@ function PingForm({
       <div className="mb-3">
         <label className="text-[13px] block">ホスト名 / IPアドレス:</label>
         <div className="flex gap-2">
-          <input
+          <Input
             type="text"
             value={host}
             onChange={(e) => setHost(e.target.value)}
             placeholder="127.0.0.1"
-            className="py-1 px-2 border border-[#ccc] rounded flex-1"
+            className="flex-1"
           />
           <FetchButton onClick={() => onPing(mode, host)} disabled={isLoading}>
             Ping
@@ -57,13 +59,14 @@ function PingForm({
         <span className="text-xs text-[#888]">プリセット:</span>
         <div className="flex gap-1 flex-wrap mt-1">
           {presets.map((p) => (
-            <button
+            <Button
               key={p.label}
+              variant="ghost"
+              size="sm"
               onClick={() => setHost(p.host)}
-              className="text-[11px] py-0.5 px-2 cursor-pointer"
             >
               {p.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

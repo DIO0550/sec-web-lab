@@ -3,6 +3,9 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Button } from "@/components/Button";
+import { Textarea } from "@/components/Textarea";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/session-hijacking";
 
@@ -117,20 +120,17 @@ function HijackingDemo({
       </FetchButton>
 
       {loginResult && (
-        <div
-          className={`mt-2 p-2 rounded text-xs ${
-            loginResult.success
-              ? "bg-[#e8f5e9] border border-[#4caf50]"
-              : "bg-[#ffebee] border border-[#f44336]"
-          }`}
+        <Alert
+          variant={loginResult.success ? "success" : "error"}
+          className="mt-2 text-xs"
         >
           {loginResult.message}
           {loginResult.sessionId && (
-            <div className="font-mono text-[11px] text-[#666]">
+            <div className="font-mono text-[11px] opacity-70">
               SessionID: {loginResult.sessionId}
             </div>
           )}
-        </div>
+        </Alert>
       )}
 
       {/* document.cookie 確認 */}
@@ -139,23 +139,25 @@ function HijackingDemo({
         <pre className="m-0 mt-1 font-mono text-[11px] whitespace-pre-wrap break-all">
           {documentCookie || "(空)"}
         </pre>
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={() => setDocumentCookie(document.cookie)}
-          className="text-[11px] mt-1 cursor-pointer"
+          className="mt-1"
         >
           再取得
-        </button>
+        </Button>
       </div>
 
       {/* コメント投稿 (XSS テスト) */}
       {loginResult?.success && (
         <div className="mt-3">
-          <label className="text-[13px] block">コメント (XSSペイロードを入力):</label>
-          <textarea
+          <Textarea
+            label="コメント (XSSペイロードを入力)"
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
-            className="py-1 px-2 border border-[#ccc] rounded w-full text-xs font-mono"
             rows={2}
+            mono
           />
           <div className="flex gap-2 mt-1">
             <FetchButton onClick={handlePostComment} disabled={loading} size="small">
@@ -222,9 +224,9 @@ export function SessionHijacking() {
       description="XSS脆弱性を利用してCookieからセッションIDを盗み出し、そのIDを使って被害者のアカウントに不正アクセスする攻撃です。HttpOnly属性がないCookieはJavaScriptから読み取り可能です。"
     >
       <div className="mt-2">
-        <button onClick={handleReset} className="text-xs p-1 cursor-pointer">
+        <Button variant="secondary" size="sm" onClick={handleReset}>
           全データリセット
-        </button>
+        </Button>
       </div>
 
       <h3 className="mt-4">Lab: XSSによるセッションID窃取</h3>

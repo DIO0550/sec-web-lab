@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Input } from "@/components/Input";
+import { Alert } from "@/components/Alert";
 
 const BASE = "/api/labs/rate-limiting";
 
@@ -33,14 +35,8 @@ function LoginPanel({
 
   return (
     <div>
-      <div className="mb-2">
-        <label className="text-[13px] block">ユーザー名:</label>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full" />
-      </div>
-      <div className="mb-2">
-        <label className="text-[13px] block">パスワード:</label>
-        <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} className="py-1 px-2 border border-[#ccc] rounded w-full" />
-      </div>
+      <Input label="ユーザー名:" type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="mb-2" />
+      <Input label="パスワード:" type="text" value={password} onChange={(e) => setPassword(e.target.value)} className="mb-2" />
       <div className="flex gap-2 mb-2">
         <FetchButton onClick={() => onLogin(username, password)} disabled={isLoading}>ログイン試行</FetchButton>
         <FetchButton onClick={onBruteForce} disabled={isLoading}>連続10回試行</FetchButton>
@@ -49,11 +45,11 @@ function LoginPanel({
       {results.length > 0 && (
         <div className="mt-2 max-h-[250px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className={`text-xs p-1 mb-1 rounded ${r.success ? "bg-[#e8f5e9]" : r.locked ? "bg-[#fff3e0]" : "bg-[#ffebee]"}`}>
+            <Alert key={i} variant={r.success ? "success" : r.locked ? "warning" : "error"} className="text-xs mb-1">
               #{i + 1}: {r.message}
               {r.attemptsRemaining !== undefined && ` (残り${r.attemptsRemaining}回)`}
-              {r._debug && <span className="text-[#888]"> [{r._debug.totalAttempts}回目]</span>}
-            </div>
+              {r._debug && <span className="opacity-70"> [{r._debug.totalAttempts}回目]</span>}
+            </Alert>
           ))}
         </div>
       )}
