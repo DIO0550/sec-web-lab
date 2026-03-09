@@ -54,7 +54,7 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
   const { theme, toggleTheme } = useThemeContext();
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-bg-primary dark:bg-bg-primary border-b border-border-light dark:border-border-light">
+    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-bg-secondary dark:bg-bg-secondary border-b border-border-light dark:border-border-light">
       {/* 左側: ハンバーガー + ロゴ */}
       <div className="flex items-center gap-3">
         <button
@@ -66,11 +66,11 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
         </button>
         <Link
           to="/"
-          className="text-lg font-bold no-underline text-text-primary dark:text-text-primary"
+          className="text-lg font-extrabold no-underline text-accent dark:text-accent"
         >
           sec-web-lab
         </Link>
-        <span className="hidden sm:inline text-xs text-text-muted dark:text-text-muted">
+        <span className="hidden sm:inline text-xs text-text-secondary dark:text-text-secondary">
           Web Security Hands-on Laboratory
         </span>
       </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Card } from "@/components/Card";
 import { getLabsForStep } from "@/data/navigation";
 
 const LABS = getLabsForStep("step06");
@@ -6,7 +7,7 @@ const LABS = getLabsForStep("step06");
 export function Step06Index() {
   return (
     <div>
-      <h2>Step 06: Server-Side Attacks (サーバーサイド攻撃)</h2>
+      <h2 className="text-2xl font-bold border-l-4 border-accent pl-3">Step 06: Server-Side Attacks (サーバーサイド攻撃)</h2>
       <p>
         サーバーサイドで発生する脆弱性を体験します。
         SSRF、XXE、ファイルアップロード、CRLFインジェクションなど、
@@ -15,9 +16,10 @@ export function Step06Index() {
 
       <div className="mt-6">
         {LABS.map((lab) => (
-          <div
+          <Card
             key={lab.id}
-            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
+            variant="bordered"
+            className="mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -39,7 +41,7 @@ export function Step06Index() {
                 Start
               </Link>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

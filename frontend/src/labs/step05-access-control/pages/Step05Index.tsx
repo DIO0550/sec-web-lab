@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Card } from "@/components/Card";
 import { getLabsForStep } from "@/data/navigation";
 
 const LABS = getLabsForStep("step05");
@@ -9,7 +10,7 @@ const LABS = getLabsForStep("step05");
 export function Step05Index() {
   return (
     <div>
-      <h2>Step 05: Access Control (アクセス制御)</h2>
+      <h2 className="text-2xl font-bold border-l-4 border-accent pl-3">Step 05: Access Control (アクセス制御)</h2>
       <p>
         認可（Authorization）に関する脆弱性を体験します。
         認証（ログイン）が成功しても、「誰が何にアクセスしてよいか」の制御が不十分だと、
@@ -19,9 +20,10 @@ export function Step05Index() {
 
       <div className="mt-6">
         {LABS.map((lab) => (
-          <div
+          <Card
             key={lab.id}
-            className="border border-border-light dark:border-border-light rounded p-4 mb-3 flex justify-between items-center"
+            variant="bordered"
+            className="mb-3 flex justify-between items-center"
           >
             <div>
               <h3 className="m-0 mb-1">
@@ -43,7 +45,7 @@ export function Step05Index() {
                 Start
               </Link>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>
