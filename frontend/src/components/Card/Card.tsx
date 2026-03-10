@@ -16,7 +16,7 @@ const variantStyles: Record<NonNullable<Props["variant"]>, string> = {
 
 /** インタラクティブカード用のスタイル（to 指定時のみ適用） */
 const interactiveStyles =
-  "block no-underline text-inherit cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:bg-bg-secondary hover:border-accent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2";
+  "block no-underline text-inherit cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:bg-card-hover-bg hover:border-card-hover-border focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2";
 
 /**
  * カードコンポーネント
