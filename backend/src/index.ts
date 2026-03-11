@@ -4,73 +4,73 @@ import { logger } from "hono/logger";
 import { getPool } from "./db/pool.js";
 
 // Step01: Recon（偵察）ラボ
-import headerLeakage from "./labs/step01-recon/header-leakage.js";
-import sensitiveFileExposure from "./labs/step01-recon/sensitive-file-exposure.js";
-import errorMessageLeakage from "./labs/step01-recon/error-message-leakage.js";
-import directoryListing from "./labs/step01-recon/directory-listing.js";
-import headerExposure from "./labs/step01-recon/header-exposure.js";
+import headerLeakage from "./labs/step01-recon/header-leakage/index.js";
+import sensitiveFileExposure from "./labs/step01-recon/sensitive-file-exposure/index.js";
+import errorMessageLeakage from "./labs/step01-recon/error-message-leakage/index.js";
+import directoryListing from "./labs/step01-recon/directory-listing/index.js";
+import headerExposure from "./labs/step01-recon/header-exposure/index.js";
 
 // Step02: Injection（インジェクション）ラボ
-import sqlInjection from "./labs/step02-injection/sql-injection.js";
-import xss from "./labs/step02-injection/xss.js";
-import commandInjection from "./labs/step02-injection/command-injection.js";
-import openRedirect from "./labs/step02-injection/open-redirect.js";
+import sqlInjection from "./labs/step02-injection/sql-injection/index.js";
+import xss from "./labs/step02-injection/xss/index.js";
+import commandInjection from "./labs/step02-injection/command-injection/index.js";
+import openRedirect from "./labs/step02-injection/open-redirect/index.js";
 
 // Step03: Auth（認証）ラボ
-import plaintextPassword from "./labs/step03-auth/plaintext-password.js";
-import weakHash from "./labs/step03-auth/weak-hash.js";
-import bruteForce from "./labs/step03-auth/brute-force.js";
-import defaultCredentials from "./labs/step03-auth/default-credentials.js";
-import weakPasswordPolicy from "./labs/step03-auth/weak-password-policy.js";
+import plaintextPassword from "./labs/step03-auth/plaintext-password/index.js";
+import weakHash from "./labs/step03-auth/weak-hash/index.js";
+import bruteForce from "./labs/step03-auth/brute-force/index.js";
+import defaultCredentials from "./labs/step03-auth/default-credentials/index.js";
+import weakPasswordPolicy from "./labs/step03-auth/weak-password-policy/index.js";
 
 // Step04: Session（セッション）ラボ
-import cookieManipulation from "./labs/step04-session/cookie-manipulation.js";
-import sessionFixation from "./labs/step04-session/session-fixation.js";
-import sessionHijacking from "./labs/step04-session/session-hijacking.js";
-import csrf from "./labs/step04-session/csrf.js";
+import cookieManipulation from "./labs/step04-session/cookie-manipulation/index.js";
+import sessionFixation from "./labs/step04-session/session-fixation/index.js";
+import sessionHijacking from "./labs/step04-session/session-hijacking/index.js";
+import csrf from "./labs/step04-session/csrf/index.js";
 // Step05: Access Control（アクセス制御）ラボ
-import idor from "./labs/step05-access-control/idor.js";
-import pathTraversal from "./labs/step05-access-control/path-traversal.js";
-import privilegeEscalation from "./labs/step05-access-control/privilege-escalation.js";
-import massAssignment from "./labs/step05-access-control/mass-assignment.js";
+import idor from "./labs/step05-access-control/idor/index.js";
+import pathTraversal from "./labs/step05-access-control/path-traversal/index.js";
+import privilegeEscalation from "./labs/step05-access-control/privilege-escalation/index.js";
+import massAssignment from "./labs/step05-access-control/mass-assignment/index.js";
 
 // Step06: Server-Side Attacks（サーバーサイド攻撃）ラボ
-import ssrf from "./labs/step06-server-side/ssrf.js";
-import xxe from "./labs/step06-server-side/xxe.js";
-import fileUpload from "./labs/step06-server-side/file-upload.js";
-import crlfInjection from "./labs/step06-server-side/crlf-injection.js";
-import corsMisconfiguration from "./labs/step06-server-side/cors-misconfiguration.js";
-import evalInjection from "./labs/step06-server-side/eval-injection.js";
+import ssrf from "./labs/step06-server-side/ssrf/index.js";
+import xxe from "./labs/step06-server-side/xxe/index.js";
+import fileUpload from "./labs/step06-server-side/file-upload/index.js";
+import crlfInjection from "./labs/step06-server-side/crlf-injection/index.js";
+import corsMisconfiguration from "./labs/step06-server-side/cors-misconfiguration/index.js";
+import evalInjection from "./labs/step06-server-side/eval-injection/index.js";
 
 // Step07: Design & Logic（設計とロジックの問題）ラボ
-import rateLimiting from "./labs/step07-design/rate-limiting.js";
-import clickjacking from "./labs/step07-design/clickjacking.js";
-import sensitiveDataHttp from "./labs/step07-design/sensitive-data-http.js";
-import httpMethods from "./labs/step07-design/http-methods.js";
-import passwordReset from "./labs/step07-design/password-reset.js";
-import businessLogic from "./labs/step07-design/business-logic.js";
-import unsignedData from "./labs/step07-design/unsigned-data.js";
-import securityHeaders from "./labs/step07-design/security-headers.js";
-import cacheControl from "./labs/step07-design/cache-control.js";
-import webStorageAbuse from "./labs/step07-design/web-storage-abuse.js";
+import rateLimiting from "./labs/step07-design/rate-limiting/index.js";
+import clickjacking from "./labs/step07-design/clickjacking/index.js";
+import sensitiveDataHttp from "./labs/step07-design/sensitive-data-http/index.js";
+import httpMethods from "./labs/step07-design/http-methods/index.js";
+import passwordReset from "./labs/step07-design/password-reset/index.js";
+import businessLogic from "./labs/step07-design/business-logic/index.js";
+import unsignedData from "./labs/step07-design/unsigned-data/index.js";
+import securityHeaders from "./labs/step07-design/security-headers/index.js";
+import cacheControl from "./labs/step07-design/cache-control/index.js";
+import webStorageAbuse from "./labs/step07-design/web-storage-abuse/index.js";
 
 // Step08: Advanced Techniques（高度な攻撃テクニック）ラボ
-import jwtVulnerabilities from "./labs/step08-advanced/jwt-vulnerabilities.js";
-import ssti from "./labs/step08-advanced/ssti.js";
-import raceCondition from "./labs/step08-advanced/race-condition.js";
-import deserialization from "./labs/step08-advanced/deserialization.js";
-import prototypePollution from "./labs/step08-advanced/prototype-pollution.js";
-import redos from "./labs/step08-advanced/redos.js";
-import postmessage from "./labs/step08-advanced/postmessage.js";
+import jwtVulnerabilities from "./labs/step08-advanced/jwt-vulnerabilities/index.js";
+import ssti from "./labs/step08-advanced/ssti/index.js";
+import raceCondition from "./labs/step08-advanced/race-condition/index.js";
+import deserialization from "./labs/step08-advanced/deserialization/index.js";
+import prototypePollution from "./labs/step08-advanced/prototype-pollution/index.js";
+import redos from "./labs/step08-advanced/redos/index.js";
+import postmessage from "./labs/step08-advanced/postmessage/index.js";
 
 // Step09: Defense（守りを固める）ラボ
-import errorMessages from "./labs/step09-defense/error-messages.js";
-import stackTrace from "./labs/step09-defense/stack-trace.js";
-import logging from "./labs/step09-defense/logging.js";
-import logInjection from "./labs/step09-defense/log-injection.js";
-import failOpen from "./labs/step09-defense/fail-open.js";
-import csp from "./labs/step09-defense/csp.js";
-import inputValidation from "./labs/step09-defense/input-validation.js";
+import errorMessages from "./labs/step09-defense/error-messages/index.js";
+import stackTrace from "./labs/step09-defense/stack-trace/index.js";
+import logging from "./labs/step09-defense/logging/index.js";
+import logInjection from "./labs/step09-defense/log-injection/index.js";
+import failOpen from "./labs/step09-defense/fail-open/index.js";
+import csp from "./labs/step09-defense/csp/index.js";
+import inputValidation from "./labs/step09-defense/input-validation/index.js";
 
 const app = new Hono();
 
