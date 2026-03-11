@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { NAVIGATION } from "@/data/navigation";
 import { Card } from "@/components/Card";
 
@@ -39,27 +38,17 @@ export function Home() {
             <Card
               key={step.id}
               variant="bordered"
+              to={step.path}
               className="mb-3 flex justify-between items-center"
             >
               <div>
-                <h3 className="m-0 mb-1">
-                  <Link to={step.path} className="no-underline">
-                    {step.name}
-                  </Link>
-                </h3>
+                <h3 className="m-0 mb-1">{step.name}</h3>
                 <p className="m-0 text-text-secondary dark:text-text-secondary text-sm">{step.description}</p>
               </div>
-              <div className="text-right min-w-[100px]">
+              <div className="text-right">
                 <span className="text-xs text-text-muted dark:text-text-muted">
                   {`${step.labs.length} labs`}
                 </span>
-                <br />
-                <Link
-                  to={step.path}
-                  className="inline-block mt-1 px-3 py-1 bg-accent dark:bg-accent text-white rounded no-underline text-[13px] hover:bg-accent-hover dark:hover:bg-accent-hover"
-                >
-                  Start
-                </Link>
               </div>
             </Card>
         ))}
