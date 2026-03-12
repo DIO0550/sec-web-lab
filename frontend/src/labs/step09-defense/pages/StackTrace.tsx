@@ -43,12 +43,18 @@ export function StackTrace() {
     setLoading(true);
     try {
       const data = await getJson<StackResult>(`${BASE}/${mode}/${endpoint}`);
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
     } catch (e) {
       const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };

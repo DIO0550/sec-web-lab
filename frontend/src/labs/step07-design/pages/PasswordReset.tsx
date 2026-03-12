@@ -68,12 +68,18 @@ export function PasswordReset() {
     setLoading(true);
     try {
       const data = await postJson<ResetResult>(`${BASE}/${mode}/reset-request`, { email: "victim@example.com" });
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
     } catch (e) {
       const err: ResetResult = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };
@@ -87,7 +93,9 @@ export function PasswordReset() {
         const data = await postJson<ResetResult>(`${BASE}/vulnerable/reset-confirm`, { token, newPassword: "hacked123" });
         data.message = `token=${token}: ${data.message}`;
         setVulnResults((prev) => [...prev, data]);
-        if (data.success) break;
+        if (data.success) {
+          break;
+        }
       } catch {
         break;
       }

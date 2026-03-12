@@ -28,7 +28,9 @@ export function ResultTable<T extends Record<string, unknown>>({
   data,
   className = "",
 }: Props<T>) {
-  if (data.length === 0) return null;
+  if (data.length === 0) {
+    return null;
+  }
 
   return (
     <table className={`w-full text-xs border-collapse ${className}`.trim()}>

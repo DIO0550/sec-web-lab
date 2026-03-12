@@ -89,14 +89,22 @@ export function BusinessLogic() {
     setLoading(true);
     try {
       const payload: Record<string, unknown> = { productId, quantity };
-      if (price !== undefined && mode === "vulnerable") payload.price = price;
+      if (price !== undefined && mode === "vulnerable") {
+        payload.price = price;
+      }
       const data = await postJson<OrderResult>(`${BASE}/${mode}/order`, payload);
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
     } catch (e) {
       const err: OrderResult = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };

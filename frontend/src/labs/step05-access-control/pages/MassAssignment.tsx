@@ -66,7 +66,9 @@ function RegisterForm({
       <FetchButton
         onClick={() => {
           const data: Record<string, string> = { username, email, password };
-          if (addRole) data.role = "admin";
+          if (addRole) {
+            data.role = "admin";
+          }
           onRegister(mode, data);
         }}
         disabled={isLoading}

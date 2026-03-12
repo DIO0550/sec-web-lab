@@ -169,7 +169,9 @@ function SecureDemo() {
       const data = await getJson<ApiResult>(`${BASE}/secure/csrf-token`, {
         credentials: "include",
       });
-      if (data.csrfToken) setCsrfToken(data.csrfToken);
+      if (data.csrfToken) {
+        setCsrfToken(data.csrfToken);
+      }
     } catch {
       // ignore
     }

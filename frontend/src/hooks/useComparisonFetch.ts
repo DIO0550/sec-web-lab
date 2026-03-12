@@ -29,8 +29,11 @@ export function useComparisonFetch<T>(basePath: string) {
 
   /** 結果をモードに応じてセットする */
   const setResult = useCallback((mode: Mode, data: T) => {
-    if (mode === "vulnerable") setVulnerable(data);
-    else setSecure(data);
+    if (mode === "vulnerable") {
+      setVulnerable(data);
+    } else {
+      setSecure(data);
+    }
   }, []);
 
   /**

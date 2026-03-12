@@ -91,14 +91,19 @@ export function PrivilegeEscalation() {
       (e) => ({ success: false, message: e.message }),
     );
     if (data.sessionId) {
-      if (mode === "vulnerable") setVulnSession(data.sessionId);
-      else setSecureSession(data.sessionId);
+      if (mode === "vulnerable") {
+        setVulnSession(data.sessionId);
+      } else {
+        setSecureSession(data.sessionId);
+      }
     }
   };
 
   const fetchUsers = async (mode: "vulnerable" | "secure") => {
     const sessionId = mode === "vulnerable" ? vulnSession : secureSession;
-    if (!sessionId) return;
+    if (!sessionId) {
+      return;
+    }
 
     await users.run(
       mode,
@@ -110,7 +115,9 @@ export function PrivilegeEscalation() {
 
   const changeSettings = async (mode: "vulnerable" | "secure") => {
     const sessionId = mode === "vulnerable" ? vulnSession : secureSession;
-    if (!sessionId) return;
+    if (!sessionId) {
+      return;
+    }
 
     await settings.run(
       mode,
@@ -125,7 +132,9 @@ export function PrivilegeEscalation() {
   };
 
   const renderResult = (result: UsersResult | SettingsResult | null, type: "users" | "settings") => {
-    if (!result) return null;
+    if (!result) {
+      return null;
+    }
     return (
       <Alert
         variant={result.success ? "success" : "error"}

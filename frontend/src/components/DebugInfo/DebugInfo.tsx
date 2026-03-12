@@ -22,7 +22,9 @@ export function DebugInfo({
   codeField,
   className = "",
 }: Props) {
-  if (!debug) return null;
+  if (!debug) {
+    return null;
+  }
 
   return (
     <details className={`mt-2 ${className}`.trim()}>

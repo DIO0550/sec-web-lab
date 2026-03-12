@@ -105,7 +105,9 @@ function CrackPanel({
 }: {
   result: CrackResult | null;
 }) {
-  if (!result) return null;
+  if (!result) {
+    return null;
+  }
 
   return (
     <Alert

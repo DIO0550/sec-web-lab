@@ -73,7 +73,9 @@ export function ErrorMessageLeakage() {
   };
 
   const handleCustomTest = async () => {
-    if (!customInput.trim()) return;
+    if (!customInput.trim()) {
+      return;
+    }
     setLoading("custom");
     try {
       const [vulnRes, secureRes] = await Promise.all([

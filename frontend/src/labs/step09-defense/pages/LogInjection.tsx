@@ -55,8 +55,11 @@ export function LogInjection() {
   const handleViewLogs = useCallback(async (mode: "vulnerable" | "secure") => {
     const data = await getJson<{ logs: LogEntry[] }>(`${BASE}/logs`);
     const filtered = data.logs.filter((l) => l.mode === mode);
-    if (mode === "vulnerable") setVulnLogs(filtered);
-    else setSecureLogs(filtered);
+    if (mode === "vulnerable") {
+      setVulnLogs(filtered);
+    } else {
+      setSecureLogs(filtered);
+    }
   }, []);
 
   return (

@@ -68,8 +68,11 @@ export function RaceCondition() {
 
   const checkStock = async (mode: "vulnerable" | "secure") => {
     const data = await getJson<StockInfo>(`${BASE}/${mode}/stock`);
-    if (mode === "vulnerable") setVulnStock(data);
-    else setSecureStock(data);
+    if (mode === "vulnerable") {
+      setVulnStock(data);
+    } else {
+      setSecureStock(data);
+    }
   };
 
   const purchase = async (mode: "vulnerable" | "secure") => {
@@ -80,13 +83,19 @@ export function RaceCondition() {
     setLoading(true);
     try {
       const data = await purchase(mode);
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
       await checkStock(mode);
     } catch (e) {
       const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };
@@ -96,8 +105,11 @@ export function RaceCondition() {
     // 5つの購入リクエストを同時に送信
     const promises = Array.from({ length: 5 }, () => purchase(mode).catch((e) => ({ success: false, message: (e as Error).message })));
     const results = await Promise.all(promises);
-    if (mode === "vulnerable") setVulnResults((prev) => [...prev, ...results]);
-    else setSecureResults((prev) => [...prev, ...results]);
+    if (mode === "vulnerable") {
+      setVulnResults((prev) => [...prev, ...results]);
+    } else {
+      setSecureResults((prev) => [...prev, ...results]);
+    }
     await checkStock(mode);
     setLoading(false);
   };

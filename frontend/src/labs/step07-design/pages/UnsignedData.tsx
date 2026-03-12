@@ -80,8 +80,12 @@ export function UnsignedData() {
 
   const handleTest = async (mode: "vulnerable" | "secure", role: string, sessionId?: string) => {
     const headers: Record<string, string> = {};
-    if (mode === "vulnerable") headers["X-User-Role"] = role;
-    if (sessionId) headers["X-Session-Id"] = sessionId;
+    if (mode === "vulnerable") {
+      headers["X-User-Role"] = role;
+    }
+    if (sessionId) {
+      headers["X-Session-Id"] = sessionId;
+    }
     await result.run(mode, "/admin", { headers }, (e) => ({
       success: false,
       message: (e as Error).message,

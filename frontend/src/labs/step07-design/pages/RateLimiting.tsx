@@ -70,8 +70,11 @@ export function RateLimiting() {
 
   /** 結果をモードに応じて追加する */
   const appendResult = (mode: "vulnerable" | "secure", data: LoginResult) => {
-    if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-    else setSecureResults((prev) => [...prev, data]);
+    if (mode === "vulnerable") {
+      setVulnResults((prev) => [...prev, data]);
+    } else {
+      setSecureResults((prev) => [...prev, data]);
+    }
   };
 
   const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
@@ -91,7 +94,9 @@ export function RateLimiting() {
       try {
         const data = await postJson<LoginResult>(`${BASE}/${mode}/login`, { username: "admin", password: pw });
         appendResult(mode, data);
-        if (data.success || data.locked) break;
+        if (data.success || data.locked) {
+          break;
+        }
       } catch {
         break;
       }

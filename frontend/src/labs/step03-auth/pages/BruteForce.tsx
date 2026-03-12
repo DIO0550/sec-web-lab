@@ -173,8 +173,11 @@ export function BruteForce() {
   const runDictionaryAttack = useCallback(async (mode: "vulnerable" | "secure") => {
     setRunning(true);
     const logs: BruteForceLog[] = [];
-    if (mode === "vulnerable") setVulnLogs([]);
-    else setSecureLogs([]);
+    if (mode === "vulnerable") {
+      setVulnLogs([]);
+    } else {
+      setSecureLogs([]);
+    }
 
     for (const password of PASSWORD_DICTIONARY) {
       try {
@@ -185,11 +188,16 @@ export function BruteForce() {
         const log = { password, result: data };
         logs.push(log);
 
-        if (mode === "vulnerable") setVulnLogs([...logs]);
-        else setSecureLogs([...logs]);
+        if (mode === "vulnerable") {
+          setVulnLogs([...logs]);
+        } else {
+          setSecureLogs([...logs]);
+        }
 
         // 成功またはロックされたら停止
-        if (data.success || data.locked) break;
+        if (data.success || data.locked) {
+          break;
+        }
       } catch (e) {
         logs.push({
           password,

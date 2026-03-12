@@ -148,8 +148,11 @@ export function CookieManipulation() {
   const [documentCookie, setDocumentCookie] = useState("");
 
   const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    if (mode === "vulnerable") setVulnCookieInfo(null);
-    else setSecureCookieInfo(null);
+    if (mode === "vulnerable") {
+      setVulnCookieInfo(null);
+    } else {
+      setSecureCookieInfo(null);
+    }
 
     await login.run(
       mode,
@@ -171,8 +174,11 @@ export function CookieManipulation() {
       const data = await getJson<CookieInfoResult>(`${BASE}/${mode}/cookie-info`, {
         credentials: "include",
       });
-      if (mode === "vulnerable") setVulnCookieInfo(data);
-      else setSecureCookieInfo(data);
+      if (mode === "vulnerable") {
+        setVulnCookieInfo(data);
+      } else {
+        setSecureCookieInfo(data);
+      }
       setDocumentCookie(document.cookie);
     } catch {
       // ignore

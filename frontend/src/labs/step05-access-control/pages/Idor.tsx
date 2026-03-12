@@ -138,14 +138,19 @@ export function Idor() {
   const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
     const data = await loginFetch.postJson(mode, "/login", { username, password }, loginErrorResult);
     if (data.sessionId) {
-      if (mode === "vulnerable") setVulnSession(data.sessionId);
-      else setSecureSession(data.sessionId);
+      if (mode === "vulnerable") {
+        setVulnSession(data.sessionId);
+      } else {
+        setSecureSession(data.sessionId);
+      }
     }
   };
 
   const fetchProfile = async (mode: "vulnerable" | "secure", targetId: string) => {
     const sessionId = mode === "vulnerable" ? vulnSession : secureSession;
-    if (!sessionId) return;
+    if (!sessionId) {
+      return;
+    }
 
     await profileFetch.run(
       mode,
