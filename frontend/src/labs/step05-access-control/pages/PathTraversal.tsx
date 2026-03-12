@@ -1,11 +1,13 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/path-traversal";
 
@@ -28,6 +30,13 @@ type FileListResult = {
   message?: string;
 };
 
+const presets = [
+  { label: "sample.txt", value: "sample.txt" },
+  { label: "report.txt", value: "report.txt" },
+  { label: "../../../etc/passwd", value: "../../../etc/passwd" },
+  { label: "../../.env", value: "../../.env" },
+];
+
 // --- ファイル取得フォーム ---
 function FileForm({
   mode,
@@ -42,29 +51,14 @@ function FileForm({
 }) {
   const [fileName, setFileName] = useState("sample.txt");
 
-  const presets = [
-    { label: "sample.txt", value: "sample.txt" },
-    { label: "report.txt", value: "report.txt" },
-    { label: "../../../etc/passwd", value: "../../../etc/passwd" },
-    { label: "../../.env", value: "../../.env" },
-  ];
-
   return (
     <div>
       <Input label="ファイル名:" value={fileName} onChange={(e) => setFileName(e.target.value)} className="mb-1" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button
-            key={p.value}
-            variant="ghost"
-            size="sm"
-            onClick={() => setFileName(p.value)}
-            className={p.value.includes("..") ? "text-[#c00]" : ""}
-          >
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons
+        presets={presets}
+        onSelect={(p) => setFileName(p.value)}
+        className="mb-2"
+      />
       <FetchButton onClick={() => onFetch(fileName)} disabled={isLoading}>
         ファイル取得
       </FetchButton>
@@ -93,37 +87,29 @@ function FileForm({
 
 // --- メインコンポーネント ---
 export function PathTraversal() {
-  const [vulnResult, setVulnResult] = useState<FileResult | null>(null);
-  const [secureResult, setSecureResult] = useState<FileResult | null>(null);
+  const fileFetch = useComparisonFetch<FileResult>(BASE);
   const [fileList, setFileList] = useState<FileListResult | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchFile = useCallback(async (mode: "vulnerable" | "secure", fileName: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/files?name=${encodeURIComponent(fileName)}`);
-      const data: FileResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
-  }, []);
+  const fetchFile = async (mode: "vulnerable" | "secure", fileName: string) => {
+    await fileFetch.run(
+      mode,
+      `/files?name=${encodeURIComponent(fileName)}`,
+      undefined,
+      (e) => ({ success: false, message: e.message }),
+    );
+  };
 
-  const fetchFileList = useCallback(async () => {
+  const fetchFileList = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/list`);
-      const data: FileListResult = await res.json();
+      const data = await getJson<FileListResult>(`${BASE}/vulnerable/list`);
       setFileList(data);
     } catch {
       // ignore
     }
     setLoading(false);
-  }, []);
+  };
 
   return (
     <LabLayout
@@ -160,16 +146,16 @@ export function PathTraversal() {
         vulnerableContent={
           <FileForm
             mode="vulnerable"
-            result={vulnResult}
-            isLoading={loading}
+            result={fileFetch.vulnerable}
+            isLoading={fileFetch.loading}
             onFetch={(name) => fetchFile("vulnerable", name)}
           />
         }
         secureContent={
           <FileForm
             mode="secure"
-            result={secureResult}
-            isLoading={loading}
+            result={fileFetch.secure}
+            isLoading={fileFetch.loading}
             onFetch={(name) => fetchFile("secure", name)}
           />
         }

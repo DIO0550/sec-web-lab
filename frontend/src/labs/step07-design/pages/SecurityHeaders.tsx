@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/security-headers";
 
@@ -57,23 +57,10 @@ function HeaderPanel({
 }
 
 export function SecurityHeaders() {
-  const [vulnResult, setVulnResult] = useState<HeaderResult | null>(null);
-  const [secureResult, setSecureResult] = useState<HeaderResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<HeaderResult>(BASE);
 
   const handleTest = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/page`);
-      const data: HeaderResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false } as HeaderResult;
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.run(mode, "/page", undefined, () => ({ success: false } as HeaderResult));
   };
 
   return (
@@ -83,8 +70,8 @@ export function SecurityHeaders() {
       description="Content-Security-Policy、X-Content-Type-Options、X-Frame-Options等のセキュリティヘッダーが設定されていない場合の多層防御の欠如を体験します。"
     >
       <ComparisonPanel
-        vulnerableContent={<HeaderPanel mode="vulnerable" result={vulnResult} isLoading={loading} onTest={() => handleTest("vulnerable")} />}
-        secureContent={<HeaderPanel mode="secure" result={secureResult} isLoading={loading} onTest={() => handleTest("secure")} />}
+        vulnerableContent={<HeaderPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onTest={() => handleTest("vulnerable")} />}
+        secureContent={<HeaderPanel mode="secure" result={result.secure} isLoading={result.loading} onTest={() => handleTest("secure")} />}
       />
 
       <CheckpointBox>

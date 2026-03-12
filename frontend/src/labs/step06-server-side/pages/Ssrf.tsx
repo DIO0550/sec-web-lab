@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
+import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/ssrf";
 
@@ -17,6 +18,13 @@ type FetchResult = {
   body?: string;
   _debug?: { message: string; requestedUrl?: string; blockedHost?: string };
 };
+
+const presets = [
+  { label: "外部サイト", value: "https://httpbin.org/get" },
+  { label: "localhost", value: "http://localhost:3000/api/health" },
+  { label: "メタデータAPI", value: "http://169.254.169.254/latest/meta-data/" },
+  { label: "内部IP", value: "http://10.0.0.1/admin" },
+];
 
 function FetchPanel({
   mode,
@@ -31,23 +39,10 @@ function FetchPanel({
 }) {
   const [url, setUrl] = useState("https://httpbin.org/get");
 
-  const presets = [
-    { label: "外部サイト", value: "https://httpbin.org/get" },
-    { label: "localhost", value: "http://localhost:3000/api/health" },
-    { label: "メタデータAPI", value: "http://169.254.169.254/latest/meta-data/" },
-    { label: "内部IP", value: "http://10.0.0.1/admin" },
-  ];
-
   return (
     <div>
       <Input label="取得先URL:" value={url} onChange={(e) => setUrl(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setUrl(p.value)}>
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setUrl(p.value)} className="mb-2" />
       <FetchButton onClick={() => onFetch(url)} disabled={isLoading}>
         Fetch実行
       </FetchButton>
@@ -70,27 +65,13 @@ function FetchPanel({
 }
 
 export function Ssrf() {
-  const [vulnResult, setVulnResult] = useState<FetchResult | null>(null);
-  const [secureResult, setSecureResult] = useState<FetchResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<FetchResult>(BASE);
 
   const handleFetch = async (mode: "vulnerable" | "secure", url: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/fetch`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
-      const data: FetchResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.postJson(mode, "/fetch", { url }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -101,10 +82,10 @@ export function Ssrf() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <FetchPanel mode="vulnerable" result={vulnResult} isLoading={loading} onFetch={(url) => handleFetch("vulnerable", url)} />
+          <FetchPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onFetch={(url) => handleFetch("vulnerable", url)} />
         }
         secureContent={
-          <FetchPanel mode="secure" result={secureResult} isLoading={loading} onFetch={(url) => handleFetch("secure", url)} />
+          <FetchPanel mode="secure" result={result.secure} isLoading={result.loading} onFetch={(url) => handleFetch("secure", url)} />
         }
       />
 

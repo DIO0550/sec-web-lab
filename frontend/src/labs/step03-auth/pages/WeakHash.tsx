@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/weak-hash";
 
@@ -105,7 +105,9 @@ function CrackPanel({
 }: {
   result: CrackResult | null;
 }) {
-  if (!result) return null;
+  if (!result) {
+    return null;
+  }
 
   return (
     <Alert
@@ -134,41 +136,25 @@ function CrackPanel({
 
 // --- メインコンポーネント ---
 export function WeakHash() {
-  const [vulnUsers, setVulnUsers] = useState<UsersResult | null>(null);
-  const [secureUsers, setSecureUsers] = useState<UsersResult | null>(null);
-  const [vulnCrack, setVulnCrack] = useState<CrackResult | null>(null);
-  const [secureCrack, setSecureCrack] = useState<CrackResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const users = useComparisonFetch<UsersResult>(BASE);
+  const crackResult = useComparisonFetch<CrackResult>(BASE);
 
-  const fetchUsers = useCallback(async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/users`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnUsers(data);
-      else setSecureUsers(data);
-    } catch (e) {
-      const err = { users: [], error: (e as Error).message };
-      if (mode === "vulnerable") setVulnUsers(err);
-      else setSecureUsers(err);
-    }
-    setLoading(false);
-  }, []);
+  const fetchUsers = async (mode: "vulnerable" | "secure") => {
+    await users.run(mode, "/users", undefined, (e) => ({
+      users: [],
+      error: e.message,
+    }));
+  };
 
-  const crack = useCallback(async (mode: "vulnerable" | "secure", hash: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/crack?hash=${encodeURIComponent(hash)}`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnCrack(data);
-      else setSecureCrack(data);
-    } catch (e) {
-      const err = { success: false, hash, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnCrack(err);
-      else setSecureCrack(err);
-    }
-    setLoading(false);
-  }, []);
+  const crack = async (mode: "vulnerable" | "secure", hash: string) => {
+    await crackResult.run(mode, `/crack?hash=${encodeURIComponent(hash)}`, undefined, (e) => ({
+      success: false,
+      hash,
+      message: e.message,
+    }));
+  };
+
+  const isLoading = users.loading || crackResult.loading;
 
   return (
     <LabLayout
@@ -186,24 +172,24 @@ export function WeakHash() {
           <div>
             <UsersPanel
               mode="vulnerable"
-              result={vulnUsers}
-              isLoading={loading}
+              result={users.vulnerable}
+              isLoading={isLoading}
               onFetch={() => fetchUsers("vulnerable")}
               onCrack={(hash) => crack("vulnerable", hash)}
             />
-            <CrackPanel result={vulnCrack} />
+            <CrackPanel result={crackResult.vulnerable} />
           </div>
         }
         secureContent={
           <div>
             <UsersPanel
               mode="secure"
-              result={secureUsers}
-              isLoading={loading}
+              result={users.secure}
+              isLoading={isLoading}
               onFetch={() => fetchUsers("secure")}
               onCrack={(hash) => crack("secure", hash)}
             />
-            <CrackPanel result={secureCrack} />
+            <CrackPanel result={crackResult.secure} />
           </div>
         }
       />

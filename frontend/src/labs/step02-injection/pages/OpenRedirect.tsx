@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { PresetButtons } from "@/components/PresetButtons";
 
 const BASE = "/api/labs/open-redirect";
 
@@ -15,6 +16,13 @@ type CheckResult = {
   blocked: boolean;
   reason?: string;
 };
+
+const presets = [
+  { label: "内部パス (/dashboard)", url: "/dashboard" },
+  { label: "外部URL (evil.example.com)", url: "https://evil.example.com/login" },
+  { label: "プロトコル相対 (//evil.com)", url: "//evil.example.com" },
+  { label: "javascript:", url: "javascript:alert(1)" },
+];
 
 // --- リダイレクトテスト ---
 function RedirectTest({
@@ -29,13 +37,6 @@ function RedirectTest({
   onCheck: (mode: "vulnerable" | "secure", url: string) => void;
 }) {
   const [url, setUrl] = useState("");
-
-  const presets = [
-    { label: "内部パス (/dashboard)", url: "/dashboard" },
-    { label: "外部URL (evil.example.com)", url: "https://evil.example.com/login" },
-    { label: "プロトコル相対 (//evil.com)", url: "//evil.example.com" },
-    { label: "javascript:", url: "javascript:alert(1)" },
-  ];
 
   return (
     <div>
@@ -55,21 +56,7 @@ function RedirectTest({
         </div>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-[#888]">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => setUrl(p.url)}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setUrl(p.url)} className="mb-3" />
 
       {result && (
         <div className="mt-2">
@@ -148,22 +135,11 @@ function RedirectTest({
 // --- メインコンポーネント ---
 
 export function OpenRedirect() {
-  const [vulnResult, setVulnResult] = useState<CheckResult | null>(null);
-  const [secureResult, setSecureResult] = useState<CheckResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<CheckResult>(BASE);
 
-  const handleCheck = useCallback(async (mode: "vulnerable" | "secure", url: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/check?url=${encodeURIComponent(url)}`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  }, []);
+  const handleCheck = async (mode: "vulnerable" | "secure", url: string) => {
+    await result.run(mode, `/check?url=${encodeURIComponent(url)}`);
+  };
 
   return (
     <LabLayout
@@ -179,10 +155,10 @@ export function OpenRedirect() {
 
       <ComparisonPanel
         vulnerableContent={
-          <RedirectTest mode="vulnerable" result={vulnResult} isLoading={loading} onCheck={handleCheck} />
+          <RedirectTest mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onCheck={handleCheck} />
         }
         secureContent={
-          <RedirectTest mode="secure" result={secureResult} isLoading={loading} onCheck={handleCheck} />
+          <RedirectTest mode="secure" result={result.secure} isLoading={result.loading} onCheck={handleCheck} />
         }
       />
 

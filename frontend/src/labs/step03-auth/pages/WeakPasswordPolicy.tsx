@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
@@ -6,6 +6,9 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { PresetButtons } from "@/components/PresetButtons";
+import { postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/weak-password-policy";
 
@@ -15,18 +18,31 @@ type RegisterResult = {
   _debug?: { passwordLength: number; message: string };
 };
 
-type LoginResult = {
-  success: boolean;
-  message: string;
-  user?: { id: number; username: string; email: string; role: string };
-};
-
 type StrengthResult = {
   password: string;
   length: number;
   valid: boolean;
   reason?: string;
 };
+
+const weakPresets = [
+  { label: "123456", password: "123456" },
+  { label: "password", password: "password" },
+  { label: "a", password: "a" },
+  { label: "admin123", password: "admin123" },
+];
+
+const strongPreset = { label: "MyStr0ngPass!", password: "MyStr0ngPass!" };
+
+const testPasswords = [
+  { label: "123456" },
+  { label: "password" },
+  { label: "abc" },
+  { label: "12345678" },
+  { label: "Password1" },
+  { label: "MyStr0ng!" },
+  { label: "MyStr0ngPass!" },
+];
 
 // --- 登録フォーム ---
 function RegisterForm({
@@ -42,15 +58,6 @@ function RegisterForm({
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const weakPresets = [
-    { label: "123456", password: "123456" },
-    { label: "password", password: "password" },
-    { label: "a", password: "a" },
-    { label: "admin123", password: "admin123" },
-  ];
-
-  const strongPreset = { label: "MyStr0ngPass!", password: "MyStr0ngPass!" };
 
   return (
     <div>
@@ -133,11 +140,6 @@ function StrengthChecker({
 }) {
   const [password, setPassword] = useState("");
 
-  const testPasswords = [
-    "123456", "password", "abc", "12345678",
-    "Password1", "MyStr0ng!", "MyStr0ngPass!",
-  ];
-
   return (
     <div>
       <div className="mb-3">
@@ -155,21 +157,11 @@ function StrengthChecker({
         </div>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-text-secondary">テスト用パスワード:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {testPasswords.map((p) => (
-            <Button
-              key={p}
-              variant="ghost"
-              size="sm"
-              onClick={() => { setPassword(p); onCheck(p); }}
-            >
-              {p}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={testPasswords}
+        onSelect={(p) => { setPassword(p.label); onCheck(p.label); }}
+        className="mb-3"
+      />
 
       {results.length > 0 && (
         <div className="mt-3">
@@ -203,49 +195,33 @@ function StrengthChecker({
 
 // --- メインコンポーネント ---
 export function WeakPasswordPolicy() {
-  const [vulnRegister, setVulnRegister] = useState<RegisterResult | null>(null);
-  const [secureRegister, setSecureRegister] = useState<RegisterResult | null>(null);
+  const register = useComparisonFetch<RegisterResult>(BASE);
   const [strengthResults, setStrengthResults] = useState<StrengthResult[]>([]);
   const [loading, setLoading] = useState(false);
 
   // ユーザー名にタイムスタンプを付与して重複を回避
   const generateUsername = (base: string, mode: string) => `${base}_${mode}_${Date.now()}`;
 
-  const handleRegister = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
+  const handleRegister = async (mode: "vulnerable" | "secure", username: string, password: string) => {
     const uniqueUsername = username || generateUsername("test", mode);
-    try {
-      const res = await fetch(`${BASE}/${mode}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: uniqueUsername, password }),
-      });
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnRegister(data);
-      else setSecureRegister(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnRegister(err);
-      else setSecureRegister(err);
-    }
-    setLoading(false);
-  }, []);
+    await register.postJson(mode, "/register", { username: uniqueUsername, password }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
+  };
 
-  const checkStrength = useCallback(async (password: string) => {
+  const checkStrength = async (password: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/secure/check-strength`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-      const data: StrengthResult = await res.json();
+      const data = await postJson<StrengthResult>(`${BASE}/secure/check-strength`, { password });
       setStrengthResults((prev) => [data, ...prev]);
     } catch {
       // ignore
     }
     setLoading(false);
-  }, []);
+  };
+
+  const isLoading = register.loading || loading;
 
   return (
     <LabLayout
@@ -260,10 +236,10 @@ export function WeakPasswordPolicy() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <RegisterForm mode="vulnerable" result={vulnRegister} isLoading={loading} onSubmit={handleRegister} />
+          <RegisterForm mode="vulnerable" result={register.vulnerable} isLoading={isLoading} onSubmit={handleRegister} />
         }
         secureContent={
-          <RegisterForm mode="secure" result={secureRegister} isLoading={loading} onSubmit={handleRegister} />
+          <RegisterForm mode="secure" result={register.secure} isLoading={isLoading} onSubmit={handleRegister} />
         }
       />
 
@@ -272,7 +248,7 @@ export function WeakPasswordPolicy() {
         様々なパスワードの強度をチェックしてみてください。
         安全版では8文字以上・大文字小文字数字・ブラックリスト照合の3段階チェックが行われます。
       </p>
-      <StrengthChecker results={strengthResults} isLoading={loading} onCheck={checkStrength} />
+      <StrengthChecker results={strengthResults} isLoading={isLoading} onCheck={checkStrength} />
 
       <CheckpointBox>
         <ul>

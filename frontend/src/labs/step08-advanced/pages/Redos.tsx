@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/redos";
 
@@ -16,6 +17,13 @@ type RedosResult = {
   elapsed?: string;
   _debug?: { message: string; pattern?: string; inputLength?: number };
 };
+
+const presets = [
+  { label: "通常(マッチ)", value: "aaaaaa" },
+  { label: "通常(不一致)", value: "aaaaab" },
+  { label: "ReDoS(短)", value: "aaaaaaaaaaaaaaab" },
+  { label: "ReDoS(長)", value: "aaaaaaaaaaaaaaaaaaaaaaaaaab" },
+];
 
 function RedosPanel({
   mode,
@@ -30,23 +38,10 @@ function RedosPanel({
 }) {
   const [input, setInput] = useState("aaaaaa");
 
-  const presets = [
-    { label: "通常(マッチ)", value: "aaaaaa" },
-    { label: "通常(不一致)", value: "aaaaab" },
-    { label: "ReDoS(短)", value: "aaaaaaaaaaaaaaab" },
-    { label: "ReDoS(長)", value: "aaaaaaaaaaaaaaaaaaaaaaaaaab" },
-  ];
-
   return (
     <div>
       <Input label="入力文字列:" type="text" value={input} onChange={(e) => setInput(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setInput(p.value)}>
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setInput(p.value)} className="mb-2" />
       <FetchButton onClick={() => onValidate(input)} disabled={isLoading}>
         バリデーション実行
       </FetchButton>
@@ -70,27 +65,13 @@ function RedosPanel({
 }
 
 export function Redos() {
-  const [vulnResult, setVulnResult] = useState<RedosResult | null>(null);
-  const [secureResult, setSecureResult] = useState<RedosResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const validate = useComparisonFetch<RedosResult>(BASE);
 
   const handleValidate = async (mode: "vulnerable" | "secure", input: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/validate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input }),
-      });
-      const data: RedosResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await validate.postJson(mode, "/validate", { input }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -100,8 +81,8 @@ export function Redos() {
       description="(a+)+$ のような量指定子がネストした正規表現に、不一致する入力を与えるとバックトラッキングが指数関数的に増加し、サーバーのCPUリソースが枯渇する脆弱性を体験します。"
     >
       <ComparisonPanel
-        vulnerableContent={<RedosPanel mode="vulnerable" result={vulnResult} isLoading={loading} onValidate={(i) => handleValidate("vulnerable", i)} />}
-        secureContent={<RedosPanel mode="secure" result={secureResult} isLoading={loading} onValidate={(i) => handleValidate("secure", i)} />}
+        vulnerableContent={<RedosPanel mode="vulnerable" result={validate.vulnerable} isLoading={validate.loading} onValidate={(i) => handleValidate("vulnerable", i)} />}
+        secureContent={<RedosPanel mode="secure" result={validate.secure} isLoading={validate.loading} onValidate={(i) => handleValidate("secure", i)} />}
       />
 
       <CheckpointBox>

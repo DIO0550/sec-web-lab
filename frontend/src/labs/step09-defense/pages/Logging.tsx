@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/logging";
 
@@ -36,21 +37,19 @@ export function Logging() {
   const handleLogin = useCallback(async (mode: "vulnerable" | "secure") => {
     setLoading(true);
     try {
-      await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: "admin", password: "admin123" }),
-      });
+      await postJson(`${BASE}/${mode}/login`, { username: "admin", password: "admin123" });
     } catch {}
     setLoading(false);
   }, []);
 
   const handleViewLogs = useCallback(async (mode: "vulnerable" | "secure") => {
-    const res = await fetch(`${BASE}/logs`);
-    const data = await res.json();
-    const filtered = (data.logs as LogEntry[]).filter((l) => l.mode === mode);
-    if (mode === "vulnerable") setVulnLogs(filtered);
-    else setSecureLogs(filtered);
+    const data = await getJson<{ logs: LogEntry[] }>(`${BASE}/logs`);
+    const filtered = data.logs.filter((l) => l.mode === mode);
+    if (mode === "vulnerable") {
+      setVulnLogs(filtered);
+    } else {
+      setSecureLogs(filtered);
+    }
   }, []);
 
   return (

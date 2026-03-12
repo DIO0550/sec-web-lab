@@ -3,30 +3,27 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/csp";
 
 type CspResult = { success: boolean; html?: string; cspHeader?: string; _debug?: { message: string; xssPayload?: string; risks?: string[] } };
 
+const presets = [
+  { label: "通常", value: "World" },
+  { label: "XSSペイロード", value: '<script>alert("XSS")</script>' },
+  { label: "imgタグ", value: '<img src=x onerror=alert(1)>' },
+];
+
 function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "secure"; result: CspResult | null; isLoading: boolean; onTest: (name: string) => void }) {
   const [name, setName] = useState("World");
-
-  const presets = [
-    { label: "通常", value: "World" },
-    { label: "XSSペイロード", value: '<script>alert("XSS")</script>' },
-    { label: "imgタグ", value: '<img src=x onerror=alert(1)>' },
-  ];
 
   return (
     <div>
       <Input label="名前（入力値）:" type="text" value={name} onChange={(e) => setName(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setName(p.value)}>{p.label}</Button>
-        ))}
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setName(p.value)} className="mb-2" />
       <FetchButton onClick={() => onTest(name)} disabled={isLoading}>ページ取得</FetchButton>
 
       {result && (
@@ -53,30 +50,19 @@ function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "s
 }
 
 export function Csp() {
-  const [vulnResult, setVulnResult] = useState<CspResult | null>(null);
-  const [secureResult, setSecureResult] = useState<CspResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const csp = useComparisonFetch<CspResult>(BASE);
 
   const handleTest = async (mode: "vulnerable" | "secure", name: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/page?name=${encodeURIComponent(name)}`);
-      const data: CspResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false } as CspResult;
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await csp.run(mode, `/page?name=${encodeURIComponent(name)}`, undefined, () => ({
+      success: false,
+    } as CspResult));
   };
 
   return (
     <LabLayout title="CSP (Content Security Policy)" subtitle="XSS対策としてのCSP設定" description="Content Security Policyヘッダーを設定することで、XSSが存在してもインラインスクリプトの実行や外部リソースの読み込みをブラウザレベルでブロックできる防御策を体験します。">
       <ComparisonPanel
-        vulnerableContent={<CspPanel mode="vulnerable" result={vulnResult} isLoading={loading} onTest={(n) => handleTest("vulnerable", n)} />}
-        secureContent={<CspPanel mode="secure" result={secureResult} isLoading={loading} onTest={(n) => handleTest("secure", n)} />}
+        vulnerableContent={<CspPanel mode="vulnerable" result={csp.vulnerable} isLoading={csp.loading} onTest={(n) => handleTest("vulnerable", n)} />}
+        secureContent={<CspPanel mode="secure" result={csp.secure} isLoading={csp.loading} onTest={(n) => handleTest("secure", n)} />}
       />
       <CheckpointBox>
         <ul>

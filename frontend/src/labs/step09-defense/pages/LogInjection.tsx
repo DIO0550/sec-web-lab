@@ -3,30 +3,27 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Textarea } from "@/components/Textarea";
+import { PresetButtons } from "@/components/PresetButtons";
+import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/log-injection";
 
 type LogEntry = { timestamp: string; message: string; mode: string };
 
+const presets = [
+  { label: "通常", value: "user1" },
+  { label: "ログ偽装", value: "user1\n[INFO] Login success: username=admin" },
+  { label: "ログ消去", value: "user1\n\n\n\n\n[INFO] System clean" },
+];
+
 function LogInjPanel({ mode, logs, isLoading, onLogin, onViewLogs }: { mode: "vulnerable" | "secure"; logs: LogEntry[]; isLoading: boolean; onLogin: (username: string) => void; onViewLogs: () => void }) {
   const [username, setUsername] = useState("user1");
-
-  const presets = [
-    { label: "通常", value: "user1" },
-    { label: "ログ偽装", value: "user1\n[INFO] Login success: username=admin" },
-    { label: "ログ消去", value: "user1\n\n\n\n\n[INFO] System clean" },
-  ];
 
   return (
     <div>
       <Textarea label="ユーザー名:" value={username} onChange={(e) => setUsername(e.target.value)} mono rows={2} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setUsername(p.value)}>{p.label}</Button>
-        ))}
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setUsername(p.value)} className="mb-2" />
       <div className="flex gap-2 mb-2">
         <FetchButton onClick={() => onLogin(username)} disabled={isLoading}>ログイン試行</FetchButton>
         <FetchButton onClick={onViewLogs} disabled={isLoading}>ログ閲覧</FetchButton>
@@ -50,21 +47,19 @@ export function LogInjection() {
   const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string) => {
     setLoading(true);
     try {
-      await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password: "wrongpass" }),
-      });
+      await postJson(`${BASE}/${mode}/login`, { username, password: "wrongpass" });
     } catch {}
     setLoading(false);
   }, []);
 
   const handleViewLogs = useCallback(async (mode: "vulnerable" | "secure") => {
-    const res = await fetch(`${BASE}/logs`);
-    const data = await res.json();
-    const filtered = (data.logs as LogEntry[]).filter((l) => l.mode === mode);
-    if (mode === "vulnerable") setVulnLogs(filtered);
-    else setSecureLogs(filtered);
+    const data = await getJson<{ logs: LogEntry[] }>(`${BASE}/logs`);
+    const filtered = data.logs.filter((l) => l.mode === mode);
+    if (mode === "vulnerable") {
+      setVulnLogs(filtered);
+    } else {
+      setSecureLogs(filtered);
+    }
   }, []);
 
   return (

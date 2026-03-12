@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/race-condition";
 
@@ -66,32 +67,35 @@ export function RaceCondition() {
   const [loading, setLoading] = useState(false);
 
   const checkStock = async (mode: "vulnerable" | "secure") => {
-    const res = await fetch(`${BASE}/${mode}/stock`);
-    const data: StockInfo = await res.json();
-    if (mode === "vulnerable") setVulnStock(data);
-    else setSecureStock(data);
+    const data = await getJson<StockInfo>(`${BASE}/${mode}/stock`);
+    if (mode === "vulnerable") {
+      setVulnStock(data);
+    } else {
+      setSecureStock(data);
+    }
   };
 
   const purchase = async (mode: "vulnerable" | "secure") => {
-    const res = await fetch(`${BASE}/${mode}/purchase`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId: "1" }),
-    });
-    return res.json() as Promise<PurchaseResult>;
+    return postJson<PurchaseResult>(`${BASE}/${mode}/purchase`, { productId: "1" });
   };
 
   const handlePurchase = async (mode: "vulnerable" | "secure") => {
     setLoading(true);
     try {
       const data = await purchase(mode);
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
       await checkStock(mode);
     } catch (e) {
       const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };
@@ -101,8 +105,11 @@ export function RaceCondition() {
     // 5つの購入リクエストを同時に送信
     const promises = Array.from({ length: 5 }, () => purchase(mode).catch((e) => ({ success: false, message: (e as Error).message })));
     const results = await Promise.all(promises);
-    if (mode === "vulnerable") setVulnResults((prev) => [...prev, ...results]);
-    else setSecureResults((prev) => [...prev, ...results]);
+    if (mode === "vulnerable") {
+      setVulnResults((prev) => [...prev, ...results]);
+    } else {
+      setSecureResults((prev) => [...prev, ...results]);
+    }
     await checkStock(mode);
     setLoading(false);
   };

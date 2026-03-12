@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
+import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/crlf-injection";
 
@@ -17,6 +18,12 @@ type CrlfResult = {
   sanitized?: boolean;
   _debug?: { message: string; crlfDetected?: boolean; injectedHeaders?: string[] };
 };
+
+const presets = [
+  { label: "通常リダイレクト", value: "/dashboard" },
+  { label: "CRLF + Cookie注入", value: "/dashboard%0d%0aSet-Cookie:%20admin=true" },
+  { label: "CRLF + XSS", value: "/dashboard%0d%0a%0d%0a<script>alert(1)</script>" },
+];
 
 function CrlfPanel({
   mode,
@@ -31,22 +38,10 @@ function CrlfPanel({
 }) {
   const [url, setUrl] = useState("/dashboard");
 
-  const presets = [
-    { label: "通常リダイレクト", value: "/dashboard" },
-    { label: "CRLF + Cookie注入", value: "/dashboard%0d%0aSet-Cookie:%20admin=true" },
-    { label: "CRLF + XSS", value: "/dashboard%0d%0a%0d%0a<script>alert(1)</script>" },
-  ];
-
   return (
     <div>
       <Input label="リダイレクト先URL:" value={url} onChange={(e) => setUrl(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setUrl(p.value)}>
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setUrl(p.value)} className="mb-2" />
       <FetchButton onClick={() => onTest(url)} disabled={isLoading}>
         リダイレクトテスト
       </FetchButton>
@@ -77,23 +72,13 @@ function CrlfPanel({
 }
 
 export function CrlfInjection() {
-  const [vulnResult, setVulnResult] = useState<CrlfResult | null>(null);
-  const [secureResult, setSecureResult] = useState<CrlfResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<CrlfResult>(BASE);
 
   const handleTest = async (mode: "vulnerable" | "secure", url: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/redirect?url=${encodeURIComponent(url)}`);
-      const data: CrlfResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.run(mode, `/redirect?url=${encodeURIComponent(url)}`, undefined, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -104,10 +89,10 @@ export function CrlfInjection() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <CrlfPanel mode="vulnerable" result={vulnResult} isLoading={loading} onTest={(url) => handleTest("vulnerable", url)} />
+          <CrlfPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onTest={(url) => handleTest("vulnerable", url)} />
         }
         secureContent={
-          <CrlfPanel mode="secure" result={secureResult} isLoading={loading} onTest={(url) => handleTest("secure", url)} />
+          <CrlfPanel mode="secure" result={result.secure} isLoading={result.loading} onTest={(url) => handleTest("secure", url)} />
         }
       />
 

@@ -1,11 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/privilege-escalation";
 
@@ -30,6 +31,11 @@ type SettingsResult = {
   _debug?: { message: string; currentUser: Record<string, unknown> };
 };
 
+const loginPresets = [
+  { label: "user1 (一般)", username: "user1", password: "password1" },
+  { label: "admin (管理者)", username: "admin", password: "admin123" },
+];
+
 // --- ログインフォーム ---
 function LoginForm({
   mode,
@@ -45,11 +51,6 @@ function LoginForm({
   const [username, setUsername] = useState("user1");
   const [password, setPassword] = useState("password1");
 
-  const presets = [
-    { label: "user1 (一般)", username: "user1", password: "password1" },
-    { label: "admin (管理者)", username: "admin", password: "admin123" },
-  ];
-
   return (
     <div className="mb-3">
       <Input label="ユーザー名:" value={username} onChange={(e) => setUsername(e.target.value)} className="mb-1" />
@@ -57,18 +58,11 @@ function LoginForm({
       <FetchButton onClick={() => onLogin(mode, username, password)} disabled={isLoading}>
         ログイン
       </FetchButton>
-      <div className="flex gap-1 flex-wrap mt-1">
-        {presets.map((p) => (
-          <Button
-            key={p.label}
-            variant="ghost"
-            size="sm"
-            onClick={() => { setUsername(p.username); setPassword(p.password); }}
-          >
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons
+        presets={loginPresets}
+        onSelect={(p) => { setUsername(p.username); setPassword(p.password); }}
+        className="mt-1"
+      />
       {loginResult && (
         <Alert variant={loginResult.success ? "success" : "error"} className="mt-2 text-xs">
           {loginResult.message}
@@ -85,82 +79,62 @@ function LoginForm({
 export function PrivilegeEscalation() {
   const [vulnSession, setVulnSession] = useState<string | null>(null);
   const [secureSession, setSecureSession] = useState<string | null>(null);
-  const [vulnLogin, setVulnLogin] = useState<LoginResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<LoginResult | null>(null);
-  const [vulnUsers, setVulnUsers] = useState<UsersResult | null>(null);
-  const [secureUsers, setSecureUsers] = useState<UsersResult | null>(null);
-  const [vulnSettings, setVulnSettings] = useState<SettingsResult | null>(null);
-  const [secureSettings, setSecureSettings] = useState<SettingsResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const login = useComparisonFetch<LoginResult>(BASE);
+  const users = useComparisonFetch<UsersResult>(BASE);
+  const settings = useComparisonFetch<SettingsResult>(BASE);
 
-  const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data: LoginResult = await res.json();
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    const data = await login.postJson(
+      mode,
+      "/login",
+      { username, password },
+      (e) => ({ success: false, message: e.message }),
+    );
+    if (data.sessionId) {
       if (mode === "vulnerable") {
-        setVulnLogin(data);
-        if (data.sessionId) setVulnSession(data.sessionId);
+        setVulnSession(data.sessionId);
       } else {
-        setSecureLogin(data);
-        if (data.sessionId) setSecureSession(data.sessionId);
+        setSecureSession(data.sessionId);
       }
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
     }
-    setLoading(false);
-  }, []);
+  };
 
-  const fetchUsers = useCallback(async (mode: "vulnerable" | "secure") => {
+  const fetchUsers = async (mode: "vulnerable" | "secure") => {
     const sessionId = mode === "vulnerable" ? vulnSession : secureSession;
-    if (!sessionId) return;
-
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/admin/users`, {
-        headers: { "X-Session-Id": sessionId },
-      });
-      const data: UsersResult = await res.json();
-      if (mode === "vulnerable") setVulnUsers(data);
-      else setSecureUsers(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnUsers(err);
-      else setSecureUsers(err);
+    if (!sessionId) {
+      return;
     }
-    setLoading(false);
-  }, [vulnSession, secureSession]);
 
-  const changeSettings = useCallback(async (mode: "vulnerable" | "secure") => {
+    await users.run(
+      mode,
+      "/admin/users",
+      { headers: { "X-Session-Id": sessionId } },
+      (e) => ({ success: false, message: e.message }),
+    );
+  };
+
+  const changeSettings = async (mode: "vulnerable" | "secure") => {
     const sessionId = mode === "vulnerable" ? vulnSession : secureSession;
-    if (!sessionId) return;
+    if (!sessionId) {
+      return;
+    }
 
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/admin/settings`, {
+    await settings.run(
+      mode,
+      "/admin/settings",
+      {
         method: "PUT",
         headers: { "Content-Type": "application/json", "X-Session-Id": sessionId },
         body: JSON.stringify({ maintenance_mode: true }),
-      });
-      const data: SettingsResult = await res.json();
-      if (mode === "vulnerable") setVulnSettings(data);
-      else setSecureSettings(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnSettings(err);
-      else setSecureSettings(err);
-    }
-    setLoading(false);
-  }, [vulnSession, secureSession]);
+      },
+      (e) => ({ success: false, message: e.message }),
+    );
+  };
 
   const renderResult = (result: UsersResult | SettingsResult | null, type: "users" | "settings") => {
-    if (!result) return null;
+    if (!result) {
+      return null;
+    }
     return (
       <Alert
         variant={result.success ? "success" : "error"}
@@ -199,10 +173,10 @@ export function PrivilegeEscalation() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <LoginForm mode="vulnerable" loginResult={vulnLogin} isLoading={loading} onLogin={handleLogin} />
+          <LoginForm mode="vulnerable" loginResult={login.vulnerable} isLoading={login.loading} onLogin={handleLogin} />
         }
         secureContent={
-          <LoginForm mode="secure" loginResult={secureLogin} isLoading={loading} onLogin={handleLogin} />
+          <LoginForm mode="secure" loginResult={login.secure} isLoading={login.loading} onLogin={handleLogin} />
         }
       />
 
@@ -214,20 +188,20 @@ export function PrivilegeEscalation() {
       <ComparisonPanel
         vulnerableContent={
           <div>
-            <FetchButton onClick={() => fetchUsers("vulnerable")} disabled={loading || !vulnSession}>
+            <FetchButton onClick={() => fetchUsers("vulnerable")} disabled={users.loading || !vulnSession}>
               管理者用ユーザー一覧を取得
             </FetchButton>
             {!vulnSession && <p className="text-xs text-[#888] mt-1">先にログインしてください</p>}
-            {renderResult(vulnUsers, "users")}
+            {renderResult(users.vulnerable, "users")}
           </div>
         }
         secureContent={
           <div>
-            <FetchButton onClick={() => fetchUsers("secure")} disabled={loading || !secureSession}>
+            <FetchButton onClick={() => fetchUsers("secure")} disabled={users.loading || !secureSession}>
               管理者用ユーザー一覧を取得
             </FetchButton>
             {!secureSession && <p className="text-xs text-[#888] mt-1">先にログインしてください</p>}
-            {renderResult(secureUsers, "users")}
+            {renderResult(users.secure, "users")}
           </div>
         }
       />
@@ -239,18 +213,18 @@ export function PrivilegeEscalation() {
       <ComparisonPanel
         vulnerableContent={
           <div>
-            <FetchButton onClick={() => changeSettings("vulnerable")} disabled={loading || !vulnSession}>
+            <FetchButton onClick={() => changeSettings("vulnerable")} disabled={settings.loading || !vulnSession}>
               メンテナンスモードを有効化
             </FetchButton>
-            {renderResult(vulnSettings, "settings")}
+            {renderResult(settings.vulnerable, "settings")}
           </div>
         }
         secureContent={
           <div>
-            <FetchButton onClick={() => changeSettings("secure")} disabled={loading || !secureSession}>
+            <FetchButton onClick={() => changeSettings("secure")} disabled={settings.loading || !secureSession}>
               メンテナンスモードを有効化
             </FetchButton>
-            {renderResult(secureSettings, "settings")}
+            {renderResult(settings.secure, "settings")}
           </div>
         }
       />

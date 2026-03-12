@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { fetchText } from "../../../hooks/useLabFetch";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
@@ -60,7 +60,7 @@ export function ErrorMessageLeakage() {
 
   const isLoading = loading !== null;
 
-  const handleTest = useCallback(async (mode: "vulnerable" | "secure", inputId: string) => {
+  const handleTest = async (mode: "vulnerable" | "secure", inputId: string) => {
     setLoading(`${mode}-${inputId}`);
     try {
       const result = await fetchText(`${BASE}/${mode}/users/${encodeURIComponent(inputId)}`);
@@ -70,10 +70,12 @@ export function ErrorMessageLeakage() {
       console.error(e);
     }
     setLoading(null);
-  }, []);
+  };
 
-  const handleCustomTest = useCallback(async () => {
-    if (!customInput.trim()) return;
+  const handleCustomTest = async () => {
+    if (!customInput.trim()) {
+      return;
+    }
     setLoading("custom");
     try {
       const [vulnRes, secureRes] = await Promise.all([
@@ -86,7 +88,7 @@ export function ErrorMessageLeakage() {
       console.error(e);
     }
     setLoading(null);
-  }, [customInput]);
+  };
 
   return (
     <LabLayout

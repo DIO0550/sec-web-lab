@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/postmessage";
 
@@ -19,6 +20,11 @@ type MsgResult = {
   data?: Record<string, unknown>;
   _debug?: { message: string; risks?: string[] };
 };
+
+const originPresets = [
+  { label: "正規サイト", value: "http://localhost:5173" },
+  { label: "攻撃者サイト", value: "https://evil.example.com" },
+];
 
 function MsgPanel({
   mode,
@@ -37,11 +43,6 @@ function MsgPanel({
 }) {
   const [origin, setOrigin] = useState("https://evil.example.com");
 
-  const presets = [
-    { label: "正規サイト", origin: "http://localhost:5173" },
-    { label: "攻撃者サイト", origin: "https://evil.example.com" },
-  ];
-
   return (
     <div>
       <FetchButton onClick={onViewCode} disabled={isLoading}>ハンドラーコードを確認</FetchButton>
@@ -51,11 +52,7 @@ function MsgPanel({
       )}
 
       <Input label="送信元Origin:" type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} className="mt-3 mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setOrigin(p.origin)}>{p.label}</Button>
-        ))}
-      </div>
+      <PresetButtons presets={originPresets} onSelect={(p) => setOrigin(p.value)} className="mb-2" />
       <FetchButton onClick={() => onProcess(origin, { action: "redirect", url: "https://evil.example.com" })} disabled={isLoading}>
         メッセージ送信
       </FetchButton>
@@ -72,44 +69,21 @@ function MsgPanel({
 }
 
 export function Postmessage() {
-  const [vulnCode, setVulnCode] = useState<MsgResult | null>(null);
-  const [secureCode, setSecureCode] = useState<MsgResult | null>(null);
-  const [vulnProcess, setVulnProcess] = useState<MsgResult | null>(null);
-  const [secureProcess, setSecureProcess] = useState<MsgResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const code = useComparisonFetch<MsgResult>(BASE);
+  const process = useComparisonFetch<MsgResult>(BASE);
 
   const handleViewCode = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/receiver`);
-      const data: MsgResult = await res.json();
-      if (mode === "vulnerable") setVulnCode(data);
-      else setSecureCode(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnCode(err);
-      else setSecureCode(err);
-    }
-    setLoading(false);
+    await code.run(mode, "/receiver", undefined, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   const handleProcess = async (mode: "vulnerable" | "secure", origin: string, data: Record<string, unknown>) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/process-message`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ origin, data }),
-      });
-      const result: MsgResult = await res.json();
-      if (mode === "vulnerable") setVulnProcess(result);
-      else setSecureProcess(result);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnProcess(err);
-      else setSecureProcess(err);
-    }
-    setLoading(false);
+    await process.postJson(mode, "/process-message", { origin, data }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -120,11 +94,11 @@ export function Postmessage() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <MsgPanel mode="vulnerable" codeResult={vulnCode} processResult={vulnProcess} isLoading={loading}
+          <MsgPanel mode="vulnerable" codeResult={code.vulnerable} processResult={process.vulnerable} isLoading={code.loading || process.loading}
             onViewCode={() => handleViewCode("vulnerable")} onProcess={(o, d) => handleProcess("vulnerable", o, d)} />
         }
         secureContent={
-          <MsgPanel mode="secure" codeResult={secureCode} processResult={secureProcess} isLoading={loading}
+          <MsgPanel mode="secure" codeResult={code.secure} processResult={process.secure} isLoading={code.loading || process.loading}
             onViewCode={() => handleViewCode("secure")} onProcess={(o, d) => handleProcess("secure", o, d)} />
         }
       />

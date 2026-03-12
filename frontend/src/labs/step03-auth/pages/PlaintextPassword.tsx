@@ -1,11 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { PresetButtons } from "@/components/PresetButtons";
 
 const BASE = "/api/labs/plaintext-password";
 
@@ -28,6 +29,11 @@ type LoginResult = {
   message: string;
   user?: { id: number; username: string; email: string; role: string };
 };
+
+const loginPresets = [
+  { label: "admin / admin123", username: "admin", password: "admin123" },
+  { label: "user1 / password1", username: "user1", password: "password1" },
+];
 
 // --- ユーザー一覧パネル ---
 function UsersPanel({
@@ -101,11 +107,6 @@ function LoginForm({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const presets = [
-    { label: "admin / admin123", username: "admin", password: "admin123" },
-    { label: "user1 / password1", username: "user1", password: "password1" },
-  ];
-
   return (
     <div>
       <div className="mb-3">
@@ -128,21 +129,11 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-text-secondary">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => { setUsername(p.username); setPassword(p.password); }}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={loginPresets}
+        onSelect={(p) => { setUsername(p.username); setPassword(p.password); }}
+        className="mb-3"
+      />
 
       {result && (
         <Alert
@@ -164,45 +155,24 @@ function LoginForm({
 
 // --- メインコンポーネント ---
 export function PlaintextPassword() {
-  const [vulnUsers, setVulnUsers] = useState<UsersResult | null>(null);
-  const [secureUsers, setSecureUsers] = useState<UsersResult | null>(null);
-  const [vulnLogin, setVulnLogin] = useState<LoginResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<LoginResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const users = useComparisonFetch<UsersResult>(BASE);
+  const login = useComparisonFetch<LoginResult>(BASE);
 
-  const fetchUsers = useCallback(async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/users`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnUsers(data);
-      else setSecureUsers(data);
-    } catch (e) {
-      const err = { users: [], error: (e as Error).message };
-      if (mode === "vulnerable") setVulnUsers(err);
-      else setSecureUsers(err);
-    }
-    setLoading(false);
-  }, []);
+  const fetchUsers = async (mode: "vulnerable" | "secure") => {
+    await users.run(mode, "/users", undefined, (e) => ({
+      users: [],
+      error: e.message,
+    }));
+  };
 
-  const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnLogin(data);
-      else setSecureLogin(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
-    }
-    setLoading(false);
-  }, []);
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    await login.postJson(mode, "/login", { username, password }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
+  };
+
+  const isLoading = users.loading || login.loading;
 
   return (
     <LabLayout
@@ -217,10 +187,10 @@ export function PlaintextPassword() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <UsersPanel mode="vulnerable" result={vulnUsers} isLoading={loading} onFetch={() => fetchUsers("vulnerable")} />
+          <UsersPanel mode="vulnerable" result={users.vulnerable} isLoading={isLoading} onFetch={() => fetchUsers("vulnerable")} />
         }
         secureContent={
-          <UsersPanel mode="secure" result={secureUsers} isLoading={loading} onFetch={() => fetchUsers("secure")} />
+          <UsersPanel mode="secure" result={users.secure} isLoading={isLoading} onFetch={() => fetchUsers("secure")} />
         }
       />
 
@@ -231,10 +201,10 @@ export function PlaintextPassword() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <LoginForm mode="vulnerable" result={vulnLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="vulnerable" result={login.vulnerable} isLoading={isLoading} onSubmit={handleLogin} />
         }
         secureContent={
-          <LoginForm mode="secure" result={secureLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="secure" result={login.secure} isLoading={isLoading} onSubmit={handleLogin} />
         }
       />
 

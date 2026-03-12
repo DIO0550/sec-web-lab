@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Select } from "@/components/Select";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/business-logic";
 
@@ -16,6 +17,12 @@ type OrderResult = {
   order?: { product: string; quantity: number; unitPrice: number; total: number; balance: number };
   _debug?: { message: string; risks?: string[] };
 };
+
+const presets = [
+  { label: "通常購入", productId: "2", quantity: "1", price: "" },
+  { label: "負の数量", productId: "2", quantity: "-5", price: "" },
+  { label: "価格改ざん", productId: "1", quantity: "1", price: "0" },
+];
 
 function OrderPanel({
   mode,
@@ -31,12 +38,6 @@ function OrderPanel({
   const [productId, setProductId] = useState("1");
   const [quantity, setQuantity] = useState("1");
   const [price, setPrice] = useState("");
-
-  const presets = [
-    { label: "通常購入", productId: "2", quantity: "1", price: "" },
-    { label: "負の数量", productId: "2", quantity: "-5", price: "" },
-    { label: "価格改ざん", productId: "1", quantity: "1", price: "0" },
-  ];
 
   return (
     <div>
@@ -55,13 +56,11 @@ function OrderPanel({
       {mode === "vulnerable" && (
         <Input type="number" label="価格（改ざん用）:" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="空=サーバー価格" className="mb-2" />
       )}
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => { setProductId(p.productId); setQuantity(p.quantity); setPrice(p.price); }}>
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons
+        presets={presets}
+        onSelect={(p) => { setProductId(p.productId); setQuantity(p.quantity); setPrice(p.price); }}
+        className="mb-2"
+      />
       <FetchButton onClick={() => onOrder(productId, Number(quantity), price ? Number(price) : undefined)} disabled={isLoading}>
         注文実行
       </FetchButton>
@@ -90,19 +89,22 @@ export function BusinessLogic() {
     setLoading(true);
     try {
       const payload: Record<string, unknown> = { productId, quantity };
-      if (price !== undefined && mode === "vulnerable") payload.price = price;
-      const res = await fetch(`${BASE}/${mode}/order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data: OrderResult = await res.json();
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      if (price !== undefined && mode === "vulnerable") {
+        payload.price = price;
+      }
+      const data = await postJson<OrderResult>(`${BASE}/${mode}/order`, payload);
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
     } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      const err: OrderResult = { success: false, message: (e as Error).message };
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };

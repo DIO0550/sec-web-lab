@@ -5,6 +5,7 @@ import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/password-reset";
 
@@ -66,18 +67,19 @@ export function PasswordReset() {
   const handleRequest = async (mode: "vulnerable" | "secure") => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/${mode}/reset-request`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: "victim@example.com" }),
-      });
-      const data: ResetResult = await res.json();
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      const data = await postJson<ResetResult>(`${BASE}/${mode}/reset-request`, { email: "victim@example.com" });
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, data]);
+      } else {
+        setSecureResults((prev) => [...prev, data]);
+      }
     } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      const err: ResetResult = { success: false, message: (e as Error).message };
+      if (mode === "vulnerable") {
+        setVulnResults((prev) => [...prev, err]);
+      } else {
+        setSecureResults((prev) => [...prev, err]);
+      }
     }
     setLoading(false);
   };
@@ -88,15 +90,12 @@ export function PasswordReset() {
     for (let i = 1; i <= 10; i++) {
       const token = String(i).padStart(4, "0");
       try {
-        const res = await fetch(`${BASE}/vulnerable/reset-confirm`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token, newPassword: "hacked123" }),
-        });
-        const data: ResetResult = await res.json();
+        const data = await postJson<ResetResult>(`${BASE}/vulnerable/reset-confirm`, { token, newPassword: "hacked123" });
         data.message = `token=${token}: ${data.message}`;
         setVulnResults((prev) => [...prev, data]);
-        if (data.success) break;
+        if (data.success) {
+          break;
+        }
       } catch {
         break;
       }

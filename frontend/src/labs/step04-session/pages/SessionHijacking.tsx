@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { postJsonWithCredentials, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/session-hijacking";
 
@@ -48,69 +49,58 @@ function HijackingDemo({
   const [documentCookie, setDocumentCookie] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = useCallback(async () => {
+  const handleLogin = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username: "alice", password: "alice123" }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<LoginResult>(
+        `${BASE}/${mode}/login`,
+        { username: "alice", password: "alice123" },
+      );
       setLoginResult(data);
       setDocumentCookie(document.cookie);
     } catch (e) {
       setLoginResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, [mode]);
+  };
 
-  const handlePostComment = useCallback(async () => {
+  const handlePostComment = async () => {
     setLoading(true);
     try {
-      await fetch(`${BASE}/${mode}/comment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ content: commentInput }),
-      });
+      await postJsonWithCredentials(`${BASE}/${mode}/comment`, { content: commentInput });
       // コメント一覧を再取得
-      const res = await fetch(`${BASE}/${mode}/comments`, {
+      const data = await getJson<{ comments?: Comment[] }>(`${BASE}/${mode}/comments`, {
         credentials: "include",
       });
-      const data = await res.json();
       setComments(data.comments || []);
     } catch {
       // ignore
     }
     setLoading(false);
-  }, [mode, commentInput]);
+  };
 
-  const handleLoadComments = useCallback(async () => {
+  const handleLoadComments = async () => {
     try {
-      const res = await fetch(`${BASE}/${mode}/comments`, {
+      const data = await getJson<{ comments?: Comment[] }>(`${BASE}/${mode}/comments`, {
         credentials: "include",
       });
-      const data = await res.json();
       setComments(data.comments || []);
     } catch {
       // ignore
     }
-  }, [mode]);
+  };
 
-  const handleCheckProfile = useCallback(async () => {
+  const handleCheckProfile = async () => {
     try {
-      const res = await fetch(`${BASE}/${mode}/profile`, {
+      const data = await getJson<ProfileResult>(`${BASE}/${mode}/profile`, {
         credentials: "include",
       });
-      const data = await res.json();
       setProfileResult(data);
       setDocumentCookie(document.cookie);
     } catch {
       // ignore
     }
-  }, [mode]);
+  };
 
   return (
     <div>
@@ -208,14 +198,14 @@ function HijackingDemo({
 
 // --- メインコンポーネント ---
 export function SessionHijacking() {
-  const handleReset = useCallback(async () => {
+  const handleReset = async () => {
     try {
       await fetch(`${BASE}/reset`, { method: "POST" });
     } catch {
       // ignore
     }
     window.location.reload();
-  }, []);
+  };
 
   return (
     <LabLayout

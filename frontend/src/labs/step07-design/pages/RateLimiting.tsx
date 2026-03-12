@@ -5,6 +5,7 @@ import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/rate-limiting";
 
@@ -16,6 +17,11 @@ type LoginResult = {
   attemptsUsed?: number;
   _debug?: { message: string; totalAttempts?: number };
 };
+
+const BRUTE_FORCE_PASSWORDS = [
+  "123456", "password", "admin", "letmein", "welcome",
+  "monkey", "master", "qwerty", "abc123", "secretpass",
+];
 
 function LoginPanel({
   mode,
@@ -62,39 +68,36 @@ export function RateLimiting() {
   const [secureResults, setSecureResults] = useState<LoginResult[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const doLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    const res = await fetch(`${BASE}/${mode}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    return res.json() as Promise<LoginResult>;
+  /** 結果をモードに応じて追加する */
+  const appendResult = (mode: "vulnerable" | "secure", data: LoginResult) => {
+    if (mode === "vulnerable") {
+      setVulnResults((prev) => [...prev, data]);
+    } else {
+      setSecureResults((prev) => [...prev, data]);
+    }
   };
 
   const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
     setLoading(true);
     try {
-      const data = await doLogin(mode, username, password);
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-      else setSecureResults((prev) => [...prev, data]);
+      const data = await postJson<LoginResult>(`${BASE}/${mode}/login`, { username, password });
+      appendResult(mode, data);
     } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResults((prev) => [...prev, err]);
-      else setSecureResults((prev) => [...prev, err]);
+      appendResult(mode, { success: false, message: (e as Error).message });
     }
     setLoading(false);
   };
 
   const handleBruteForce = async (mode: "vulnerable" | "secure") => {
     setLoading(true);
-    const passwords = ["123456", "password", "admin", "letmein", "welcome", "monkey", "master", "qwerty", "abc123", "secretpass"];
-    for (const pw of passwords) {
+    for (const pw of BRUTE_FORCE_PASSWORDS) {
       try {
-        const data = await doLogin(mode, "admin", pw);
-        if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
-        else setSecureResults((prev) => [...prev, data]);
-        if (data.success || data.locked) break;
-      } catch (e) {
+        const data = await postJson<LoginResult>(`${BASE}/${mode}/login`, { username: "admin", password: pw });
+        appendResult(mode, data);
+        if (data.success || data.locked) {
+          break;
+        }
+      } catch {
         break;
       }
     }
