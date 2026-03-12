@@ -1,10 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { PresetButtons } from "@/components/PresetButtons";
+import { DebugInfo } from "@/components/DebugInfo";
 
 const BASE = "/api/labs/command-injection";
 
@@ -15,6 +17,13 @@ type PingResult = {
   message?: string;
   _debug?: { command: string };
 };
+
+const presets = [
+  { label: "正常 (127.0.0.1)", host: "127.0.0.1" },
+  { label: "; cat /etc/passwd", host: "127.0.0.1; cat /etc/passwd" },
+  { label: "&& whoami", host: "127.0.0.1 && whoami" },
+  { label: "$(id)", host: "$(id)" },
+];
 
 // --- Pingフォーム ---
 function PingForm({
@@ -29,13 +38,6 @@ function PingForm({
   onPing: (mode: "vulnerable" | "secure", host: string) => void;
 }) {
   const [host, setHost] = useState("");
-
-  const presets = [
-    { label: "正常 (127.0.0.1)", host: "127.0.0.1" },
-    { label: "; cat /etc/passwd", host: "127.0.0.1; cat /etc/passwd" },
-    { label: "&& whoami", host: "127.0.0.1 && whoami" },
-    { label: "$(id)", host: "$(id)" },
-  ];
 
   return (
     <div>
@@ -55,21 +57,7 @@ function PingForm({
         </div>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-[#888]">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => setHost(p.host)}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setHost(p.host)} className="mb-3" />
 
       {result && (
         <div className="mt-2">
@@ -96,14 +84,7 @@ function PingForm({
             </pre>
           )}
 
-          {result._debug && (
-            <details className="mt-2">
-              <summary className="text-xs text-[#888] cursor-pointer">実行されたコマンド</summary>
-              <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
-                {result._debug.command}
-              </pre>
-            </details>
-          )}
+          <DebugInfo debug={result._debug} summary="実行されたコマンド" codeField="command" />
         </div>
       )}
     </div>
@@ -113,28 +94,15 @@ function PingForm({
 // --- メインコンポーネント ---
 
 export function CommandInjection() {
-  const [vulnResult, setVulnResult] = useState<PingResult | null>(null);
-  const [secureResult, setSecureResult] = useState<PingResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<PingResult>(BASE);
 
-  const handlePing = useCallback(async (mode: "vulnerable" | "secure", host: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/ping`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ host }),
-      });
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, output: "", message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
-  }, []);
+  const handlePing = async (mode: "vulnerable" | "secure", host: string) => {
+    await result.postJson(mode, "/ping", { host }, (e) => ({
+      success: false,
+      output: "",
+      message: e.message,
+    }));
+  };
 
   return (
     <LabLayout
@@ -150,10 +118,10 @@ export function CommandInjection() {
 
       <ComparisonPanel
         vulnerableContent={
-          <PingForm mode="vulnerable" result={vulnResult} isLoading={loading} onPing={handlePing} />
+          <PingForm mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onPing={handlePing} />
         }
         secureContent={
-          <PingForm mode="secure" result={secureResult} isLoading={loading} onPing={handlePing} />
+          <PingForm mode="secure" result={result.secure} isLoading={result.loading} onPing={handlePing} />
         }
       />
 

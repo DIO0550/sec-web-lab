@@ -1,11 +1,13 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/xss";
 
@@ -18,6 +20,44 @@ type PostsResult = {
   posts: { id: number; title: string; content: string; created_at: string }[];
   postsHtml: string;
 };
+
+const reflectedPresets = [
+  { label: "通常テキスト", query: "セキュリティ" },
+  { label: "<script>alert</script>", query: "<script>alert('XSS')</script>" },
+  { label: "<img onerror>", query: '<img src=x onerror=alert("XSS")>' },
+  { label: "<b>太字</b>", query: "<b>太字テスト</b>" },
+];
+
+const storedPresets = [
+  { label: "通常投稿", title: "テスト投稿", content: "これは通常の投稿です" },
+  { label: "<img onerror>", title: "画像テスト", content: '<img src=x onerror=alert("Stored XSS!")>' },
+  { label: "<script>", title: "スクリプトテスト", content: "<script>alert('Stored XSS')</script>" },
+];
+
+// --- HTMLレスポンス表示 ---
+function HtmlPreview({
+  html,
+  mode,
+}: {
+  html: string;
+  mode: "vulnerable" | "secure";
+}) {
+  return (
+    <div className="mt-2">
+      <div className="text-xs text-[#888] mb-1">サーバーからのHTMLレスポンス:</div>
+      <pre
+        className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[200px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
+      >
+        {html}
+      </pre>
+      <div className="text-xs text-[#888] mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
+      <div
+        className={`border-2 p-3 rounded bg-white ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </div>
+  );
+}
 
 // --- Reflected XSS テスト ---
 function ReflectedXssTest({
@@ -32,13 +72,6 @@ function ReflectedXssTest({
   onSearch: (mode: "vulnerable" | "secure", query: string) => void;
 }) {
   const [query, setQuery] = useState("");
-
-  const presets = [
-    { label: "通常テキスト", query: "セキュリティ" },
-    { label: "<script>alert</script>", query: "<script>alert('XSS')</script>" },
-    { label: "<img onerror>", query: '<img src=x onerror=alert("XSS")>' },
-    { label: "<b>太字</b>", query: "<b>太字テスト</b>" },
-  ];
 
   return (
     <div>
@@ -57,41 +90,13 @@ function ReflectedXssTest({
         </div>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-[#888]">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => setQuery(p.query)}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={reflectedPresets}
+        onSelect={(p) => setQuery(p.query)}
+        className="mb-3"
+      />
 
-      {result && (
-        <div className="mt-2">
-          <div className="text-xs text-[#888] mb-1">
-            サーバーからのHTMLレスポンス:
-          </div>
-          <pre
-            className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[200px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
-          >
-            {result.html}
-          </pre>
-          <div className="text-xs text-[#888] mt-2 mb-1">
-            ブラウザでの描画結果 (dangerouslySetInnerHTML):
-          </div>
-          <div
-            className={`border-2 p-3 rounded bg-white ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
-            dangerouslySetInnerHTML={{ __html: result.html }}
-          />
-        </div>
-      )}
+      {result && <HtmlPreview html={result.html} mode={mode} />}
     </div>
   );
 }
@@ -112,20 +117,6 @@ function StoredXssTest({
 }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  const presets = [
-    { label: "通常投稿", title: "テスト投稿", content: "これは通常の投稿です" },
-    {
-      label: "<img onerror>",
-      title: "画像テスト",
-      content: '<img src=x onerror=alert("Stored XSS!")>',
-    },
-    {
-      label: "<script>",
-      title: "スクリプトテスト",
-      content: "<script>alert('Stored XSS')</script>",
-    },
-  ];
 
   return (
     <div>
@@ -154,38 +145,24 @@ function StoredXssTest({
         </div>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-[#888]">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setTitle(p.title);
-                setContent(p.content);
-              }}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={storedPresets}
+        onSelect={(p) => {
+          setTitle(p.title);
+          setContent(p.content);
+        }}
+        className="mb-3"
+      />
 
       {posts && (
         <div className="mt-2">
-          <div className="text-xs text-[#888] mb-1">
-            サーバーからのHTMLフラグメント:
-          </div>
+          <div className="text-xs text-[#888] mb-1">サーバーからのHTMLフラグメント:</div>
           <pre
             className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[150px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
           >
             {posts.postsHtml}
           </pre>
-          <div className="text-xs text-[#888] mt-2 mb-1">
-            ブラウザでの描画結果 (dangerouslySetInnerHTML):
-          </div>
+          <div className="text-xs text-[#888] mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
           <div
             className={`border-2 p-3 rounded bg-white max-h-[200px] overflow-auto ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
             dangerouslySetInnerHTML={{ __html: posts.postsHtml }}
@@ -199,56 +176,24 @@ function StoredXssTest({
 // --- メインコンポーネント ---
 
 export function Xss() {
-  const [vulnSearch, setVulnSearch] = useState<SearchResult | null>(null);
-  const [secureSearch, setSecureSearch] = useState<SearchResult | null>(null);
-  const [vulnPosts, setVulnPosts] = useState<PostsResult | null>(null);
-  const [securePosts, setSecurePosts] = useState<PostsResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const searchFetch = useComparisonFetch<SearchResult>(BASE);
+  const postsFetch = useComparisonFetch<PostsResult>(BASE);
 
-  const handleSearch = useCallback(async (mode: "vulnerable" | "secure", query: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/api/search?q=${encodeURIComponent(query)}`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnSearch(data);
-      else setSecureSearch(data);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  }, []);
+  const handleSearch = async (mode: "vulnerable" | "secure", query: string) => {
+    await searchFetch.run(mode, `/api/search?q=${encodeURIComponent(query)}`);
+  };
 
-  const handlePost = useCallback(async (mode: "vulnerable" | "secure", title: string, content: string) => {
-    setLoading(true);
-    try {
-      await fetch(`${BASE}/${mode}/posts`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, content }),
-      });
-      // 投稿後に一覧を更新
-      const res = await fetch(`${BASE}/${mode}/api/posts`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnPosts(data);
-      else setSecurePosts(data);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  }, []);
+  const handlePost = async (mode: "vulnerable" | "secure", title: string, content: string) => {
+    await postsFetch.postJson(mode, "/posts", { title, content });
+    // 投稿後に一覧を更新
+    const data = await getJson<PostsResult>(`${BASE}/${mode}/api/posts`);
+    postsFetch.setResult(mode, data);
+  };
 
-  const handleRefresh = useCallback(async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/api/posts`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnPosts(data);
-      else setSecurePosts(data);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  }, []);
+  const handleRefresh = async (mode: "vulnerable" | "secure") => {
+    const data = await getJson<PostsResult>(`${BASE}/${mode}/api/posts`);
+    postsFetch.setResult(mode, data);
+  };
 
   return (
     <LabLayout
@@ -264,10 +209,10 @@ export function Xss() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <ReflectedXssTest mode="vulnerable" result={vulnSearch} isLoading={loading} onSearch={handleSearch} />
+          <ReflectedXssTest mode="vulnerable" result={searchFetch.vulnerable} isLoading={searchFetch.loading} onSearch={handleSearch} />
         }
         secureContent={
-          <ReflectedXssTest mode="secure" result={secureSearch} isLoading={loading} onSearch={handleSearch} />
+          <ReflectedXssTest mode="secure" result={searchFetch.secure} isLoading={searchFetch.loading} onSearch={handleSearch} />
         }
       />
 
@@ -280,8 +225,8 @@ export function Xss() {
         vulnerableContent={
           <StoredXssTest
             mode="vulnerable"
-            posts={vulnPosts}
-            isLoading={loading}
+            posts={postsFetch.vulnerable}
+            isLoading={postsFetch.loading}
             onPost={handlePost}
             onRefresh={handleRefresh}
           />
@@ -289,8 +234,8 @@ export function Xss() {
         secureContent={
           <StoredXssTest
             mode="secure"
-            posts={securePosts}
-            isLoading={loading}
+            posts={postsFetch.secure}
+            isLoading={postsFetch.loading}
             onPost={handlePost}
             onRefresh={handleRefresh}
           />

@@ -1,11 +1,14 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { DebugInfo } from "@/components/DebugInfo";
+import { ResultTable } from "@/components/ResultTable";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/sql-injection";
 
@@ -24,6 +27,22 @@ type SearchResult = {
   error?: string;
 };
 
+const loginPresets = [
+  { label: "正常ログイン", username: "admin", password: "admin123" },
+  { label: "' OR 1=1 --", username: "' OR 1=1 --", password: "anything" },
+  { label: "admin' --", username: "admin' --", password: "wrong" },
+];
+
+const searchPresets = [
+  { label: "正常検索", query: "Welcome" },
+  { label: "UNION (user情報)", query: "' UNION SELECT username, password FROM users --" },
+];
+
+const searchColumns = [
+  { key: "title" as const, label: "title" },
+  { key: "content" as const, label: "content" },
+];
+
 // --- ログインフォーム ---
 function LoginForm({
   mode,
@@ -38,12 +57,6 @@ function LoginForm({
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const presets = [
-    { label: "正常ログイン", username: "admin", password: "admin123" },
-    { label: "' OR 1=1 --", username: "' OR 1=1 --", password: "anything" },
-    { label: "admin' --", username: "admin' --", password: "wrong" },
-  ];
 
   return (
     <div>
@@ -67,24 +80,14 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-[#888]">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setUsername(p.username);
-                setPassword(p.password);
-              }}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={loginPresets}
+        onSelect={(p) => {
+          setUsername(p.username);
+          setPassword(p.password);
+        }}
+        className="mb-3"
+      />
 
       {result && (
         <Alert
@@ -98,15 +101,7 @@ function LoginForm({
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}
-          {result._debug && (
-            <details className="mt-2">
-              <summary className="text-xs text-[#888] cursor-pointer">実行されたSQL</summary>
-              <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
-                {result._debug.query}
-              </pre>
-              <div className="text-[11px] text-[#888]">返却行数: {result._debug.rowCount}</div>
-            </details>
-          )}
+          <DebugInfo debug={result._debug} summary="実行されたSQL" codeField="query" />
           {result.error && (
             <pre className="text-[11px] text-[#c00] mt-1">{result.error}</pre>
           )}
@@ -130,11 +125,6 @@ function SearchForm({
 }) {
   const [query, setQuery] = useState("");
 
-  const presets = [
-    { label: "正常検索", query: "Welcome" },
-    { label: "UNION (user情報)", query: "' UNION SELECT username, password FROM users --" },
-  ];
-
   return (
     <div>
       <div className="mb-3">
@@ -152,51 +142,17 @@ function SearchForm({
         </div>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-[#888]">プリセット:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => setQuery(p.query)}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={searchPresets}
+        onSelect={(p) => setQuery(p.query)}
+        className="mb-3"
+      />
 
       {result && (
         <div className="mt-2">
           <div className="text-[13px] text-[#888]">{result.count} 件の結果</div>
-          {result.results.length > 0 && (
-            <table className="w-full text-xs border-collapse mt-1">
-              <thead>
-                <tr className="bg-[#f5f5f5]">
-                  <th className="p-1 border border-[#ddd] text-left">title</th>
-                  <th className="p-1 border border-[#ddd] text-left">content</th>
-                </tr>
-              </thead>
-              <tbody>
-                {result.results.map((r, i) => (
-                  <tr key={i}>
-                    <td className="p-1 border border-[#ddd]">{r.title}</td>
-                    <td className="p-1 border border-[#ddd]">{r.content}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          {result._debug && (
-            <details className="mt-2">
-              <summary className="text-xs text-[#888] cursor-pointer">実行されたSQL</summary>
-              <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
-                {result._debug.query}
-              </pre>
-            </details>
-          )}
+          <ResultTable columns={searchColumns} data={result.results} className="mt-1" />
+          <DebugInfo debug={result._debug} summary="実行されたSQL" codeField="query" />
           {result.error && (
             <pre className="text-[11px] text-[#c00] mt-1">{result.error}</pre>
           )}
@@ -209,45 +165,25 @@ function SearchForm({
 // --- メインコンポーネント ---
 
 export function SqlInjection() {
-  const [vulnLogin, setVulnLogin] = useState<LoginResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<LoginResult | null>(null);
-  const [vulnSearch, setVulnSearch] = useState<SearchResult | null>(null);
-  const [secureSearch, setSecureSearch] = useState<SearchResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const login = useComparisonFetch<LoginResult>(BASE);
+  const search = useComparisonFetch<SearchResult>(BASE);
 
-  const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnLogin(data);
-      else setSecureLogin(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
-    }
-    setLoading(false);
-  }, []);
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    await login.postJson(mode, "/login", { username, password }, (e) => ({
+      success: false,
+      message: e.message,
+      results: [],
+      count: 0,
+    }));
+  };
 
-  const handleSearch = useCallback(async (mode: "vulnerable" | "secure", query: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/search?q=${encodeURIComponent(query)}`);
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnSearch(data);
-      else setSecureSearch(data);
-    } catch (e) {
-      const err = { results: [], count: 0, error: (e as Error).message };
-      if (mode === "vulnerable") setVulnSearch(err);
-      else setSecureSearch(err);
-    }
-    setLoading(false);
-  }, []);
+  const handleSearch = async (mode: "vulnerable" | "secure", query: string) => {
+    await search.run(mode, `/search?q=${encodeURIComponent(query)}`, undefined, (e) => ({
+      results: [],
+      count: 0,
+      error: e.message,
+    }));
+  };
 
   return (
     <LabLayout
@@ -262,10 +198,10 @@ export function SqlInjection() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <LoginForm mode="vulnerable" result={vulnLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="vulnerable" result={login.vulnerable} isLoading={login.loading} onSubmit={handleLogin} />
         }
         secureContent={
-          <LoginForm mode="secure" result={secureLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="secure" result={login.secure} isLoading={login.loading} onSubmit={handleLogin} />
         }
       />
 
@@ -277,10 +213,10 @@ export function SqlInjection() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <SearchForm mode="vulnerable" result={vulnSearch} isLoading={loading} onSearch={handleSearch} />
+          <SearchForm mode="vulnerable" result={search.vulnerable} isLoading={search.loading} onSearch={handleSearch} />
         }
         secureContent={
-          <SearchForm mode="secure" result={secureSearch} isLoading={loading} onSearch={handleSearch} />
+          <SearchForm mode="secure" result={search.secure} isLoading={search.loading} onSearch={handleSearch} />
         }
       />
 
