@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/cache-control";
 
@@ -65,23 +65,10 @@ function CachePanel({
 }
 
 export function CacheControl() {
-  const [vulnResult, setVulnResult] = useState<CacheResult | null>(null);
-  const [secureResult, setSecureResult] = useState<CacheResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<CacheResult>(BASE);
 
   const handleTest = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/profile`);
-      const data: CacheResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false } as CacheResult;
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.run(mode, "/profile", undefined, (e) => ({ success: false } as CacheResult));
   };
 
   return (
@@ -91,8 +78,8 @@ export function CacheControl() {
       description="Cache-Controlヘッダーが設定されていない場合、個人情報やクレジットカード情報がブラウザキャッシュやCDNに残存し、情報漏洩につながる脆弱性を体験します。"
     >
       <ComparisonPanel
-        vulnerableContent={<CachePanel mode="vulnerable" result={vulnResult} isLoading={loading} onTest={() => handleTest("vulnerable")} />}
-        secureContent={<CachePanel mode="secure" result={secureResult} isLoading={loading} onTest={() => handleTest("secure")} />}
+        vulnerableContent={<CachePanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onTest={() => handleTest("vulnerable")} />}
+        secureContent={<CachePanel mode="secure" result={result.secure} isLoading={result.loading} onTest={() => handleTest("secure")} />}
       />
 
       <CheckpointBox>

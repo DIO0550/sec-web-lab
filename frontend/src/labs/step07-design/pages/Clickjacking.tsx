@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/clickjacking";
 
@@ -70,23 +70,13 @@ function ClickPanel({
 }
 
 export function Clickjacking() {
-  const [vulnResult, setVulnResult] = useState<ClickResult | null>(null);
-  const [secureResult, setSecureResult] = useState<ClickResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<ClickResult>(BASE);
 
   const handleTest = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/target`);
-      const data: ClickResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.run(mode, "/target", undefined, (e) => ({
+      success: false,
+      message: (e as Error).message,
+    }));
   };
 
   return (
@@ -96,8 +86,8 @@ export function Clickjacking() {
       description="X-Frame-Optionsヘッダーが未設定の場合、攻撃者は透明なiframeにターゲットページを埋め込み、ユーザーに意図しない操作（送金、設定変更等）をさせることができます。"
     >
       <ComparisonPanel
-        vulnerableContent={<ClickPanel mode="vulnerable" result={vulnResult} isLoading={loading} onTest={() => handleTest("vulnerable")} />}
-        secureContent={<ClickPanel mode="secure" result={secureResult} isLoading={loading} onTest={() => handleTest("secure")} />}
+        vulnerableContent={<ClickPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onTest={() => handleTest("vulnerable")} />}
+        secureContent={<ClickPanel mode="secure" result={result.secure} isLoading={result.loading} onTest={() => handleTest("secure")} />}
       />
 
       <CheckpointBox>

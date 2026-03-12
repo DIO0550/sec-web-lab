@@ -5,6 +5,7 @@ import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Select } from "@/components/Select";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/unsigned-data";
 
@@ -75,26 +76,16 @@ function UnsignedPanel({
 }
 
 export function UnsignedData() {
-  const [vulnResult, setVulnResult] = useState<AdminResult | null>(null);
-  const [secureResult, setSecureResult] = useState<AdminResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<AdminResult>(BASE);
 
   const handleTest = async (mode: "vulnerable" | "secure", role: string, sessionId?: string) => {
-    setLoading(true);
-    try {
-      const headers: Record<string, string> = {};
-      if (mode === "vulnerable") headers["X-User-Role"] = role;
-      if (sessionId) headers["X-Session-Id"] = sessionId;
-      const res = await fetch(`${BASE}/${mode}/admin`, { headers });
-      const data: AdminResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    const headers: Record<string, string> = {};
+    if (mode === "vulnerable") headers["X-User-Role"] = role;
+    if (sessionId) headers["X-Session-Id"] = sessionId;
+    await result.run(mode, "/admin", { headers }, (e) => ({
+      success: false,
+      message: (e as Error).message,
+    }));
   };
 
   return (
@@ -104,8 +95,8 @@ export function UnsignedData() {
       description="HTTPヘッダーやCookieの値を署名なしでそのまま信頼すると、攻撃者がヘッダーを改ざんするだけで権限昇格やデータ改ざんが可能になります。"
     >
       <ComparisonPanel
-        vulnerableContent={<UnsignedPanel mode="vulnerable" result={vulnResult} isLoading={loading} onTest={(role) => handleTest("vulnerable", role)} />}
-        secureContent={<UnsignedPanel mode="secure" result={secureResult} isLoading={loading} onTest={(_, sid) => handleTest("secure", "", sid)} />}
+        vulnerableContent={<UnsignedPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onTest={(role) => handleTest("vulnerable", role)} />}
+        secureContent={<UnsignedPanel mode="secure" result={result.secure} isLoading={result.loading} onTest={(_, sid) => handleTest("secure", "", sid)} />}
       />
 
       <CheckpointBox>

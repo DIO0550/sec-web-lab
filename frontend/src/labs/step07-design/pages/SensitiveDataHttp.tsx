@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/sensitive-data-http";
 
@@ -59,27 +59,13 @@ function HttpPanel({
 }
 
 export function SensitiveDataHttp() {
-  const [vulnResult, setVulnResult] = useState<LoginResult | null>(null);
-  const [secureResult, setSecureResult] = useState<LoginResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<LoginResult>(BASE);
 
   const handleLogin = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: "admin", password: "admin123" }),
-      });
-      const data: LoginResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.postJson(mode, "/login", { username: "admin", password: "admin123" }, (e) => ({
+      success: false,
+      message: (e as Error).message,
+    }));
   };
 
   return (
@@ -89,8 +75,8 @@ export function SensitiveDataHttp() {
       description="HSTS未設定やCookie Secure属性の欠如により、HTTP通信でパスワードやセッション情報が平文で送信され、中間者攻撃で傍受される脆弱性を体験します。"
     >
       <ComparisonPanel
-        vulnerableContent={<HttpPanel mode="vulnerable" result={vulnResult} isLoading={loading} onLogin={() => handleLogin("vulnerable")} />}
-        secureContent={<HttpPanel mode="secure" result={secureResult} isLoading={loading} onLogin={() => handleLogin("secure")} />}
+        vulnerableContent={<HttpPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onLogin={() => handleLogin("vulnerable")} />}
+        secureContent={<HttpPanel mode="secure" result={result.secure} isLoading={result.loading} onLogin={() => handleLogin("secure")} />}
       />
 
       <CheckpointBox>

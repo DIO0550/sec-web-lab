@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/web-storage-abuse";
 
@@ -71,27 +71,13 @@ function StoragePanel({
 }
 
 export function WebStorageAbuse() {
-  const [vulnResult, setVulnResult] = useState<StorageResult | null>(null);
-  const [secureResult, setSecureResult] = useState<StorageResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<StorageResult>(BASE);
 
   const handleLogin = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: "admin", password: "admin123" }),
-      });
-      const data: StorageResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.postJson(mode, "/login", { username: "admin", password: "admin123" }, (e) => ({
+      success: false,
+      message: (e as Error).message,
+    }));
   };
 
   return (
@@ -101,8 +87,8 @@ export function WebStorageAbuse() {
       description="JWTトークンをlocalStorageに保存すると、XSS攻撃でlocalStorage.getItem()でトークンを窃取される脆弱性を体験します。HttpOnly Cookieによる安全な代替手段を学びます。"
     >
       <ComparisonPanel
-        vulnerableContent={<StoragePanel mode="vulnerable" result={vulnResult} isLoading={loading} onLogin={() => handleLogin("vulnerable")} />}
-        secureContent={<StoragePanel mode="secure" result={secureResult} isLoading={loading} onLogin={() => handleLogin("secure")} />}
+        vulnerableContent={<StoragePanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onLogin={() => handleLogin("vulnerable")} />}
+        secureContent={<StoragePanel mode="secure" result={result.secure} isLoading={result.loading} onLogin={() => handleLogin("secure")} />}
       />
 
       <CheckpointBox>
