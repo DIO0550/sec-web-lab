@@ -6,6 +6,8 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/brute-force";
 
@@ -29,6 +31,11 @@ const PASSWORD_DICTIONARY = [
   "password", "123456", "admin", "admin123", "letmein",
   "welcome", "monkey", "dragon", "master", "qwerty",
 ];
+
+const loginErrorResult = (e: Error): LoginResult => ({
+  success: false,
+  message: e.message,
+});
 
 // --- 単発ログインフォーム ---
 function LoginForm({
@@ -154,31 +161,14 @@ function DictionaryAttack({
 
 // --- メインコンポーネント ---
 export function BruteForce() {
-  const [vulnLogin, setVulnLogin] = useState<LoginResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<LoginResult | null>(null);
+  const login = useComparisonFetch<LoginResult>(BASE);
   const [vulnLogs, setVulnLogs] = useState<BruteForceLog[]>([]);
   const [secureLogs, setSecureLogs] = useState<BruteForceLog[]>([]);
-  const [loading, setLoading] = useState(false);
   const [running, setRunning] = useState(false);
 
-  const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnLogin(data);
-      else setSecureLogin(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
-    }
-    setLoading(false);
-  }, []);
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    await login.postJson(mode, "/login", { username, password }, loginErrorResult);
+  };
 
   const runDictionaryAttack = useCallback(async (mode: "vulnerable" | "secure") => {
     setRunning(true);
@@ -188,12 +178,10 @@ export function BruteForce() {
 
     for (const password of PASSWORD_DICTIONARY) {
       try {
-        const res = await fetch(`${BASE}/${mode}/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: "admin", password }),
+        const data = await postJson<LoginResult>(`${BASE}/${mode}/login`, {
+          username: "admin",
+          password,
         });
-        const data: LoginResult = await res.json();
         const log = { password, result: data };
         logs.push(log);
 
@@ -216,11 +204,11 @@ export function BruteForce() {
     try {
       await fetch(`${BASE}/secure/reset`, { method: "POST" });
       setSecureLogs([]);
-      setSecureLogin(null);
+      login.reset();
     } catch {
       // ignore
     }
-  }, []);
+  }, [login]);
 
   return (
     <LabLayout
@@ -235,10 +223,10 @@ export function BruteForce() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <LoginForm mode="vulnerable" result={vulnLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="vulnerable" result={login.vulnerable} isLoading={login.loading} onSubmit={handleLogin} />
         }
         secureContent={
-          <LoginForm mode="secure" result={secureLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="secure" result={login.secure} isLoading={login.loading} onSubmit={handleLogin} />
         }
       />
 

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
@@ -6,6 +6,9 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { PresetButtons } from "@/components/PresetButtons";
+import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/default-credentials";
 
@@ -33,6 +36,12 @@ type DefaultsResult = {
   credentials: DefaultCred[];
 };
 
+const loginPresets = [
+  { label: "admin / admin123", username: "admin", password: "admin123" },
+  { label: "admin / admin", username: "admin", password: "admin" },
+  { label: "admin / password", username: "admin", password: "password" },
+];
+
 // --- ログインフォーム ---
 function LoginForm({
   mode,
@@ -47,12 +56,6 @@ function LoginForm({
 }) {
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("admin123");
-
-  const presets = [
-    { label: "admin / admin123", username: "admin", password: "admin123" },
-    { label: "admin / admin", username: "admin", password: "admin" },
-    { label: "admin / password", username: "admin", password: "password" },
-  ];
 
   return (
     <div>
@@ -76,21 +79,11 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      <div className="mb-3">
-        <span className="text-xs text-text-secondary">よくあるデフォルト認証情報:</span>
-        <div className="flex gap-1 flex-wrap mt-1">
-          {presets.map((p) => (
-            <Button
-              key={p.label}
-              variant="ghost"
-              size="sm"
-              onClick={() => { setUsername(p.username); setPassword(p.password); }}
-            >
-              {p.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <PresetButtons
+        presets={loginPresets}
+        onSelect={(p) => { setUsername(p.username); setPassword(p.password); }}
+        className="mb-3"
+      />
 
       {result && (
         <Alert
@@ -175,68 +168,55 @@ function ChangePasswordForm({
 
 // --- メインコンポーネント ---
 export function DefaultCredentials() {
-  const [vulnLogin, setVulnLogin] = useState<LoginResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<LoginResult | null>(null);
+  const login = useComparisonFetch<LoginResult>(BASE);
   const [changeResult, setChangeResult] = useState<ChangePasswordResult | null>(null);
   const [defaults, setDefaults] = useState<DefaultsResult | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (mode === "vulnerable") setVulnLogin(data);
-      else setSecureLogin(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
-    }
-    setLoading(false);
-  }, []);
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    await login.postJson(mode, "/login", { username, password }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
+  };
 
-  const handleChangePassword = useCallback(async (username: string, currentPassword: string, newPassword: string) => {
+  const handleChangePassword = async (username: string, currentPassword: string, newPassword: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/secure/change-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, currentPassword, newPassword }),
+      const data = await postJson<ChangePasswordResult>(`${BASE}/secure/change-password`, {
+        username,
+        currentPassword,
+        newPassword,
       });
-      const data = await res.json();
       setChangeResult(data);
     } catch (e) {
       setChangeResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, []);
+  };
 
-  const fetchDefaults = useCallback(async () => {
+  const fetchDefaults = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/defaults`);
-      const data = await res.json();
+      const data = await getJson<DefaultsResult>(`${BASE}/vulnerable/defaults`);
       setDefaults(data);
     } catch {
       // ignore
     }
     setLoading(false);
-  }, []);
+  };
 
-  const resetSecure = useCallback(async () => {
+  const resetSecure = async () => {
     try {
       await fetch(`${BASE}/secure/reset`, { method: "POST" });
-      setSecureLogin(null);
+      login.reset();
       setChangeResult(null);
     } catch {
       // ignore
     }
-  }, []);
+  };
+
+  const isLoading = login.loading || loading;
 
   return (
     <LabLayout
@@ -249,7 +229,7 @@ export function DefaultCredentials() {
         まず、攻撃者が入手可能なデフォルト認証情報のリストを確認してください。
       </p>
       <div className="mb-4">
-        <FetchButton onClick={fetchDefaults} disabled={loading}>
+        <FetchButton onClick={fetchDefaults} disabled={isLoading}>
           デフォルト認証情報を表示
         </FetchButton>
         {defaults && (
@@ -281,15 +261,15 @@ export function DefaultCredentials() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <LoginForm mode="vulnerable" result={vulnLogin} isLoading={loading} onSubmit={handleLogin} />
+          <LoginForm mode="vulnerable" result={login.vulnerable} isLoading={isLoading} onSubmit={handleLogin} />
         }
         secureContent={
           <div>
-            <LoginForm mode="secure" result={secureLogin} isLoading={loading} onSubmit={handleLogin} />
-            {secureLogin?.requirePasswordChange && (
+            <LoginForm mode="secure" result={login.secure} isLoading={isLoading} onSubmit={handleLogin} />
+            {login.secure?.requirePasswordChange && (
               <ChangePasswordForm
                 changeResult={changeResult}
-                isLoading={loading}
+                isLoading={isLoading}
                 onChangePassword={handleChangePassword}
               />
             )}
