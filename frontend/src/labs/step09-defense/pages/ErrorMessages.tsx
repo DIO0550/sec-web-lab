@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { getJson, postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/error-messages";
 
@@ -57,32 +58,23 @@ export function ErrorMessages() {
   const handleTest = async (mode: "vulnerable" | "secure", action: string) => {
     setLoading(true);
     try {
-      let res: Response;
+      let data: ErrorResult;
       switch (action) {
         case "user-exist":
-          res = await fetch(`${BASE}/${mode}/user/1`);
+          data = await getJson<ErrorResult>(`${BASE}/${mode}/user/1`);
           break;
         case "user-notfound":
-          res = await fetch(`${BASE}/${mode}/user/9999`);
+          data = await getJson<ErrorResult>(`${BASE}/${mode}/user/9999`);
           break;
         case "login-nouser":
-          res = await fetch(`${BASE}/${mode}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: "nonexistent", password: "test" }),
-          });
+          data = await postJson<ErrorResult>(`${BASE}/${mode}/login`, { username: "nonexistent", password: "test" });
           break;
         case "login-wrongpw":
-          res = await fetch(`${BASE}/${mode}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: "admin", password: "wrongpass" }),
-          });
+          data = await postJson<ErrorResult>(`${BASE}/${mode}/login`, { username: "admin", password: "wrongpass" });
           break;
         default:
           return;
       }
-      const data: ErrorResult = await res.json();
       if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
       else setSecureResults((prev) => [...prev, data]);
     } catch (e) {

@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/stack-trace";
 
@@ -41,8 +42,7 @@ export function StackTrace() {
   const handleTest = async (mode: "vulnerable" | "secure", endpoint: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/${mode}/${endpoint}`);
-      const data: StackResult = await res.json();
+      const data = await getJson<StackResult>(`${BASE}/${mode}/${endpoint}`);
       if (mode === "vulnerable") setVulnResults((prev) => [...prev, data]);
       else setSecureResults((prev) => [...prev, data]);
     } catch (e) {

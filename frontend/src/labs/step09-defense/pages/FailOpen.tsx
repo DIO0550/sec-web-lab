@@ -3,6 +3,8 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { getJson, postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/fail-open";
 
@@ -34,43 +36,29 @@ function FailPanel({ mode, result, authDown, isLoading, onAccess, onToggle }: { 
 }
 
 export function FailOpen() {
-  const [vulnResult, setVulnResult] = useState<AdminResult | null>(null);
-  const [secureResult, setSecureResult] = useState<AdminResult | null>(null);
+  const access = useComparisonFetch<AdminResult>(BASE);
   const [authDown, setAuthDown] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`${BASE}/auth-service-status`).then((r) => r.json()).then((d) => setAuthDown(d.authServiceDown));
+    getJson<{ authServiceDown: boolean }>(`${BASE}/auth-service-status`).then((d) => setAuthDown(d.authServiceDown));
   }, []);
 
   const handleToggle = async () => {
-    const res = await fetch(`${BASE}/toggle-auth-service`, { method: "POST" });
-    const data = await res.json();
+    const data = await postJson<{ authServiceDown: boolean }>(`${BASE}/toggle-auth-service`, {});
     setAuthDown(data.authServiceDown);
   };
 
   const handleAccess = async (mode: "vulnerable" | "secure") => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/admin`, {
-        headers: { Authorization: "Bearer invalid-token" },
-      });
-      const data: AdminResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await access.run(mode, "/admin", {
+      headers: { Authorization: "Bearer invalid-token" },
+    }, (e) => ({ success: false, message: e.message }));
   };
 
   return (
     <LabLayout title="Fail-Open" subtitle="認証サービス障害時にアクセスを許可してしまう" description="認証・認可の処理でエラーが発生した場合に、デフォルトでアクセスを許可（Fail-Open）してしまうか、拒否（Fail-Closed）するかの違いを体験します。">
       <ComparisonPanel
-        vulnerableContent={<FailPanel mode="vulnerable" result={vulnResult} authDown={authDown} isLoading={loading} onAccess={() => handleAccess("vulnerable")} onToggle={handleToggle} />}
-        secureContent={<FailPanel mode="secure" result={secureResult} authDown={authDown} isLoading={loading} onAccess={() => handleAccess("secure")} onToggle={handleToggle} />}
+        vulnerableContent={<FailPanel mode="vulnerable" result={access.vulnerable} authDown={authDown} isLoading={access.loading} onAccess={() => handleAccess("vulnerable")} onToggle={handleToggle} />}
+        secureContent={<FailPanel mode="secure" result={access.secure} authDown={authDown} isLoading={access.loading} onAccess={() => handleAccess("secure")} onToggle={handleToggle} />}
       />
       <CheckpointBox>
         <ul>
