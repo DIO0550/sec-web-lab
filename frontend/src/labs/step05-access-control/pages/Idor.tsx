@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
@@ -6,6 +6,8 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/idor";
 
@@ -23,12 +25,21 @@ type ProfileResult = {
   _debug?: { message: string; currentUserId: number; requestedId: number };
 };
 
-type PostsResult = {
-  success: boolean;
-  message?: string;
-  posts?: Array<Record<string, unknown>>;
-  _debug?: { message: string; currentUserId: number; requestedUserId: number };
-};
+const loginPresets = [
+  { label: "user1 / password1", username: "user1", password: "password1" },
+  { label: "user2 / password2", username: "user2", password: "password2" },
+  { label: "admin / admin123", username: "admin", password: "admin123" },
+];
+
+const loginErrorResult = (e: Error): LoginResult => ({
+  success: false,
+  message: e.message,
+});
+
+const profileErrorResult = (e: Error): ProfileResult => ({
+  success: false,
+  message: e.message,
+});
 
 // --- ログインフォーム ---
 function LoginForm({
@@ -45,12 +56,6 @@ function LoginForm({
   const [username, setUsername] = useState("user1");
   const [password, setPassword] = useState("password1");
 
-  const presets = [
-    { label: "user1 / password1", username: "user1", password: "password1" },
-    { label: "user2 / password2", username: "user2", password: "password2" },
-    { label: "admin / admin123", username: "admin", password: "admin123" },
-  ];
-
   return (
     <div className="mb-3">
       <Input label="ユーザー名:" value={username} onChange={(e) => setUsername(e.target.value)} className="mb-1" />
@@ -58,18 +63,11 @@ function LoginForm({
       <FetchButton onClick={() => onLogin(mode, username, password)} disabled={isLoading}>
         ログイン
       </FetchButton>
-      <div className="flex gap-1 flex-wrap mt-1">
-        {presets.map((p) => (
-          <Button
-            key={p.label}
-            variant="ghost"
-            size="sm"
-            onClick={() => { setUsername(p.username); setPassword(p.password); }}
-          >
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons
+        presets={loginPresets}
+        onSelect={(p) => { setUsername(p.username); setPassword(p.password); }}
+        className="mt-1"
+      />
       {loginResult && (
         <Alert variant={loginResult.success ? "success" : "error"} className="mt-2 text-xs">
           {loginResult.message}
@@ -134,55 +132,28 @@ function ProfileForm({
 export function Idor() {
   const [vulnSession, setVulnSession] = useState<string | null>(null);
   const [secureSession, setSecureSession] = useState<string | null>(null);
-  const [vulnLogin, setVulnLogin] = useState<LoginResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<LoginResult | null>(null);
-  const [vulnProfile, setVulnProfile] = useState<ProfileResult | null>(null);
-  const [secureProfile, setSecureProfile] = useState<ProfileResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const loginFetch = useComparisonFetch<LoginResult>(BASE);
+  const profileFetch = useComparisonFetch<ProfileResult>(BASE);
 
-  const handleLogin = useCallback(async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data: LoginResult = await res.json();
-      if (mode === "vulnerable") {
-        setVulnLogin(data);
-        if (data.sessionId) setVulnSession(data.sessionId);
-      } else {
-        setSecureLogin(data);
-        if (data.sessionId) setSecureSession(data.sessionId);
-      }
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    const data = await loginFetch.postJson(mode, "/login", { username, password }, loginErrorResult);
+    if (data.sessionId) {
+      if (mode === "vulnerable") setVulnSession(data.sessionId);
+      else setSecureSession(data.sessionId);
     }
-    setLoading(false);
-  }, []);
+  };
 
-  const fetchProfile = useCallback(async (mode: "vulnerable" | "secure", targetId: string) => {
+  const fetchProfile = async (mode: "vulnerable" | "secure", targetId: string) => {
     const sessionId = mode === "vulnerable" ? vulnSession : secureSession;
     if (!sessionId) return;
 
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/users/${targetId}/profile`, {
-        headers: { "X-Session-Id": sessionId },
-      });
-      const data: ProfileResult = await res.json();
-      if (mode === "vulnerable") setVulnProfile(data);
-      else setSecureProfile(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnProfile(err);
-      else setSecureProfile(err);
-    }
-    setLoading(false);
-  }, [vulnSession, secureSession]);
+    await profileFetch.run(
+      mode,
+      `/users/${targetId}/profile`,
+      { headers: { "X-Session-Id": sessionId } },
+      profileErrorResult
+    );
+  };
 
   return (
     <LabLayout
@@ -196,10 +167,10 @@ export function Idor() {
       </p>
       <ComparisonPanel
         vulnerableContent={
-          <LoginForm mode="vulnerable" loginResult={vulnLogin} isLoading={loading} onLogin={handleLogin} />
+          <LoginForm mode="vulnerable" loginResult={loginFetch.vulnerable} isLoading={loginFetch.loading} onLogin={handleLogin} />
         }
         secureContent={
-          <LoginForm mode="secure" loginResult={secureLogin} isLoading={loading} onLogin={handleLogin} />
+          <LoginForm mode="secure" loginResult={loginFetch.secure} isLoading={loginFetch.loading} onLogin={handleLogin} />
         }
       />
 
@@ -212,16 +183,16 @@ export function Idor() {
         vulnerableContent={
           <ProfileForm
             sessionId={vulnSession}
-            result={vulnProfile}
-            isLoading={loading}
+            result={profileFetch.vulnerable}
+            isLoading={profileFetch.loading}
             onFetch={(id) => fetchProfile("vulnerable", id)}
           />
         }
         secureContent={
           <ProfileForm
             sessionId={secureSession}
-            result={secureProfile}
-            isLoading={loading}
+            result={profileFetch.secure}
+            isLoading={profileFetch.loading}
             onFetch={(id) => fetchProfile("secure", id)}
           />
         }

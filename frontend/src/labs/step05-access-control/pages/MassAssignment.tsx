@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
@@ -6,6 +6,8 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/mass-assignment";
 
@@ -106,52 +108,39 @@ function RegisterForm({
 
 // --- メインコンポーネント ---
 export function MassAssignment() {
-  const [vulnRegister, setVulnRegister] = useState<RegisterResult | null>(null);
-  const [secureRegister, setSecureRegister] = useState<RegisterResult | null>(null);
+  const register = useComparisonFetch<RegisterResult>(BASE);
   const [users, setUsers] = useState<UsersResult | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = useCallback(async (mode: "vulnerable" | "secure", data: Record<string, string>) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result: RegisterResult = await res.json();
-      if (mode === "vulnerable") setVulnRegister(result);
-      else setSecureRegister(result);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnRegister(err);
-      else setSecureRegister(err);
-    }
-    setLoading(false);
-  }, []);
+  const handleRegister = async (mode: "vulnerable" | "secure", data: Record<string, string>) => {
+    await register.postJson(
+      mode,
+      "/register",
+      data,
+      (e) => ({ success: false, message: e.message }),
+    );
+  };
 
-  const fetchUsers = useCallback(async () => {
+  const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/users`);
-      const data: UsersResult = await res.json();
+      const data = await getJson<UsersResult>(`${BASE}/users`);
       setUsers(data);
     } catch {
       // ignore
     }
     setLoading(false);
-  }, []);
+  };
 
-  const resetData = useCallback(async () => {
+  const resetData = async () => {
     try {
       await fetch(`${BASE}/reset`, { method: "POST" });
-      setVulnRegister(null);
-      setSecureRegister(null);
+      register.reset();
       setUsers(null);
     } catch {
       // ignore
     }
-  }, []);
+  };
 
   return (
     <LabLayout
@@ -168,16 +157,16 @@ export function MassAssignment() {
         vulnerableContent={
           <RegisterForm
             mode="vulnerable"
-            result={vulnRegister}
-            isLoading={loading}
+            result={register.vulnerable}
+            isLoading={register.loading}
             onRegister={handleRegister}
           />
         }
         secureContent={
           <RegisterForm
             mode="secure"
-            result={secureRegister}
-            isLoading={loading}
+            result={register.secure}
+            isLoading={register.loading}
             onRegister={handleRegister}
           />
         }
