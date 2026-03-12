@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { postJsonWithCredentials, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/session-fixation";
 
@@ -31,52 +32,45 @@ function VulnerableDemo() {
   };
 
   // Step 1: 攻撃者がセッションIDを仕込む
-  const handleSetSession = useCallback(async () => {
+  const handleSetSession = async () => {
     setLoading(true);
     setResults([]);
     try {
-      const res = await fetch(`${BASE}/vulnerable/set-session`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ sessionId: fixedSessionId }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/vulnerable/set-session`,
+        { sessionId: fixedSessionId },
+      );
       addResult({ ...data, message: `[攻撃者] ${data.message}` });
       setStep(1);
     } catch (e) {
       addResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, [fixedSessionId]);
+  };
 
   // Step 2: 被害者がそのセッションIDでログイン
-  const handleVictimLogin = useCallback(async () => {
+  const handleVictimLogin = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username: "alice", password: "alice123" }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/vulnerable/login`,
+        { username: "alice", password: "alice123" },
+      );
       addResult({ ...data, message: `[被害者] ${data.message}` });
       setStep(2);
     } catch (e) {
       addResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, []);
+  };
 
   // Step 3: 攻撃者が同じセッションIDでプロフィール取得
-  const handleAttackerAccess = useCallback(async () => {
+  const handleAttackerAccess = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/profile`, {
+      const data = await getJson<ApiResult>(`${BASE}/vulnerable/profile`, {
         credentials: "include",
       });
-      const data = await res.json();
       addResult({
         ...data,
         message: `[攻撃者] ${data.success ? `${data.username} のプロフィールにアクセス成功!` : data.message}`,
@@ -86,9 +80,9 @@ function VulnerableDemo() {
       addResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, []);
+  };
 
-  const handleReset = useCallback(async () => {
+  const handleReset = async () => {
     try {
       await fetch(`${BASE}/reset`, { method: "POST" });
       await fetch(`${BASE}/vulnerable/logout`, { method: "POST", credentials: "include" });
@@ -97,7 +91,7 @@ function VulnerableDemo() {
     }
     setStep(0);
     setResults([]);
-  }, []);
+  };
 
   return (
     <div>
@@ -163,33 +157,29 @@ function SecureDemo() {
   };
 
   // Step 1: 被害者が安全版でログイン（新しいセッションIDが生成される）
-  const handleLogin = useCallback(async () => {
+  const handleLogin = async () => {
     setLoading(true);
     setResults([]);
     try {
-      const res = await fetch(`${BASE}/secure/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username: "alice", password: "alice123" }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/secure/login`,
+        { username: "alice", password: "alice123" },
+      );
       addResult({ ...data, message: `[被害者] ${data.message}` });
       setStep(1);
     } catch (e) {
       addResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, []);
+  };
 
   // Step 2: プロフィールが取得できることを確認
-  const handleProfile = useCallback(async () => {
+  const handleProfile = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/secure/profile`, {
+      const data = await getJson<ApiResult>(`${BASE}/secure/profile`, {
         credentials: "include",
       });
-      const data = await res.json();
       addResult({
         ...data,
         message: data.success
@@ -201,9 +191,9 @@ function SecureDemo() {
       addResult({ success: false, message: (e as Error).message });
     }
     setLoading(false);
-  }, []);
+  };
 
-  const handleReset = useCallback(async () => {
+  const handleReset = async () => {
     try {
       await fetch(`${BASE}/reset`, { method: "POST" });
       await fetch(`${BASE}/secure/logout`, { method: "POST", credentials: "include" });
@@ -212,7 +202,7 @@ function SecureDemo() {
     }
     setStep(0);
     setResults([]);
-  }, []);
+  };
 
   return (
     <div>

@@ -1,10 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/cookie-manipulation";
 
@@ -140,56 +142,42 @@ function LoginForm({
 
 // --- メインコンポーネント ---
 export function CookieManipulation() {
-  const [vulnResult, setVulnResult] = useState<LoginResult | null>(null);
-  const [secureResult, setSecureResult] = useState<LoginResult | null>(null);
+  const login = useComparisonFetch<LoginResult>(BASE);
   const [vulnCookieInfo, setVulnCookieInfo] = useState<CookieInfoResult | null>(null);
   const [secureCookieInfo, setSecureCookieInfo] = useState<CookieInfoResult | null>(null);
   const [documentCookie, setDocumentCookie] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const handleLogin = useCallback(
-    async (mode: "vulnerable" | "secure", username: string, password: string) => {
-      setLoading(true);
-      try {
-        const res = await fetch(`${BASE}/${mode}/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ username, password }),
-        });
-        const data = await res.json();
-        if (mode === "vulnerable") {
-          setVulnResult(data);
-          setVulnCookieInfo(null);
-        } else {
-          setSecureResult(data);
-          setSecureCookieInfo(null);
-        }
-        // document.cookie を読み取って表示
-        setDocumentCookie(document.cookie);
-      } catch (e) {
-        const err = { success: false, message: (e as Error).message };
-        if (mode === "vulnerable") setVulnResult(err);
-        else setSecureResult(err);
-      }
-      setLoading(false);
-    },
-    []
-  );
+  const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
+    if (mode === "vulnerable") setVulnCookieInfo(null);
+    else setSecureCookieInfo(null);
 
-  const handleCheckCookie = useCallback(async (mode: "vulnerable" | "secure") => {
+    await login.run(
+      mode,
+      "/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      },
+      (e) => ({ success: false, message: e.message }),
+    );
+    // document.cookie を読み取って表示
+    setDocumentCookie(document.cookie);
+  };
+
+  const handleCheckCookie = async (mode: "vulnerable" | "secure") => {
     try {
-      const res = await fetch(`${BASE}/${mode}/cookie-info`, {
+      const data = await getJson<CookieInfoResult>(`${BASE}/${mode}/cookie-info`, {
         credentials: "include",
       });
-      const data = await res.json();
       if (mode === "vulnerable") setVulnCookieInfo(data);
       else setSecureCookieInfo(data);
       setDocumentCookie(document.cookie);
     } catch {
       // ignore
     }
-  }, []);
+  };
 
   return (
     <LabLayout
@@ -208,8 +196,8 @@ export function CookieManipulation() {
         vulnerableContent={
           <LoginForm
             mode="vulnerable"
-            result={vulnResult}
-            isLoading={loading}
+            result={login.vulnerable}
+            isLoading={login.loading}
             onSubmit={handleLogin}
             onCheckCookie={handleCheckCookie}
             cookieInfo={vulnCookieInfo}
@@ -219,8 +207,8 @@ export function CookieManipulation() {
         secureContent={
           <LoginForm
             mode="secure"
-            result={secureResult}
-            isLoading={loading}
+            result={login.secure}
+            isLoading={login.loading}
             onSubmit={handleLogin}
             onCheckCookie={handleCheckCookie}
             cookieInfo={secureCookieInfo}

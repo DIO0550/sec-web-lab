@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { postJsonWithCredentials, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/csrf";
 
@@ -19,6 +20,11 @@ type ApiResult = {
   csrfToken?: string;
 };
 
+const apiErrorResult = (e: Error): ApiResult => ({
+  success: false,
+  message: e.message,
+});
+
 // --- 脆弱バージョン ---
 function VulnerableDemo() {
   const [loginResult, setLoginResult] = useState<ApiResult | null>(null);
@@ -30,50 +36,43 @@ function VulnerableDemo() {
   const handleLogin = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username: "alice", password: "alice123" }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/vulnerable/login`,
+        { username: "alice", password: "alice123" }
+      );
       setLoginResult(data);
       setProfileResult(null);
       setChangeResult(null);
     } catch (e) {
-      setLoginResult({ success: false, message: (e as Error).message });
+      setLoginResult(apiErrorResult(e as Error));
     }
     setLoading(false);
   }, []);
 
   const handleProfile = useCallback(async () => {
     try {
-      const res = await fetch(`${BASE}/vulnerable/profile`, {
+      const data = await getJson<ApiResult>(`${BASE}/vulnerable/profile`, {
         credentials: "include",
       });
-      const data = await res.json();
       setProfileResult(data);
     } catch {
       // ignore
     }
   }, []);
 
-  // ⚠️ CSRF攻撃をシミュレート: 外部サイトからのリクエストを模倣
+  // CSRF攻撃をシミュレート: 外部サイトからのリクエストを模倣
   const handleCsrfAttack = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/change-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ newPassword }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/vulnerable/change-password`,
+        { newPassword }
+      );
       setChangeResult(data);
       // プロフィールを再取得してパスワードが変わったことを確認
       handleProfile();
     } catch (e) {
-      setChangeResult({ success: false, message: (e as Error).message });
+      setChangeResult(apiErrorResult(e as Error));
     }
     setLoading(false);
   }, [newPassword, handleProfile]);
@@ -151,67 +150,57 @@ function SecureDemo() {
   const handleLogin = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/secure/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username: "alice", password: "alice123" }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/secure/login`,
+        { username: "alice", password: "alice123" }
+      );
       setLoginResult(data);
       setChangeResult(null);
       setAttackResult(null);
       setCsrfToken("");
     } catch (e) {
-      setLoginResult({ success: false, message: (e as Error).message });
+      setLoginResult(apiErrorResult(e as Error));
     }
     setLoading(false);
   }, []);
 
   const handleGetToken = useCallback(async () => {
     try {
-      const res = await fetch(`${BASE}/secure/csrf-token`, {
+      const data = await getJson<ApiResult>(`${BASE}/secure/csrf-token`, {
         credentials: "include",
       });
-      const data = await res.json();
       if (data.csrfToken) setCsrfToken(data.csrfToken);
     } catch {
       // ignore
     }
   }, []);
 
-  // ✅ 正規のパスワード変更（CSRFトークン付き）
+  // 正規のパスワード変更（CSRFトークン付き）
   const handleLegitChange = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/secure/change-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ newPassword, csrfToken }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/secure/change-password`,
+        { newPassword, csrfToken }
+      );
       setChangeResult(data);
     } catch (e) {
-      setChangeResult({ success: false, message: (e as Error).message });
+      setChangeResult(apiErrorResult(e as Error));
     }
     setLoading(false);
   }, [newPassword, csrfToken]);
 
-  // ⚠️ CSRF攻撃を試みる（トークンなし）
+  // CSRF攻撃を試みる（トークンなし）
   const handleCsrfAttack = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE}/secure/change-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ newPassword: "hacked123" }),
-      });
-      const data = await res.json();
+      const data = await postJsonWithCredentials<ApiResult>(
+        `${BASE}/secure/change-password`,
+        { newPassword: "hacked123" }
+      );
       setAttackResult(data);
     } catch (e) {
-      setAttackResult({ success: false, message: (e as Error).message });
+      setAttackResult(apiErrorResult(e as Error));
     }
     setLoading(false);
   }, []);
