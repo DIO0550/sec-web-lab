@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
+import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/file-upload";
 
@@ -15,6 +16,13 @@ type UploadResult = {
   file?: { id: string; originalName: string; savedName: string; size: number; mimeType: string };
   _debug?: { message: string; risks?: string[] };
 };
+
+const presets = [
+  { label: "画像", fileName: "photo.jpg", mimeType: "image/jpeg" },
+  { label: "PHPシェル", fileName: "shell.php", mimeType: "application/x-php" },
+  { label: "JSファイル", fileName: "backdoor.js", mimeType: "application/javascript" },
+  { label: "パストラバーサル", fileName: "../../etc/cron.d/backdoor", mimeType: "text/plain" },
+];
 
 function UploadPanel({
   mode,
@@ -28,32 +36,18 @@ function UploadPanel({
   onUpload: (fileName: string, content: string, mimeType: string) => void;
 }) {
   const [fileName, setFileName] = useState("photo.jpg");
-  const [content, setContent] = useState("(ファイルコンテンツ)");
+  const [content] = useState("(ファイルコンテンツ)");
   const [mimeType, setMimeType] = useState("image/jpeg");
-
-  const presets = [
-    { label: "画像", fileName: "photo.jpg", mimeType: "image/jpeg" },
-    { label: "PHPシェル", fileName: "shell.php", mimeType: "application/x-php" },
-    { label: "JSファイル", fileName: "backdoor.js", mimeType: "application/javascript" },
-    { label: "パストラバーサル", fileName: "../../etc/cron.d/backdoor", mimeType: "text/plain" },
-  ];
 
   return (
     <div>
       <Input label="ファイル名:" value={fileName} onChange={(e) => setFileName(e.target.value)} className="mb-2" />
       <Input label="MIMEタイプ:" value={mimeType} onChange={(e) => setMimeType(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button
-            key={p.label}
-            variant="ghost"
-            size="sm"
-            onClick={() => { setFileName(p.fileName); setMimeType(p.mimeType); }}
-          >
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons
+        presets={presets}
+        onSelect={(p) => { setFileName(p.fileName); setMimeType(p.mimeType); }}
+        className="mb-2"
+      />
       <FetchButton onClick={() => onUpload(fileName, content, mimeType)} disabled={isLoading}>
         アップロード
       </FetchButton>
@@ -81,27 +75,13 @@ function UploadPanel({
 }
 
 export function FileUpload() {
-  const [vulnResult, setVulnResult] = useState<UploadResult | null>(null);
-  const [secureResult, setSecureResult] = useState<UploadResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<UploadResult>(BASE);
 
   const handleUpload = async (mode: "vulnerable" | "secure", fileName: string, content: string, mimeType: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/upload`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileName, content, mimeType }),
-      });
-      const data: UploadResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.postJson(mode, "/upload", { fileName, content, mimeType }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -112,10 +92,10 @@ export function FileUpload() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <UploadPanel mode="vulnerable" result={vulnResult} isLoading={loading} onUpload={(f, c, m) => handleUpload("vulnerable", f, c, m)} />
+          <UploadPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onUpload={(f, c, m) => handleUpload("vulnerable", f, c, m)} />
         }
         secureContent={
-          <UploadPanel mode="secure" result={secureResult} isLoading={loading} onUpload={(f, c, m) => handleUpload("secure", f, c, m)} />
+          <UploadPanel mode="secure" result={result.secure} isLoading={result.loading} onUpload={(f, c, m) => handleUpload("secure", f, c, m)} />
         }
       />
 

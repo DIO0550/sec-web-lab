@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
+import { PresetButtons } from "@/components/PresetButtons";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/xxe";
 
@@ -15,6 +16,26 @@ type XxeResult = {
   parsed?: { name: string; email: string };
   _debug?: { message: string; entityDetected?: boolean; entityValue?: string };
 };
+
+const normalXml = `<?xml version="1.0"?>
+<user>
+  <name>Taro</name>
+  <email>taro@example.com</email>
+</user>`;
+
+const maliciousXml = `<?xml version="1.0"?>
+<!DOCTYPE foo [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<user>
+  <name>&xxe;</name>
+  <email>test@example.com</email>
+</user>`;
+
+const presets = [
+  { label: "通常XML", value: normalXml },
+  { label: "XXEペイロード", value: maliciousXml },
+];
 
 function XxePanel({
   mode,
@@ -27,34 +48,12 @@ function XxePanel({
   isLoading: boolean;
   onSubmit: (xml: string) => void;
 }) {
-  const normalXml = `<?xml version="1.0"?>
-<user>
-  <name>Taro</name>
-  <email>taro@example.com</email>
-</user>`;
-
-  const maliciousXml = `<?xml version="1.0"?>
-<!DOCTYPE foo [
-  <!ENTITY xxe SYSTEM "file:///etc/passwd">
-]>
-<user>
-  <name>&xxe;</name>
-  <email>test@example.com</email>
-</user>`;
-
   const [xml, setXml] = useState(normalXml);
 
   return (
     <div>
       <Textarea label="XMLデータ:" value={xml} onChange={(e) => setXml(e.target.value)} rows={8} mono className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        <Button variant="ghost" size="sm" onClick={() => setXml(normalXml)}>
-          通常XML
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setXml(maliciousXml)}>
-          XXEペイロード
-        </Button>
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setXml(p.value)} className="mb-2" />
       <FetchButton onClick={() => onSubmit(xml)} disabled={isLoading}>
         XMLインポート
       </FetchButton>
@@ -77,27 +76,17 @@ function XxePanel({
 }
 
 export function Xxe() {
-  const [vulnResult, setVulnResult] = useState<XxeResult | null>(null);
-  const [secureResult, setSecureResult] = useState<XxeResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<XxeResult>(BASE);
 
   const handleSubmit = async (mode: "vulnerable" | "secure", xml: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/import`, {
-        method: "POST",
-        headers: { "Content-Type": "application/xml" },
-        body: xml,
-      });
-      const data: XxeResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.run(mode, "/import", {
+      method: "POST",
+      headers: { "Content-Type": "application/xml" },
+      body: xml,
+    }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -108,10 +97,10 @@ export function Xxe() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <XxePanel mode="vulnerable" result={vulnResult} isLoading={loading} onSubmit={(xml) => handleSubmit("vulnerable", xml)} />
+          <XxePanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onSubmit={(xml) => handleSubmit("vulnerable", xml)} />
         }
         secureContent={
-          <XxePanel mode="secure" result={secureResult} isLoading={loading} onSubmit={(xml) => handleSubmit("secure", xml)} />
+          <XxePanel mode="secure" result={result.secure} isLoading={result.loading} onSubmit={(xml) => handleSubmit("secure", xml)} />
         }
       />
 

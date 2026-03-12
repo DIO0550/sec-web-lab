@@ -3,9 +3,10 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
+import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/eval-injection";
 
@@ -16,6 +17,13 @@ type CalcResult = {
   result?: string;
   _debug?: { message: string; type?: string };
 };
+
+const presets = [
+  { label: "通常の計算", value: "1 + 2 * 3" },
+  { label: "環境変数", value: "JSON.stringify(process.env)" },
+  { label: "コード実行", value: "require('child_process').execSync('whoami').toString()" },
+  { label: "ファイル読取", value: "require('fs').readFileSync('/etc/hostname','utf8')" },
+];
 
 function CalcPanel({
   mode,
@@ -30,23 +38,10 @@ function CalcPanel({
 }) {
   const [expression, setExpression] = useState("1 + 2 * 3");
 
-  const presets = [
-    { label: "通常の計算", value: "1 + 2 * 3" },
-    { label: "環境変数", value: "JSON.stringify(process.env)" },
-    { label: "コード実行", value: "require('child_process').execSync('whoami').toString()" },
-    { label: "ファイル読取", value: "require('fs').readFileSync('/etc/hostname','utf8')" },
-  ];
-
   return (
     <div>
       <Input label="数式 / コード:" value={expression} onChange={(e) => setExpression(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => setExpression(p.value)}>
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setExpression(p.value)} className="mb-2" />
       <FetchButton onClick={() => onCalc(expression)} disabled={isLoading}>
         計算実行
       </FetchButton>
@@ -68,27 +63,13 @@ function CalcPanel({
 }
 
 export function EvalInjection() {
-  const [vulnResult, setVulnResult] = useState<CalcResult | null>(null);
-  const [secureResult, setSecureResult] = useState<CalcResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const result = useComparisonFetch<CalcResult>(BASE);
 
   const handleCalc = async (mode: "vulnerable" | "secure", expression: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/calculate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ expression }),
-      });
-      const data: CalcResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await result.postJson(mode, "/calculate", { expression }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -99,10 +80,10 @@ export function EvalInjection() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <CalcPanel mode="vulnerable" result={vulnResult} isLoading={loading} onCalc={(e) => handleCalc("vulnerable", e)} />
+          <CalcPanel mode="vulnerable" result={result.vulnerable} isLoading={result.loading} onCalc={(e) => handleCalc("vulnerable", e)} />
         }
         secureContent={
-          <CalcPanel mode="secure" result={secureResult} isLoading={loading} onCalc={(e) => handleCalc("secure", e)} />
+          <CalcPanel mode="secure" result={result.secure} isLoading={result.loading} onCalc={(e) => handleCalc("secure", e)} />
         }
       />
 
