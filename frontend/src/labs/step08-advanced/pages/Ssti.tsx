@@ -3,10 +3,11 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/ssti";
 
@@ -17,6 +18,12 @@ type SstiResult = {
   warning?: string;
   _debug?: { message: string };
 };
+
+const presets = [
+  { label: "通常", template: "Hello, {{name}}! Today is {{date}}.", name: "Taro" },
+  { label: "コード実行", template: "Result: {{7*7}}", name: "test" },
+  { label: "環境変数", template: "{{JSON.stringify(process.env).substring(0,200)}}", name: "test" },
+];
 
 function SstiPanel({
   mode,
@@ -32,23 +39,15 @@ function SstiPanel({
   const [template, setTemplate] = useState("Hello, {{name}}! Today is {{date}}.");
   const [name, setName] = useState("Taro");
 
-  const presets = [
-    { label: "通常", template: "Hello, {{name}}! Today is {{date}}.", name: "Taro" },
-    { label: "コード実行", template: "Result: {{7*7}}", name: "test" },
-    { label: "環境変数", template: "{{JSON.stringify(process.env).substring(0,200)}}", name: "test" },
-  ];
-
   return (
     <div>
       <Textarea label="テンプレート:" value={template} onChange={(e) => setTemplate(e.target.value)} mono rows={3} className="mb-2" />
       <Input label="name変数:" type="text" value={name} onChange={(e) => setName(e.target.value)} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        {presets.map((p) => (
-          <Button key={p.label} variant="ghost" size="sm" onClick={() => { setTemplate(p.template); setName(p.name); }}>
-            {p.label}
-          </Button>
-        ))}
-      </div>
+      <PresetButtons
+        presets={presets}
+        onSelect={(p) => { setTemplate(p.template); setName(p.name); }}
+        className="mb-2"
+      />
       <FetchButton onClick={() => onRender(template, name)} disabled={isLoading}>
         レンダリング
       </FetchButton>
@@ -71,27 +70,13 @@ function SstiPanel({
 }
 
 export function Ssti() {
-  const [vulnResult, setVulnResult] = useState<SstiResult | null>(null);
-  const [secureResult, setSecureResult] = useState<SstiResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const render = useComparisonFetch<SstiResult>(BASE);
 
   const handleRender = async (mode: "vulnerable" | "secure", template: string, name: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/render`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ template, name }),
-      });
-      const data: SstiResult = await res.json();
-      if (mode === "vulnerable") setVulnResult(data);
-      else setSecureResult(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnResult(err);
-      else setSecureResult(err);
-    }
-    setLoading(false);
+    await render.postJson(mode, "/render", { template, name }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   return (
@@ -101,8 +86,8 @@ export function Ssti() {
       description="テンプレートエンジンがユーザー入力をテンプレート式として評価する場合、{{7*7}}のような式が実行され、さらに任意のコード実行（RCE）につながる脆弱性を体験します。"
     >
       <ComparisonPanel
-        vulnerableContent={<SstiPanel mode="vulnerable" result={vulnResult} isLoading={loading} onRender={(t, n) => handleRender("vulnerable", t, n)} />}
-        secureContent={<SstiPanel mode="secure" result={secureResult} isLoading={loading} onRender={(t, n) => handleRender("secure", t, n)} />}
+        vulnerableContent={<SstiPanel mode="vulnerable" result={render.vulnerable} isLoading={render.loading} onRender={(t, n) => handleRender("vulnerable", t, n)} />}
+        secureContent={<SstiPanel mode="secure" result={render.secure} isLoading={render.loading} onRender={(t, n) => handleRender("secure", t, n)} />}
       />
 
       <CheckpointBox>

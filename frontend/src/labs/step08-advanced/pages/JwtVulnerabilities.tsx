@@ -7,6 +7,7 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/jwt-vulnerabilities";
 
@@ -95,46 +96,20 @@ function JwtPanel({
 }
 
 export function JwtVulnerabilities() {
-  const [vulnLogin, setVulnLogin] = useState<JwtResult | null>(null);
-  const [secureLogin, setSecureLogin] = useState<JwtResult | null>(null);
-  const [vulnProfile, setVulnProfile] = useState<JwtResult | null>(null);
-  const [secureProfile, setSecureProfile] = useState<JwtResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const login = useComparisonFetch<JwtResult>(BASE);
+  const profile = useComparisonFetch<JwtResult>(BASE);
 
   const handleLogin = async (mode: "vulnerable" | "secure", username: string, password: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data: JwtResult = await res.json();
-      if (mode === "vulnerable") setVulnLogin(data);
-      else setSecureLogin(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnLogin(err);
-      else setSecureLogin(err);
-    }
-    setLoading(false);
+    await login.postJson(mode, "/login", { username, password }, (e) => ({
+      success: false,
+      message: e.message,
+    }));
   };
 
   const handleProfile = async (mode: "vulnerable" | "secure", token: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data: JwtResult = await res.json();
-      if (mode === "vulnerable") setVulnProfile(data);
-      else setSecureProfile(data);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnProfile(err);
-      else setSecureProfile(err);
-    }
-    setLoading(false);
+    await profile.run(mode, "/profile", {
+      headers: { Authorization: `Bearer ${token}` },
+    }, (e) => ({ success: false, message: e.message }));
   };
 
   const handleAlgNone = async () => {
@@ -153,11 +128,11 @@ export function JwtVulnerabilities() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <JwtPanel mode="vulnerable" loginResult={vulnLogin} profileResult={vulnProfile} isLoading={loading}
+          <JwtPanel mode="vulnerable" loginResult={login.vulnerable} profileResult={profile.vulnerable} isLoading={login.loading || profile.loading}
             onLogin={(u, p) => handleLogin("vulnerable", u, p)} onProfile={(t) => handleProfile("vulnerable", t)} onAlgNone={handleAlgNone} />
         }
         secureContent={
-          <JwtPanel mode="secure" loginResult={secureLogin} profileResult={secureProfile} isLoading={loading}
+          <JwtPanel mode="secure" loginResult={login.secure} profileResult={profile.secure} isLoading={login.loading || profile.loading}
             onLogin={(u, p) => handleLogin("secure", u, p)} onProfile={(t) => handleProfile("secure", t)} onAlgNone={() => {}} />
         }
       />

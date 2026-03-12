@@ -3,9 +3,11 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Button } from "@/components/Button";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { PresetButtons } from "@/components/PresetButtons";
+import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/prototype-pollution";
 
@@ -15,6 +17,11 @@ type PollutionResult = {
   config?: Record<string, unknown>;
   _debug?: { message: string; prototypeCheck?: { isAdmin: unknown; polluted: boolean }; hint?: string };
 };
+
+const presets = [
+  { label: "通常データ", value: JSON.stringify({ theme: "dark", lang: "en" }, null, 2) },
+  { label: "__proto__ 汚染", value: JSON.stringify({ __proto__: { isAdmin: true } }, null, 2) },
+];
 
 function PollutionPanel({
   mode,
@@ -31,17 +38,12 @@ function PollutionPanel({
   onMerge: (data: string) => void;
   onAdmin: () => void;
 }) {
-  const normalJson = JSON.stringify({ theme: "dark", lang: "en" }, null, 2);
-  const pollutionJson = JSON.stringify({ __proto__: { isAdmin: true } }, null, 2);
-  const [data, setData] = useState(normalJson);
+  const [data, setData] = useState(presets[0].value);
 
   return (
     <div>
       <Textarea label="マージするデータ:" value={data} onChange={(e) => setData(e.target.value)} mono rows={4} className="mb-2" />
-      <div className="flex gap-1 flex-wrap mb-2">
-        <Button variant="ghost" size="sm" onClick={() => setData(normalJson)}>通常データ</Button>
-        <Button variant="ghost" size="sm" onClick={() => setData(pollutionJson)}>__proto__ 汚染</Button>
-      </div>
+      <PresetButtons presets={presets} onSelect={(p) => setData(p.value)} className="mb-2" />
       <div className="flex gap-2 mb-2">
         <FetchButton onClick={() => onMerge(data)} disabled={isLoading}>マージ実行</FetchButton>
         {mode === "vulnerable" && <FetchButton onClick={onAdmin} disabled={isLoading}>管理者ページ確認</FetchButton>}
@@ -73,40 +75,27 @@ function PollutionPanel({
 }
 
 export function PrototypePollution() {
-  const [vulnMerge, setVulnMerge] = useState<PollutionResult | null>(null);
-  const [secureMerge, setSecureMerge] = useState<PollutionResult | null>(null);
+  const merge = useComparisonFetch<PollutionResult>(BASE);
   const [vulnAdmin, setVulnAdmin] = useState<PollutionResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(false);
 
   const handleMerge = async (mode: "vulnerable" | "secure", data: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BASE}/${mode}/merge`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: data,
-      });
-      const result: PollutionResult = await res.json();
-      if (mode === "vulnerable") setVulnMerge(result);
-      else setSecureMerge(result);
-    } catch (e) {
-      const err = { success: false, message: (e as Error).message };
-      if (mode === "vulnerable") setVulnMerge(err);
-      else setSecureMerge(err);
-    }
-    setLoading(false);
+    await merge.run(mode, "/merge", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: data,
+    }, (e) => ({ success: false, message: e.message }));
   };
 
   const handleAdmin = async () => {
-    setLoading(true);
+    setAdminLoading(true);
     try {
-      const res = await fetch(`${BASE}/vulnerable/admin`);
-      const result: PollutionResult = await res.json();
+      const result = await getJson<PollutionResult>(`${BASE}/vulnerable/admin`);
       setVulnAdmin(result);
     } catch (e) {
       setVulnAdmin({ success: false, message: (e as Error).message });
     }
-    setLoading(false);
+    setAdminLoading(false);
   };
 
   return (
@@ -117,11 +106,11 @@ export function PrototypePollution() {
     >
       <ComparisonPanel
         vulnerableContent={
-          <PollutionPanel mode="vulnerable" mergeResult={vulnMerge} adminResult={vulnAdmin} isLoading={loading}
+          <PollutionPanel mode="vulnerable" mergeResult={merge.vulnerable} adminResult={vulnAdmin} isLoading={merge.loading || adminLoading}
             onMerge={(d) => handleMerge("vulnerable", d)} onAdmin={handleAdmin} />
         }
         secureContent={
-          <PollutionPanel mode="secure" mergeResult={secureMerge} adminResult={null} isLoading={loading}
+          <PollutionPanel mode="secure" mergeResult={merge.secure} adminResult={null} isLoading={merge.loading || adminLoading}
             onMerge={(d) => handleMerge("secure", d)} onAdmin={() => {}} />
         }
       />

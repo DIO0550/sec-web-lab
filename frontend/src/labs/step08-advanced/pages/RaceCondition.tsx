@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/race-condition";
 
@@ -66,19 +67,13 @@ export function RaceCondition() {
   const [loading, setLoading] = useState(false);
 
   const checkStock = async (mode: "vulnerable" | "secure") => {
-    const res = await fetch(`${BASE}/${mode}/stock`);
-    const data: StockInfo = await res.json();
+    const data = await getJson<StockInfo>(`${BASE}/${mode}/stock`);
     if (mode === "vulnerable") setVulnStock(data);
     else setSecureStock(data);
   };
 
   const purchase = async (mode: "vulnerable" | "secure") => {
-    const res = await fetch(`${BASE}/${mode}/purchase`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId: "1" }),
-    });
-    return res.json() as Promise<PurchaseResult>;
+    return postJson<PurchaseResult>(`${BASE}/${mode}/purchase`, { productId: "1" });
   };
 
   const handlePurchase = async (mode: "vulnerable" | "secure") => {
