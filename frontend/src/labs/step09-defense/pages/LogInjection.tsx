@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Textarea } from "@/components/Textarea";
 import { PresetButtons } from "@/components/PresetButtons";
 import { postJson, getJson } from "../../../utils/api";
@@ -28,13 +29,13 @@ function LogInjPanel({ mode, logs, isLoading, onLogin, onViewLogs }: { mode: "vu
         <FetchButton onClick={() => onLogin(username)} disabled={isLoading}>ログイン試行</FetchButton>
         <FetchButton onClick={onViewLogs} disabled={isLoading}>ログ閲覧</FetchButton>
       </div>
-      {logs.length > 0 && (
-        <div className="mt-2 max-h-[250px] overflow-auto bg-[#1a1a1a] p-2 rounded">
+      <ExpandableSection isOpen={logs.length > 0}>
+        <div className="mt-2 max-h-[250px] overflow-auto bg-terminal-bg p-2 rounded">
           {logs.map((log, i) => (
-            <div key={i} className="text-[10px] text-[#0f0] font-mono">{log.timestamp.substring(11, 19)} | {log.message}</div>
+            <div key={i} className="text-[10px] text-terminal-text font-mono">{log.timestamp.substring(11, 19)} | {log.message}</div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

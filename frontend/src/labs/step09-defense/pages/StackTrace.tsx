@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/stack-trace";
@@ -16,20 +17,20 @@ function StackPanel({ mode, results, isLoading, onTest }: { mode: "vulnerable" |
         <FetchButton onClick={() => onTest("error")} disabled={isLoading}>エラー発生</FetchButton>
         <FetchButton onClick={() => onTest("debug")} disabled={isLoading}>デバッグ情報</FetchButton>
       </div>
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[300px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className="text-xs p-2 mb-1 rounded bg-[#ffebee]">
+            <div key={i} className="text-xs p-2 mb-1 rounded bg-error-bg-light">
               {r.error && <div className="font-bold">{r.error}</div>}
               {r.message && <div>{r.message}</div>}
-              {r.errorId && <div className="text-[#666]">Error ID: {r.errorId}</div>}
-              {r.stack && <pre className="text-[10px] mt-1 overflow-auto max-h-[100px] bg-[#f5f5f5] p-1 rounded">{r.stack}</pre>}
-              {r.debug && <pre className="text-[10px] mt-1 overflow-auto bg-[#f5f5f5] p-1 rounded">{JSON.stringify(r.debug, null, 2)}</pre>}
-              {r._debug && <div className="text-[#888] italic mt-1">{r._debug.message}</div>}
+              {r.errorId && <div className="text-text-secondary">Error ID: {r.errorId}</div>}
+              {r.stack && <pre className="text-[10px] mt-1 overflow-auto max-h-[100px] bg-code-bg p-1 rounded">{r.stack}</pre>}
+              {r.debug && <pre className="text-[10px] mt-1 overflow-auto bg-code-bg p-1 rounded">{JSON.stringify(r.debug, null, 2)}</pre>}
+              {r._debug && <div className="text-text-muted italic mt-1">{r._debug.message}</div>}
             </div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

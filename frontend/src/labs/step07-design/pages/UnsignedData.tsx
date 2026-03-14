@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Select } from "@/components/Select";
 import { Alert } from "@/components/Alert";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
@@ -60,17 +61,17 @@ function UnsignedPanel({
         管理者ページにアクセス
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "アクセス成功" : "アクセス拒否"} className="mt-2">
-          <div className="text-[13px] mt-1">{result.message}</div>
-          {result.adminData && (
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "アクセス成功" : "アクセス拒否"} className="mt-2">
+          <div className="text-[13px] mt-1">{result?.message}</div>
+          {result?.adminData && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">
-              {JSON.stringify(result.adminData, null, 2)}
+              {JSON.stringify(result?.adminData, null, 2)}
             </pre>
           )}
-          {result._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
+          {result?._debug && <div className="mt-2 text-xs italic opacity-70">{result?._debug.message}</div>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

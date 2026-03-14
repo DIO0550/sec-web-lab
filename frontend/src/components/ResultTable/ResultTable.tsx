@@ -29,15 +29,15 @@ export function ResultTable<T extends Record<string, unknown>>({
   className = "",
 }: Props<T>) {
   if (data.length === 0) {
-    return null;
+    return <div />;
   }
 
   return (
     <table className={`w-full text-xs border-collapse ${className}`.trim()}>
       <thead>
-        <tr className="bg-[#f5f5f5]">
+        <tr className="bg-table-header-bg">
           {columns.map((col) => (
-            <th key={col.key} className="p-1 border border-[#ddd] text-left">
+            <th key={col.key} className="p-1 border border-table-border text-left">
               {col.label}
             </th>
           ))}
@@ -47,7 +47,7 @@ export function ResultTable<T extends Record<string, unknown>>({
         {data.map((row, i) => (
           <tr key={i}>
             {columns.map((col) => (
-              <td key={col.key} className="p-1 border border-[#ddd]">
+              <td key={col.key} className="p-1 border border-table-border">
                 {String(row[col.key] ?? "")}
               </td>
             ))}

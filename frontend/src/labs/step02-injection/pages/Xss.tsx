@@ -8,6 +8,7 @@ import { Textarea } from "@/components/Textarea";
 import { PresetButtons } from "@/components/PresetButtons";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 import { getJson } from "../../../utils/api";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 const BASE = "/api/labs/xss";
 
@@ -44,15 +45,15 @@ function HtmlPreview({
 }) {
   return (
     <div className="mt-2">
-      <div className="text-xs text-[#888] mb-1">サーバーからのHTMLレスポンス:</div>
+      <div className="text-xs text-text-muted mb-1">サーバーからのHTMLレスポンス:</div>
       <pre
         className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[200px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
       >
         {html}
       </pre>
-      <div className="text-xs text-[#888] mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
+      <div className="text-xs text-text-muted mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
       <div
-        className={`border-2 p-3 rounded bg-white ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
+        className={`border-2 p-3 rounded bg-white ${mode === "vulnerable" ? "border-error-border" : "border-success-border"}`}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
@@ -96,7 +97,9 @@ function ReflectedXssTest({
         className="mb-3"
       />
 
-      {result && <HtmlPreview html={result.html} mode={mode} />}
+      <ExpandableSection isOpen={!!result}>
+        {result && <HtmlPreview html={result.html} mode={mode} />}
+      </ExpandableSection>
     </div>
   );
 }
@@ -154,21 +157,21 @@ function StoredXssTest({
         className="mb-3"
       />
 
-      {posts && (
+      <ExpandableSection isOpen={!!posts}>
         <div className="mt-2">
-          <div className="text-xs text-[#888] mb-1">サーバーからのHTMLフラグメント:</div>
+          <div className="text-xs text-text-muted mb-1">サーバーからのHTMLフラグメント:</div>
           <pre
             className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[150px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
           >
-            {posts.postsHtml}
+            {posts?.postsHtml}
           </pre>
-          <div className="text-xs text-[#888] mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
+          <div className="text-xs text-text-muted mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
           <div
-            className={`border-2 p-3 rounded bg-white max-h-[200px] overflow-auto ${mode === "vulnerable" ? "border-[#c00]" : "border-[#080]"}`}
-            dangerouslySetInnerHTML={{ __html: posts.postsHtml }}
+            className={`border-2 p-3 rounded bg-white max-h-[200px] overflow-auto ${mode === "vulnerable" ? "border-error-border" : "border-success-border"}`}
+            dangerouslySetInnerHTML={{ __html: posts?.postsHtml ?? "" }}
           />
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -203,7 +206,7 @@ export function Xss() {
     >
       {/* Reflected XSS */}
       <h3 className="mt-6">Lab 1: Reflected XSS (反射型)</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         URLパラメータの値がHTMLレスポンスにそのまま反映されます。
         <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> を入力してみてください。
       </p>
@@ -218,7 +221,7 @@ export function Xss() {
 
       {/* Stored XSS */}
       <h3 className="mt-8">Lab 2: Stored XSS (格納型)</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         掲示板にスクリプトを含む投稿を行い、他のユーザーが閲覧した際にスクリプトが実行されることを確認します。
       </p>
       <ComparisonPanel
@@ -243,7 +246,7 @@ export function Xss() {
       />
 
       <CheckpointBox variant="warning" title="注意">
-        <p className="text-[13px] text-[#666]">
+        <p className="text-[13px] text-text-secondary">
           脆弱版の「ブラウザでの描画結果」では、<code>dangerouslySetInnerHTML</code> を使用してHTMLを描画しています。
           実際のブラウザでは <code>&lt;script&gt;</code> タグは innerHTML 経由では実行されませんが、
           <code>&lt;img onerror&gt;</code> や <code>&lt;svg onload&gt;</code> は実行されます。

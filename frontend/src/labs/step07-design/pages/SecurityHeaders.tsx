@@ -2,6 +2,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/security-headers";
@@ -30,28 +31,28 @@ function HeaderPanel({
         ヘッダー確認
       </FetchButton>
 
-      {result && (
-        <div className="mt-2 p-3 rounded bg-[#f5f5f5] border">
+      <ExpandableSection isOpen={!!result}>
+        <div className="mt-2 p-3 rounded bg-code-bg border">
           <div className="font-bold text-sm mb-2">レスポンス情報</div>
-          {result.headers && (
+          {result?.headers && (
             <div>
               <div className="text-xs font-bold mb-1">設定されたヘッダー:</div>
               <pre className="text-xs overflow-auto bg-white p-2 rounded">
-                {Object.entries(result.headers).map(([k, v]) => `${k}: ${v}`).join("\n")}
+                {Object.entries(result?.headers ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}
               </pre>
             </div>
           )}
-          {result._debug?.missingHeaders && (
+          {result?._debug?.missingHeaders && (
             <div className="mt-2">
-              <div className="text-xs font-bold mb-1 text-[#c62828]">未設定のヘッダー:</div>
-              <ul className="text-xs text-[#c62828]">
-                {result._debug.missingHeaders.map((h) => <li key={h}>{h}</li>)}
+              <div className="text-xs font-bold mb-1 text-error-text-light">未設定のヘッダー:</div>
+              <ul className="text-xs text-error-text-light">
+                {result?._debug.missingHeaders.map((h) => <li key={h}>{h}</li>)}
               </ul>
             </div>
           )}
-          {result._debug && <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>}
+          {result?._debug && <div className="mt-2 text-xs text-text-muted italic">{result?._debug.message}</div>}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

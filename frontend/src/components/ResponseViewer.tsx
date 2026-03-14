@@ -11,18 +11,18 @@ type HeaderViewerProps = {
  * JSON レスポンス + ヘッダーの表示コンポーネント
  */
 export function HeaderViewer({ result, mode }: HeaderViewerProps) {
-  if (!result) return null;
+  if (!result) return <div className="mt-4" />;
   const isVuln = mode === "vulnerable";
   return (
     <div className="mt-4">
       <h4>レスポンスヘッダー</h4>
-      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-3 rounded overflow-auto`}>
+      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-3 rounded overflow-auto whitespace-pre-wrap break-all`}>
         {Object.entries(result.headers)
           .map(([k, v]) => `${k}: ${v}`)
           .join("\n")}
       </pre>
       <h4>レスポンスボディ</h4>
-      <pre className="bg-bg-secondary dark:bg-bg-secondary p-3 rounded overflow-auto">
+      <pre className="bg-bg-secondary dark:bg-bg-secondary p-3 rounded overflow-auto whitespace-pre-wrap break-all">
         {JSON.stringify(result.body, null, 2)}
       </pre>
     </div>
@@ -40,7 +40,7 @@ type TextViewerProps = {
  * ステータスコードに応じて色分けする
  */
 export function TextViewer({ result }: TextViewerProps) {
-  if (!result) return null;
+  if (!result) return <div />;
   const isError = result.status >= 400;
   return (
     <div className="mt-2">
@@ -51,7 +51,7 @@ export function TextViewer({ result }: TextViewerProps) {
         </span>
       </div>
       <pre
-        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-3 rounded overflow-auto text-[13px] max-h-[200px]`}
+        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-3 rounded overflow-auto whitespace-pre-wrap break-all text-[13px] max-h-[200px]`}
       >
         {result.body}
       </pre>
@@ -70,7 +70,7 @@ type JsonTextViewerProps = {
  * JSON パース可能ならインデント表示する
  */
 export function JsonTextViewer({ result }: JsonTextViewerProps) {
-  if (!result) return null;
+  if (!result) return <div />;
   const isError = result.status >= 400;
   let formatted: string;
   try {
@@ -84,7 +84,7 @@ export function JsonTextViewer({ result }: JsonTextViewerProps) {
         {result.status}
       </span>
       <pre
-        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-2.5 rounded overflow-auto text-xs max-h-[200px]`}
+        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-2.5 rounded overflow-auto whitespace-pre-wrap break-all text-xs max-h-[200px]`}
       >
         {formatted}
       </pre>

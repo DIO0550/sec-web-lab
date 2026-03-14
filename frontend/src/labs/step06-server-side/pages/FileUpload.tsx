@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/file-upload";
@@ -52,24 +53,24 @@ function UploadPanel({
         アップロード
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "アップロード成功" : "アップロード拒否"} className="mt-2">
-          {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
-          {result.file && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
-              {JSON.stringify(result.file, null, 2)}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "アップロード成功" : "アップロード拒否"} className="mt-2">
+          {result?.message && <div className="text-[13px] mt-1">{result?.message}</div>}
+          {result?.file && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+              {JSON.stringify(result?.file, null, 2)}
             </pre>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              {result._debug.message}
-              {result._debug.risks && (
-                <ul className="mt-1">{result._debug.risks.map((r, i) => <li key={i}>{r}</li>)}</ul>
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
+              {result?._debug.risks && (
+                <ul className="mt-1">{result?._debug.risks.map((r, i) => <li key={i}>{r}</li>)}</ul>
               )}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

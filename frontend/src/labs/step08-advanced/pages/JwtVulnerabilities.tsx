@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
@@ -80,17 +81,17 @@ function JwtPanel({
         </div>
       </div>
 
-      {profileResult && (
-        <Alert variant={profileResult.success ? "success" : "error"} title={profileResult.success ? "認証成功" : "認証失敗"} className="mt-2">
-          <div className="text-[13px] mt-1">{profileResult.message}</div>
-          {profileResult.profile && (
+      <ExpandableSection isOpen={!!profileResult}>
+        <Alert variant={profileResult?.success ? "success" : "error"} title={profileResult?.success ? "認証成功" : "認証失敗"} className="mt-2">
+          <div className="text-[13px] mt-1">{profileResult?.message}</div>
+          {profileResult?.profile && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(profileResult.profile, null, 2)}
             </pre>
           )}
-          {profileResult._debug && <div className="mt-2 text-xs italic opacity-70">{profileResult._debug.message}</div>}
+          {profileResult?._debug && <div className="mt-2 text-xs italic opacity-70">{profileResult._debug.message}</div>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

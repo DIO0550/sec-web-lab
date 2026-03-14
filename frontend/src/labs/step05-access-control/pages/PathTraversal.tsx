@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -63,24 +64,24 @@ function FileForm({
         ファイル取得
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "ファイル取得成功" : "取得失敗"} className="mt-2">
-          {result.message && <div className="text-[13px]">{result.message}</div>}
-          {result.content && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto max-h-[200px] whitespace-pre-wrap">
-              {result.content}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "ファイル取得成功" : "取得失敗"} className="mt-2">
+          {result?.message && <div className="text-[13px]">{result?.message}</div>}
+          {result?.content && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px] whitespace-pre-wrap">
+              {result?.content}
             </pre>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              <div>{result._debug.message}</div>
-              <div>解決パス: <code>{result._debug.resolvedPath}</code></div>
-              <div>ベースDir: <code>{result._debug.baseDir}</code></div>
-              {result._debug.check && <div>検証: <code>{result._debug.check}</code></div>}
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              <div>{result?._debug.message}</div>
+              <div>解決パス: <code>{result?._debug.resolvedPath}</code></div>
+              <div>ベースDir: <code>{result?._debug.baseDir}</code></div>
+              {result?._debug.check && <div>検証: <code>{result?._debug.check}</code></div>}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -118,27 +119,27 @@ export function PathTraversal() {
       description="ファイルを取得するAPIのパスに ../ を挿入することで、本来公開されていないサーバー上の任意のファイル（/etc/passwd 等）を読み取れてしまう脆弱性を体験します。"
     >
       <h3 className="mt-6">Step 1: 公開ファイルの確認</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         まず、公開ディレクトリ（uploads/）にあるファイル一覧を確認してください。
       </p>
       <div className="mb-4">
         <FetchButton onClick={fetchFileList} disabled={loading}>
           ファイル一覧を表示
         </FetchButton>
-        {fileList && (
-          <div className="mt-2 p-2 bg-[#f5f5f5] rounded text-xs">
+        <ExpandableSection isOpen={!!fileList}>
+          <div className="mt-2 p-2 bg-code-bg rounded text-xs">
             <strong>uploads/ 内のファイル:</strong>
             <ul className="m-0 pl-4">
-              {fileList.files.map((f) => (
+              {fileList?.files.map((f) => (
                 <li key={f} className="font-mono">{f}</li>
               ))}
             </ul>
           </div>
-        )}
+        </ExpandableSection>
       </div>
 
       <h3 className="mt-6">Step 2: パストラバーサル攻撃</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         正規のファイル名（sample.txt）を指定した後、<code>../../../etc/passwd</code> を指定してみてください。
         脆弱版ではサーバーのシステムファイルが読み取れ、安全版ではアクセスが拒否されます。
       </p>

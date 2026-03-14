@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
@@ -54,40 +55,40 @@ function UsersPanel({
       </FetchButton>
 
       {result?.error && (
-        <pre className="text-[11px] text-[#c00] mt-2">{result.error}</pre>
+        <pre className="text-[11px] text-status-ng mt-2">{result.error}</pre>
       )}
 
-      {result?.users && (
+      <ExpandableSection isOpen={!!result?.users}>
         <div className="mt-3">
           <table className="w-full text-xs border-collapse">
             <thead>
-              <tr className="bg-[#f5f5f5]">
-                <th className="p-1 border border-[#ddd] text-left">username</th>
-                <th className="p-1 border border-[#ddd] text-left">password</th>
-                <th className="p-1 border border-[#ddd] text-left">email</th>
-                <th className="p-1 border border-[#ddd] text-left">role</th>
+              <tr className="bg-code-bg">
+                <th className="p-1 border border-table-border text-left">username</th>
+                <th className="p-1 border border-table-border text-left">password</th>
+                <th className="p-1 border border-table-border text-left">email</th>
+                <th className="p-1 border border-table-border text-left">role</th>
               </tr>
             </thead>
             <tbody>
-              {result.users.map((u) => (
+              {result?.users.map((u) => (
                 <tr key={u.id}>
-                  <td className="p-1 border border-[#ddd]">{u.username}</td>
-                  <td className={`p-1 border border-[#ddd] font-mono text-[11px] break-all ${mode === "vulnerable" ? "bg-[#ffebee]" : "bg-[#e8f5e9]"}`}>
+                  <td className="p-1 border border-table-border">{u.username}</td>
+                  <td className={`p-1 border border-table-border font-mono text-[11px] break-all ${mode === "vulnerable" ? "bg-error-bg-light" : "bg-success-bg"}`}>
                     {u.password}
                   </td>
-                  <td className="p-1 border border-[#ddd]">{u.email}</td>
-                  <td className="p-1 border border-[#ddd]">{u.role}</td>
+                  <td className="p-1 border border-table-border">{u.email}</td>
+                  <td className="p-1 border border-table-border">{u.role}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              {result._debug.message}
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
             </div>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -135,20 +136,20 @@ function LoginForm({
         className="mb-3"
       />
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <Alert
-          variant={result.success ? "success" : "error"}
-          title={result.success ? "ログイン成功" : "ログイン失敗"}
+          variant={result?.success ? "success" : "error"}
+          title={result?.success ? "ログイン成功" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result.message}</div>
-          {result.user && (
+          <div className="text-[13px]">{result?.message}</div>
+          {result?.user && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2">
-              {JSON.stringify(result.user, null, 2)}
+              {JSON.stringify(result?.user, null, 2)}
             </pre>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -181,7 +182,7 @@ export function PlaintextPassword() {
       description="パスワードをハッシュ化せず平文でDBに保存していると、データベースが漏洩した瞬間に全ユーザーのパスワードが丸見えになります。"
     >
       <h3 className="mt-6">Lab 1: DB内のパスワード確認</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         ユーザー一覧を取得して、パスワードの保存形式を比較してください。
         脆弱版では平文、安全版ではbcryptハッシュが表示されます。
       </p>
@@ -195,7 +196,7 @@ export function PlaintextPassword() {
       />
 
       <h3 className="mt-8">Lab 2: パスワードでログイン</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         上で確認したパスワードを使ってログインしてみてください。
         平文保存の場合、漏洩したパスワードでそのままログインできます。
       </p>

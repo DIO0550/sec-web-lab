@@ -6,6 +6,7 @@ import { JsonTextViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Input } from "@/components/Input";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 type FetchResult = { status: number; body: string } | null;
 
@@ -31,7 +32,7 @@ function TestCaseList({
 }) {
   return (
     <>
-      <h4 className={mode === "vulnerable" ? "text-[#c00]" : "text-[#080]"}>
+      <h4 className={mode === "vulnerable" ? "text-status-ng" : "text-status-ok"}>
         {mode === "vulnerable" ? "脆弱バージョン" : "安全バージョン"}
       </h4>
       {TEST_INPUTS.map((input) => (
@@ -41,7 +42,7 @@ function TestCaseList({
               実行
             </FetchButton>
             <span className="text-[13px]">{input.label}</span>
-            <span className="text-[11px] text-[#888]">-- {input.description}</span>
+            <span className="text-[11px] text-text-muted">-- {input.description}</span>
           </div>
           <JsonTextViewer result={results[input.id] ?? null} />
         </div>
@@ -109,7 +110,7 @@ export function ErrorMessageLeakage() {
 
       {/* カスタム入力 */}
       <CheckpointBox title="カスタム入力テスト" variant="warning">
-        <p className="text-[13px] text-[#666]">
+        <p className="text-[13px] text-text-secondary">
           任意の入力でエラーを誘発してみてください。脆弱版と安全版を同時にテストします。
         </p>
         <div className="flex gap-2 items-center">
@@ -125,18 +126,18 @@ export function ErrorMessageLeakage() {
           </FetchButton>
         </div>
 
-        {(customVulnResult || customSecureResult) && (
+        <ExpandableSection isOpen={!!(customVulnResult || customSecureResult)}>
           <div className="flex gap-6 mt-3">
             <div className="flex-1">
-              <strong className="text-[#c00]">脆弱版</strong>
+              <strong className="text-status-ng">脆弱版</strong>
               <JsonTextViewer result={customVulnResult} />
             </div>
             <div className="flex-1">
-              <strong className="text-[#080]">安全版</strong>
+              <strong className="text-status-ok">安全版</strong>
               <JsonTextViewer result={customSecureResult} />
             </div>
           </div>
-        )}
+        </ExpandableSection>
       </CheckpointBox>
 
       <CheckpointBox>

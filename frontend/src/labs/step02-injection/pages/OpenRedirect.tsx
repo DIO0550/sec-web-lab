@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Input } from "@/components/Input";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 const BASE = "/api/labs/open-redirect";
 
@@ -58,54 +59,54 @@ function RedirectTest({
 
       <PresetButtons presets={presets} onSelect={(p) => setUrl(p.url)} className="mb-3" />
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <div className="mt-2">
           <table className="text-[13px] border-collapse w-full">
             <tbody>
               <tr>
-                <td className="p-1 px-2 border border-[#ddd] font-bold w-[140px]">
+                <td className="p-1 px-2 border border-table-border font-bold w-[140px]">
                   入力URL
                 </td>
-                <td className="p-1 px-2 border border-[#ddd]">
-                  <code>{result.input}</code>
+                <td className="p-1 px-2 border border-table-border">
+                  <code>{result?.input}</code>
                 </td>
               </tr>
               <tr>
-                <td className="p-1 px-2 border border-[#ddd] font-bold">
+                <td className="p-1 px-2 border border-table-border font-bold">
                   リダイレクト先
                 </td>
-                <td className="p-1 px-2 border border-[#ddd]">
-                  <code>{result.wouldRedirectTo ?? "(なし)"}</code>
+                <td className="p-1 px-2 border border-table-border">
+                  <code>{result?.wouldRedirectTo ?? "(なし)"}</code>
                 </td>
               </tr>
               <tr>
-                <td className="p-1 px-2 border border-[#ddd] font-bold">
+                <td className="p-1 px-2 border border-table-border font-bold">
                   外部URL
                 </td>
-                <td className="p-1 px-2 border border-[#ddd]">
-                  <span className={result.isExternal ? "text-[#c00]" : "text-[#080]"}>
-                    {result.isExternal ? "はい" : "いいえ"}
+                <td className="p-1 px-2 border border-table-border">
+                  <span className={result?.isExternal ? "text-status-ng" : "text-status-ok"}>
+                    {result?.isExternal ? "はい" : "いいえ"}
                   </span>
                 </td>
               </tr>
               <tr>
-                <td className="p-1 px-2 border border-[#ddd] font-bold">
+                <td className="p-1 px-2 border border-table-border font-bold">
                   ブロック
                 </td>
-                <td className="p-1 px-2 border border-[#ddd]">
+                <td className="p-1 px-2 border border-table-border">
                   <span
-                    className={`font-bold ${result.blocked ? "text-[#080]" : "text-[#c00]"}`}
+                    className={`font-bold ${result?.blocked ? "text-status-ok" : "text-status-ng"}`}
                   >
-                    {result.blocked ? "ブロック済み" : "ブロックなし"}
+                    {result?.blocked ? "ブロック済み" : "ブロックなし"}
                   </span>
                 </td>
               </tr>
-              {result.reason && (
+              {result?.reason && (
                 <tr>
-                  <td className="p-1 px-2 border border-[#ddd] font-bold">
+                  <td className="p-1 px-2 border border-table-border font-bold">
                     理由
                   </td>
-                  <td className="p-1 px-2 border border-[#ddd]">
+                  <td className="p-1 px-2 border border-table-border">
                     {result.reason}
                   </td>
                 </tr>
@@ -114,20 +115,20 @@ function RedirectTest({
           </table>
 
           {/* 実際のリダイレクトリンク */}
-          <div className="mt-2 text-xs text-[#888]">
+          <div className="mt-2 text-xs text-text-muted">
             実際のリダイレクトURL:
             <a
-              href={`${BASE}/${mode}/redirect?url=${encodeURIComponent(result.input)}`}
+              href={`${BASE}/${mode}/redirect?url=${encodeURIComponent(result?.input ?? "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`ml-1 ${mode === "vulnerable" ? "text-[#c00]" : "text-[#080]"}`}
+              className={`ml-1 ${mode === "vulnerable" ? "text-status-ng" : "text-status-ok"}`}
             >
-              {`${BASE}/${mode}/redirect?url=${result.input}`}
+              {`${BASE}/${mode}/redirect?url=${result?.input ?? ""}`}
             </a>
-            <span className="ml-2 text-[#888]">(新しいタブで開きます)</span>
+            <span className="ml-2 text-text-muted">(新しいタブで開きます)</span>
           </div>
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -148,7 +149,7 @@ export function OpenRedirect() {
       description="リダイレクト先URLの検証不備を悪用して、正規サイトのURLからユーザーを外部のフィッシングサイトへ誘導する脆弱性です。"
     >
       <h3 className="mt-6">リダイレクト検証テスト</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         リダイレクト先URLを指定して、脆弱版と安全版でリダイレクトの挙動を比較します。
         外部URLが指定された場合に、サーバーがそのままリダイレクトするか、ブロックするかを確認してください。
       </p>
@@ -163,13 +164,13 @@ export function OpenRedirect() {
       />
 
       <CheckpointBox variant="warning" title="攻撃シナリオ">
-        <p className="text-[13px] text-[#666]">
+        <p className="text-[13px] text-text-secondary">
           攻撃者は以下のようなURLを作成し、被害者にメールやSNSで送信します:
         </p>
         <pre className="text-xs bg-white p-2 rounded overflow-auto">
           {`https://trusted-site.com/redirect?url=https://evil-site.com/login`}
         </pre>
-        <p className="text-[13px] text-[#666]">
+        <p className="text-[13px] text-text-secondary">
           URLの冒頭が正規のドメインであるため、被害者は不審に思わずクリックし、
           フィッシングサイトのログインフォームに認証情報を入力してしまいます。
         </p>

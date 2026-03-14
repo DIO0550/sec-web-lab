@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
@@ -74,20 +75,20 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <Alert
-          variant={result.success ? "success" : result.locked ? "warning" : "error"}
-          title={result.success ? "ログイン成功" : result.locked ? "アカウントロック" : "ログイン失敗"}
+          variant={result?.success ? "success" : result?.locked ? "warning" : "error"}
+          title={result?.success ? "ログイン成功" : result?.locked ? "アカウントロック" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result.message}</div>
-          {result.attemptsUsed !== undefined && (
+          <div className="text-[13px]">{result?.message}</div>
+          {result?.attemptsUsed !== undefined && (
             <div className="text-xs opacity-70 mt-1">
-              試行回数: {result.attemptsUsed} / {result.maxAttempts}
+              試行回数: {result?.attemptsUsed} / {result?.maxAttempts}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -119,34 +120,34 @@ function DictionaryAttack({
         )}
       </div>
 
-      <div className="text-[11px] text-[#888] mt-1">
+      <div className="text-[11px] text-text-muted mt-1">
         辞書: [{PASSWORD_DICTIONARY.join(", ")}]
       </div>
 
-      {logs.length > 0 && (
+      <ExpandableSection isOpen={logs.length > 0}>
         <div className="mt-3 max-h-[300px] overflow-auto">
           <table className="w-full text-[11px] border-collapse">
             <thead>
-              <tr className="bg-[#f5f5f5]">
-                <th className="p-1 border border-[#ddd] text-left">#</th>
-                <th className="p-1 border border-[#ddd] text-left">パスワード</th>
-                <th className="p-1 border border-[#ddd] text-left">結果</th>
+              <tr className="bg-code-bg">
+                <th className="p-1 border border-table-border text-left">#</th>
+                <th className="p-1 border border-table-border text-left">パスワード</th>
+                <th className="p-1 border border-table-border text-left">結果</th>
               </tr>
             </thead>
             <tbody>
               {logs.map((log, i) => (
-                <tr key={i} className={log.result.success ? "bg-[#e8f5e9]" : log.result.locked ? "bg-[#fff3e0]" : ""}>
-                  <td className="p-1 border border-[#ddd]">{i + 1}</td>
-                  <td className="p-1 border border-[#ddd] font-mono">
+                <tr key={i} className={log.result.success ? "bg-success-bg" : log.result.locked ? "bg-warning-bg" : ""}>
+                  <td className="p-1 border border-table-border">{i + 1}</td>
+                  <td className="p-1 border border-table-border font-mono">
                     {log.password}
                   </td>
-                  <td className="p-1 border border-[#ddd]">
+                  <td className="p-1 border border-table-border">
                     {log.result.success ? (
-                      <span className="text-[#c00] font-bold">突破成功!</span>
+                      <span className="text-status-ng font-bold">突破成功!</span>
                     ) : log.result.locked ? (
-                      <span className="text-[#e65100]">ブロック (429)</span>
+                      <span className="text-warning-text">ブロック (429)</span>
                     ) : (
-                      <span className="text-[#888]">失敗</span>
+                      <span className="text-text-muted">失敗</span>
                     )}
                   </td>
                 </tr>
@@ -154,7 +155,7 @@ function DictionaryAttack({
             </tbody>
           </table>
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -225,7 +226,7 @@ export function BruteForce() {
       description="ログイン試行に回数制限がないアプリケーションに対して、パスワード辞書を使って総当たりで正しいパスワードを見つけ出す攻撃です。"
     >
       <h3 className="mt-6">Lab 1: 手動ログイン試行</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         間違ったパスワードを何度か入力してみてください。
         脆弱版は何度でも試行できますが、安全版は5回で制限されます。
       </p>
@@ -239,7 +240,7 @@ export function BruteForce() {
       />
 
       <h3 className="mt-8">Lab 2: 辞書攻撃シミュレーション</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         パスワード辞書を使った自動攻撃をシミュレーションします。
         脆弱版では <code>admin123</code> が見つかるまで全候補を試行でき、
         安全版ではレート制限によりブロックされます。

@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { getJson, postJson } from "../../../utils/api";
 
 const BASE = "/api/labs/error-messages";
@@ -35,17 +36,17 @@ function ErrorPanel({
         <FetchButton onClick={() => onTest("login-wrongpw")} disabled={isLoading}>パスワード間違い</FetchButton>
       </div>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[300px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className={`text-xs p-2 mb-1 rounded ${r.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+            <div key={i} className={`text-xs p-2 mb-1 rounded ${r.success ? "bg-success-bg" : "bg-error-bg-light"}`}>
               <div className="font-bold">{r.message}</div>
               {r.stack && <pre className="text-[10px] mt-1 overflow-auto max-h-[100px]">{r.stack}</pre>}
-              {r._debug && <div className="text-[#888] italic mt-1">{r._debug.message}</div>}
+              {r._debug && <div className="text-text-muted italic mt-1">{r._debug.message}</div>}
             </div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

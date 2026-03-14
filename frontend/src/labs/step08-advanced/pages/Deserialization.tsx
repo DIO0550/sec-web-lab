@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -42,13 +43,13 @@ function DeserPanel({
       <PresetButtons presets={presets} onSelect={(p) => setData(p.value)} className="mb-2" />
       <FetchButton onClick={() => onDeserialize(data)} disabled={isLoading}>デシリアライズ</FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.message} className="mt-2">
-          {result.result && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{result.result}</pre>}
-          {result.data && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
-          {result._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.message ?? ""} className="mt-2">
+          {result?.result && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{result.result}</pre>}
+          {result?.data && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
+          {result?._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

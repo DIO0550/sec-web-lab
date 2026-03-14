@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { PresetButtons } from "@/components/PresetButtons";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
@@ -26,9 +27,9 @@ function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "s
       <PresetButtons presets={presets} onSelect={(p) => setName(p.value)} className="mb-2" />
       <FetchButton onClick={() => onTest(name)} disabled={isLoading}>ページ取得</FetchButton>
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <div className="mt-2 p-3 rounded bg-bg-secondary border">
-          {result.html && (
+          {result?.html && (
             <div>
               <div className="text-xs font-bold">生成HTML:</div>
               <pre className="text-xs bg-white p-2 rounded mt-1 overflow-auto">{result.html}</pre>
@@ -36,15 +37,15 @@ function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "s
           )}
           <div className="mt-2">
             <div className="text-xs font-bold">CSPヘッダー:</div>
-            <pre className="text-[10px] bg-white p-2 rounded mt-1 overflow-auto break-all">{result.cspHeader || "(未設定)"}</pre>
+            <pre className="text-[10px] bg-white p-2 rounded mt-1 overflow-auto break-all">{result?.cspHeader || "(未設定)"}</pre>
           </div>
-          {result._debug && (
+          {result?._debug && (
             <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}
               {result._debug.risks && <ul className="mt-1">{result._debug.risks.map((r, i) => <li key={i}>{r}</li>)}</ul>}
             </div>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

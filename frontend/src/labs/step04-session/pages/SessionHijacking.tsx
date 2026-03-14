@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { postJsonWithCredentials, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/session-hijacking";
@@ -109,22 +110,22 @@ function HijackingDemo({
         alice でログイン
       </FetchButton>
 
-      {loginResult && (
+      <ExpandableSection isOpen={!!loginResult}>
         <Alert
-          variant={loginResult.success ? "success" : "error"}
+          variant={loginResult?.success ? "success" : "error"}
           className="mt-2 text-xs"
         >
-          {loginResult.message}
-          {loginResult.sessionId && (
+          {loginResult?.message}
+          {loginResult?.sessionId && (
             <div className="font-mono text-[11px] opacity-70">
-              SessionID: {loginResult.sessionId}
+              SessionID: {loginResult?.sessionId}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
 
       {/* document.cookie 確認 */}
-      <div className="mt-2 p-2 bg-[#fff8e1] rounded text-xs">
+      <div className="mt-2 p-2 bg-warning-bg rounded text-xs">
         <strong>document.cookie:</strong>
         <pre className="m-0 mt-1 font-mono text-[11px] whitespace-pre-wrap break-all">
           {documentCookie || "(空)"}
@@ -164,11 +165,11 @@ function HijackingDemo({
       )}
 
       {/* コメント一覧 */}
-      {comments.length > 0 && (
+      <ExpandableSection isOpen={comments.length > 0}>
         <div className="mt-3">
           <strong className="text-xs">コメント一覧:</strong>
           {comments.map((c) => (
-            <div key={c.id} className="p-2 mt-1 bg-[#f5f5f5] rounded text-xs">
+            <div key={c.id} className="p-2 mt-1 bg-code-bg rounded text-xs">
               <div className="font-bold">{c.username}</div>
               {mode === "vulnerable" ? (
                 // ⚠️ 脆弱版: dangerouslySetInnerHTML で XSS が発動する
@@ -177,21 +178,21 @@ function HijackingDemo({
                 // ✅ 安全版: テキストとして表示（HTMLはエスケープ済み）
                 <div>{c.content}</div>
               )}
-              <div className="text-[11px] text-[#888]">{c.createdAt}</div>
+              <div className="text-[11px] text-text-muted">{c.createdAt}</div>
             </div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
 
       {/* プロフィール結果 */}
-      {profileResult && (
-        <div className="mt-2 p-2 bg-[#f5f5f5] rounded text-xs">
+      <ExpandableSection isOpen={!!profileResult}>
+        <div className="mt-2 p-2 bg-code-bg rounded text-xs">
           <strong>プロフィール:</strong>
           <pre className="m-0 mt-1 text-[11px]">
             {JSON.stringify(profileResult, null, 2)}
           </pre>
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -220,7 +221,7 @@ export function SessionHijacking() {
       </div>
 
       <h3 className="mt-4">Lab: XSSによるセッションID窃取</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         ログイン後、XSSペイロードをコメントとして投稿してください。
         脆弱版では <code>document.cookie</code> でセッションIDが読み取れ、
         XSS経由で窃取可能です。安全版では <code>HttpOnly</code> によりJavaScriptからアクセスできません。

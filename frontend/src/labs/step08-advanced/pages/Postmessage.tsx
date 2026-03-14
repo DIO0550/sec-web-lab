@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -57,13 +58,13 @@ function MsgPanel({
         メッセージ送信
       </FetchButton>
 
-      {processResult && (
-        <Alert variant={processResult.success ? "success" : "error"} title={processResult.success ? "メッセージ処理" : "拒否"} className="mt-2">
-          {processResult.message && <div className="text-[13px] mt-1">{processResult.message}</div>}
-          {processResult.receivedFrom && <div className="text-xs mt-1">From: {processResult.receivedFrom}</div>}
-          {processResult._debug && <div className="mt-2 text-xs italic opacity-70">{processResult._debug.message}</div>}
+      <ExpandableSection isOpen={!!processResult}>
+        <Alert variant={processResult?.success ? "success" : "error"} title={processResult?.success ? "メッセージ処理" : "拒否"} className="mt-2">
+          {processResult?.message && <div className="text-[13px] mt-1">{processResult.message}</div>}
+          {processResult?.receivedFrom && <div className="text-xs mt-1">From: {processResult.receivedFrom}</div>}
+          {processResult?._debug && <div className="mt-2 text-xs italic opacity-70">{processResult._debug.message}</div>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

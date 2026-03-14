@@ -2,6 +2,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/cache-control";
@@ -30,36 +31,36 @@ function CachePanel({
         プロフィール取得
       </FetchButton>
 
-      {result && (
-        <div className="mt-2 p-3 rounded bg-[#f5f5f5] border">
-          {result.profile && (
+      <ExpandableSection isOpen={!!result}>
+        <div className="mt-2 p-3 rounded bg-code-bg border">
+          {result?.profile && (
             <div>
               <div className="text-xs font-bold mb-1">個人情報:</div>
               <pre className="text-xs overflow-auto bg-white p-2 rounded">
-                {JSON.stringify(result.profile, null, 2)}
+                {JSON.stringify(result?.profile, null, 2)}
               </pre>
             </div>
           )}
-          {result.headers && (
+          {result?.headers && (
             <div className="mt-2">
               <div className="text-xs font-bold mb-1">キャッシュ制御ヘッダー:</div>
               <pre className="text-xs overflow-auto bg-white p-2 rounded">
-                {Object.entries(result.headers).map(([k, v]) => `${k}: ${v}`).join("\n")}
+                {Object.entries(result?.headers ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}
               </pre>
             </div>
           )}
-          {result._debug && (
+          {result?._debug && (
             <div className="mt-2">
-              <div className="text-xs text-[#888] italic">{result._debug.message}</div>
-              {result._debug.risks && (
-                <ul className="text-xs text-[#c62828] mt-1">
-                  {result._debug.risks.map((r, i) => <li key={i}>{r}</li>)}
+              <div className="text-xs text-text-muted italic">{result?._debug.message}</div>
+              {result?._debug.risks && (
+                <ul className="text-xs text-error-text-light mt-1">
+                  {result?._debug.risks.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
               )}
             </div>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

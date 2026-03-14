@@ -9,6 +9,7 @@ import { PresetButtons } from "@/components/PresetButtons";
 import { DebugInfo } from "@/components/DebugInfo";
 import { ResultTable } from "@/components/ResultTable";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 const BASE = "/api/labs/sql-injection";
 
@@ -89,24 +90,24 @@ function LoginForm({
         className="mb-3"
       />
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <Alert
-          variant={result.success ? "success" : "error"}
-          title={result.success ? "ログイン成功" : "ログイン失敗"}
+          variant={result?.success ? "success" : "error"}
+          title={result?.success ? "ログイン成功" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result.message}</div>
-          {result.user && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2">
+          <div className="text-[13px]">{result?.message}</div>
+          {result?.user && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}
-          <DebugInfo debug={result._debug} summary="実行されたSQL" codeField="query" />
-          {result.error && (
-            <pre className="text-[11px] text-[#c00] mt-1">{result.error}</pre>
+          <DebugInfo debug={result?._debug ?? null} summary="実行されたSQL" codeField="query" />
+          {result?.error && (
+            <pre className="text-[11px] text-status-ng mt-1">{result.error}</pre>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -148,16 +149,16 @@ function SearchForm({
         className="mb-3"
       />
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <div className="mt-2">
-          <div className="text-[13px] text-[#888]">{result.count} 件の結果</div>
-          <ResultTable columns={searchColumns} data={result.results} className="mt-1" />
-          <DebugInfo debug={result._debug} summary="実行されたSQL" codeField="query" />
-          {result.error && (
-            <pre className="text-[11px] text-[#c00] mt-1">{result.error}</pre>
+          <div className="text-[13px] text-text-muted">{result?.count} 件の結果</div>
+          <ResultTable columns={searchColumns} data={result?.results ?? []} className="mt-1" />
+          <DebugInfo debug={result?._debug ?? null} summary="実行されたSQL" codeField="query" />
+          {result?.error && (
+            <pre className="text-[11px] text-status-ng mt-1">{result.error}</pre>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -193,7 +194,7 @@ export function SqlInjection() {
     >
       {/* 認証バイパス */}
       <h3 className="mt-6">Lab 1: 認証バイパス</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         ユーザー名に <code>{`' OR 1=1 --`}</code> を入力して、パスワードなしでログインを試みてください。
       </p>
       <ComparisonPanel
@@ -207,7 +208,7 @@ export function SqlInjection() {
 
       {/* データ抽出 */}
       <h3 className="mt-8">Lab 2: データ抽出 (UNION)</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         検索欄に <code>{`' UNION SELECT username, password FROM users --`}</code> を入力して、
         ユーザーテーブルの内容を抽出してみてください。
       </p>

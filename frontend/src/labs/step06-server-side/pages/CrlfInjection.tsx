@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/crlf-injection";
@@ -46,27 +47,27 @@ function CrlfPanel({
         リダイレクトテスト
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title="Locationヘッダー" className="mt-2">
-          <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-1 overflow-auto">{result.locationHeader}</pre>
-          {result.sanitized !== undefined && (
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title="Locationヘッダー" className="mt-2">
+          <pre className="text-xs bg-code-bg p-2 rounded mt-1 overflow-auto">{result?.locationHeader}</pre>
+          {result?.sanitized !== undefined && (
             <div className="text-xs mt-1">
-              {result.sanitized ? "改行コードが除去されました" : "サニタイズなし"}
+              {result?.sanitized ? "改行コードが除去されました" : "サニタイズなし"}
             </div>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              {result._debug.message}
-              {result._debug.injectedHeaders && result._debug.injectedHeaders.length > 0 && (
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
+              {result?._debug.injectedHeaders && result?._debug.injectedHeaders.length > 0 && (
                 <div className="mt-1">
                   注入されたヘッダー:
-                  <ul>{result._debug.injectedHeaders.map((h, i) => <li key={i} className="font-mono">{h}</li>)}</ul>
+                  <ul>{result?._debug.injectedHeaders.map((h, i) => <li key={i} className="font-mono">{h}</li>)}</ul>
                 </div>
               )}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

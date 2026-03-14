@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
@@ -58,7 +59,7 @@ function RegisterForm({
             checked={addRole}
             onChange={(e) => setAddRole(e.target.checked)}
           />
-          <span className="text-[#c00]">
+          <span className="text-status-ng">
             リクエストに <code>"role": "admin"</code> を追加する（Mass Assignment 攻撃）
           </span>
         </label>
@@ -76,34 +77,34 @@ function RegisterForm({
         ユーザー登録
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "登録成功" : "登録失敗"} className="mt-2">
-          <div className="text-[13px]">{result.message}</div>
-          {result.user && (
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "登録成功" : "登録失敗"} className="mt-2">
+          <div className="text-[13px]">{result?.message}</div>
+          {result?.user && (
             <div className="mt-2">
-              <pre className="text-xs bg-[#f5f5f5] p-2 rounded overflow-auto">
-                {JSON.stringify(result.user, null, 2)}
+              <pre className="text-xs bg-code-bg p-2 rounded overflow-auto">
+                {JSON.stringify(result?.user, null, 2)}
               </pre>
-              <div className={`text-sm font-bold mt-1 ${result.user.role === "admin" ? "text-[#c00]" : "text-[#080]"}`}>
-                role: {result.user.role}
-                {result.user.role === "admin" && " — 管理者権限を取得！"}
+              <div className={`text-sm font-bold mt-1 ${result?.user.role === "admin" ? "text-status-ng" : "text-status-ok"}`}>
+                role: {result?.user.role}
+                {result?.user.role === "admin" && " -- 管理者権限を取得！"}
               </div>
             </div>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              <div>{result._debug.message}</div>
-              {result._debug.receivedFields && (
-                <div>受信フィールド: {result._debug.receivedFields.join(", ")}</div>
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              <div>{result?._debug.message}</div>
+              {result?._debug.receivedFields && (
+                <div>受信フィールド: {result?._debug.receivedFields.join(", ")}</div>
               )}
-              {result._debug.roleSource && <div>role の出所: {result._debug.roleSource}</div>}
-              {result._debug.ignoredFields && (
-                <div>無視されたフィールド: {result._debug.ignoredFields.join(", ")}</div>
+              {result?._debug.roleSource && <div>role の出所: {result?._debug.roleSource}</div>}
+              {result?._debug.ignoredFields && (
+                <div>無視されたフィールド: {result?._debug.ignoredFields.join(", ")}</div>
               )}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -151,8 +152,8 @@ export function MassAssignment() {
       description="ユーザー登録やプロフィール更新のAPIに、本来送るべきでないフィールド（例: &quot;role&quot;: &quot;admin&quot;）を追加して送信するだけで、管理者権限を取得できてしまう脆弱性を体験します。"
     >
       <h3 className="mt-6">Step 1: ユーザー登録（Mass Assignment 攻撃）</h3>
-      <p className="text-sm text-[#666]">
-        ユーザー名とメールを入力し、<strong className="text-[#c00]">「role: admin を追加する」チェックボックス</strong>をONにして登録してみてください。
+      <p className="text-sm text-text-secondary">
+        ユーザー名とメールを入力し、<strong className="text-status-ng">「role: admin を追加する」チェックボックス</strong>をONにして登録してみてください。
         脆弱版では管理者として登録され、安全版では role フィールドが無視されます。
       </p>
       <ComparisonPanel
@@ -175,7 +176,7 @@ export function MassAssignment() {
       />
 
       <h3 className="mt-6">Step 2: 登録済みユーザーの確認</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         登録されたユーザーの一覧を確認し、role が正しく設定されているか比較してください。
       </p>
       <div className="flex gap-2 mb-3">
@@ -186,30 +187,30 @@ export function MassAssignment() {
           デモデータをリセット
         </Button>
       </div>
-      {users && (
+      <ExpandableSection isOpen={!!users}>
         <table className="w-full text-xs border-collapse">
           <thead>
-            <tr className="bg-[#f5f5f5]">
-              <th className="p-1 border border-[#ddd] text-left">ID</th>
-              <th className="p-1 border border-[#ddd] text-left">username</th>
-              <th className="p-1 border border-[#ddd] text-left">email</th>
-              <th className="p-1 border border-[#ddd] text-left">role</th>
+            <tr className="bg-code-bg">
+              <th className="p-1 border border-table-border text-left">ID</th>
+              <th className="p-1 border border-table-border text-left">username</th>
+              <th className="p-1 border border-table-border text-left">email</th>
+              <th className="p-1 border border-table-border text-left">role</th>
             </tr>
           </thead>
           <tbody>
-            {users.users.map((u) => (
+            {users?.users.map((u) => (
               <tr key={u.id}>
-                <td className="p-1 border border-[#ddd]">{u.id}</td>
-                <td className="p-1 border border-[#ddd]">{u.username}</td>
-                <td className="p-1 border border-[#ddd]">{u.email}</td>
-                <td className={`p-1 border border-[#ddd] font-bold ${u.role === "admin" ? "text-[#c00]" : ""}`}>
+                <td className="p-1 border border-table-border">{u.id}</td>
+                <td className="p-1 border border-table-border">{u.username}</td>
+                <td className="p-1 border border-table-border">{u.email}</td>
+                <td className={`p-1 border border-table-border font-bold ${u.role === "admin" ? "text-status-ng" : ""}`}>
                   {u.role}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      )}
+      </ExpandableSection>
 
       <CheckpointBox>
         <ul>

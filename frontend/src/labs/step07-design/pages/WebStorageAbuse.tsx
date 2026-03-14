@@ -2,6 +2,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/web-storage-abuse";
@@ -26,46 +27,46 @@ function StoragePanel({
 }) {
   return (
     <div>
-      <p className="text-xs text-[#666] mb-2">admin / admin123 でログイン</p>
+      <p className="text-xs text-text-secondary mb-2">admin / admin123 でログイン</p>
       <FetchButton onClick={onLogin} disabled={isLoading}>
         ログイン
       </FetchButton>
 
-      {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className="text-sm font-bold">{result.message}</div>
-          {result.token && (
+      <ExpandableSection isOpen={!!result}>
+        <div className={`mt-2 p-3 rounded ${result?.success ? "bg-success-bg border border-success-border" : "bg-error-bg-light border border-error-border"}`}>
+          <div className="text-sm font-bold">{result?.message}</div>
+          {result?.token && (
             <div className="mt-2">
               <div className="text-xs font-bold">レスポンスに含まれるトークン:</div>
-              <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-1 overflow-auto break-all">{result.token}</pre>
-              <div className="text-xs text-[#c62828] mt-1">
+              <pre className="text-xs bg-code-bg p-2 rounded mt-1 overflow-auto break-all">{result?.token}</pre>
+              <div className="text-xs text-error-text-light mt-1">
                 → フロントエンドがlocalStorage.setItem("token", ...) で保存する想定
               </div>
             </div>
           )}
-          {!result.token && result.success && (
-            <div className="text-xs text-[#2e7d32] mt-1">
+          {!result?.token && result?.success && (
+            <div className="text-xs text-success-text mt-1">
               トークンはHttpOnly Cookieに保存（JavaScriptからアクセス不可）
             </div>
           )}
-          {result._debug && (
+          {result?._debug && (
             <div className="mt-2">
-              <div className="text-xs text-[#888] italic">{result._debug.message}</div>
-              {result._debug.risks && (
-                <ul className="text-xs text-[#c62828] mt-1">
-                  {result._debug.risks.map((r, i) => <li key={i}>{r}</li>)}
+              <div className="text-xs text-text-muted italic">{result?._debug.message}</div>
+              {result?._debug.risks && (
+                <ul className="text-xs text-error-text-light mt-1">
+                  {result?._debug.risks.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
               )}
-              {result._debug.xssPayload && (
+              {result?._debug.xssPayload && (
                 <div className="mt-1">
-                  <div className="text-xs font-bold text-[#c62828]">XSS窃取コード:</div>
-                  <pre className="text-[10px] bg-[#fff3e0] p-1 rounded overflow-auto">{result._debug.xssPayload}</pre>
+                  <div className="text-xs font-bold text-error-text-light">XSS窃取コード:</div>
+                  <pre className="text-[10px] bg-warning-bg p-1 rounded overflow-auto">{result?._debug.xssPayload}</pre>
                 </div>
               )}
             </div>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/eval-injection";
@@ -46,18 +47,18 @@ function CalcPanel({
         計算実行
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "実行結果" : "エラー"} className="mt-2">
-          {result.expression && <div className="text-xs text-[#666] mt-1">式: {result.expression}</div>}
-          {result.result && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">{result.result}</pre>
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "実行結果" : "エラー"} className="mt-2">
+          {result?.expression && <div className="text-xs text-text-secondary mt-1">式: {result?.expression}</div>}
+          {result?.result && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">{result?.result}</pre>
           )}
-          {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>
+          {result?.message && <div className="text-[13px] mt-1">{result?.message}</div>}
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">{result?._debug.message}</div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
