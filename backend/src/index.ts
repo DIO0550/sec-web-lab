@@ -1,3 +1,4 @@
+import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
@@ -379,9 +380,12 @@ app.get("/api/labs", (c) => {
   });
 });
 
-console.log("Server starting on http://localhost:3000");
-
-export default {
-  port: 3000,
-  fetch: app.fetch,
-};
+serve(
+  {
+    fetch: app.fetch,
+    port: 3000,
+  },
+  (info) => {
+    console.log(`Server listening on http://localhost:${info.port}`);
+  }
+);

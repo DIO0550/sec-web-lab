@@ -11,6 +11,7 @@
     "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
+    "@hono/node-server": "^1.19.11",
     "bcryptjs": "^3.0.3",
     "hono": "^4.6.0",
     "pg": "^8.13.0"

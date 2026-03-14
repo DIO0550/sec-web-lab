@@ -63,7 +63,7 @@ export function useLabFetch<T>(
   const [loading, setLoading] = useState<string | null>(null);
 
   const fetchVulnerable = useCallback(
-    async (subPath = "/") => {
+    async (subPath = "") => {
       const key = `vulnerable-${subPath}`;
       setLoading(key);
       try {
@@ -78,7 +78,7 @@ export function useLabFetch<T>(
   );
 
   const fetchSecure = useCallback(
-    async (subPath = "/") => {
+    async (subPath = "") => {
       const key = `secure-${subPath}`;
       setLoading(key);
       try {
