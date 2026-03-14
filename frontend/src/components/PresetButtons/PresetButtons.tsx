@@ -28,7 +28,7 @@ export function PresetButtons<T extends { label: string }>({
 }: Props<T>) {
   return (
     <div className={className}>
-      <span className="text-xs text-[#888]">プリセット:</span>
+      <span className="text-xs text-text-muted">プリセット:</span>
       <div className="flex gap-1 flex-wrap mt-1">
         {presets.map((p) => (
           <Button

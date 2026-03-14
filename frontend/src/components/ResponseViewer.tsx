@@ -11,7 +11,7 @@ type HeaderViewerProps = {
  * JSON レスポンス + ヘッダーの表示コンポーネント
  */
 export function HeaderViewer({ result, mode }: HeaderViewerProps) {
-  if (!result) return null;
+  if (!result) return <div className="mt-4" />;
   const isVuln = mode === "vulnerable";
   return (
     <div className="mt-4">
@@ -40,7 +40,7 @@ type TextViewerProps = {
  * ステータスコードに応じて色分けする
  */
 export function TextViewer({ result }: TextViewerProps) {
-  if (!result) return null;
+  if (!result) return <div />;
   const isError = result.status >= 400;
   return (
     <div className="mt-2">
@@ -70,7 +70,7 @@ type JsonTextViewerProps = {
  * JSON パース可能ならインデント表示する
  */
 export function JsonTextViewer({ result }: JsonTextViewerProps) {
-  if (!result) return null;
+  if (!result) return <div />;
   const isError = result.status >= 400;
   let formatted: string;
   try {

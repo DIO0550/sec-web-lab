@@ -23,21 +23,21 @@ export function DebugInfo({
   className = "",
 }: Props) {
   if (!debug) {
-    return null;
+    return <div />;
   }
 
   return (
     <details className={`mt-2 ${className}`.trim()}>
-      <summary className="text-xs text-[#888] cursor-pointer">{summary}</summary>
+      <summary className="text-xs text-text-muted cursor-pointer">{summary}</summary>
       {codeField && debug[codeField] != null && (
-        <pre className="text-[11px] bg-vuln-bg text-vuln-text p-2 rounded">
+        <pre className="text-[11px] bg-code-bg text-vuln-text p-2 rounded">
           {String(debug[codeField])}
         </pre>
       )}
       {Object.entries(debug)
         .filter(([key]) => key !== codeField)
         .map(([key, value]) => (
-          <div key={key} className="text-[11px] text-[#888]">
+          <div key={key} className="text-[11px] text-text-muted">
             {key}: {typeof value === "object" ? JSON.stringify(value) : String(value)}
           </div>
         ))}
