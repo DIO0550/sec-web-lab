@@ -34,7 +34,7 @@ function FileTestList({
       </FetchButton>
 
       {TARGET_FILES.map((file) => (
-        <div key={file.path} className="mt-4 border-b border-[#ddd] pb-3">
+        <div key={file.path} className="mt-4 border-b border-table-border pb-3">
           <div className="flex items-center gap-2">
             <code>{file.label}</code>
             <FetchButton onClick={() => onFetch(mode, file.path)} disabled={isLoading} size="small">

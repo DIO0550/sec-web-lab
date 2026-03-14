@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
@@ -91,7 +92,7 @@ function RegisterForm({
               variant="ghost"
               size="sm"
               onClick={() => setPassword(p.password)}
-              className="text-[#c00]"
+              className="text-status-ng"
             >
               {p.label}
             </Button>
@@ -103,27 +104,27 @@ function RegisterForm({
             variant="ghost"
             size="sm"
             onClick={() => setPassword(strongPreset.password)}
-            className="text-[#080] ml-1"
+            className="text-status-ok ml-1"
           >
             {strongPreset.label}
           </Button>
         </div>
       </div>
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <Alert
-          variant={result.success ? "success" : "error"}
-          title={result.success ? "登録成功" : "登録失敗"}
+          variant={result?.success ? "success" : "error"}
+          title={result?.success ? "登録成功" : "登録失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result.message}</div>
-          {result._debug && (
+          <div className="text-[13px]">{result?.message}</div>
+          {result?._debug && (
             <div className="mt-1 text-[11px] opacity-70">
-              {result._debug.message}
+              {result?._debug.message}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -163,32 +164,32 @@ function StrengthChecker({
         className="mb-3"
       />
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-3">
           <table className="w-full text-[11px] border-collapse">
             <thead>
-              <tr className="bg-[#f5f5f5]">
-                <th className="p-1 border border-[#ddd] text-left">パスワード</th>
-                <th className="p-1 border border-[#ddd] text-left">長さ</th>
-                <th className="p-1 border border-[#ddd] text-left">判定</th>
-                <th className="p-1 border border-[#ddd] text-left">理由</th>
+              <tr className="bg-code-bg">
+                <th className="p-1 border border-table-border text-left">パスワード</th>
+                <th className="p-1 border border-table-border text-left">長さ</th>
+                <th className="p-1 border border-table-border text-left">判定</th>
+                <th className="p-1 border border-table-border text-left">理由</th>
               </tr>
             </thead>
             <tbody>
               {results.map((r, i) => (
-                <tr key={i} className={r.valid ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}>
-                  <td className="p-1 border border-[#ddd] font-mono">{r.password}</td>
-                  <td className="p-1 border border-[#ddd]">{r.length}</td>
-                  <td className="p-1 border border-[#ddd]">
-                    {r.valid ? <span className="text-[#2e7d32]">OK</span> : <span className="text-[#c62828]">NG</span>}
+                <tr key={i} className={r.valid ? "bg-success-bg" : "bg-error-bg-light"}>
+                  <td className="p-1 border border-table-border font-mono">{r.password}</td>
+                  <td className="p-1 border border-table-border">{r.length}</td>
+                  <td className="p-1 border border-table-border">
+                    {r.valid ? <span className="text-success-text">OK</span> : <span className="text-error-text-light">NG</span>}
                   </td>
-                  <td className="p-1 border border-[#ddd]">{r.reason ?? "-"}</td>
+                  <td className="p-1 border border-table-border">{r.reason ?? "-"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -230,7 +231,7 @@ export function WeakPasswordPolicy() {
       description="パスワード強度チェックがないと、123456 や password のような極めて弱いパスワードが登録でき、辞書攻撃で瞬時に突破されます。"
     >
       <h3 className="mt-6">Lab 1: パスワード登録テスト</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         弱いパスワード（<code>123456</code>, <code>a</code> 等）で登録を試みてください。
         脆弱版は何でも受け付けますが、安全版は強度チェックで拒否します。
       </p>
@@ -244,7 +245,7 @@ export function WeakPasswordPolicy() {
       />
 
       <h3 className="mt-8">Lab 2: パスワード強度チェッカー</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         様々なパスワードの強度をチェックしてみてください。
         安全版では8文字以上・大文字小文字数字・ブラックリスト照合の3段階チェックが行われます。
       </p>

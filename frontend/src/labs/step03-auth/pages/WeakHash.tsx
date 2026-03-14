@@ -2,6 +2,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Alert } from "@/components/Alert";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
@@ -53,29 +54,29 @@ function UsersPanel({
       </FetchButton>
 
       {result?.error && (
-        <pre className="text-[11px] text-[#c00] mt-2">{result.error}</pre>
+        <pre className="text-[11px] text-status-ng mt-2">{result.error}</pre>
       )}
 
-      {result?.users && (
+      <ExpandableSection isOpen={!!result?.users}>
         <div className="mt-3">
           <table className="w-full text-xs border-collapse">
             <thead>
-              <tr className="bg-[#f5f5f5]">
-                <th className="p-1 border border-[#ddd] text-left">username</th>
-                <th className="p-1 border border-[#ddd] text-left">password (hash)</th>
-                <th className="p-1 border border-[#ddd] text-left">algorithm</th>
-                <th className="p-1 border border-[#ddd] text-left">action</th>
+              <tr className="bg-code-bg">
+                <th className="p-1 border border-table-border text-left">username</th>
+                <th className="p-1 border border-table-border text-left">password (hash)</th>
+                <th className="p-1 border border-table-border text-left">algorithm</th>
+                <th className="p-1 border border-table-border text-left">action</th>
               </tr>
             </thead>
             <tbody>
-              {result.users.map((u) => (
+              {result?.users.map((u) => (
                 <tr key={u.id}>
-                  <td className="p-1 border border-[#ddd]">{u.username}</td>
-                  <td className={`p-1 border border-[#ddd] font-mono text-[10px] break-all ${mode === "vulnerable" ? "bg-[#fff8e1]" : "bg-[#e8f5e9]"}`}>
+                  <td className="p-1 border border-table-border">{u.username}</td>
+                  <td className={`p-1 border border-table-border font-mono text-[10px] break-all ${mode === "vulnerable" ? "bg-warning-bg" : "bg-success-bg"}`}>
                     {u.password}
                   </td>
-                  <td className="p-1 border border-[#ddd] text-[11px]">{u.hashAlgorithm}</td>
-                  <td className="p-1 border border-[#ddd]">
+                  <td className="p-1 border border-table-border text-[11px]">{u.hashAlgorithm}</td>
+                  <td className="p-1 border border-table-border">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -88,13 +89,13 @@ function UsersPanel({
               ))}
             </tbody>
           </table>
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              {result._debug.message}
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
             </div>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -119,7 +120,7 @@ function CrackPanel({
         <div>ハッシュ: <code className="text-[10px] break-all">{result.hash}</code></div>
         {result.password && (
           <div className="mt-1">
-            パスワード: <strong className="text-[#c00]">{result.password}</strong>
+            パスワード: <strong className="text-status-ng">{result.password}</strong>
           </div>
         )}
         {result.method && <div className="mt-1">手法: {result.method}</div>}
@@ -163,7 +164,7 @@ export function WeakHash() {
       description="MD5やSHA1でハッシュ化しても、レインボーテーブル（事前計算済みハッシュ対応表）を使えば数秒で元のパスワードに戻せてしまいます。"
     >
       <h3 className="mt-6">Lab 1: ハッシュ値の確認と逆引き</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         ユーザー一覧を取得し、各ユーザーのパスワードハッシュを確認してください。
         「逆引き」ボタンでレインボーテーブルによるハッシュ解読を体験できます。
       </p>

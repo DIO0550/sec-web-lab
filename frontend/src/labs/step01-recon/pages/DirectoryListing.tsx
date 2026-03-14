@@ -5,6 +5,7 @@ import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { TextViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 const BASE = "/api/labs/directory-listing";
 const SENSITIVE_FILES = ["config.bak", "database.sql", ".htpasswd", ".env.backup"];
@@ -53,21 +54,21 @@ export function DirectoryListing() {
         <FetchButton onClick={() => handleFetchListing(mode)} disabled={isLoading}>
           ディレクトリ一覧を取得
         </FetchButton>
-        {listing && (
+        <ExpandableSection isOpen={!!listing}>
           <div className="mt-2">
             <div className="text-[13px]">
-              Status: <span className={`${listing.status >= 400 ? "text-[#c00]" : "text-[#080]"} font-bold`}>{listing.status}</span>
+              Status: <span className={`${listing?.status !== undefined && listing.status >= 400 ? "text-status-ng" : "text-status-ok"} font-bold`}>{listing?.status}</span>
             </div>
             {isHtml ? (
               <div
-                className="bg-white border border-[#ccc] p-3 rounded mt-1 max-h-[300px] overflow-auto"
-                dangerouslySetInnerHTML={{ __html: listing.body }}
+                className="bg-white border border-input-border p-3 rounded mt-1 max-h-[300px] overflow-auto"
+                dangerouslySetInnerHTML={{ __html: listing?.body ?? "" }}
               />
             ) : (
               <TextViewer result={listing} />
             )}
           </div>
-        )}
+        </ExpandableSection>
 
         <h4 className="mt-4">2. 機密ファイルの取得</h4>
         <p className="text-[13px]">

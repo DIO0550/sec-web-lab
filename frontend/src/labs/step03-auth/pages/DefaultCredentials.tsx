@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
@@ -85,25 +86,25 @@ function LoginForm({
         className="mb-3"
       />
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <Alert
-          variant={result.success ? "success" : result.requirePasswordChange ? "warning" : "error"}
-          title={result.success ? "ログイン成功" : result.requirePasswordChange ? "パスワード変更が必要" : "ログイン失敗"}
+          variant={result?.success ? "success" : result?.requirePasswordChange ? "warning" : "error"}
+          title={result?.success ? "ログイン成功" : result?.requirePasswordChange ? "パスワード変更が必要" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result.message}</div>
-          {result.user && (
+          <div className="text-[13px]">{result?.message}</div>
+          {result?.user && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2">
-              {JSON.stringify(result.user, null, 2)}
+              {JSON.stringify(result?.user, null, 2)}
             </pre>
           )}
-          {result._debug && (
+          {result?._debug && (
             <div className="mt-2 text-xs opacity-70 italic">
-              {result._debug.message}
+              {result?._debug.message}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -154,14 +155,14 @@ function ChangePasswordForm({
         パスワード変更
       </FetchButton>
 
-      {changeResult && (
+      <ExpandableSection isOpen={!!changeResult}>
         <Alert
-          variant={changeResult.success ? "success" : "error"}
+          variant={changeResult?.success ? "success" : "error"}
           className="mt-2 text-xs"
         >
-          {changeResult.message}
+          {changeResult?.message}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -225,37 +226,37 @@ export function DefaultCredentials() {
       description="admin/admin123 等のデフォルト認証情報が変更されないまま運用されていると、攻撃者が公開情報からパスワードを入手して即座に管理者権限を取得できます。"
     >
       <h3 className="mt-6">Lab 1: デフォルト認証情報の確認</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         まず、攻撃者が入手可能なデフォルト認証情報のリストを確認してください。
       </p>
       <div className="mb-4">
         <FetchButton onClick={fetchDefaults} disabled={isLoading}>
           デフォルト認証情報を表示
         </FetchButton>
-        {defaults && (
+        <ExpandableSection isOpen={!!defaults}>
           <table className="w-full text-xs border-collapse mt-3">
             <thead>
-              <tr className="bg-[#f5f5f5]">
-                <th className="p-1 border border-[#ddd] text-left">username</th>
-                <th className="p-1 border border-[#ddd] text-left">password</th>
-                <th className="p-1 border border-[#ddd] text-left">情報源</th>
+              <tr className="bg-code-bg">
+                <th className="p-1 border border-table-border text-left">username</th>
+                <th className="p-1 border border-table-border text-left">password</th>
+                <th className="p-1 border border-table-border text-left">情報源</th>
               </tr>
             </thead>
             <tbody>
-              {defaults.credentials.map((cred, i) => (
+              {defaults?.credentials.map((cred, i) => (
                 <tr key={i}>
-                  <td className="p-1 border border-[#ddd]">{cred.username}</td>
-                  <td className="p-1 border border-[#ddd] font-mono">{cred.password}</td>
-                  <td className="p-1 border border-[#ddd] text-[11px]">{cred.source}</td>
+                  <td className="p-1 border border-table-border">{cred.username}</td>
+                  <td className="p-1 border border-table-border font-mono">{cred.password}</td>
+                  <td className="p-1 border border-table-border text-[11px]">{cred.source}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        )}
+        </ExpandableSection>
       </div>
 
       <h3 className="mt-6">Lab 2: デフォルトパスワードでログイン</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         デフォルトパスワード <code>admin123</code> でログインを試みてください。
         脆弱版ではそのままログインでき、安全版ではパスワード変更を求められます。
       </p>

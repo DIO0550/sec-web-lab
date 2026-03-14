@@ -7,6 +7,7 @@ import { Input } from "@/components/Input";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
 import { DebugInfo } from "@/components/DebugInfo";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 const BASE = "/api/labs/command-injection";
 
@@ -59,16 +60,16 @@ function PingForm({
 
       <PresetButtons presets={presets} onSelect={(p) => setHost(p.host)} className="mb-3" />
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <div className="mt-2">
           <div
-            className={`text-[13px] font-bold mb-1 ${result.success ? "text-[#080]" : "text-[#c00]"}`}
+            className={`text-[13px] font-bold mb-1 ${result?.success ? "text-status-ok" : "text-status-ng"}`}
           >
-            {result.success ? "実行成功" : "実行失敗"}
-            {result.message && ` — ${result.message}`}
+            {result?.success ? "実行成功" : "実行失敗"}
+            {result?.message && ` — ${result.message}`}
           </div>
 
-          {result.output && (
+          {result?.output && (
             <pre
               className={`bg-vuln-bg p-3 rounded overflow-auto text-xs max-h-[300px] whitespace-pre-wrap ${mode === "vulnerable" ? "text-vuln-text" : "text-secure-text"}`}
             >
@@ -76,7 +77,7 @@ function PingForm({
             </pre>
           )}
 
-          {result.stderr && (
+          {result?.stderr && (
             <pre
               className="bg-error-bg text-error-text p-2 rounded overflow-auto text-[11px] max-h-[150px] mt-1"
             >
@@ -84,9 +85,9 @@ function PingForm({
             </pre>
           )}
 
-          <DebugInfo debug={result._debug} summary="実行されたコマンド" codeField="command" />
+          <DebugInfo debug={result?._debug ?? null} summary="実行されたコマンド" codeField="command" />
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -111,7 +112,7 @@ export function CommandInjection() {
       description="ping ツールの入力欄にシェルのメタ文字を注入し、サーバー上で意図しないOSコマンドを実行させる脆弱性です。"
     >
       <h3 className="mt-6">ネットワーク診断ツール (ping)</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         ホスト名に <code>127.0.0.1; cat /etc/passwd</code> を入力して、
         <code>;</code> でコマンドを連結することでサーバー上のファイルを読み取れることを確認してください。
       </p>
@@ -128,37 +129,37 @@ export function CommandInjection() {
       <CheckpointBox variant="warning" title="シェルメタ文字の一覧">
         <table className="text-[13px] border-collapse w-full">
           <thead>
-            <tr className="bg-[#f5f5f5]">
-              <th className="p-1 px-2 border border-[#ddd] text-left">文字</th>
-              <th className="p-1 px-2 border border-[#ddd] text-left">意味</th>
-              <th className="p-1 px-2 border border-[#ddd] text-left">例</th>
+            <tr className="bg-code-bg">
+              <th className="p-1 px-2 border border-table-border text-left">文字</th>
+              <th className="p-1 px-2 border border-table-border text-left">意味</th>
+              <th className="p-1 px-2 border border-table-border text-left">例</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="p-1 px-2 border border-[#ddd]"><code>;</code></td>
-              <td className="p-1 px-2 border border-[#ddd]">コマンド区切り</td>
-              <td className="p-1 px-2 border border-[#ddd]"><code>ping 127.0.0.1; cat /etc/passwd</code></td>
+              <td className="p-1 px-2 border border-table-border"><code>;</code></td>
+              <td className="p-1 px-2 border border-table-border">コマンド区切り</td>
+              <td className="p-1 px-2 border border-table-border"><code>ping 127.0.0.1; cat /etc/passwd</code></td>
             </tr>
             <tr>
-              <td className="p-1 px-2 border border-[#ddd]"><code>&&</code></td>
-              <td className="p-1 px-2 border border-[#ddd]">前のコマンドが成功したら実行</td>
-              <td className="p-1 px-2 border border-[#ddd]"><code>ping 127.0.0.1 && whoami</code></td>
+              <td className="p-1 px-2 border border-table-border"><code>&&</code></td>
+              <td className="p-1 px-2 border border-table-border">前のコマンドが成功したら実行</td>
+              <td className="p-1 px-2 border border-table-border"><code>ping 127.0.0.1 && whoami</code></td>
             </tr>
             <tr>
-              <td className="p-1 px-2 border border-[#ddd]"><code>||</code></td>
-              <td className="p-1 px-2 border border-[#ddd]">前のコマンドが失敗したら実行</td>
-              <td className="p-1 px-2 border border-[#ddd]"><code>ping invalid || whoami</code></td>
+              <td className="p-1 px-2 border border-table-border"><code>||</code></td>
+              <td className="p-1 px-2 border border-table-border">前のコマンドが失敗したら実行</td>
+              <td className="p-1 px-2 border border-table-border"><code>ping invalid || whoami</code></td>
             </tr>
             <tr>
-              <td className="p-1 px-2 border border-[#ddd]"><code>|</code></td>
-              <td className="p-1 px-2 border border-[#ddd]">パイプ</td>
-              <td className="p-1 px-2 border border-[#ddd]"><code>ping 127.0.0.1 | head -1</code></td>
+              <td className="p-1 px-2 border border-table-border"><code>|</code></td>
+              <td className="p-1 px-2 border border-table-border">パイプ</td>
+              <td className="p-1 px-2 border border-table-border"><code>ping 127.0.0.1 | head -1</code></td>
             </tr>
             <tr>
-              <td className="p-1 px-2 border border-[#ddd]"><code>$()</code></td>
-              <td className="p-1 px-2 border border-[#ddd]">コマンド置換</td>
-              <td className="p-1 px-2 border border-[#ddd]"><code>ping $(whoami)</code></td>
+              <td className="p-1 px-2 border border-table-border"><code>$()</code></td>
+              <td className="p-1 px-2 border border-table-border">コマンド置換</td>
+              <td className="p-1 px-2 border border-table-border"><code>ping $(whoami)</code></td>
             </tr>
           </tbody>
         </table>

@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 // チェックするセキュリティヘッダーの定義
 const SECURITY_HEADERS = [
@@ -39,11 +40,11 @@ const SECURITY_HEADERS = [
 ];
 
 function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
-  if (!result) return null;
+  if (!result) return <div />;
   return (
     <table className="w-full border-collapse text-[13px] mt-2">
       <thead>
-        <tr className="bg-[#333] text-white">
+        <tr className="bg-table-header-bg text-white">
           <th className="py-1.5 px-2 text-left">ヘッダー</th>
           <th className="py-1.5 px-2 text-left">値</th>
           <th className="py-1.5 px-2 text-center w-[60px]">状態</th>
@@ -54,24 +55,24 @@ function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
           const value = result.headers[header.name.toLowerCase()];
           const isPresent = !!value;
           return (
-            <tr key={header.name} className="border-b border-[#ddd]">
+            <tr key={header.name} className="border-b border-table-border">
               <td className="py-1.5 px-2">
                 <code>{header.name}</code>
                 <br />
-                <span className="text-[11px] text-[#888]">{header.description}</span>
+                <span className="text-[11px] text-text-muted">{header.description}</span>
               </td>
               <td className="py-1.5 px-2">
                 {isPresent ? (
-                  <code className="text-[#080]">{value}</code>
+                  <code className="text-status-ok">{value}</code>
                 ) : (
-                  <span className="text-[#c00] italic">未設定</span>
+                  <span className="text-status-ng italic">未設定</span>
                 )}
               </td>
               <td className="py-1.5 px-2 text-center">
                 {isPresent ? (
-                  <span className="text-[#080] text-[18px]">OK</span>
+                  <span className="text-status-ok text-[18px]">OK</span>
                 ) : (
-                  <span className="text-[#c00] text-[18px]">NG</span>
+                  <span className="text-status-ng text-[18px]">NG</span>
                 )}
               </td>
             </tr>
@@ -104,7 +105,9 @@ export function HeaderExposure() {
             >
               ヘッダーを確認
             </FetchButton>
-            <HeaderCheckTable result={vulnerable} />
+            <ExpandableSection isOpen={!!vulnerable}>
+              <HeaderCheckTable result={vulnerable} />
+            </ExpandableSection>
           </>
         }
         secureContent={
@@ -118,7 +121,9 @@ export function HeaderExposure() {
             >
               ヘッダーを確認
             </FetchButton>
-            <HeaderCheckTable result={secure} />
+            <ExpandableSection isOpen={!!secure}>
+              <HeaderCheckTable result={secure} />
+            </ExpandableSection>
           </>
         }
       />
@@ -127,14 +132,14 @@ export function HeaderExposure() {
       <CheckpointBox title="各ヘッダーの役割" variant="warning">
         <table className="w-full border-collapse text-[13px]">
           <thead>
-            <tr className="bg-[#f5f5f5]">
+            <tr className="bg-code-bg">
               <th className="py-1.5 px-2 text-left">ヘッダー</th>
               <th className="py-1.5 px-2 text-left">欠如した場合のリスク</th>
             </tr>
           </thead>
           <tbody>
             {SECURITY_HEADERS.map((header) => (
-              <tr key={header.name} className="border-b border-[#ddd]">
+              <tr key={header.name} className="border-b border-table-border">
                 <td className="py-1.5 px-2"><code>{header.name}</code></td>
                 <td className="py-1.5 px-2">{header.attack}</td>
               </tr>
