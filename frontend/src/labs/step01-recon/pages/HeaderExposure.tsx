@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useLabFetch, fetchJsonWithHeaders, type HeaderResponse } from "../../../hooks/useLabFetch";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
@@ -11,31 +12,37 @@ const SECURITY_HEADERS = [
     name: "X-Content-Type-Options",
     description: "MIMEスニッフィング防止",
     attack: "ブラウザがContent-Typeを無視して中身を推測実行する",
+    labLink: null,
   },
   {
     name: "X-Frame-Options",
     description: "クリックジャッキング防止",
     attack: "iframeに埋め込まれて意図しない操作をさせられる",
+    labLink: { path: "/step07/clickjacking", label: "Clickjacking ラボ" },
   },
   {
     name: "X-XSS-Protection",
     description: "XSSフィルター (レガシー)",
     attack: "レガシーブラウザでXSSフィルターが動作しない",
+    labLink: { path: "/step02/xss", label: "XSS ラボ" },
   },
   {
     name: "Content-Security-Policy",
     description: "リソース読み込み制限",
     attack: "外部スクリプトの注入が容易になる",
+    labLink: { path: "/step09/csp", label: "CSP ラボ" },
   },
   {
     name: "Strict-Transport-Security",
     description: "HTTPS強制",
     attack: "中間者攻撃でHTTP通信を傍受される",
+    labLink: { path: "/step07/sensitive-data-http", label: "HTTP通信の危険性 ラボ" },
   },
   {
     name: "Referrer-Policy",
     description: "リファラー制御",
     attack: "URLのクエリパラメータ等が外部サイトに漏洩する",
+    labLink: null,
   },
 ];
 
@@ -135,6 +142,7 @@ export function HeaderExposure() {
             <tr className="bg-code-bg">
               <th className="py-1.5 px-2 text-left">ヘッダー</th>
               <th className="py-1.5 px-2 text-left">欠如した場合のリスク</th>
+              <th className="py-1.5 px-2 text-left">攻撃を体験</th>
             </tr>
           </thead>
           <tbody>
@@ -142,6 +150,15 @@ export function HeaderExposure() {
               <tr key={header.name} className="border-b border-table-border">
                 <td className="py-1.5 px-2"><code>{header.name}</code></td>
                 <td className="py-1.5 px-2">{header.attack}</td>
+                <td className="py-1.5 px-2">
+                  {header.labLink ? (
+                    <Link to={header.labLink.path} className="text-accent hover:underline">
+                      {header.labLink.label} →
+                    </Link>
+                  ) : (
+                    <span className="text-text-muted">—</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
