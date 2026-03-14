@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { PresetButtons } from "@/components/PresetButtons";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/xxe";
@@ -58,19 +59,19 @@ function XxePanel({
         XMLインポート
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "パース成功" : "拒否"} className="mt-2">
-          {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
-          {result.parsed && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
-              {JSON.stringify(result.parsed, null, 2)}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "パース成功" : "拒否"} className="mt-2">
+          {result?.message && <div className="text-[13px] mt-1">{result?.message}</div>}
+          {result?.parsed && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+              {JSON.stringify(result?.parsed, null, 2)}
             </pre>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">{result?._debug.message}</div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

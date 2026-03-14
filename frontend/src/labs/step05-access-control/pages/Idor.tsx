@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
@@ -68,12 +69,12 @@ function LoginForm({
         onSelect={(p) => { setUsername(p.username); setPassword(p.password); }}
         className="mt-1"
       />
-      {loginResult && (
-        <Alert variant={loginResult.success ? "success" : "error"} className="mt-2 text-xs">
-          {loginResult.message}
-          {loginResult.user && <span className="ml-1">(ID: {loginResult.user.id})</span>}
+      <ExpandableSection isOpen={!!loginResult}>
+        <Alert variant={loginResult?.success ? "success" : "error"} className="mt-2 text-xs">
+          {loginResult?.message}
+          {loginResult?.user && <span className="ml-1">(ID: {loginResult?.user.id})</span>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -105,25 +106,25 @@ function ProfileForm({
       <FetchButton onClick={() => onFetch(targetId)} disabled={isLoading || !sessionId}>
         プロフィール取得
       </FetchButton>
-      {!sessionId && <p className="text-xs text-[#888] mt-1">先にログインしてください</p>}
+      {!sessionId && <p className="text-xs text-text-muted mt-1">先にログインしてください</p>}
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
-          {result.message && <div className="text-[13px]">{result.message}</div>}
-          {result.profile && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
-              {JSON.stringify(result.profile, null, 2)}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
+          {result?.message && <div className="text-[13px]">{result?.message}</div>}
+          {result?.profile && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+              {JSON.stringify(result?.profile, null, 2)}
             </pre>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              {result._debug.message}
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
               <br />
-              ログインユーザーID: {result._debug.currentUserId} / リクエストID: {result._debug.requestedId}
+              ログインユーザーID: {result?._debug.currentUserId} / リクエストID: {result?._debug.requestedId}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -167,7 +168,7 @@ export function Idor() {
       description="URLやリクエストに含まれるユーザーIDを別の値に変えるだけで、本来アクセスできないはずの他人のデータを閲覧できてしまう脆弱性を体験します。"
     >
       <h3 className="mt-6">Step 1: ログイン</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         まず user1 (ID=2) としてログインしてください。その後、IDを書き換えて他ユーザーのプロフィールにアクセスしてみましょう。
       </p>
       <ComparisonPanel
@@ -180,7 +181,7 @@ export function Idor() {
       />
 
       <h3 className="mt-6">Step 2: 他ユーザーのプロフィールにアクセス</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         ログインしたユーザーとは異なるIDを指定して、プロフィールを取得してみてください。
         脆弱版では他ユーザーのデータが取得でき、安全版ではアクセスが拒否されます。
       </p>

@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { postJsonWithCredentials, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/session-fixation";
@@ -118,7 +119,7 @@ function VulnerableDemo() {
         </Button>
       </div>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-3">
           {results.map((r, i) => (
             <Alert
@@ -132,16 +133,16 @@ function VulnerableDemo() {
                   SessionID: {r.sessionId}
                 </div>
               )}
-              {r.warning && <div className="text-[#e65100]">{r.warning}</div>}
+              {r.warning && <div className="text-warning-text">{r.warning}</div>}
               {r.username && r.success && i === results.length - 1 && (
-                <div className="text-[#c00] font-bold mt-1">
+                <div className="text-status-ng font-bold mt-1">
                   セッション乗っ取り成功! {r.username} としてアクセスできました
                 </div>
               )}
             </Alert>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -218,7 +219,7 @@ function SecureDemo() {
         </Button>
       </div>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-3">
           {results.map((r, i) => (
             <Alert
@@ -227,11 +228,11 @@ function SecureDemo() {
               className="mb-1 text-xs"
             >
               <div className="font-bold">{r.message}</div>
-              {r.info && <div className="text-[#080]">{r.info}</div>}
+              {r.info && <div className="text-status-ok">{r.info}</div>}
             </Alert>
           ))}
         </div>
-      )}
+      </ExpandableSection>
 
       <Alert variant="info" className="mt-3 text-xs">
         <strong>ポイント:</strong> ログイン時に新しいセッションIDが生成され、古いIDは無効化されます。
@@ -250,7 +251,7 @@ export function SessionFixation() {
       description="ログイン時にセッションIDを再生成しないと、攻撃者が事前に指定したセッションIDのまま認証が成立し、セッションを乗っ取られます。"
     >
       <h3 className="mt-6">Lab: セッション固定攻撃のシミュレーション</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         脆弱版では攻撃者が仕込んだセッションIDがそのまま使われ、ログイン後に攻撃者がアクセスできます。
         安全版ではログイン時に新しいセッションIDが生成されるため、攻撃が失敗します。
       </p>

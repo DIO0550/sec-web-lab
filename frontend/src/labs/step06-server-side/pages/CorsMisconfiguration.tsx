@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { PresetButtons } from "@/components/PresetButtons";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/cors-misconfiguration";
@@ -44,23 +45,23 @@ function CorsPanel({
         プロフィール取得
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
-          {result.profile && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
-              {JSON.stringify(result.profile, null, 2)}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
+          {result?.profile && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+              {JSON.stringify(result?.profile, null, 2)}
             </pre>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">
-              {result._debug.message}
-              {result._debug.corsHeaders && (
-                <pre className="mt-1">{JSON.stringify(result._debug.corsHeaders, null, 2)}</pre>
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
+              {result?._debug.corsHeaders && (
+                <pre className="mt-1">{JSON.stringify(result?._debug.corsHeaders, null, 2)}</pre>
               )}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

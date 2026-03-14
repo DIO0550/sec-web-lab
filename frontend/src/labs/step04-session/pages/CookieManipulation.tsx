@@ -5,6 +5,7 @@ import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 import { getJson } from "../../../utils/api";
 
@@ -73,29 +74,29 @@ function LoginForm({
         </FetchButton>
       </div>
 
-      {result && (
+      <ExpandableSection isOpen={!!result}>
         <Alert
-          variant={result.success ? "success" : "error"}
-          title={result.success ? "ログイン成功" : "ログイン失敗"}
+          variant={result?.success ? "success" : "error"}
+          title={result?.success ? "ログイン成功" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result.message}</div>
-          {result.cookieAttributes && (
+          <div className="text-[13px]">{result?.message}</div>
+          {result?.cookieAttributes && (
             <div className="mt-2 text-xs">
               <div>
                 <strong>Cookie属性:</strong>
               </div>
               <div>
-                HttpOnly: {result.cookieAttributes.httpOnly ? "✅ 有効" : "❌ 無効"}
+                HttpOnly: {result?.cookieAttributes.httpOnly ? "✅ 有効" : "❌ 無効"}
               </div>
               <div>
-                Secure: {result.cookieAttributes.secure ? "✅ 有効" : "❌ 無効"}
+                Secure: {result?.cookieAttributes.secure ? "✅ 有効" : "❌ 無効"}
               </div>
-              <div>SameSite: {result.cookieAttributes.sameSite}</div>
+              <div>SameSite: {result?.cookieAttributes.sameSite}</div>
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
 
       {result?.success && (
         <div className="mt-3">
@@ -103,32 +104,32 @@ function LoginForm({
             Cookie情報を確認
           </FetchButton>
 
-          {cookieInfo && (
-            <div className="mt-2 p-2 bg-[#f5f5f5] rounded text-xs">
-              {cookieInfo.vulnerabilities && (
+          <ExpandableSection isOpen={!!cookieInfo}>
+            <div className="mt-2 p-2 bg-code-bg rounded text-xs">
+              {cookieInfo?.vulnerabilities && (
                 <div>
-                  <strong className="text-[#c00]">脆弱性:</strong>
+                  <strong className="text-status-ng">脆弱性:</strong>
                   <ul className="m-0 pl-4">
-                    {cookieInfo.vulnerabilities.map((v, i) => (
+                    {cookieInfo?.vulnerabilities.map((v, i) => (
                       <li key={i}>{v}</li>
                     ))}
                   </ul>
                 </div>
               )}
-              {cookieInfo.protections && (
+              {cookieInfo?.protections && (
                 <div>
-                  <strong className="text-[#080]">保護:</strong>
+                  <strong className="text-status-ok">保護:</strong>
                   <ul className="m-0 pl-4">
-                    {cookieInfo.protections.map((p, i) => (
+                    {cookieInfo?.protections.map((p, i) => (
                       <li key={i}>{p}</li>
                     ))}
                   </ul>
                 </div>
               )}
             </div>
-          )}
+          </ExpandableSection>
 
-          <div className="mt-2 p-2 bg-[#fff8e1] rounded text-xs">
+          <div className="mt-2 p-2 bg-warning-bg rounded text-xs">
             <strong>document.cookie の値:</strong>
             <pre className="m-0 mt-1 font-mono text-[11px] whitespace-pre-wrap break-all">
               {documentCookie || "(空 — HttpOnly の Cookie は表示されません)"}
@@ -192,7 +193,7 @@ export function CookieManipulation() {
       description="セッションCookieにHttpOnly・Secure・SameSite属性が設定されていないと、XSSによるセッション窃取、HTTP通信での傍受、CSRF攻撃での自動送信が可能になります。"
     >
       <h3 className="mt-6">Lab: ログインしてCookie属性を比較</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         両方のバージョンでログインし、発行されるCookieの属性の違いを確認してください。
         脆弱版では <code>document.cookie</code> でセッションIDが読み取れますが、
         安全版では <code>HttpOnly</code> により読み取れません。

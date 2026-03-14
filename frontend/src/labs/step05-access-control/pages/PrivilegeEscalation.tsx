@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -63,14 +64,14 @@ function LoginForm({
         onSelect={(p) => { setUsername(p.username); setPassword(p.password); }}
         className="mt-1"
       />
-      {loginResult && (
-        <Alert variant={loginResult.success ? "success" : "error"} className="mt-2 text-xs">
-          {loginResult.message}
-          {loginResult.user && (
-            <span className="ml-1">(role: <strong>{loginResult.user.role}</strong>)</span>
+      <ExpandableSection isOpen={!!loginResult}>
+        <Alert variant={loginResult?.success ? "success" : "error"} className="mt-2 text-xs">
+          {loginResult?.message}
+          {loginResult?.user && (
+            <span className="ml-1">(role: <strong>{loginResult?.user.role}</strong>)</span>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -132,32 +133,31 @@ export function PrivilegeEscalation() {
   };
 
   const renderResult = (result: UsersResult | SettingsResult | null, type: "users" | "settings") => {
-    if (!result) {
-      return null;
-    }
     return (
-      <Alert
-        variant={result.success ? "success" : "error"}
-        title={result.success ? (type === "users" ? "ユーザー一覧取得成功" : "設定変更成功") : "アクセス拒否"}
-        className="mt-2"
-      >
-        {result.message && <div className="text-[13px]">{result.message}</div>}
-        {type === "users" && "users" in result && result.users && (
-          <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto max-h-[200px]">
-            {JSON.stringify(result.users, null, 2)}
-          </pre>
-        )}
-        {type === "settings" && "settings" in result && result.settings && (
-          <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
-            {JSON.stringify(result.settings, null, 2)}
-          </pre>
-        )}
-        {result._debug && (
-          <div className="mt-2 text-xs text-[#888] italic">
-            {result._debug.message}
-          </div>
-        )}
-      </Alert>
+      <ExpandableSection isOpen={!!result}>
+        <Alert
+          variant={result?.success ? "success" : "error"}
+          title={result?.success ? (type === "users" ? "ユーザー一覧取得成功" : "設定変更成功") : "アクセス拒否"}
+          className="mt-2"
+        >
+          {result?.message && <div className="text-[13px]">{result?.message}</div>}
+          {type === "users" && result && "users" in result && result.users && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px]">
+              {JSON.stringify(result.users, null, 2)}
+            </pre>
+          )}
+          {type === "settings" && result && "settings" in result && result.settings && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+              {JSON.stringify(result.settings, null, 2)}
+            </pre>
+          )}
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">
+              {result?._debug.message}
+            </div>
+          )}
+        </Alert>
+      </ExpandableSection>
     );
   };
 
@@ -168,7 +168,7 @@ export function PrivilegeEscalation() {
       description="管理者用APIにロール検証がない場合、一般ユーザーが直接URLを叩くだけで管理者限定の操作（ユーザー一覧取得、設定変更等）を実行できてしまう脆弱性を体験します。"
     >
       <h3 className="mt-6">Step 1: 一般ユーザーでログイン</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         まず <code>user1</code>（一般ユーザー、role: user）としてログインしてください。
       </p>
       <ComparisonPanel
@@ -181,7 +181,7 @@ export function PrivilegeEscalation() {
       />
 
       <h3 className="mt-6">Step 2: 管理者用APIにアクセス</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         一般ユーザーのセッションで、管理者用のユーザー一覧APIにアクセスしてみてください。
         脆弱版では全ユーザー情報が取得でき、安全版では 403 エラーが返されます。
       </p>
@@ -191,7 +191,7 @@ export function PrivilegeEscalation() {
             <FetchButton onClick={() => fetchUsers("vulnerable")} disabled={users.loading || !vulnSession}>
               管理者用ユーザー一覧を取得
             </FetchButton>
-            {!vulnSession && <p className="text-xs text-[#888] mt-1">先にログインしてください</p>}
+            {!vulnSession && <p className="text-xs text-text-muted mt-1">先にログインしてください</p>}
             {renderResult(users.vulnerable, "users")}
           </div>
         }
@@ -200,14 +200,14 @@ export function PrivilegeEscalation() {
             <FetchButton onClick={() => fetchUsers("secure")} disabled={users.loading || !secureSession}>
               管理者用ユーザー一覧を取得
             </FetchButton>
-            {!secureSession && <p className="text-xs text-[#888] mt-1">先にログインしてください</p>}
+            {!secureSession && <p className="text-xs text-text-muted mt-1">先にログインしてください</p>}
             {renderResult(users.secure, "users")}
           </div>
         }
       />
 
       <h3 className="mt-6">Step 3: 管理者設定を変更</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         さらに、管理者用のシステム設定変更API（メンテナンスモード有効化）を実行してみてください。
       </p>
       <ComparisonPanel

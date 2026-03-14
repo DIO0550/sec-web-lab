@@ -6,6 +6,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { postJsonWithCredentials, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/csrf";
@@ -83,28 +84,28 @@ function VulnerableDemo() {
         alice でログイン
       </FetchButton>
 
-      {loginResult && (
+      <ExpandableSection isOpen={!!loginResult}>
         <Alert
-          variant={loginResult.success ? "success" : "error"}
+          variant={loginResult?.success ? "success" : "error"}
           className="mt-2 text-xs"
         >
-          {loginResult.message}
+          {loginResult?.message}
         </Alert>
-      )}
+      </ExpandableSection>
 
-      {loginResult?.success && (
+      <ExpandableSection isOpen={!!loginResult?.success}>
         <>
           <div className="mt-3">
             <FetchButton onClick={handleProfile} disabled={loading} size="small">
               プロフィール確認
             </FetchButton>
-            {profileResult && (
+            <ExpandableSection isOpen={!!profileResult}>
               <div className="mt-1 p-2 bg-bg-secondary rounded text-xs">
-                <div>ユーザー: {profileResult.username}</div>
-                <div>メール: {profileResult.email}</div>
-                <div>現在のパスワード: <code>{profileResult.currentPassword}</code></div>
+                <div>ユーザー: {profileResult?.username}</div>
+                <div>メール: {profileResult?.email}</div>
+                <div>現在のパスワード: <code>{profileResult?.currentPassword}</code></div>
               </div>
-            )}
+            </ExpandableSection>
           </div>
 
           <Alert variant="warning" className="mt-3">
@@ -122,18 +123,18 @@ function VulnerableDemo() {
               CSRF攻撃を実行（CSRFトークンなし）
             </FetchButton>
 
-            {changeResult && (
+            <ExpandableSection isOpen={!!changeResult}>
               <Alert
-                variant={changeResult.success ? "error" : "success"}
-                title={changeResult.success ? "攻撃成功!" : "攻撃失敗"}
+                variant={changeResult?.success ? "error" : "success"}
+                title={changeResult?.success ? "攻撃成功!" : "攻撃失敗"}
                 className="mt-2 text-xs"
               >
-                {changeResult.message}
+                {changeResult?.message}
               </Alert>
-            )}
+            </ExpandableSection>
           </Alert>
         </>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -213,16 +214,16 @@ function SecureDemo() {
         alice でログイン
       </FetchButton>
 
-      {loginResult && (
+      <ExpandableSection isOpen={!!loginResult}>
         <Alert
-          variant={loginResult.success ? "success" : "error"}
+          variant={loginResult?.success ? "success" : "error"}
           className="mt-2 text-xs"
         >
-          {loginResult.message}
+          {loginResult?.message}
         </Alert>
-      )}
+      </ExpandableSection>
 
-      {loginResult?.success && (
+      <ExpandableSection isOpen={!!loginResult?.success}>
         <>
           {/* 正規のパスワード変更フロー */}
           <Alert variant="success" className="mt-3">
@@ -234,11 +235,11 @@ function SecureDemo() {
                 CSRFトークンを取得
               </FetchButton>
             </div>
-            {csrfToken && (
+            <ExpandableSection isOpen={!!csrfToken}>
               <div className="p-1 bg-bg-secondary rounded text-[11px] font-mono mb-2 break-all">
                 Token: {csrfToken}
               </div>
-            )}
+            </ExpandableSection>
             <Input
               label="新しいパスワード"
               type="text"
@@ -253,14 +254,14 @@ function SecureDemo() {
             >
               パスワード変更（トークン付き）
             </FetchButton>
-            {changeResult && (
+            <ExpandableSection isOpen={!!changeResult}>
               <Alert
-                variant={changeResult.success ? "success" : "error"}
+                variant={changeResult?.success ? "success" : "error"}
                 className="mt-2 text-xs"
               >
-                {changeResult.message}
+                {changeResult?.message}
               </Alert>
-            )}
+            </ExpandableSection>
           </Alert>
 
           {/* CSRF攻撃の試行 */}
@@ -271,18 +272,18 @@ function SecureDemo() {
             <FetchButton onClick={handleCsrfAttack} disabled={loading} size="small">
               CSRF攻撃を実行（トークンなしで送信）
             </FetchButton>
-            {attackResult && (
+            <ExpandableSection isOpen={!!attackResult}>
               <Alert
-                variant={attackResult.success ? "error" : "success"}
-                title={attackResult.success ? "攻撃成功（問題あり）" : "攻撃失敗（防御成功）"}
+                variant={attackResult?.success ? "error" : "success"}
+                title={attackResult?.success ? "攻撃成功（問題あり）" : "攻撃失敗（防御成功）"}
                 className="mt-2 text-xs"
               >
-                {attackResult.message}
+                {attackResult?.message}
               </Alert>
-            )}
+            </ExpandableSection>
           </Alert>
         </>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
@@ -311,7 +312,7 @@ export function Csrf() {
       </div>
 
       <h3 className="mt-4">Lab: CSRF攻撃によるパスワード変更</h3>
-      <p className="text-sm text-[#666]">
+      <p className="text-sm text-text-secondary">
         脆弱版ではCSRFトークンなしでパスワード変更が成功します（外部サイトからのリクエストでも成功する）。
         安全版ではCSRFトークンが必要で、トークンなしのリクエストは拒否されます。
       </p>
