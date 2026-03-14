@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -37,13 +38,13 @@ function ValidationPanel({ mode, result, isLoading, onRegister }: { mode: "vulne
       />
       <FetchButton onClick={() => onRegister({ username, email, age: Number(age), website })} disabled={isLoading}>登録</FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} title={result.success ? "登録成功" : "バリデーションエラー"} className="mt-2">
-          {result.errors && <ul className="text-xs mt-1">{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul>}
-          {result.user && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.user, null, 2)}</pre>}
-          {result._debug && <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}</div>}
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "登録成功" : "バリデーションエラー"} className="mt-2">
+          {result?.errors && <ul className="text-xs mt-1">{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul>}
+          {result?.user && <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.user, null, 2)}</pre>}
+          {result?._debug && <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}</div>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

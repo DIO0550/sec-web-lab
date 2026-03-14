@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 import { getJson, postJson } from "../../../utils/api";
 
@@ -13,7 +14,7 @@ type AdminResult = { success: boolean; message: string; data?: Record<string, un
 function FailPanel({ mode, result, authDown, isLoading, onAccess, onToggle }: { mode: "vulnerable" | "secure"; result: AdminResult | null; authDown: boolean; isLoading: boolean; onAccess: () => void; onToggle: () => void }) {
   return (
     <div>
-      <div className={`text-xs p-2 rounded mb-2 ${authDown ? "bg-[#ffebee] text-[#c62828]" : "bg-[#e8f5e9] text-[#2e7d32]"}`}>
+      <div className={`text-xs p-2 rounded mb-2 ${authDown ? "bg-error-bg-light text-error-text-light" : "bg-success-bg text-success-text"}`}>
         認証サービス: {authDown ? "停止中" : "稼働中"}
       </div>
       <div className="flex gap-2 mb-2">
@@ -21,16 +22,16 @@ function FailPanel({ mode, result, authDown, isLoading, onAccess, onToggle }: { 
         <FetchButton onClick={onAccess} disabled={isLoading}>管理者ページにアクセス</FetchButton>
       </div>
 
-      {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className={`font-bold text-sm ${result.success ? "text-[#2e7d32]" : "text-[#c62828]"}`}>
-            {result.success ? "アクセス成功" : "アクセス拒否"}
+      <ExpandableSection isOpen={!!result}>
+        <div className={`mt-2 p-3 rounded ${result?.success ? "bg-success-bg border border-success-border" : "bg-error-bg-light border border-error-border"}`}>
+          <div className={`font-bold text-sm ${result?.success ? "text-success-text" : "text-error-text-light"}`}>
+            {result?.success ? "アクセス成功" : "アクセス拒否"}
           </div>
-          <div className="text-[13px] mt-1">{result.message}</div>
-          {result.data && <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
-          {result._debug && <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>}
+          <div className="text-[13px] mt-1">{result?.message}</div>
+          {result?.data && <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
+          {result?._debug && <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}</div>}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

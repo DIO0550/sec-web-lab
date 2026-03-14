@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { postJson } from "../../../utils/api";
@@ -48,7 +49,7 @@ function LoginPanel({
         <FetchButton onClick={onBruteForce} disabled={isLoading}>連続10回試行</FetchButton>
       </div>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[250px] overflow-auto">
           {results.map((r, i) => (
             <Alert key={i} variant={r.success ? "success" : r.locked ? "warning" : "error"} className="text-xs mb-1">
@@ -58,7 +59,7 @@ function LoginPanel({
             </Alert>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

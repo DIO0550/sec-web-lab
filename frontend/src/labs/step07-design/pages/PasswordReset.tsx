@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { postJson } from "../../../utils/api";
@@ -44,7 +45,7 @@ function ResetPanel({
 
       <Input label="トークン:" type="text" value={token} onChange={(e) => setToken(e.target.value)} className="mt-2 mb-2" />
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[200px] overflow-auto">
           {results.map((r, i) => (
             <Alert key={i} variant={r.success ? "success" : "error"} className="text-xs mb-1">
@@ -54,7 +55,7 @@ function ResetPanel({
             </Alert>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

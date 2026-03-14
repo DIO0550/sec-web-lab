@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/race-condition";
@@ -36,7 +37,7 @@ function RacePanel({
   return (
     <div>
       {stockInfo && (
-        <div className="text-sm mb-2 p-2 bg-[#f5f5f5] rounded">
+        <div className="text-sm mb-2 p-2 bg-code-bg rounded">
           在庫: {stockInfo.stock}個 / 購入数: {stockInfo.purchases}
         </div>
       )}
@@ -46,15 +47,15 @@ function RacePanel({
         <FetchButton onClick={onRace} disabled={isLoading}>同時5回購入</FetchButton>
       </div>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[200px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className={`text-xs p-1 mb-1 rounded ${r.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+            <div key={i} className={`text-xs p-1 mb-1 rounded ${r.success ? "bg-success-bg" : "bg-error-bg-light"}`}>
               #{i + 1}: {r.message} {r.stock !== undefined && `(残り: ${r.stock})`}
             </div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

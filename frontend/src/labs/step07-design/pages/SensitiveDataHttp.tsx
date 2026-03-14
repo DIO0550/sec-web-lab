@@ -2,6 +2,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/sensitive-data-http";
@@ -26,34 +27,34 @@ function HttpPanel({
 }) {
   return (
     <div>
-      <p className="text-xs text-[#666] mb-2">admin / admin123 でログイン</p>
+      <p className="text-xs text-text-secondary mb-2">admin / admin123 でログイン</p>
       <FetchButton onClick={onLogin} disabled={isLoading}>
         ログイン送信
       </FetchButton>
 
-      {result && (
-        <div className={`mt-2 p-3 rounded ${result.success ? "bg-[#e8f5e9] border border-[#4caf50]" : "bg-[#ffebee] border border-[#f44336]"}`}>
-          <div className="text-sm font-bold">{result.message}</div>
-          {result._debug && (
+      <ExpandableSection isOpen={!!result}>
+        <div className={`mt-2 p-3 rounded ${result?.success ? "bg-success-bg border border-success-border" : "bg-error-bg-light border border-error-border"}`}>
+          <div className="text-sm font-bold">{result?.message}</div>
+          {result?._debug && (
             <div className="mt-2">
-              <div className="text-xs text-[#888] italic">{result._debug.message}</div>
-              {result._debug.cookie && (
-                <div className="text-xs mt-1 font-mono bg-[#f5f5f5] p-1 rounded">{result._debug.cookie}</div>
+              <div className="text-xs text-text-muted italic">{result?._debug.message}</div>
+              {result?._debug.cookie && (
+                <div className="text-xs mt-1 font-mono bg-code-bg p-1 rounded">{result?._debug.cookie}</div>
               )}
-              {result._debug.risks && (
-                <ul className="text-xs mt-1 text-[#c62828]">
-                  {result._debug.risks.map((r, i) => <li key={i}>{r}</li>)}
+              {result?._debug.risks && (
+                <ul className="text-xs mt-1 text-error-text-light">
+                  {result?._debug.risks.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
               )}
             </div>
           )}
-          {result.protectedHeaders && (
-            <pre className="text-xs bg-[#f5f5f5] p-2 rounded mt-2 overflow-auto">
-              {JSON.stringify(result.protectedHeaders, null, 2)}
+          {result?.protectedHeaders && (
+            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+              {JSON.stringify(result?.protectedHeaders, null, 2)}
             </pre>
           )}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

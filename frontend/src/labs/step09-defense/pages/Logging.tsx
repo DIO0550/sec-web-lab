@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { postJson, getJson } from "../../../utils/api";
 
 const BASE = "/api/labs/logging";
@@ -16,15 +17,15 @@ function LogPanel({ mode, logs, isLoading, onLogin, onViewLogs }: { mode: "vulne
         <FetchButton onClick={onLogin} disabled={isLoading}>ログイン試行</FetchButton>
         <FetchButton onClick={onViewLogs} disabled={isLoading}>ログ閲覧</FetchButton>
       </div>
-      {logs.length > 0 && (
+      <ExpandableSection isOpen={logs.length > 0}>
         <div className="mt-2 max-h-[250px] overflow-auto">
           {logs.map((log, i) => (
-            <div key={i} className={`text-[10px] p-1 mb-1 rounded font-mono ${log.level === "WARN" ? "bg-[#fff3e0]" : "bg-[#f5f5f5]"}`}>
+            <div key={i} className={`text-[10px] p-1 mb-1 rounded font-mono ${log.level === "WARN" ? "bg-warning-bg" : "bg-code-bg"}`}>
               [{log.timestamp.substring(11, 19)}] [{log.level}] {log.message}
             </div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

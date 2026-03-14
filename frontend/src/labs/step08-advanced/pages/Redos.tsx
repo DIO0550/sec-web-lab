@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -46,20 +47,20 @@ function RedosPanel({
         バリデーション実行
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} className="mt-2">
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} className="mt-2">
           <div className="text-sm font-bold">
-            {result.matched ? "マッチ" : "不一致"} — {result.elapsed}
+            {result?.matched ? "マッチ" : "不一致"} — {result?.elapsed}
           </div>
-          {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
-          {result._debug && (
+          {result?.message && <div className="text-[13px] mt-1">{result.message}</div>}
+          {result?._debug && (
             <div className="mt-2 text-xs italic opacity-70">
               {result._debug.message}
               {result._debug.pattern && <div>パターン: {result._debug.pattern}</div>}
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Select } from "@/components/Select";
 import { Alert } from "@/components/Alert";
@@ -65,7 +66,7 @@ function OrderPanel({
         注文実行
       </FetchButton>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[250px] overflow-auto">
           {results.map((r, i) => (
             <Alert key={i} variant={r.success ? "success" : "error"} className="text-xs mb-1">
@@ -75,7 +76,7 @@ function OrderPanel({
             </Alert>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

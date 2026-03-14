@@ -2,6 +2,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
 
 const BASE = "/api/labs/clickjacking";
@@ -30,37 +31,37 @@ function ClickPanel({
         ヘッダー確認
       </FetchButton>
 
-      {result && (
-        <div className={`mt-2 p-3 rounded bg-[#f5f5f5] border`}>
+      <ExpandableSection isOpen={!!result}>
+        <div className={`mt-2 p-3 rounded bg-code-bg border`}>
           <div className="font-bold text-sm mb-2">レスポンスヘッダー</div>
-          {result._debug?.headers && (
+          {result?._debug?.headers && (
             <pre className="text-xs overflow-auto">
-              {Object.entries(result._debug.headers).map(([k, v]) => `${k}: ${v}`).join("\n")}
+              {Object.entries(result?._debug?.headers ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}
             </pre>
           )}
-          {result.protectedHeaders && (
+          {result?.protectedHeaders && (
             <pre className="text-xs overflow-auto">
-              {Object.entries(result.protectedHeaders).map(([k, v]) => `${k}: ${v}`).join("\n")}
+              {Object.entries(result?.protectedHeaders ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}
             </pre>
           )}
-          {result._debug && (
-            <div className="mt-2 text-xs text-[#888] italic">{result._debug.message}</div>
+          {result?._debug && (
+            <div className="mt-2 text-xs text-text-muted italic">{result?._debug.message}</div>
           )}
         </div>
-      )}
+      </ExpandableSection>
 
-      <div className="mt-3 p-3 border border-dashed border-[#ccc] rounded">
+      <div className="mt-3 p-3 border border-dashed border-input-border rounded">
         <div className="text-[13px] font-bold mb-1">攻撃シミュレーション</div>
-        <p className="text-xs text-[#666]">
+        <p className="text-xs text-text-secondary">
           攻撃者は透明なiframeの下にボタンを配置します。ユーザーは「当選しました！」と書かれたボタンをクリックしますが、
           実際には裏のiframeの「送金実行」ボタンをクリックしています。
         </p>
-        <div className="relative bg-[#eee] p-4 rounded mt-2 text-center">
+        <div className="relative bg-bg-tertiary p-4 rounded mt-2 text-center">
           <div className="text-sm">おめでとうございます！当選しました！</div>
-          <button className="mt-2 px-4 py-2 bg-[#ff6600] text-white rounded cursor-pointer">
+          <button className="mt-2 px-4 py-2 bg-warning-text text-white rounded cursor-pointer">
             賞品を受け取る
           </button>
-          <div className="text-[10px] text-[#888] mt-2">
+          <div className="text-[10px] text-text-muted mt-2">
             (実際には裏の iframe で「送金実行」が押される)
           </div>
         </div>

@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 
 const BASE = "/api/labs/http-methods";
 
@@ -38,16 +39,16 @@ function MethodPanel({
         ))}
       </div>
 
-      {results.length > 0 && (
+      <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-2 max-h-[300px] overflow-auto">
           {results.map((r, i) => (
-            <div key={i} className={`text-xs p-2 mb-1 rounded ${r.success ? "bg-[#e8f5e9]" : "bg-[#ffebee]"}`}>
+            <div key={i} className={`text-xs p-2 mb-1 rounded ${r.success ? "bg-success-bg" : "bg-error-bg-light"}`}>
               <span className="font-bold">{r.method || ""}</span>: {r.message}
-              {r._debug && <div className="text-[#888] italic mt-1">{r._debug.message}</div>}
+              {r._debug && <div className="text-text-muted italic mt-1">{r._debug.message}</div>}
             </div>
           ))}
         </div>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

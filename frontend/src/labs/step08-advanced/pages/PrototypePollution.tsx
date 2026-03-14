@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
@@ -49,10 +50,10 @@ function PollutionPanel({
         {mode === "vulnerable" && <FetchButton onClick={onAdmin} disabled={isLoading}>管理者ページ確認</FetchButton>}
       </div>
 
-      {mergeResult && (
+      <ExpandableSection isOpen={!!mergeResult}>
         <Alert variant="info" title="マージ結果:" className="mt-2">
-          {mergeResult.config && <pre className="text-xs mt-1 overflow-auto">{JSON.stringify(mergeResult.config, null, 2)}</pre>}
-          {mergeResult._debug && (
+          {mergeResult?.config && <pre className="text-xs mt-1 overflow-auto">{JSON.stringify(mergeResult.config, null, 2)}</pre>}
+          {mergeResult?._debug && (
             <div className="mt-2 text-xs italic opacity-70">
               {mergeResult._debug.message}
               {mergeResult._debug.prototypeCheck && (
@@ -63,13 +64,13 @@ function PollutionPanel({
             </div>
           )}
         </Alert>
-      )}
+      </ExpandableSection>
 
-      {adminResult && (
-        <Alert variant={adminResult.success ? "success" : "error"} title={adminResult.success ? "管理者アクセス成功（プロトタイプ汚染）" : "アクセス拒否"} className="mt-2">
-          <div className="text-[13px] mt-1">{adminResult.message}</div>
+      <ExpandableSection isOpen={!!adminResult}>
+        <Alert variant={adminResult?.success ? "success" : "error"} title={adminResult?.success ? "管理者アクセス成功（プロトタイプ汚染）" : "アクセス拒否"} className="mt-2">
+          <div className="text-[13px] mt-1">{adminResult?.message}</div>
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }

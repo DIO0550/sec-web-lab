@@ -3,6 +3,7 @@ import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
@@ -52,19 +53,19 @@ function SstiPanel({
         レンダリング
       </FetchButton>
 
-      {result && (
-        <Alert variant={result.success ? "success" : "error"} className="mt-2">
-          {result.rendered && (
+      <ExpandableSection isOpen={!!result}>
+        <Alert variant={result?.success ? "success" : "error"} className="mt-2">
+          {result?.rendered && (
             <div>
               <div className="text-xs font-bold">レンダリング結果:</div>
               <pre className="text-xs bg-bg-secondary p-2 rounded mt-1 overflow-auto">{result.rendered}</pre>
             </div>
           )}
-          {result.warning && <div className="text-xs mt-1">{result.warning}</div>}
-          {result.message && <div className="text-[13px] mt-1">{result.message}</div>}
-          {result._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
+          {result?.warning && <div className="text-xs mt-1">{result.warning}</div>}
+          {result?.message && <div className="text-[13px] mt-1">{result.message}</div>}
+          {result?._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
         </Alert>
-      )}
+      </ExpandableSection>
     </div>
   );
 }
