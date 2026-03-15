@@ -281,7 +281,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         {/* メインコンテンツ */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-scroll">
           <div className="max-w-[960px] mx-auto p-5">{children}</div>
         </main>
       </div>
