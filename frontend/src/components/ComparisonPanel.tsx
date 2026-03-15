@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Tabs } from "./Tabs";
 
 type Props = {
   vulnerableContent: ReactNode;
@@ -6,19 +7,26 @@ type Props = {
 };
 
 /**
- * 脆弱バージョン / 安全バージョンの横並び比較レイアウト
+ * 脆弱バージョン / 安全バージョンのタブ切り替え比較レイアウト
  */
 export function ComparisonPanel({ vulnerableContent, secureContent }: Props) {
   return (
-    <div className="flex flex-col sm:flex-row gap-6 mt-6">
-      <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-semibold text-vuln-text">脆弱バージョン</h3>
-        {vulnerableContent}
-      </div>
-      <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-semibold text-secure-text">安全バージョン</h3>
-        {secureContent}
-      </div>
+    <div className="mt-6">
+      <Tabs
+        keepMounted
+        tabs={[
+          {
+            id: "vulnerable",
+            label: <span className="text-vuln-text font-semibold">脆弱バージョン</span>,
+            content: vulnerableContent,
+          },
+          {
+            id: "secure",
+            label: <span className="text-secure-text font-semibold">安全バージョン</span>,
+            content: secureContent,
+          },
+        ]}
+      />
     </div>
   );
 }
