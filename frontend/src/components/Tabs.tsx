@@ -44,10 +44,10 @@ export function Tabs({ tabs, className = "", keepMounted = false }: Props) {
             role="tab"
             aria-selected={i === activeIndex}
             aria-controls={panelElId(i)}
-            className={`px-4 py-2.5 text-sm font-medium transition-colors -mb-px ${
+            className={`px-5 py-2.5 text-sm font-medium transition-colors duration-200 -mb-px cursor-pointer ${
               i === activeIndex
                 ? "border-b-2 border-accent"
-                : "border-b-2 border-transparent text-text-muted hover:text-text-primary"
+                : "border-b-2 border-transparent text-text-muted hover:text-text-primary hover:bg-bg-secondary rounded-t"
             }`}
             onClick={() => setActiveIndex(i)}
           >
