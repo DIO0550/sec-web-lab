@@ -102,6 +102,14 @@
   scrollbar-color: var(--color-border-light) transparent;
 }
 
+/* スクロールバー非表示（スクロール機能は維持） */
+.scrollbar-none {
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Edge */
+}
+
 /* ダークモード カラー上書き */
 .dark {
   /* 脆弱バージョンの配色（ダークモード） */

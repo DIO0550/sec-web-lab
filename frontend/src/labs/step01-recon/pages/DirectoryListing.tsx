@@ -6,6 +6,7 @@ import { TextViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { ExpandableSection } from "../../../components/ExpandableSection";
+import { Tabs } from "../../../components/Tabs";
 
 const BASE = "/api/labs/directory-listing";
 const SENSITIVE_FILES = ["config.bak", "database.sql", ".htpasswd", ".env.backup"];
@@ -48,48 +49,55 @@ export function DirectoryListing() {
   ) => {
     const isHtml = listing && listing.status < 400 && listing.contentType.includes("html");
     return (
-      <>
-        <h4>1. ディレクトリ一覧の取得</h4>
-        <p className="text-[13px]"><code>GET {BASE}/{mode}/static/</code></p>
-        <FetchButton onClick={() => handleFetchListing(mode)} disabled={isLoading}>
-          ディレクトリ一覧を取得
-        </FetchButton>
-        <ExpandableSection isOpen={!!listing}>
-          <div className="mt-2">
-            <div className="text-[13px]">
-              Status: <span className={`${listing?.status !== undefined && listing.status >= 400 ? "text-status-ng" : "text-status-ok"} font-bold`}>{listing?.status}</span>
-            </div>
-            {isHtml ? (
-              <div
-                className="bg-white border border-input-border p-3 rounded mt-1 max-h-[300px] overflow-auto"
-                dangerouslySetInnerHTML={{ __html: listing?.body ?? "" }}
-              />
-            ) : (
-              <TextViewer result={listing} />
-            )}
-          </div>
-        </ExpandableSection>
-
-        <h4 className="mt-4">2. 機密ファイルの取得</h4>
-        <p className="text-[13px]">
-          {mode === "vulnerable" ? "一覧で見つけたファイルにアクセス:" : "機密ファイルへのアクセスを試行:"}
-        </p>
-        <div className="flex gap-2 flex-wrap">
-          {SENSITIVE_FILES.map((f) => (
-            <FetchButton key={f} onClick={() => handleFetchFile(mode, f)} disabled={isLoading} size="small">
-              {f}
-            </FetchButton>
-          ))}
-        </div>
-        <TextViewer result={fileResults[`${mode}-${SENSITIVE_FILES.find((f) => fileResults[`${mode}-${f}`])}`] ?? null} />
-        {/* 全ファイル結果を表示 */}
-        {SENSITIVE_FILES.filter((f) => fileResults[`${mode}-${f}`]).map((f) => (
-          <div key={f} className="mt-2">
-            <code className="text-xs">{f}</code>
-            <TextViewer result={fileResults[`${mode}-${f}`] ?? null} />
-          </div>
-        ))}
-      </>
+      <Tabs
+        tabs={[
+          {
+            id: "listing",
+            label: "ディレクトリ一覧",
+            content: (
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <code className="text-[13px]">GET {BASE}/{mode}/static/</code>
+                  <FetchButton onClick={() => handleFetchListing(mode)} disabled={isLoading}>
+                    取得
+                  </FetchButton>
+                </div>
+                <ExpandableSection isOpen={!!listing}>
+                  <div className="mt-2">
+                    <div className="text-[13px]">
+                      Status: <span className={`${listing?.status !== undefined && listing.status >= 400 ? "text-status-ng" : "text-status-ok"} font-bold`}>{listing?.status}</span>
+                    </div>
+                    {isHtml ? (
+                      <div
+                        className="bg-white border border-input-border p-3 rounded mt-1 max-h-[300px] overflow-auto"
+                        dangerouslySetInnerHTML={{ __html: listing?.body ?? "" }}
+                      />
+                    ) : (
+                      <TextViewer result={listing} />
+                    )}
+                  </div>
+                </ExpandableSection>
+              </div>
+            ),
+          },
+          ...SENSITIVE_FILES.map((f) => ({
+            id: f,
+            label: f,
+            content: (
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <code className="text-[13px]">GET {BASE}/{mode}/static/{f}</code>
+                  <FetchButton onClick={() => handleFetchFile(mode, f)} disabled={isLoading}>
+                    取得
+                  </FetchButton>
+                </div>
+                <TextViewer result={fileResults[`${mode}-${f}`] ?? null} />
+              </div>
+            ),
+          })),
+        ]}
+        keepMounted
+      />
     );
   };
 
