@@ -150,7 +150,6 @@ function ChangePasswordForm({
       <FetchButton
         onClick={() => onChangePassword(username, currentPassword, newPassword)}
         disabled={isLoading}
-        size="small"
       >
         パスワード変更
       </FetchButton>

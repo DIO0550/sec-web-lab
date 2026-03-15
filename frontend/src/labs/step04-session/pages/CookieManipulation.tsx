@@ -100,7 +100,7 @@ function LoginForm({
 
       {result?.success && (
         <div className="mt-3">
-          <FetchButton onClick={() => onCheckCookie(mode)} disabled={isLoading} size="small">
+          <FetchButton onClick={() => onCheckCookie(mode)} disabled={isLoading}>
             Cookie情報を確認
           </FetchButton>
 

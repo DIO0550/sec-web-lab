@@ -76,7 +76,7 @@ export function DirectoryListing() {
         </p>
         <div className="flex gap-2 flex-wrap">
           {SENSITIVE_FILES.map((f) => (
-            <FetchButton key={f} onClick={() => handleFetchFile(mode, f)} disabled={isLoading} size="small">
+            <FetchButton key={f} onClick={() => handleFetchFile(mode, f)} disabled={isLoading}>
               {f}
             </FetchButton>
           ))}
