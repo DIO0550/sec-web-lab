@@ -104,7 +104,7 @@ export function Tabs({
   return (
     <div className={className}>
       <div
-        className="flex border-b border-border-light overflow-x-auto"
+        className="flex border-b border-border-light overflow-x-auto scrollbar-none"
         role="tablist"
       >
         {tabs.map((tab, i) => {
