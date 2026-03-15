@@ -20,7 +20,7 @@ const variantStyles: Record<NonNullable<Props["variant"]>, string> = {
 
 /** サイズごとのスタイルマッピング */
 const sizeStyles: Record<NonNullable<Props["size"]>, string> = {
-  sm: "text-xs py-0.5 px-2",
+  sm: "text-xs py-1 px-3",
   md: "text-sm py-1.5 px-4",
 };
 
