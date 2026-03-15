@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { fetchText } from "../../../hooks/useLabFetch";
 import { LabLayout } from "../../../components/LabLayout";
 import { ComparisonPanel } from "../../../components/ComparisonPanel";
@@ -11,13 +11,6 @@ import { ExpandableSection } from "../../../components/ExpandableSection";
 
 type FetchResult = { status: number; body: string } | null;
 
-/** リクエスト結果タブ1つ分のデータ */
-type ResultTab = {
-  id: string;
-  label: string;
-  result: FetchResult;
-};
-
 const BASE = "/api/labs/error-message-leakage";
 
 const TEST_INPUTS = [
@@ -27,23 +20,14 @@ const TEST_INPUTS = [
   { id: "1 OR 1=1", label: "SQL Injection (1 OR 1=1)", description: "SQLインジェクション試行" },
 ];
 
-let tabCounter = 0;
-const nextTabId = () => `req-${++tabCounter}`;
-
 function TestCaseList({
   mode,
-  tabs,
-  activeTabId,
-  onChangeTab,
-  onCloseTab,
+  results,
   isLoading,
   onTest,
 }: {
   mode: "vulnerable" | "secure";
-  tabs: ResultTab[];
-  activeTabId: string;
-  onChangeTab: (id: string) => void;
-  onCloseTab: (id: string) => void;
+  results: Record<string, FetchResult>;
   isLoading: boolean;
   onTest: (mode: "vulnerable" | "secure", id: string) => void;
 }) {
@@ -52,86 +36,48 @@ function TestCaseList({
       <h4 className={mode === "vulnerable" ? "text-status-ng" : "text-status-ok"}>
         {mode === "vulnerable" ? "脆弱バージョン" : "安全バージョン"}
       </h4>
-      {TEST_INPUTS.map((input) => (
-        <div key={input.id} className="mb-3">
-          <div className="flex items-center gap-2">
-            <FetchButton onClick={() => onTest(mode, input.id)} disabled={isLoading}>
-              実行
-            </FetchButton>
-            <span className="text-[13px]">{input.label}</span>
-            <span className="text-[11px] text-text-muted">-- {input.description}</span>
-          </div>
-        </div>
-      ))}
-
-      {tabs.length > 0 && (
-        <Tabs
-          tabs={tabs.map((tab) => ({
-            id: tab.id,
-            label: tab.label,
-            content: <JsonTextViewer result={tab.result} />,
-          }))}
-          activeTabId={activeTabId}
-          onChangeTab={onChangeTab}
-          closable
-          onCloseTab={onCloseTab}
-          className="mt-2"
-        />
-      )}
+      <Tabs
+        tabs={TEST_INPUTS.map((input) => ({
+          id: input.id,
+          label: input.label,
+          content: (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <FetchButton onClick={() => onTest(mode, input.id)} disabled={isLoading}>
+                  実行
+                </FetchButton>
+                <span className="text-[11px] text-text-muted">{input.description}</span>
+              </div>
+              <JsonTextViewer result={results[input.id] ?? null} />
+            </div>
+          ),
+        }))}
+        keepMounted
+      />
     </>
   );
 }
 
 export function ErrorMessageLeakage() {
-  const [vulnTabs, setVulnTabs] = useState<ResultTab[]>([]);
-  const [secureTabs, setSecureTabs] = useState<ResultTab[]>([]);
-  const [activeVulnTabId, setActiveVulnTabId] = useState("");
-  const [activeSecureTabId, setActiveSecureTabId] = useState("");
+  const [vulnerableResults, setVulnerableResults] = useState<Record<string, FetchResult>>({});
+  const [secureResults, setSecureResults] = useState<Record<string, FetchResult>>({});
   const [customInput, setCustomInput] = useState("");
   const [customVulnResult, setCustomVulnResult] = useState<FetchResult>(null);
   const [customSecureResult, setCustomSecureResult] = useState<FetchResult>(null);
   const [loading, setLoading] = useState<string | null>(null);
-  // 削除しても重複しない連番管理
-  const tabLabelCounterRef = useRef({ vulnerable: 0, secure: 0 });
 
   const isLoading = loading !== null;
 
   const handleTest = async (mode: "vulnerable" | "secure", inputId: string) => {
     setLoading(`${mode}-${inputId}`);
-    const setTabs = mode === "vulnerable" ? setVulnTabs : setSecureTabs;
-    const setActiveId = mode === "vulnerable" ? setActiveVulnTabId : setActiveSecureTabId;
-    const testInput = TEST_INPUTS.find((t) => t.id === inputId);
-
     try {
       const result = await fetchText(`${BASE}/${mode}/users/${encodeURIComponent(inputId)}`);
-      const labelNum = ++tabLabelCounterRef.current[mode];
-      const newTab: ResultTab = {
-        id: nextTabId(),
-        label: `${testInput?.label ?? inputId} #${labelNum}`,
-        result,
-      };
-      setTabs((prev) => [...prev, newTab]);
-      setActiveId(newTab.id);
+      const setter = mode === "vulnerable" ? setVulnerableResults : setSecureResults;
+      setter((prev) => ({ ...prev, [inputId]: result }));
     } catch (e) {
       console.error(e);
     }
     setLoading(null);
-  };
-
-  const handleCloseTab = (
-    tabId: string,
-    setTabs: React.Dispatch<React.SetStateAction<ResultTab[]>>,
-    setActiveId: React.Dispatch<React.SetStateAction<string>>,
-    currentTabs: ResultTab[],
-    currentActiveId: string,
-  ) => {
-    const idx = currentTabs.findIndex((t) => t.id === tabId);
-    const newTabs = currentTabs.filter((t) => t.id !== tabId);
-    setTabs(newTabs);
-    if (currentActiveId === tabId) {
-      const nextIdx = Math.min(idx, newTabs.length - 1);
-      setActiveId(newTabs[nextIdx]?.id ?? "");
-    }
   };
 
   const handleCustomTest = async () => {
@@ -162,26 +108,10 @@ export function ErrorMessageLeakage() {
       <h3 className="mt-6">プリセットテスト</h3>
       <ComparisonPanel
         vulnerableContent={
-          <TestCaseList
-            mode="vulnerable"
-            tabs={vulnTabs}
-            activeTabId={activeVulnTabId}
-            onChangeTab={setActiveVulnTabId}
-            onCloseTab={(id) => handleCloseTab(id, setVulnTabs, setActiveVulnTabId, vulnTabs, activeVulnTabId)}
-            isLoading={isLoading}
-            onTest={handleTest}
-          />
+          <TestCaseList mode="vulnerable" results={vulnerableResults} isLoading={isLoading} onTest={handleTest} />
         }
         secureContent={
-          <TestCaseList
-            mode="secure"
-            tabs={secureTabs}
-            activeTabId={activeSecureTabId}
-            onChangeTab={setActiveSecureTabId}
-            onCloseTab={(id) => handleCloseTab(id, setSecureTabs, setActiveSecureTabId, secureTabs, activeSecureTabId)}
-            isLoading={isLoading}
-            onTest={handleTest}
-          />
+          <TestCaseList mode="secure" results={secureResults} isLoading={isLoading} onTest={handleTest} />
         }
       />
 
