@@ -7,13 +7,6 @@ type Props = {
   loadingText?: string;
   isLoading?: boolean;
   children: ReactNode;
-  size?: "normal" | "small";
-};
-
-/** FetchButton の size を Button の size にマッピング */
-const sizeMap: Record<NonNullable<Props["size"]>, "sm" | "md"> = {
-  normal: "md",
-  small: "sm",
 };
 
 /**
@@ -21,6 +14,7 @@ const sizeMap: Record<NonNullable<Props["size"]>, "sm" | "md"> = {
  *
  * 内部で共通 Button コンポーネントを使用。
  * isLoading 時は disabled にし、loadingText があればそれを表示する。
+ * 常に md サイズで表示される。
  */
 export function FetchButton({
   onClick,
@@ -28,12 +22,11 @@ export function FetchButton({
   loadingText,
   isLoading,
   children,
-  size = "normal",
 }: Props) {
   return (
     <Button
       variant="primary"
-      size={sizeMap[size]}
+      size="md"
       disabled={disabled || !!isLoading}
       onClick={onClick}
     >

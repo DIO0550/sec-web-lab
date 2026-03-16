@@ -4,6 +4,7 @@ import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { TextViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Tabs } from "../../../components/Tabs";
 
 const TARGET_FILES = [
   { path: ".env", label: ".env (環境変数)" },
@@ -33,17 +34,24 @@ function FileTestList({
         全ファイル取得
       </FetchButton>
 
-      {TARGET_FILES.map((file) => (
-        <div key={file.path} className="mt-4 border-b border-table-border pb-3">
-          <div className="flex items-center gap-2">
-            <code>{file.label}</code>
-            <FetchButton onClick={() => onFetch(mode, file.path)} disabled={isLoading} size="small">
-              取得
-            </FetchButton>
-          </div>
-          <TextViewer result={results[file.path] ?? null} />
-        </div>
-      ))}
+      <Tabs
+        tabs={TARGET_FILES.map((file) => ({
+          id: file.path,
+          label: file.label,
+          content: (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <FetchButton onClick={() => onFetch(mode, file.path)} disabled={isLoading}>
+                  取得
+                </FetchButton>
+              </div>
+              <TextViewer result={results[file.path] ?? null} />
+            </div>
+          ),
+        }))}
+        keepMounted
+        className="mt-3"
+      />
     </>
   );
 }

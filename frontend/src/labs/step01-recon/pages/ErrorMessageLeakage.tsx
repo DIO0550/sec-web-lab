@@ -5,6 +5,7 @@ import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { JsonTextViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { Tabs } from "../../../components/Tabs";
 import { Input } from "@/components/Input";
 import { ExpandableSection } from "../../../components/ExpandableSection";
 
@@ -35,18 +36,24 @@ function TestCaseList({
       <h4 className={mode === "vulnerable" ? "text-status-ng" : "text-status-ok"}>
         {mode === "vulnerable" ? "脆弱バージョン" : "安全バージョン"}
       </h4>
-      {TEST_INPUTS.map((input) => (
-        <div key={input.id} className="mb-3">
-          <div className="flex items-center gap-2">
-            <FetchButton onClick={() => onTest(mode, input.id)} disabled={isLoading} size="small">
-              実行
-            </FetchButton>
-            <span className="text-[13px]">{input.label}</span>
-            <span className="text-[11px] text-text-muted">-- {input.description}</span>
-          </div>
-          <JsonTextViewer result={results[input.id] ?? null} />
-        </div>
-      ))}
+      <Tabs
+        tabs={TEST_INPUTS.map((input) => ({
+          id: input.id,
+          label: input.label,
+          content: (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <FetchButton onClick={() => onTest(mode, input.id)} disabled={isLoading}>
+                  実行
+                </FetchButton>
+                <span className="text-[11px] text-text-muted">{input.description}</span>
+              </div>
+              <JsonTextViewer result={results[input.id] ?? null} />
+            </div>
+          ),
+        }))}
+        keepMounted
+      />
     </>
   );
 }

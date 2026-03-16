@@ -151,13 +151,13 @@ function HijackingDemo({
             mono
           />
           <div className="flex gap-2 mt-1">
-            <FetchButton onClick={handlePostComment} disabled={loading} size="small">
+            <FetchButton onClick={handlePostComment} disabled={loading}>
               投稿
             </FetchButton>
-            <FetchButton onClick={handleLoadComments} disabled={loading} size="small">
+            <FetchButton onClick={handleLoadComments} disabled={loading}>
               一覧を読込
             </FetchButton>
-            <FetchButton onClick={handleCheckProfile} disabled={loading} size="small">
+            <FetchButton onClick={handleCheckProfile} disabled={loading}>
               プロフィール確認
             </FetchButton>
           </div>

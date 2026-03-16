@@ -96,7 +96,7 @@ function VulnerableDemo() {
       <ExpandableSection isOpen={!!loginResult?.success}>
         <>
           <div className="mt-3">
-            <FetchButton onClick={handleProfile} disabled={loading} size="small">
+            <FetchButton onClick={handleProfile} disabled={loading}>
               プロフィール確認
             </FetchButton>
             <ExpandableSection isOpen={!!profileResult}>
@@ -119,7 +119,7 @@ function VulnerableDemo() {
               onChange={(e) => setNewPassword(e.target.value)}
               className="mb-2"
             />
-            <FetchButton onClick={handleCsrfAttack} disabled={loading} size="small">
+            <FetchButton onClick={handleCsrfAttack} disabled={loading}>
               CSRF攻撃を実行（CSRFトークンなし）
             </FetchButton>
 
@@ -231,7 +231,7 @@ function SecureDemo() {
               正規のパスワード変更（CSRFトークン付き）
             </div>
             <div className="flex gap-2 mb-2">
-              <FetchButton onClick={handleGetToken} disabled={loading} size="small">
+              <FetchButton onClick={handleGetToken} disabled={loading}>
                 CSRFトークンを取得
               </FetchButton>
             </div>
@@ -250,7 +250,6 @@ function SecureDemo() {
             <FetchButton
               onClick={handleLegitChange}
               disabled={loading || !csrfToken}
-              size="small"
             >
               パスワード変更（トークン付き）
             </FetchButton>
@@ -269,7 +268,7 @@ function SecureDemo() {
             <div className="text-xs font-bold mb-1">
               CSRF攻撃シミュレーション（トークンなし）
             </div>
-            <FetchButton onClick={handleCsrfAttack} disabled={loading} size="small">
+            <FetchButton onClick={handleCsrfAttack} disabled={loading}>
               CSRF攻撃を実行（トークンなしで送信）
             </FetchButton>
             <ExpandableSection isOpen={!!attackResult}>
