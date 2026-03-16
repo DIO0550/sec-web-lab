@@ -30,14 +30,14 @@ export function DebugInfo({
     <details className={`mt-2 ${className}`.trim()}>
       <summary className="text-xs text-text-muted cursor-pointer">{summary}</summary>
       {codeField && debug[codeField] != null && (
-        <pre className="text-[11px] bg-code-bg text-vuln-text p-2 rounded">
+        <pre className="text-xs bg-code-bg text-vuln-text p-3 rounded-lg">
           {String(debug[codeField])}
         </pre>
       )}
       {Object.entries(debug)
         .filter(([key]) => key !== codeField)
         .map(([key, value]) => (
-          <div key={key} className="text-[11px] text-text-muted">
+          <div key={key} className="text-xs text-text-muted">
             {key}: {typeof value === "object" ? JSON.stringify(value) : String(value)}
           </div>
         ))}

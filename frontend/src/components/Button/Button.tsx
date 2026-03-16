@@ -20,8 +20,8 @@ const variantStyles: Record<NonNullable<Props["variant"]>, string> = {
 
 /** サイズごとのスタイルマッピング */
 const sizeStyles: Record<NonNullable<Props["size"]>, string> = {
-  sm: "text-xs py-1 px-3",
-  md: "text-sm py-1.5 px-4",
+  sm: "text-xs py-1.5 px-3.5",
+  md: "text-sm py-2 px-5",
 };
 
 /**
@@ -44,7 +44,7 @@ export function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className={`cursor-pointer rounded transition-colors ${variantStyles[variant]} ${sizeStyles[size]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`.trim()}
+      className={`cursor-pointer rounded-lg transition-colors ${variantStyles[variant]} ${sizeStyles[size]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`.trim()}
     >
       {children}
     </button>

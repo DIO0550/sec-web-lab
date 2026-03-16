@@ -218,7 +218,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const asideWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : sidebarWidth;
 
   return (
-    <div className="h-screen flex flex-col bg-bg-primary dark:bg-bg-primary text-text-primary dark:text-text-primary">
+    <div className="h-screen flex flex-col bg-bg-primary text-text-primary">
       <Header
         onToggleSidebar={toggleMobileSidebar}
         isSidebarOpen={isMobileOpen}
@@ -228,7 +228,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {/* デスクトップサイドバー */}
         <aside
           ref={sidebarRef}
-          className={`hidden lg:block flex-shrink-0 border-r border-border-light dark:border-border-light overflow-hidden ${
+          className={`hidden lg:block flex-shrink-0 border-r border-border-light overflow-hidden ${
             isDragging ? "transition-none" : "transition-[width] duration-200"
           }`}
           style={{ width: asideWidth }}
@@ -256,7 +256,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             aria-valuemax={SIDEBAR_MAX_WIDTH}
             tabIndex={0}
           >
-            <div className="w-full bg-transparent group-hover:bg-accent dark:group-hover:bg-accent transition-colors duration-150" />
+            <div className="w-full bg-transparent group-hover:bg-accent transition-colors duration-150" />
           </div>
         )}
 
@@ -282,7 +282,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
         {/* メインコンテンツ */}
         <main className="flex-1 overflow-y-scroll">
-          <div className="max-w-[960px] mx-auto p-5">{children}</div>
+          <div className="max-w-5xl mx-auto p-6 lg:p-8">{children}</div>
         </main>
       </div>
     </div>

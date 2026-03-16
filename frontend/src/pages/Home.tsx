@@ -21,9 +21,9 @@ export function Home() {
 
   return (
     <div>
-      <div className="bg-bg-secondary dark:bg-bg-secondary rounded-lg p-6 mb-8">
-        <h1 className="text-3xl font-extrabold text-accent dark:text-accent m-0">sec-web-lab</h1>
-        <p className="text-lg text-text-secondary dark:text-text-secondary mt-2 mb-0">Web Security Hands-on Laboratory</p>
+      <div className="bg-bg-secondary rounded-lg p-8 mb-10 shadow-sm">
+        <h1 className="text-3xl font-extrabold text-accent m-0">sec-web-lab</h1>
+        <p className="text-lg text-text-secondary mt-2 mb-0">Web Security Hands-on Laboratory</p>
         <p className="mt-3 mb-0">
           Webセキュリティの脆弱性をステップごとに体験して学びます。
           各ステップには複数のラボがあり、<strong>脆弱バージョン</strong>と
@@ -43,10 +43,10 @@ export function Home() {
             >
               <div>
                 <h3 className="m-0 mb-1">{step.name}</h3>
-                <p className="m-0 text-text-secondary dark:text-text-secondary text-sm">{step.description}</p>
+                <p className="m-0 text-text-secondary text-sm">{step.description}</p>
               </div>
               <div className="text-right">
-                <span className="text-xs text-text-muted dark:text-text-muted">
+                <span className="text-xs text-text-muted">
                   {`${step.labs.length} labs`}
                 </span>
               </div>
@@ -57,7 +57,7 @@ export function Home() {
       <h3 className="mt-8 text-lg font-semibold">Server Status</h3>
       {error && <p className="text-error-text-light">Error: {error}</p>}
       {health ? (
-        <pre className="bg-bg-secondary dark:bg-bg-secondary p-3 rounded">
+        <pre className="bg-bg-secondary p-4 rounded-lg">
           {JSON.stringify(health, null, 2)}
         </pre>
       ) : (

@@ -181,7 +181,7 @@ export function Tabs({
           id={panelElId(i)}
           role="tabpanel"
           aria-labelledby={tabElId(i)}
-          className="pt-4"
+          className="pt-5"
           hidden={tab.id !== activeId}
         >
           {keepMounted || tab.id === activeId ? tab.content : null}
