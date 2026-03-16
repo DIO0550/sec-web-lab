@@ -5,6 +5,7 @@ import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { ExpandableSection } from "../../../components/ExpandableSection";
+import { EndpointUrl } from "../../../components/EndpointUrl";
 
 // チェックするセキュリティヘッダーの定義
 const SECURITY_HEADERS = [
@@ -49,7 +50,7 @@ const SECURITY_HEADERS = [
 function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
   if (!result) return <div />;
   return (
-    <table className="w-full border-collapse text-[13px] mt-2">
+    <table className="w-full border-collapse text-sm mt-2">
       <thead>
         <tr className="bg-table-header-bg text-white">
           <th className="py-1.5 px-2 text-left">ヘッダー</th>
@@ -66,7 +67,7 @@ function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
               <td className="py-1.5 px-2">
                 <code>{header.name}</code>
                 <br />
-                <span className="text-[11px] text-text-muted">{header.description}</span>
+                <span className="text-xs text-text-muted">{header.description}</span>
               </td>
               <td className="py-1.5 px-2">
                 {isPresent ? (
@@ -77,9 +78,9 @@ function HeaderCheckTable({ result }: { result: HeaderResponse | null }) {
               </td>
               <td className="py-1.5 px-2 text-center">
                 {isPresent ? (
-                  <span className="text-status-ok text-[18px]">OK</span>
+                  <span className="text-status-ok text-lg">OK</span>
                 ) : (
-                  <span className="text-status-ng text-[18px]">NG</span>
+                  <span className="text-status-ng text-lg">NG</span>
                 )}
               </td>
             </tr>
@@ -103,15 +104,21 @@ export function HeaderExposure() {
       <ComparisonPanel
         vulnerableContent={
           <>
-            <p><code>GET /api/labs/header-exposure/vulnerable/</code></p>
-            <FetchButton
-              onClick={() => fetchVulnerable()}
-              disabled={isLoading}
-              isLoading={loading?.startsWith("vulnerable")}
-              loadingText="送信中..."
+            <EndpointUrl
+              method="GET"
+              action={
+                <FetchButton
+                  onClick={() => fetchVulnerable()}
+                  disabled={isLoading}
+                  isLoading={loading?.startsWith("vulnerable")}
+                  loadingText="送信中..."
+                >
+                  ヘッダーを確認
+                </FetchButton>
+              }
             >
-              ヘッダーを確認
-            </FetchButton>
+              /api/labs/header-exposure/vulnerable/
+            </EndpointUrl>
             <ExpandableSection isOpen={!!vulnerable}>
               <HeaderCheckTable result={vulnerable} />
             </ExpandableSection>
@@ -119,15 +126,21 @@ export function HeaderExposure() {
         }
         secureContent={
           <>
-            <p><code>GET /api/labs/header-exposure/secure/</code></p>
-            <FetchButton
-              onClick={() => fetchSecure()}
-              disabled={isLoading}
-              isLoading={loading?.startsWith("secure")}
-              loadingText="送信中..."
+            <EndpointUrl
+              method="GET"
+              action={
+                <FetchButton
+                  onClick={() => fetchSecure()}
+                  disabled={isLoading}
+                  isLoading={loading?.startsWith("secure")}
+                  loadingText="送信中..."
+                >
+                  ヘッダーを確認
+                </FetchButton>
+              }
             >
-              ヘッダーを確認
-            </FetchButton>
+              /api/labs/header-exposure/secure/
+            </EndpointUrl>
             <ExpandableSection isOpen={!!secure}>
               <HeaderCheckTable result={secure} />
             </ExpandableSection>
@@ -137,7 +150,7 @@ export function HeaderExposure() {
 
       {/* セキュリティヘッダー解説 */}
       <CheckpointBox title="各ヘッダーの役割" variant="warning">
-        <table className="w-full border-collapse text-[13px]">
+        <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-code-bg">
               <th className="py-1.5 px-2 text-left">ヘッダー</th>

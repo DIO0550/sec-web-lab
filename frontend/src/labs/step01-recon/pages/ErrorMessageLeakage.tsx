@@ -8,6 +8,7 @@ import { CheckpointBox } from "../../../components/CheckpointBox";
 import { Tabs } from "../../../components/Tabs";
 import { Input } from "@/components/Input";
 import { ExpandableSection } from "../../../components/ExpandableSection";
+import { EndpointUrl } from "../../../components/EndpointUrl";
 
 type FetchResult = { status: number; body: string } | null;
 
@@ -46,7 +47,7 @@ function TestCaseList({
                 <FetchButton onClick={() => onTest(mode, input.id)} disabled={isLoading}>
                   実行
                 </FetchButton>
-                <span className="text-[11px] text-text-muted">{input.description}</span>
+                <span className="text-xs text-text-muted">{input.description}</span>
               </div>
               <JsonTextViewer result={results[input.id] ?? null} />
             </div>
@@ -117,21 +118,28 @@ export function ErrorMessageLeakage() {
 
       {/* カスタム入力 */}
       <CheckpointBox title="カスタム入力テスト" variant="warning">
-        <p className="text-[13px] text-text-secondary">
+        <p className="text-sm text-text-secondary">
           任意の入力でエラーを誘発してみてください。脆弱版と安全版を同時にテストします。
         </p>
-        <div className="flex gap-2 items-center">
-          <code>/api/labs/error-message-leakage/[mode]/users/</code>
-          <Input
-            type="text"
-            value={customInput}
-            onChange={(e) => setCustomInput(e.target.value)}
-            placeholder="入力値"
-          />
-          <FetchButton onClick={handleCustomTest} disabled={isLoading || !customInput.trim()}>
-            テスト
-          </FetchButton>
-        </div>
+        <EndpointUrl
+          method="GET"
+          action={
+            <FetchButton onClick={handleCustomTest} disabled={isLoading || !customInput.trim()}>
+              テスト
+            </FetchButton>
+          }
+        >
+          <span className="flex items-center gap-1">
+            /api/labs/error-message-leakage/[mode]/users/
+            <input
+              type="text"
+              value={customInput}
+              onChange={(e) => setCustomInput(e.target.value)}
+              placeholder="入力値"
+              className="w-24 px-2 py-0.5 border border-input-border rounded bg-bg-primary text-text-primary text-sm outline-none focus:border-input-focus"
+            />
+          </span>
+        </EndpointUrl>
 
         <ExpandableSection isOpen={!!(customVulnResult || customSecureResult)}>
           <div className="flex gap-6 mt-3">

@@ -7,6 +7,7 @@ import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
 import { ExpandableSection } from "../../../components/ExpandableSection";
 import { Tabs } from "../../../components/Tabs";
+import { EndpointUrl } from "../../../components/EndpointUrl";
 
 const BASE = "/api/labs/directory-listing";
 const SENSITIVE_FILES = ["config.bak", "database.sql", ".htpasswd", ".env.backup"];
@@ -56,15 +57,20 @@ export function DirectoryListing() {
             label: "ディレクトリ一覧",
             content: (
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <code className="text-[13px]">GET {BASE}/{mode}/static/</code>
-                  <FetchButton onClick={() => handleFetchListing(mode)} disabled={isLoading}>
-                    取得
-                  </FetchButton>
-                </div>
+                <EndpointUrl
+                  method="GET"
+                  className="mb-2"
+                  action={
+                    <FetchButton onClick={() => handleFetchListing(mode)} disabled={isLoading}>
+                      取得
+                    </FetchButton>
+                  }
+                >
+                  {BASE}/{mode}/static/
+                </EndpointUrl>
                 <ExpandableSection isOpen={!!listing}>
                   <div className="mt-2">
-                    <div className="text-[13px]">
+                    <div className="text-sm">
                       Status: <span className={`${listing?.status !== undefined && listing.status >= 400 ? "text-status-ng" : "text-status-ok"} font-bold`}>{listing?.status}</span>
                     </div>
                     {isHtml ? (
@@ -85,12 +91,17 @@ export function DirectoryListing() {
             label: f,
             content: (
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <code className="text-[13px]">GET {BASE}/{mode}/static/{f}</code>
-                  <FetchButton onClick={() => handleFetchFile(mode, f)} disabled={isLoading}>
-                    取得
-                  </FetchButton>
-                </div>
+                <EndpointUrl
+                  method="GET"
+                  className="mb-2"
+                  action={
+                    <FetchButton onClick={() => handleFetchFile(mode, f)} disabled={isLoading}>
+                      取得
+                    </FetchButton>
+                  }
+                >
+                  {BASE}/{mode}/static/{f}
+                </EndpointUrl>
                 <TextViewer result={fileResults[`${mode}-${f}`] ?? null} />
               </div>
             ),
