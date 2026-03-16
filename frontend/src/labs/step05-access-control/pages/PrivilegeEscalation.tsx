@@ -140,7 +140,7 @@ export function PrivilegeEscalation() {
           title={result?.success ? (type === "users" ? "ユーザー一覧取得成功" : "設定変更成功") : "アクセス拒否"}
           className="mt-2"
         >
-          {result?.message && <div className="text-[13px]">{result?.message}</div>}
+          {result?.message && <div className="text-sm">{result?.message}</div>}
           {type === "users" && result && "users" in result && result.users && (
             <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px]">
               {JSON.stringify(result.users, null, 2)}

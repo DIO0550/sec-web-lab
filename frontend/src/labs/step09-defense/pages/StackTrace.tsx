@@ -24,8 +24,8 @@ function StackPanel({ mode, results, isLoading, onTest }: { mode: "vulnerable" |
               {r.error && <div className="font-bold">{r.error}</div>}
               {r.message && <div>{r.message}</div>}
               {r.errorId && <div className="text-text-secondary">Error ID: {r.errorId}</div>}
-              {r.stack && <pre className="text-[10px] mt-1 overflow-auto max-h-[100px] bg-code-bg p-1 rounded">{r.stack}</pre>}
-              {r.debug && <pre className="text-[10px] mt-1 overflow-auto bg-code-bg p-1 rounded">{JSON.stringify(r.debug, null, 2)}</pre>}
+              {r.stack && <pre className="text-xs mt-1 overflow-auto max-h-[100px] bg-code-bg p-1 rounded">{r.stack}</pre>}
+              {r.debug && <pre className="text-xs mt-1 overflow-auto bg-code-bg p-1 rounded">{JSON.stringify(r.debug, null, 2)}</pre>}
               {r._debug && <div className="text-text-muted italic mt-1">{r._debug.message}</div>}
             </div>
           ))}

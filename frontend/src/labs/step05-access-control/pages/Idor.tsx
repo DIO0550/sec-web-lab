@@ -110,7 +110,7 @@ function ProfileForm({
 
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
-          {result?.message && <div className="text-[13px]">{result?.message}</div>}
+          {result?.message && <div className="text-sm">{result?.message}</div>}
           {result?.profile && (
             <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result?.profile, null, 2)}

@@ -66,7 +66,7 @@ function FileForm({
 
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "ファイル取得成功" : "取得失敗"} className="mt-2">
-          {result?.message && <div className="text-[13px]">{result?.message}</div>}
+          {result?.message && <div className="text-sm">{result?.message}</div>}
           {result?.content && (
             <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px] whitespace-pre-wrap">
               {result?.content}

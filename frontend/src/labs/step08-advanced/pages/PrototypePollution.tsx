@@ -68,7 +68,7 @@ function PollutionPanel({
 
       <ExpandableSection isOpen={!!adminResult}>
         <Alert variant={adminResult?.success ? "success" : "error"} title={adminResult?.success ? "管理者アクセス成功（プロトタイプ汚染）" : "アクセス拒否"} className="mt-2">
-          <div className="text-[13px] mt-1">{adminResult?.message}</div>
+          <div className="text-sm mt-1">{adminResult?.message}</div>
         </Alert>
       </ExpandableSection>
     </div>

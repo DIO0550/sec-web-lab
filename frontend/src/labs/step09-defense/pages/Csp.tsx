@@ -37,7 +37,7 @@ function CspPanel({ mode, result, isLoading, onTest }: { mode: "vulnerable" | "s
           )}
           <div className="mt-2">
             <div className="text-xs font-bold">CSPヘッダー:</div>
-            <pre className="text-[10px] bg-white p-2 rounded mt-1 overflow-auto break-all">{result?.cspHeader || "(未設定)"}</pre>
+            <pre className="text-xs bg-white p-2 rounded mt-1 overflow-auto break-all">{result?.cspHeader || "(未設定)"}</pre>
           </div>
           {result?._debug && (
             <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}

@@ -20,7 +20,7 @@ function LogPanel({ mode, logs, isLoading, onLogin, onViewLogs }: { mode: "vulne
       <ExpandableSection isOpen={logs.length > 0}>
         <div className="mt-2 max-h-[250px] overflow-auto">
           {logs.map((log, i) => (
-            <div key={i} className={`text-[10px] p-1 mb-1 rounded font-mono ${log.level === "WARN" ? "bg-warning-bg" : "bg-code-bg"}`}>
+            <div key={i} className={`text-xs p-1 mb-1 rounded font-mono ${log.level === "WARN" ? "bg-warning-bg" : "bg-code-bg"}`}>
               [{log.timestamp.substring(11, 19)}] [{log.level}] {log.message}
             </div>
           ))}

@@ -43,7 +43,7 @@ function PingForm({
   return (
     <div>
       <div className="mb-3">
-        <label className="text-[13px] block">ホスト名 / IPアドレス:</label>
+        <label className="text-sm block">ホスト名 / IPアドレス:</label>
         <div className="flex gap-2">
           <Input
             type="text"
@@ -63,7 +63,7 @@ function PingForm({
       <ExpandableSection isOpen={!!result}>
         <div className="mt-2">
           <div
-            className={`text-[13px] font-bold mb-1 ${result?.success ? "text-status-ok" : "text-status-ng"}`}
+            className={`text-sm font-bold mb-1 ${result?.success ? "text-status-ok" : "text-status-ng"}`}
           >
             {result?.success ? "実行成功" : "実行失敗"}
             {result?.message && ` — ${result.message}`}
@@ -79,7 +79,7 @@ function PingForm({
 
           {result?.stderr && (
             <pre
-              className="bg-error-bg text-error-text p-2 rounded overflow-auto text-[11px] max-h-[150px] mt-1"
+              className="bg-error-bg text-error-text p-2 rounded overflow-auto text-xs max-h-[150px] mt-1"
             >
               stderr: {result.stderr}
             </pre>
@@ -127,7 +127,7 @@ export function CommandInjection() {
       />
 
       <CheckpointBox variant="warning" title="シェルメタ文字の一覧">
-        <table className="text-[13px] border-collapse w-full">
+        <table className="text-sm border-collapse w-full">
           <thead>
             <tr className="bg-code-bg">
               <th className="p-1 px-2 border border-table-border text-left">文字</th>

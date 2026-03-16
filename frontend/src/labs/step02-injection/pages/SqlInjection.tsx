@@ -96,7 +96,7 @@ function LoginForm({
           title={result?.success ? "ログイン成功" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?.user && (
             <pre className="text-xs bg-code-bg p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
@@ -104,7 +104,7 @@ function LoginForm({
           )}
           <DebugInfo debug={result?._debug ?? null} summary="実行されたSQL" codeField="query" />
           {result?.error && (
-            <pre className="text-[11px] text-status-ng mt-1">{result.error}</pre>
+            <pre className="text-xs text-status-ng mt-1">{result.error}</pre>
           )}
         </Alert>
       </ExpandableSection>
@@ -129,7 +129,7 @@ function SearchForm({
   return (
     <div>
       <div className="mb-3">
-        <label className="text-[13px] block">検索キーワード:</label>
+        <label className="text-sm block">検索キーワード:</label>
         <div className="flex gap-2">
           <Input
             type="text"
@@ -151,11 +151,11 @@ function SearchForm({
 
       <ExpandableSection isOpen={!!result}>
         <div className="mt-2">
-          <div className="text-[13px] text-text-muted">{result?.count} 件の結果</div>
+          <div className="text-sm text-text-muted">{result?.count} 件の結果</div>
           <ResultTable columns={searchColumns} data={result?.results ?? []} className="mt-1" />
           <DebugInfo debug={result?._debug ?? null} summary="実行されたSQL" codeField="query" />
           {result?.error && (
-            <pre className="text-[11px] text-status-ng mt-1">{result.error}</pre>
+            <pre className="text-xs text-status-ng mt-1">{result.error}</pre>
           )}
         </div>
       </ExpandableSection>

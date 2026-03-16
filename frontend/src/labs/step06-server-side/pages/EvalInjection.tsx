@@ -53,7 +53,7 @@ function CalcPanel({
           {result?.result && (
             <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">{result?.result}</pre>
           )}
-          {result?.message && <div className="text-[13px] mt-1">{result?.message}</div>}
+          {result?.message && <div className="text-sm mt-1">{result?.message}</div>}
           {result?._debug && (
             <div className="mt-2 text-xs text-text-muted italic">{result?._debug.message}</div>
           )}

@@ -77,7 +77,7 @@ function ReflectedXssTest({
   return (
     <div>
       <div className="mb-3">
-        <label className="text-[13px] block">検索キーワード:</label>
+        <label className="text-sm block">検索キーワード:</label>
         <div className="flex gap-2">
           <Input
             type="text"
@@ -246,7 +246,7 @@ export function Xss() {
       />
 
       <CheckpointBox variant="warning" title="注意">
-        <p className="text-[13px] text-text-secondary">
+        <p className="text-sm text-text-secondary">
           脆弱版の「ブラウザでの描画結果」では、<code>dangerouslySetInnerHTML</code> を使用してHTMLを描画しています。
           実際のブラウザでは <code>&lt;script&gt;</code> タグは innerHTML 経由では実行されませんが、
           <code>&lt;img onerror&gt;</code> や <code>&lt;svg onload&gt;</code> は実行されます。

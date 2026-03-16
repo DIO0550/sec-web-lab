@@ -63,7 +63,7 @@ function UnsignedPanel({
 
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "アクセス成功" : "アクセス拒否"} className="mt-2">
-          <div className="text-[13px] mt-1">{result?.message}</div>
+          <div className="text-sm mt-1">{result?.message}</div>
           {result?.adminData && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result?.adminData, null, 2)}

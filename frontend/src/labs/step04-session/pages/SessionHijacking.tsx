@@ -117,7 +117,7 @@ function HijackingDemo({
         >
           {loginResult?.message}
           {loginResult?.sessionId && (
-            <div className="font-mono text-[11px] opacity-70">
+            <div className="font-mono text-xs opacity-70">
               SessionID: {loginResult?.sessionId}
             </div>
           )}
@@ -127,7 +127,7 @@ function HijackingDemo({
       {/* document.cookie 確認 */}
       <div className="mt-2 p-2 bg-warning-bg rounded text-xs">
         <strong>document.cookie:</strong>
-        <pre className="m-0 mt-1 font-mono text-[11px] whitespace-pre-wrap break-all">
+        <pre className="m-0 mt-1 font-mono text-xs whitespace-pre-wrap break-all">
           {documentCookie || "(空)"}
         </pre>
         <Button
@@ -178,7 +178,7 @@ function HijackingDemo({
                 // ✅ 安全版: テキストとして表示（HTMLはエスケープ済み）
                 <div>{c.content}</div>
               )}
-              <div className="text-[11px] text-text-muted">{c.createdAt}</div>
+              <div className="text-xs text-text-muted">{c.createdAt}</div>
             </div>
           ))}
         </div>
@@ -188,7 +188,7 @@ function HijackingDemo({
       <ExpandableSection isOpen={!!profileResult}>
         <div className="mt-2 p-2 bg-code-bg rounded text-xs">
           <strong>プロフィール:</strong>
-          <pre className="m-0 mt-1 text-[11px]">
+          <pre className="m-0 mt-1 text-xs">
             {JSON.stringify(profileResult, null, 2)}
           </pre>
         </div>

@@ -83,7 +83,7 @@ function JwtPanel({
 
       <ExpandableSection isOpen={!!profileResult}>
         <Alert variant={profileResult?.success ? "success" : "error"} title={profileResult?.success ? "認証成功" : "認証失敗"} className="mt-2">
-          <div className="text-[13px] mt-1">{profileResult?.message}</div>
+          <div className="text-sm mt-1">{profileResult?.message}</div>
           {profileResult?.profile && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(profileResult.profile, null, 2)}

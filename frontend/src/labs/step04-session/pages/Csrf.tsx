@@ -236,7 +236,7 @@ function SecureDemo() {
               </FetchButton>
             </div>
             <ExpandableSection isOpen={!!csrfToken}>
-              <div className="p-1 bg-bg-secondary rounded text-[11px] font-mono mb-2 break-all">
+              <div className="p-1 bg-bg-secondary rounded text-xs font-mono mb-2 break-all">
                 Token: {csrfToken}
               </div>
             </ExpandableSection>

@@ -42,7 +42,7 @@ function RedirectTest({
   return (
     <div>
       <div className="mb-3">
-        <label className="text-[13px] block">リダイレクト先URL:</label>
+        <label className="text-sm block">リダイレクト先URL:</label>
         <div className="flex gap-2">
           <Input
             type="text"
@@ -61,7 +61,7 @@ function RedirectTest({
 
       <ExpandableSection isOpen={!!result}>
         <div className="mt-2">
-          <table className="text-[13px] border-collapse w-full">
+          <table className="text-sm border-collapse w-full">
             <tbody>
               <tr>
                 <td className="p-1 px-2 border border-table-border font-bold w-[140px]">
@@ -164,13 +164,13 @@ export function OpenRedirect() {
       />
 
       <CheckpointBox variant="warning" title="攻撃シナリオ">
-        <p className="text-[13px] text-text-secondary">
+        <p className="text-sm text-text-secondary">
           攻撃者は以下のようなURLを作成し、被害者にメールやSNSで送信します:
         </p>
         <pre className="text-xs bg-white p-2 rounded overflow-auto">
           {`https://trusted-site.com/redirect?url=https://evil-site.com/login`}
         </pre>
-        <p className="text-[13px] text-text-secondary">
+        <p className="text-sm text-text-secondary">
           URLの冒頭が正規のドメインであるため、被害者は不審に思わずクリックし、
           フィッシングサイトのログインフォームに認証情報を入力してしまいます。
         </p>

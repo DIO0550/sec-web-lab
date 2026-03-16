@@ -117,9 +117,9 @@ function RegisterForm({
           title={result?.success ? "登録成功" : "登録失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?._debug && (
-            <div className="mt-1 text-[11px] opacity-70">
+            <div className="mt-1 text-xs opacity-70">
               {result?._debug.message}
             </div>
           )}
@@ -166,7 +166,7 @@ function StrengthChecker({
 
       <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-3">
-          <table className="w-full text-[11px] border-collapse">
+          <table className="w-full text-xs border-collapse">
             <thead>
               <tr className="bg-code-bg">
                 <th className="p-1 border border-table-border text-left">パスワード</th>

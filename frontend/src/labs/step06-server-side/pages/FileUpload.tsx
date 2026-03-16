@@ -55,7 +55,7 @@ function UploadPanel({
 
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "アップロード成功" : "アップロード拒否"} className="mt-2">
-          {result?.message && <div className="text-[13px] mt-1">{result?.message}</div>}
+          {result?.message && <div className="text-sm mt-1">{result?.message}</div>}
           {result?.file && (
             <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result?.file, null, 2)}
