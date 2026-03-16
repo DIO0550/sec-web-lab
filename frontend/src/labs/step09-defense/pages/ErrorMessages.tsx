@@ -41,7 +41,7 @@ function ErrorPanel({
           {results.map((r, i) => (
             <div key={i} className={`text-xs p-2 mb-1 rounded ${r.success ? "bg-success-bg" : "bg-error-bg-light"}`}>
               <div className="font-bold">{r.message}</div>
-              {r.stack && <pre className="text-[10px] mt-1 overflow-auto max-h-[100px]">{r.stack}</pre>}
+              {r.stack && <pre className="text-xs mt-1 overflow-auto max-h-[100px]">{r.stack}</pre>}
               {r._debug && <div className="text-text-muted italic mt-1">{r._debug.message}</div>}
             </div>
           ))}

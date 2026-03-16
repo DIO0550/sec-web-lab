@@ -54,23 +54,23 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
   const { theme, toggleTheme } = useThemeContext();
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-bg-secondary dark:bg-bg-secondary border-b border-border-light dark:border-border-light">
+    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-5 bg-bg-secondary border-b border-border-light shadow-sm">
       {/* 左側: ハンバーガー + ロゴ */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
-          className="lg:hidden p-1.5 rounded hover:bg-sidebar-hover dark:hover:bg-sidebar-hover text-text-primary dark:text-text-primary"
+          className="lg:hidden p-1.5 rounded hover:bg-sidebar-hover text-text-primary"
           aria-label={isSidebarOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
         >
           <span className="text-xl leading-none">{isSidebarOpen ? "✕" : "☰"}</span>
         </button>
         <Link
           to="/"
-          className="text-lg font-extrabold no-underline text-accent dark:text-accent"
+          className="text-lg font-extrabold no-underline text-accent"
         >
           sec-web-lab
         </Link>
-        <span className="hidden sm:inline text-xs text-text-secondary dark:text-text-secondary">
+        <span className="hidden sm:inline text-xs text-text-secondary">
           Web Security Hands-on Laboratory
         </span>
       </div>
@@ -78,7 +78,7 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
       {/* 右側: テーマトグル */}
       <button
         onClick={toggleTheme}
-        className="p-1.5 rounded hover:bg-sidebar-hover dark:hover:bg-sidebar-hover text-text-primary dark:text-text-primary"
+        className="p-1.5 rounded hover:bg-sidebar-hover text-text-primary"
         aria-label={
           theme === "dark" ? "ライトモードに切り替え" : "ダークモードに切り替え"
         }

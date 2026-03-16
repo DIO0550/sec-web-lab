@@ -53,7 +53,7 @@ function RegisterForm({
       <Input label="メール:" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="hacker@evil.com" className="mb-1" />
       <Input label="パスワード:" value={password} onChange={(e) => setPassword(e.target.value)} className="mb-1" />
       <div className="mb-2">
-        <label className="text-[13px] flex items-center gap-1">
+        <label className="text-sm flex items-center gap-1">
           <input
             type="checkbox"
             checked={addRole}
@@ -79,7 +79,7 @@ function RegisterForm({
 
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "登録成功" : "登録失敗"} className="mt-2">
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?.user && (
             <div className="mt-2">
               <pre className="text-xs bg-code-bg p-2 rounded overflow-auto">

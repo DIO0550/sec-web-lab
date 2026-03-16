@@ -80,7 +80,7 @@ function LoginForm({
           title={result?.success ? "ログイン成功" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?.cookieAttributes && (
             <div className="mt-2 text-xs">
               <div>
@@ -131,7 +131,7 @@ function LoginForm({
 
           <div className="mt-2 p-2 bg-warning-bg rounded text-xs">
             <strong>document.cookie の値:</strong>
-            <pre className="m-0 mt-1 font-mono text-[11px] whitespace-pre-wrap break-all">
+            <pre className="m-0 mt-1 font-mono text-xs whitespace-pre-wrap break-all">
               {documentCookie || "(空 — HttpOnly の Cookie は表示されません)"}
             </pre>
           </div>

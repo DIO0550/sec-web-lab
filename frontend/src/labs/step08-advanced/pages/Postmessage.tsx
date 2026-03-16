@@ -49,7 +49,7 @@ function MsgPanel({
       <FetchButton onClick={onViewCode} disabled={isLoading}>ハンドラーコードを確認</FetchButton>
 
       {codeResult?.code && (
-        <pre className="text-[10px] bg-bg-secondary p-2 rounded mt-2 overflow-auto max-h-[150px]">{codeResult.code}</pre>
+        <pre className="text-xs bg-bg-secondary p-2 rounded mt-2 overflow-auto max-h-[150px]">{codeResult.code}</pre>
       )}
 
       <Input label="送信元Origin:" type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} className="mt-3 mb-2" />
@@ -60,7 +60,7 @@ function MsgPanel({
 
       <ExpandableSection isOpen={!!processResult}>
         <Alert variant={processResult?.success ? "success" : "error"} title={processResult?.success ? "メッセージ処理" : "拒否"} className="mt-2">
-          {processResult?.message && <div className="text-[13px] mt-1">{processResult.message}</div>}
+          {processResult?.message && <div className="text-sm mt-1">{processResult.message}</div>}
           {processResult?.receivedFrom && <div className="text-xs mt-1">From: {processResult.receivedFrom}</div>}
           {processResult?._debug && <div className="mt-2 text-xs italic opacity-70">{processResult._debug.message}</div>}
         </Alert>

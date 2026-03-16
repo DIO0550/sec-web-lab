@@ -32,7 +32,7 @@ function LogInjPanel({ mode, logs, isLoading, onLogin, onViewLogs }: { mode: "vu
       <ExpandableSection isOpen={logs.length > 0}>
         <div className="mt-2 max-h-[250px] overflow-auto bg-terminal-bg p-2 rounded">
           {logs.map((log, i) => (
-            <div key={i} className="text-[10px] text-terminal-text font-mono">{log.timestamp.substring(11, 19)} | {log.message}</div>
+            <div key={i} className="text-xs text-terminal-text font-mono">{log.timestamp.substring(11, 19)} | {log.message}</div>
           ))}
         </div>
       </ExpandableSection>

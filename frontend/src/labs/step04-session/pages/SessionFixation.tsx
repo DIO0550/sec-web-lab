@@ -129,7 +129,7 @@ function VulnerableDemo() {
             >
               <div className="font-bold">{r.message}</div>
               {r.sessionId && (
-                <div className="font-mono text-[11px] opacity-70">
+                <div className="font-mono text-xs opacity-70">
                   SessionID: {r.sessionId}
                 </div>
               )}

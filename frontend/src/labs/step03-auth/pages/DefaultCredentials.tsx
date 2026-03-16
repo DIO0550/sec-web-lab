@@ -92,7 +92,7 @@ function LoginForm({
           title={result?.success ? "ログイン成功" : result?.requirePasswordChange ? "パスワード変更が必要" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?.user && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2">
               {JSON.stringify(result?.user, null, 2)}
@@ -246,7 +246,7 @@ export function DefaultCredentials() {
                 <tr key={i}>
                   <td className="p-1 border border-table-border">{cred.username}</td>
                   <td className="p-1 border border-table-border font-mono">{cred.password}</td>
-                  <td className="p-1 border border-table-border text-[11px]">{cred.source}</td>
+                  <td className="p-1 border border-table-border text-xs">{cred.source}</td>
                 </tr>
               ))}
             </tbody>

@@ -54,7 +54,7 @@ function UsersPanel({
       </FetchButton>
 
       {result?.error && (
-        <pre className="text-[11px] text-status-ng mt-2">{result.error}</pre>
+        <pre className="text-xs text-status-ng mt-2">{result.error}</pre>
       )}
 
       <ExpandableSection isOpen={!!result?.users}>
@@ -72,10 +72,10 @@ function UsersPanel({
               {result?.users.map((u) => (
                 <tr key={u.id}>
                   <td className="p-1 border border-table-border">{u.username}</td>
-                  <td className={`p-1 border border-table-border font-mono text-[10px] break-all ${mode === "vulnerable" ? "bg-warning-bg" : "bg-success-bg"}`}>
+                  <td className={`p-1 border border-table-border font-mono text-xs break-all ${mode === "vulnerable" ? "bg-warning-bg" : "bg-success-bg"}`}>
                     {u.password}
                   </td>
-                  <td className="p-1 border border-table-border text-[11px]">{u.hashAlgorithm}</td>
+                  <td className="p-1 border border-table-border text-xs">{u.hashAlgorithm}</td>
                   <td className="p-1 border border-table-border">
                     <Button
                       variant="ghost"
@@ -117,7 +117,7 @@ function CrackPanel({
       className="mt-3"
     >
       <div className="text-xs mt-1">
-        <div>ハッシュ: <code className="text-[10px] break-all">{result.hash}</code></div>
+        <div>ハッシュ: <code className="text-xs break-all">{result.hash}</code></div>
         {result.password && (
           <div className="mt-1">
             パスワード: <strong className="text-status-ng">{result.password}</strong>
@@ -126,7 +126,7 @@ function CrackPanel({
         {result.method && <div className="mt-1">手法: {result.method}</div>}
         {result.message && <div className="mt-1 opacity-70">{result.message}</div>}
         {result._debug?.reasons && (
-          <ul className="mt-2 text-[11px] opacity-70">
+          <ul className="mt-2 text-xs opacity-70">
             {result._debug.reasons.map((r, i) => <li key={i}>{r}</li>)}
           </ul>
         )}

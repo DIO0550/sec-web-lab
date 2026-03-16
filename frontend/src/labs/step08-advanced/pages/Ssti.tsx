@@ -62,7 +62,7 @@ function SstiPanel({
             </div>
           )}
           {result?.warning && <div className="text-xs mt-1">{result.warning}</div>}
-          {result?.message && <div className="text-[13px] mt-1">{result.message}</div>}
+          {result?.message && <div className="text-sm mt-1">{result.message}</div>}
           {result?._debug && <div className="mt-2 text-xs italic opacity-70">{result._debug.message}</div>}
         </Alert>
       </ExpandableSection>

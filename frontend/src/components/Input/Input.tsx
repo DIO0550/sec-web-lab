@@ -19,14 +19,14 @@ export function Input({ label, error, className = "", ...rest }: Props) {
   return (
     <div className={className}>
       {label && (
-        <label className="text-[13px] block mb-0.5">{label}</label>
+        <label className="text-sm font-medium block mb-1">{label}</label>
       )}
       <input
         {...rest}
-        className="py-1 px-2 border border-input-border rounded w-full bg-bg-primary text-text-primary focus:border-input-focus focus:ring-1 focus:ring-input-focus outline-none"
+        className="py-2 px-3 border border-input-border rounded-lg w-full bg-bg-primary text-text-primary focus:border-input-focus focus:ring-1 focus:ring-input-focus outline-none"
       />
       {error && (
-        <p className="text-error-text-light text-xs mt-0.5">{error}</p>
+        <p className="text-error-text-light text-xs mt-1">{error}</p>
       )}
     </div>
   );

@@ -4,6 +4,7 @@ import { ComparisonPanel } from "../../../components/ComparisonPanel";
 import { HeaderViewer } from "../../../components/ResponseViewer";
 import { FetchButton } from "../../../components/FetchButton";
 import { CheckpointBox } from "../../../components/CheckpointBox";
+import { EndpointUrl } from "../../../components/EndpointUrl";
 
 export function HeaderLeakage() {
   const { vulnerable, secure, loading, isLoading, fetchVulnerable, fetchSecure } =
@@ -18,29 +19,41 @@ export function HeaderLeakage() {
       <ComparisonPanel
         vulnerableContent={
           <>
-            <p><code>GET /api/labs/header-leakage/vulnerable/</code></p>
-            <FetchButton
-              onClick={() => fetchVulnerable()}
-              disabled={isLoading}
-              isLoading={loading?.startsWith("vulnerable")}
-              loadingText="送信中..."
+            <EndpointUrl
+              method="GET"
+              action={
+                <FetchButton
+                  onClick={() => fetchVulnerable()}
+                  disabled={isLoading}
+                  isLoading={loading?.startsWith("vulnerable")}
+                  loadingText="送信中..."
+                >
+                  リクエスト送信
+                </FetchButton>
+              }
             >
-              リクエスト送信
-            </FetchButton>
+              /api/labs/header-leakage/vulnerable/
+            </EndpointUrl>
             <HeaderViewer result={vulnerable} mode="vulnerable" />
           </>
         }
         secureContent={
           <>
-            <p><code>GET /api/labs/header-leakage/secure/</code></p>
-            <FetchButton
-              onClick={() => fetchSecure()}
-              disabled={isLoading}
-              isLoading={loading?.startsWith("secure")}
-              loadingText="送信中..."
+            <EndpointUrl
+              method="GET"
+              action={
+                <FetchButton
+                  onClick={() => fetchSecure()}
+                  disabled={isLoading}
+                  isLoading={loading?.startsWith("secure")}
+                  loadingText="送信中..."
+                >
+                  リクエスト送信
+                </FetchButton>
+              }
             >
-              リクエスト送信
-            </FetchButton>
+              /api/labs/header-leakage/secure/
+            </EndpointUrl>
             <HeaderViewer result={secure} mode="secure" />
           </>
         }

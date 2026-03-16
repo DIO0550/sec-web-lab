@@ -16,13 +16,13 @@ export function HeaderViewer({ result, mode }: HeaderViewerProps) {
   return (
     <div className="mt-4">
       <h4>レスポンスヘッダー</h4>
-      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-3 rounded overflow-auto whitespace-pre-wrap break-all`}>
+      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all`}>
         {Object.entries(result.headers)
           .map(([k, v]) => `${k}: ${v}`)
           .join("\n")}
       </pre>
       <h4>レスポンスボディ</h4>
-      <pre className="bg-bg-secondary dark:bg-bg-secondary p-3 rounded overflow-auto whitespace-pre-wrap break-all">
+      <pre className="bg-bg-secondary p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all">
         {JSON.stringify(result.body, null, 2)}
       </pre>
     </div>
@@ -51,7 +51,7 @@ export function TextViewer({ result }: TextViewerProps) {
         </span>
       </div>
       <pre
-        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-3 rounded overflow-auto whitespace-pre-wrap break-all text-[13px] max-h-[200px]`}
+        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all text-xs max-h-[300px]`}
       >
         {result.body}
       </pre>
@@ -80,11 +80,11 @@ export function JsonTextViewer({ result }: JsonTextViewerProps) {
   }
   return (
     <div className="mt-1">
-      <span className={`font-bold text-[13px] ${isError ? "text-error-text" : "text-secure-text"}`}>
+      <span className={`font-bold text-xs ${isError ? "text-error-text" : "text-secure-text"}`}>
         {result.status}
       </span>
       <pre
-        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-2.5 rounded overflow-auto whitespace-pre-wrap break-all text-xs max-h-[200px]`}
+        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all text-xs max-h-[200px]`}
       >
         {formatted}
       </pre>

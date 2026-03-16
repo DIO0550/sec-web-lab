@@ -29,7 +29,7 @@ export function PresetButtons<T extends { label: string }>({
   return (
     <div className={className}>
       <span className="text-xs text-text-muted">プリセット:</span>
-      <div className="flex gap-1 flex-wrap mt-1">
+      <div className="flex gap-2 flex-wrap mt-1.5">
         {presets.map((p) => (
           <Button
             key={p.label}

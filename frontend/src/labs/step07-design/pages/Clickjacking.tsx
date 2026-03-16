@@ -51,7 +51,7 @@ function ClickPanel({
       </ExpandableSection>
 
       <div className="mt-3 p-3 border border-dashed border-input-border rounded">
-        <div className="text-[13px] font-bold mb-1">攻撃シミュレーション</div>
+        <div className="text-sm font-bold mb-1">攻撃シミュレーション</div>
         <p className="text-xs text-text-secondary">
           攻撃者は透明なiframeの下にボタンを配置します。ユーザーは「当選しました！」と書かれたボタンをクリックしますが、
           実際には裏のiframeの「送金実行」ボタンをクリックしています。
@@ -61,7 +61,7 @@ function ClickPanel({
           <button className="mt-2 px-4 py-2 bg-warning-text text-white rounded cursor-pointer">
             賞品を受け取る
           </button>
-          <div className="text-[10px] text-text-muted mt-2">
+          <div className="text-xs text-text-muted mt-2">
             (実際には裏の iframe で「送金実行」が押される)
           </div>
         </div>

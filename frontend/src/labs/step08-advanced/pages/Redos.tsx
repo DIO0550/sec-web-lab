@@ -52,7 +52,7 @@ function RedosPanel({
           <div className="text-sm font-bold">
             {result?.matched ? "マッチ" : "不一致"} — {result?.elapsed}
           </div>
-          {result?.message && <div className="text-[13px] mt-1">{result.message}</div>}
+          {result?.message && <div className="text-sm mt-1">{result.message}</div>}
           {result?._debug && (
             <div className="mt-2 text-xs italic opacity-70">
               {result._debug.message}

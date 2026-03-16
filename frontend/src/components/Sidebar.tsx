@@ -51,12 +51,12 @@ export function Sidebar({
   const isLabActive = (labPath: string) => location.pathname === labPath;
 
   return (
-    <nav className="h-full flex flex-col bg-sidebar-bg dark:bg-sidebar-bg">
+    <nav className="h-full flex flex-col bg-sidebar-bg">
       {/* 折りたたみトグル（デスクトップのみ） */}
-      <div className="hidden lg:flex items-center justify-end px-2 py-1.5 border-b border-border-light dark:border-border-light">
+      <div className="hidden lg:flex items-center justify-end px-2 py-1.5 border-b border-border-light">
         <button
           onClick={onToggleCollapse}
-          className="p-1 rounded hover:bg-sidebar-hover dark:hover:bg-sidebar-hover text-text-muted dark:text-text-muted transition-colors duration-150"
+          className="p-1 rounded hover:bg-sidebar-hover text-text-muted transition-colors duration-150"
           aria-label={isCollapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"}
           title={isCollapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"}
         >
@@ -90,8 +90,8 @@ export function Sidebar({
                 onClick={onNavigate}
                 className={`w-full flex items-center justify-center px-2 py-2 text-sm no-underline transition-colors duration-150 relative ${
                   isStepActive(step)
-                    ? "bg-sidebar-active dark:bg-sidebar-active text-text-primary dark:text-text-primary font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent dark:before:bg-accent"
-                    : "text-text-secondary dark:text-text-secondary hover:bg-sidebar-hover dark:hover:bg-sidebar-hover"
+                    ? "bg-sidebar-active text-text-primary font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
+                    : "text-text-secondary hover:bg-sidebar-hover"
                 }`}
                 title={step.name}
                 aria-label={step.name}
@@ -103,8 +103,8 @@ export function Sidebar({
                 onClick={() => toggleStep(step.id)}
                 className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm transition-colors duration-150 relative ${
                   isStepActive(step)
-                    ? "bg-sidebar-active dark:bg-sidebar-active text-text-primary dark:text-text-primary font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent dark:before:bg-accent"
-                    : "text-text-secondary dark:text-text-secondary hover:bg-sidebar-hover dark:hover:bg-sidebar-hover"
+                    ? "bg-sidebar-active text-text-primary font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
+                    : "text-text-secondary hover:bg-sidebar-hover"
                 }`}
                 aria-expanded={expandedSteps.has(step.id)}
               >
@@ -112,7 +112,7 @@ export function Sidebar({
                 <span className="flex-1 truncate leading-tight">
                   {step.shortName}
                 </span>
-                <span className="text-xs text-text-muted dark:text-text-muted flex-shrink-0 tabular-nums">
+                <span className="text-xs text-text-muted flex-shrink-0 tabular-nums">
                   {step.labs.length}
                 </span>
                 <svg
@@ -120,7 +120,7 @@ export function Sidebar({
                   height="12"
                   viewBox="0 0 12 12"
                   fill="none"
-                  className={`flex-shrink-0 text-text-muted dark:text-text-muted transition-transform duration-150 ${
+                  className={`flex-shrink-0 text-text-muted transition-transform duration-150 ${
                     expandedSteps.has(step.id) ? "rotate-90" : ""
                   }`}
                 >
@@ -142,10 +142,10 @@ export function Sidebar({
                 <Link
                   to={step.path}
                   onClick={onNavigate}
-                  className={`block pl-8 pr-3 py-1.5 text-[13px] no-underline truncate transition-colors duration-150 relative ${
+                  className={`block pl-9 pr-4 py-2 text-sm no-underline truncate transition-colors duration-150 relative ${
                     location.pathname === step.path
-                      ? "text-text-primary dark:text-text-primary bg-sidebar-active dark:bg-sidebar-active font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent dark:before:bg-accent"
-                      : "text-text-muted dark:text-text-muted hover:bg-sidebar-hover dark:hover:bg-sidebar-hover hover:text-text-primary dark:hover:text-text-primary"
+                      ? "text-text-primary bg-sidebar-active font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
+                      : "text-text-muted hover:bg-sidebar-hover hover:text-text-primary"
                   }`}
                   title={step.name}
                 >
@@ -156,10 +156,10 @@ export function Sidebar({
                     key={lab.id}
                     to={lab.path}
                     onClick={onNavigate}
-                    className={`block pl-8 pr-3 py-1.5 text-[13px] no-underline truncate transition-colors duration-150 relative ${
+                    className={`block pl-9 pr-4 py-2 text-sm no-underline truncate transition-colors duration-150 relative ${
                       isLabActive(lab.path)
-                        ? "text-text-primary dark:text-text-primary bg-sidebar-active dark:bg-sidebar-active font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent dark:before:bg-accent"
-                        : "text-text-muted dark:text-text-muted hover:bg-sidebar-hover dark:hover:bg-sidebar-hover hover:text-text-primary dark:hover:text-text-primary"
+                        ? "text-text-primary bg-sidebar-active font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
+                        : "text-text-muted hover:bg-sidebar-hover hover:text-text-primary"
                     }`}
                     title={lab.name}
                   >

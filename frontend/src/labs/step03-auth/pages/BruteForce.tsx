@@ -81,7 +81,7 @@ function LoginForm({
           title={result?.success ? "ログイン成功" : result?.locked ? "アカウントロック" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?.attemptsUsed !== undefined && (
             <div className="text-xs opacity-70 mt-1">
               試行回数: {result?.attemptsUsed} / {result?.maxAttempts}
@@ -120,13 +120,13 @@ function DictionaryAttack({
         )}
       </div>
 
-      <div className="text-[11px] text-text-muted mt-1">
+      <div className="text-xs text-text-muted mt-1">
         辞書: [{PASSWORD_DICTIONARY.join(", ")}]
       </div>
 
       <ExpandableSection isOpen={logs.length > 0}>
         <div className="mt-3 max-h-[300px] overflow-auto">
-          <table className="w-full text-[11px] border-collapse">
+          <table className="w-full text-xs border-collapse">
             <thead>
               <tr className="bg-code-bg">
                 <th className="p-1 border border-table-border text-left">#</th>

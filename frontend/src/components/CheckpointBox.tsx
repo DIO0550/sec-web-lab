@@ -7,8 +7,8 @@ type Props = {
 };
 
 const VARIANT_CLASS = {
-  default: "bg-bg-tertiary dark:bg-bg-tertiary",
-  warning: "bg-warning-bg dark:bg-warning-bg",
+  default: "bg-bg-tertiary",
+  warning: "bg-warning-bg",
 } as const;
 
 /**
@@ -16,7 +16,7 @@ const VARIANT_CLASS = {
  */
 export function CheckpointBox({ title = "確認ポイント", children, variant = "default" }: Props) {
   return (
-    <div className={`mt-8 p-4 rounded ${VARIANT_CLASS[variant]}`}>
+    <div className={`mt-10 p-5 rounded-lg ${VARIANT_CLASS[variant]}`}>
       <h3 className="text-lg font-semibold">{title}</h3>
       {children}
     </div>

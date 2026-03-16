@@ -60,7 +60,7 @@ function StoragePanel({
               {result?._debug.xssPayload && (
                 <div className="mt-1">
                   <div className="text-xs font-bold text-error-text-light">XSS窃取コード:</div>
-                  <pre className="text-[10px] bg-warning-bg p-1 rounded overflow-auto">{result?._debug.xssPayload}</pre>
+                  <pre className="text-xs bg-warning-bg p-1 rounded overflow-auto">{result?._debug.xssPayload}</pre>
                 </div>
               )}
             </div>

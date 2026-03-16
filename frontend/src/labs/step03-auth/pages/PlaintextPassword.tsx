@@ -55,7 +55,7 @@ function UsersPanel({
       </FetchButton>
 
       {result?.error && (
-        <pre className="text-[11px] text-status-ng mt-2">{result.error}</pre>
+        <pre className="text-xs text-status-ng mt-2">{result.error}</pre>
       )}
 
       <ExpandableSection isOpen={!!result?.users}>
@@ -73,7 +73,7 @@ function UsersPanel({
               {result?.users.map((u) => (
                 <tr key={u.id}>
                   <td className="p-1 border border-table-border">{u.username}</td>
-                  <td className={`p-1 border border-table-border font-mono text-[11px] break-all ${mode === "vulnerable" ? "bg-error-bg-light" : "bg-success-bg"}`}>
+                  <td className={`p-1 border border-table-border font-mono text-xs break-all ${mode === "vulnerable" ? "bg-error-bg-light" : "bg-success-bg"}`}>
                     {u.password}
                   </td>
                   <td className="p-1 border border-table-border">{u.email}</td>
@@ -142,7 +142,7 @@ function LoginForm({
           title={result?.success ? "ログイン成功" : "ログイン失敗"}
           className="mt-2"
         >
-          <div className="text-[13px]">{result?.message}</div>
+          <div className="text-sm">{result?.message}</div>
           {result?.user && (
             <pre className="text-xs bg-bg-secondary p-2 rounded mt-2">
               {JSON.stringify(result?.user, null, 2)}

@@ -25,12 +25,12 @@ export function Textarea({
   return (
     <div className={className}>
       {label && (
-        <label className="text-[13px] block mb-0.5">{label}</label>
+        <label className="text-sm font-medium block mb-1">{label}</label>
       )}
       <textarea
         rows={rows}
         {...rest}
-        className={`py-1 px-2 border border-input-border rounded w-full bg-bg-primary text-text-primary focus:border-input-focus focus:ring-1 focus:ring-input-focus outline-none ${mono ? "font-mono text-xs" : ""}`}
+        className={`py-2 px-3 border border-input-border rounded-lg w-full bg-bg-primary text-text-primary focus:border-input-focus focus:ring-1 focus:ring-input-focus outline-none ${mono ? "font-mono text-xs" : ""}`}
       />
     </div>
   );

@@ -27,7 +27,7 @@ function FailPanel({ mode, result, authDown, isLoading, onAccess, onToggle }: { 
           <div className={`font-bold text-sm ${result?.success ? "text-success-text" : "text-error-text-light"}`}>
             {result?.success ? "アクセス成功" : "アクセス拒否"}
           </div>
-          <div className="text-[13px] mt-1">{result?.message}</div>
+          <div className="text-sm mt-1">{result?.message}</div>
           {result?.data && <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
           {result?._debug && <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}</div>}
         </div>
