@@ -38,7 +38,8 @@ frontend/src/             → React アプリ
 .devcontainer/            → Dev Container / Docker 関連設定
   app/Dockerfile          → 開発コンテナ用イメージ定義
   db/init.sql             → DB スキーマ・初期データ
-docs/                     → 各ラボの解説ドキュメント
+docs-site/                → Docusaurus ドキュメントサイト
+  docs/                   → 各ラボの解説ドキュメント
 ```
 
 ## コマンド
@@ -59,6 +60,15 @@ pnpm build           # プロダクションビルド
 pnpm typecheck       # 型チェック
 ```
 
+```bash
+# ドキュメントサイト
+cd docs-site
+pnpm install         # 依存インストール
+pnpm start           # 開発サーバー起動 (port 3001)
+pnpm build           # プロダクションビルド
+pnpm typecheck       # 型チェック
+```
+
 ## 開発ルール
 
 ### ラボの追加手順
@@ -69,7 +79,7 @@ pnpm typecheck       # 型チェック
 2. **フロントエンド**: `frontend/src/labs/<step>/pages/<LabName>.tsx` にページを作成
    - `labs/<step>/index.ts` の barrel export に追加
    - `frontend/src/App.tsx` にルートを追加
-3. **ドキュメント**: `docs/<step>/<lab-name>.md` に解説を作成
+3. **ドキュメント**: `docs-site/docs/<step>/<lab-name>.md` に解説を作成
 
 ### フロントエンド構成ルール
 

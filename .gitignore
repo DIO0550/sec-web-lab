@@ -106,6 +106,7 @@ dist
 
 # Docusaurus cache and generated files
 .docusaurus
+docs-site/build/
 
 # Serverless directories
 .serverless/
@@ -144,3 +145,5 @@ vite.config.ts.timestamp-*
 # devcontainer init flag
 .devcontainer/.init-done
 .orchestrator
+.DS_Store
+storybook-static
