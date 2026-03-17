@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- ===== Title ===== -->
+  <text x="380" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">Token Replay Attack Flow</text>
+  <text x="380" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">トークンリプレイ — ログアウト後もJWTが有効なまま</text>
+  <rect x="278" y="66" width="204" height="20" rx="10" fill="#ef4444" opacity="0.15"/>
+  <text x="380" y="80" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">OWASP A07 — Authentication Failures</text>
+
+  <!-- ====================================================== -->
+  <!--  ACTORS (2-actor: Attacker x=200, Server x=600)         -->
+  <!-- ====================================================== -->
+
+  <!-- Attacker -->
+  <g transform="translate(200, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="155" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, 12) scale(1.15)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="85" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+    <text x="0" y="99" text-anchor="middle" fill="#ef4444" font-size="9.5" opacity="0.7">Attacker</text>
+  </g>
+
+  <!-- Web Server -->
+  <g transform="translate(600, 250)" filter="url(#shadow)">
+    <rect x="-56" y="-30" width="112" height="155" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 16) scale(1.15)">
+      <rect x="-20" y="-18" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-12" r="2" fill="#3b82f6"/><circle cx="-5" cy="-12" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-2" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="4" r="2" fill="#3b82f6"/><circle cx="-5" cy="4" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="14" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="20" r="2" fill="#3b82f6"/><circle cx="-5" cy="20" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="85" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Webサーバー</text>
+    <text x="0" y="99" text-anchor="middle" fill="#3b82f6" font-size="9.5" opacity="0.7">JWT Stateless</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ARROWS                                                 -->
+  <!-- ====================================================== -->
+
+  <!-- Step 1: Attacker → Server (upper curve) — ログインしてJWT取得 -->
+  <path d="M 256 215 Q 400 130 544 215" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <circle cx="400" cy="148" r="16" fill="#ef4444"/>
+  <text x="400" y="153" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+  <text x="400" y="136" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">POST /login (正規ログイン)</text>
+
+  <!-- Step 2: Server → Attacker (Y=230) — JWTトークン発行 -->
+  <path d="M 544 230 L 256 230" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="400" cy="208" r="16" fill="#3b82f6"/>
+  <text x="400" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+  <text x="400" y="198" text-anchor="middle" fill="#93c5fd" font-size="9.5" font-weight="600">JWT: eyJhbG... (トークン発行)</text>
+
+  <!-- Step 3: Attacker self-action — トークンを保存してログアウト -->
+  <!-- Downward arrow from attacker to token-save box -->
+  <path d="M 200 375 L 200 398" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowRed)"/>
+  <circle cx="225" cy="386" r="16" fill="#ef4444"/>
+  <text x="225" y="391" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+
+  <!-- Token save box below attacker -->
+  <g transform="translate(200, 408)" filter="url(#shadow)">
+    <rect x="-80" y="0" width="160" height="48" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="0" y="18" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="700">トークン保存</text>
+    <text x="0" y="34" text-anchor="middle" fill="#ef4444" font-size="8.5" font-family="'Fira Code', monospace">localStorage.set(jwt)</text>
+  </g>
+
+  <!-- Step 4: Attacker → Server (Y=282) — ログアウト (クライアント側のみ) -->
+  <path d="M 256 282 L 544 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <circle cx="400" cy="304" r="16" fill="#ef4444"/>
+  <text x="400" y="309" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+  <text x="400" y="322" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">POST /logout (Cookie削除のみ)</text>
+
+  <!-- Step 5: Attacker → Server (lower curve using L-shape from token box) -->
+  <path d="M 280 432 L 540 432 L 540 340 L 544 340" fill="none" stroke="#ef4444" stroke-linejoin="round" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <circle cx="410" cy="410" r="16" fill="#ef4444"/>
+  <text x="410" y="415" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+  <text x="460" y="450" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="600">保存したJWTで再リクエスト</text>
+
+  <!-- Success indicator next to server -->
+  <g transform="translate(600, 408)" filter="url(#shadow)">
+    <rect x="-68" y="0" width="136" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="0" y="16" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="700">アクセス許可!</text>
+    <text x="0" y="30" text-anchor="middle" fill="#ef4444" font-size="9">JWT署名有効 → 認可</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  VULNERABILITY BOX                                      -->
+  <!-- ====================================================== -->
+  <g transform="translate(400, 510)" filter="url(#shadow)">
+    <rect x="-160" y="-18" width="320" height="68" rx="8" fill="#451a03" stroke="#f97316" stroke-width="1"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">⚠ サーバーサイドの失効処理なし</text>
+    <text x="0" y="18" text-anchor="middle" fill="#fb923c" font-size="9.5" font-family="'Fira Code', monospace">logout: delete client cookie only</text>
+    <text x="0" y="34" text-anchor="middle" fill="#fed7aa" font-size="9">JWTはステートレスのためサーバー側で無効化されない</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  STEP LIST (right sidebar)                              -->
+  <!-- ====================================================== -->
+  <g transform="translate(775, 100)">
+    <rect x="0" y="0" width="305" height="320" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="152" y="28" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">攻撃ステップ詳細</text>
+    <line x1="16" y1="40" x2="289" y2="40" stroke="#334155" stroke-width="1"/>
+
+    <!-- Step 1 -->
+    <circle cx="34" cy="68" r="13" fill="#ef4444"/>
+    <text x="34" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="56" y="64" fill="#f8fafc" font-size="11.5" font-weight="600">正規ログイン</text>
+    <text x="56" y="80" fill="#94a3b8" font-size="9.5">攻撃者が正規の認証情報で</text>
+    <text x="56" y="93" fill="#94a3b8" font-size="9.5">ログインしJWTトークンを取得</text>
+
+    <!-- Step 2 -->
+    <circle cx="34" cy="124" r="13" fill="#3b82f6"/>
+    <text x="34" y="129" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="56" y="120" fill="#f8fafc" font-size="11.5" font-weight="600">JWTトークン発行</text>
+    <text x="56" y="136" fill="#94a3b8" font-size="9.5">サーバーがJWTを生成し</text>
+    <text x="56" y="149" fill="#94a3b8" font-size="9.5">クライアントに返却</text>
+
+    <!-- Step 3 -->
+    <circle cx="34" cy="180" r="13" fill="#ef4444"/>
+    <text x="34" y="185" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="56" y="176" fill="#f8fafc" font-size="11.5" font-weight="600">トークンを別途保存</text>
+    <text x="56" y="192" fill="#94a3b8" font-size="9.5">JWTをlocalStorageやファイルに</text>
+    <text x="56" y="205" fill="#94a3b8" font-size="9.5">コピーして永続保存</text>
+
+    <!-- Step 4 -->
+    <circle cx="34" cy="236" r="13" fill="#ef4444"/>
+    <text x="34" y="241" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="56" y="232" fill="#f8fafc" font-size="11.5" font-weight="600">ログアウト実行</text>
+    <text x="56" y="248" fill="#94a3b8" font-size="9.5">ログアウトはCookie削除のみ</text>
+    <text x="56" y="261" fill="#94a3b8" font-size="9.5">サーバー側の失効処理なし</text>
+
+    <!-- Step 5 -->
+    <circle cx="34" cy="292" r="13" fill="#ef4444"/>
+    <text x="34" y="297" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+    <text x="56" y="288" fill="#f8fafc" font-size="11.5" font-weight="600">保存トークンで再アクセス</text>
+    <text x="56" y="304" fill="#94a3b8" font-size="9.5">保存したJWTをAuthorizationヘッダに</text>
+    <text x="56" y="317" fill="#94a3b8" font-size="9.5">設定しリクエスト → アクセス成功</text>
+  </g>
+
+  <!-- ====================================================== -->
+  <!--  ATTACK TECHNIQUE CARDS (bottom)                        -->
+  <!-- ====================================================== -->
+  <line x1="30" y1="660" x2="1070" y2="660" stroke="#334155" stroke-width="1"/>
+  <text x="550" y="685" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="700">使用される攻撃テクニック</text>
+
+  <!-- Card: トークン保存 -->
+  <g transform="translate(165, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <!-- Save/disk icon -->
+      <rect x="-6" y="-6" width="12" height="12" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <rect x="-3" y="-6" width="6" height="4" rx="1" fill="none" stroke="#ef4444" stroke-width="0.8"/>
+      <rect x="-4" y="1" width="8" height="5" rx="1" fill="none" stroke="#ef4444" stroke-width="0.8"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">トークン保存</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">JWTを外部にコピー・保存</text>
+  </g>
+
+  <!-- Card: ログアウト後再利用 -->
+  <g transform="translate(465, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <!-- Replay/refresh icon -->
+      <path d="M-5,-5 A7,7 0 1,1 -5,5" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <polyline points="-7,2 -5,5 -2,3" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">ログアウト後再利用</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">失効されないトークンを再送信</text>
+  </g>
+
+  <!-- Card: セッション維持 -->
+  <g transform="translate(765, 698)" filter="url(#shadow)">
+    <rect x="-120" y="0" width="240" height="38" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <rect x="-108" y="6" width="28" height="26" rx="5" fill="#ef4444" opacity="0.1"/>
+    <g transform="translate(-94, 19)">
+      <!-- Lock-open icon -->
+      <rect x="-5" y="-1" width="10" height="8" rx="2" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <path d="M-2,-1 L-2,-4 A3,3 0 0,1 4,-4" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+    </g>
+    <text x="10" y="16" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">セッション維持</text>
+    <text x="10" y="30" text-anchor="middle" fill="#94a3b8" font-size="8.5">ログアウト後も権限を維持</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(775, 445)">
+    <rect x="0" y="0" width="305" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="600">凡例</text>
+    <line x1="14" y1="34" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="52" y="38" fill="#fca5a5" font-size="9.5">攻撃通信</text>
+    <line x1="152" y1="34" x2="182" y2="34" stroke="#3b82f6" stroke-width="2"/>
+    <text x="190" y="38" fill="#93c5fd" font-size="9.5">サーバー応答</text>
+    <rect x="14" y="48" width="12" height="12" rx="2" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <text x="32" y="58" fill="#fdba74" font-size="9.5">脆弱性ポイント</text>
+    <rect x="152" y="48" width="12" height="12" rx="2" fill="#1e1b2e" stroke="#ef4444" stroke-width="0.8"/>
+    <text x="170" y="58" fill="#fca5a5" font-size="9.5">トークン保存</text>
+  </g>
+
+</svg>
