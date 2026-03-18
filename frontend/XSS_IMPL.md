@@ -234,7 +234,7 @@ API エンドポイントの規約:
 
 | リソース | パス | 用途 |
 |---|---|---|
-| XSS ラボ概要 | `docs/step02-injection/xss.md` | 各ラボの概要・攻撃例・難易度 |
+| XSS ラボ概要 | `docs-site/docs/step02-injection/xss.md` | 各ラボの概要・攻撃例・難易度 |
 | DB スキーマ | `.devcontainer/db/init.sql` | `posts` テーブル (Stored XSS で使用) |
 | DB 接続 | `backend/src/db/pool.ts` | `getPool()` で PostgreSQL に接続 |
 | 開発ガイド | `CLAUDE.md` | ラボ追加手順・コーディング規約 |
