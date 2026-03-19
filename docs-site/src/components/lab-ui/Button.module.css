@@ -1,0 +1,56 @@
+.button {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s, color 0.15s;
+  border: none;
+  font-family: inherit;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--lab-accent);
+  color: #fff;
+}
+.primary:hover:not(:disabled) {
+  background-color: var(--lab-accent-hover);
+}
+
+.secondary {
+  background-color: transparent;
+  border: 1px solid var(--lab-border);
+  color: var(--lab-text-primary);
+}
+.secondary:hover:not(:disabled) {
+  background-color: var(--lab-bg-secondary);
+}
+
+.danger {
+  background-color: var(--lab-danger);
+  color: #fff;
+}
+.danger:hover:not(:disabled) {
+  background-color: var(--lab-danger-hover);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--lab-text-secondary);
+}
+.ghost:hover:not(:disabled) {
+  background-color: var(--lab-bg-secondary);
+}
+
+/* Sizes */
+.sm {
+  font-size: 0.75rem;
+  padding: 0.375rem 0.875rem;
+}
+.md {
+  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
+}

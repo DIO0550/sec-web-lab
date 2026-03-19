@@ -2,6 +2,26 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// /api へのリクエストを backend (port 3000) にプロキシする開発用プラグイン
+function proxyPlugin(): import('@docusaurus/types').Plugin {
+  return {
+    name: 'api-proxy',
+    configureWebpack() {
+      return {
+        devServer: {
+          proxy: [
+            {
+              context: ['/api'],
+              target: 'http://localhost:3000',
+              changeOrigin: true,
+            },
+          ],
+        },
+      } as Record<string, unknown>;
+    },
+  };
+}
+
 const config: Config = {
   title: 'sec-web-lab Docs',
   tagline: 'Webセキュリティ ハンズオンラボ ドキュメント',
@@ -27,6 +47,8 @@ const config: Config = {
     defaultLocale: 'ja',
     locales: ['ja'],
   },
+
+  plugins: [proxyPlugin],
 
   presets: [
     [

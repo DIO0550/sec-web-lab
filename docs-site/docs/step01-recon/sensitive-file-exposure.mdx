@@ -3,6 +3,8 @@ title: Sensitive File Exposure — 機密ファイルの露出 (.git / .env / ro
 sidebar_position: 2
 ---
 
+import { SensitiveFileExposureLab } from '@site/src/components/labs/step01/SensitiveFileExposureLab';
+
 # Sensitive File Exposure — 機密ファイルの露出 (.git / .env / robots.txt)
 
 > `.env` や `.git/` などの機密ファイルがWebから直接アクセスでき、データベースのパスワードやソースコードが丸ごと盗まれてしまう問題です。
@@ -233,7 +235,7 @@ app.use("*", async (c, next) => {
 | 脆弱エンドポイント | `/api/labs/sensitive-file-exposure/vulnerable/` |
 | 安全エンドポイント | `/api/labs/sensitive-file-exposure/secure/` |
 | バックエンド | `backend/src/labs/sensitive-file-exposure.ts` |
-| フロントエンド | `frontend/src/pages/SensitiveFileExposure.tsx` |
+| フロントエンド | `docs-site/src/components/labs/step01/SensitiveFileExposureLab.tsx` |
 
 - 脆弱版: 静的ファイル配信でドットファイルも含めて返却する
 - 安全版: ドットファイルへのリクエストを 403 で拒否し、公開ディレクトリを限定する
@@ -254,8 +256,8 @@ app.use("*", async (c, next) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [ディレクトリリスティング](directory-listing.md) | ディレクトリ一覧が公開されると、機密ファイルの存在を確認しやすくなる |
-| [HTTPヘッダーからの情報漏洩](header-leakage.md) | ヘッダー漏洩と機密ファイル露出を組み合わせると、偵察フェーズの効率が飛躍的に向上する |
+| [ディレクトリリスティング](./directory-listing) | ディレクトリ一覧が公開されると、機密ファイルの存在を確認しやすくなる |
+| [HTTPヘッダーからの情報漏洩](./header-leakage) | ヘッダー漏洩と機密ファイル露出を組み合わせると、偵察フェーズの効率が飛躍的に向上する |
 
 ---
 
@@ -263,3 +265,9 @@ app.use("*", async (c, next) => {
 
 - [OWASP - Information Disclosure](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/)
 - [CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory](https://cwe.mitre.org/data/definitions/538.html)
+
+---
+
+## ラボ体験
+
+<SensitiveFileExposureLab />

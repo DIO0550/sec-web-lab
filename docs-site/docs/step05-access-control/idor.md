@@ -302,7 +302,7 @@ app.get('/api/profile', async (c) => {
 |------|--------|
 | [権限昇格](./privilege-escalation.md) | IDOR が「水平方向」（同じ権限レベルの他ユーザーへのアクセス）の認可不備であるのに対し、権限昇格は「垂直方向」（上位権限への昇格）の認可不備 |
 | [Mass Assignment](./mass-assignment.md) | IDOR で他ユーザーのデータを参照した後、Mass Assignment で意図しないフィールドを変更するという複合攻撃が可能 |
-| [エラーメッセージからの情報漏洩](../step01-recon/error-message-leakage.md) | 詳細なエラーメッセージが有効なIDの範囲や存在するリソースのヒントを攻撃者に与える |
+| [エラーメッセージからの情報漏洩](../step01-recon/error-message-leakage) | 詳細なエラーメッセージが有効なIDの範囲や存在するリソースのヒントを攻撃者に与える |
 
 ---
 

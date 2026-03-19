@@ -1,0 +1,112 @@
+.headerViewerWrapper {
+  margin-top: 1rem;
+}
+
+.preVuln {
+  background-color: var(--lab-vuln-bg);
+  color: var(--lab-vuln-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.preSecure {
+  background-color: var(--lab-secure-bg);
+  color: var(--lab-secure-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.preBody {
+  background-color: var(--lab-bg-secondary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* TextViewer */
+.textViewerWrapper {
+  margin-top: 0.5rem;
+}
+
+.statusOk {
+  font-weight: 700;
+  color: var(--lab-secure-text);
+}
+
+.statusError {
+  font-weight: 700;
+  color: var(--lab-error-text);
+}
+
+.preError {
+  background-color: var(--lab-error-bg);
+  color: var(--lab-error-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 0.75rem;
+  max-height: 300px;
+}
+
+.preNormal {
+  background-color: var(--lab-vuln-bg);
+  color: var(--lab-vuln-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 0.75rem;
+  max-height: 300px;
+}
+
+/* JsonTextViewer */
+.jsonWrapper {
+  margin-top: 0.25rem;
+}
+
+.jsonStatusOk {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--lab-secure-text);
+}
+
+.jsonStatusError {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--lab-error-text);
+}
+
+.jsonPreError {
+  background-color: var(--lab-vuln-bg);
+  color: var(--lab-vuln-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 0.75rem;
+  max-height: 200px;
+}
+
+.jsonPreOk {
+  background-color: var(--lab-vuln-bg);
+  color: var(--lab-secure-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 0.75rem;
+  max-height: 200px;
+}

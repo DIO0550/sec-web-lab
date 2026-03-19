@@ -1,0 +1,134 @@
+/**
+ * ラボ UI コンポーネント用 CSS カスタムプロパティ
+ *
+ * Docusaurus の :root / [data-theme='dark'] セレクタに合わせて定義。
+ * frontend/ の index.css (Tailwind @theme) から移植。
+ */
+
+:root {
+  /* 脆弱バージョンの配色 */
+  --lab-vuln-bg: #fef2f2;
+  --lab-vuln-text: #991b1b;
+
+  /* 安全バージョンの配色 */
+  --lab-secure-bg: #f0fdf4;
+  --lab-secure-text: #166534;
+
+  /* エラー表示 */
+  --lab-error-bg: #fef2f2;
+  --lab-error-text: #dc2626;
+
+  /* テーブル・コード・ステータス */
+  --lab-table-header-bg: #f8fafc;
+  --lab-table-border: #e5e7eb;
+  --lab-code-bg: #f5f5f5;
+  --lab-status-ok: #008800;
+  --lab-status-ng: #cc0000;
+
+  /* セマンティックカラー */
+  --lab-bg-primary: #ffffff;
+  --lab-bg-secondary: #f8fafc;
+  --lab-bg-tertiary: #f1f5f9;
+
+  --lab-text-primary: #1a1a1a;
+  --lab-text-secondary: #666666;
+  --lab-text-muted: #888888;
+
+  --lab-border: #e2e8f0;
+  --lab-border-light: #e5e7eb;
+
+  --lab-accent: #06b6d4;
+  --lab-accent-hover: #0891b2;
+
+  /* 警告 */
+  --lab-warning-bg: #fff8e1;
+  --lab-warning-border: #ffb300;
+  --lab-warning-text: #7a5d00;
+
+  /* Alert success */
+  --lab-success-bg: #e8f5e9;
+  --lab-success-border: #4caf50;
+  --lab-success-text: #2e7d32;
+
+  /* Alert error (light) */
+  --lab-error-bg-light: #ffebee;
+  --lab-error-border: #f44336;
+  --lab-error-text-light: #c62828;
+
+  /* Alert info */
+  --lab-info-bg: #e3f2fd;
+  --lab-info-border: #2196f3;
+  --lab-info-text: #1565c0;
+
+  /* Button danger */
+  --lab-danger: #d32f2f;
+  --lab-danger-hover: #b71c1c;
+
+  /* Input */
+  --lab-input-border: #d1d5db;
+  --lab-input-focus: #06b6d4;
+}
+
+[data-theme='dark'] {
+  /* 脆弱バージョン */
+  --lab-vuln-bg: #1a1a2e;
+  --lab-vuln-text: #e94560;
+
+  /* 安全バージョン */
+  --lab-secure-bg: #1a2e1a;
+  --lab-secure-text: #4ecdc4;
+
+  /* エラー表示 */
+  --lab-error-bg: #2e1a1a;
+  --lab-error-text: #ff6b6b;
+
+  /* テーブル・コード・ステータス */
+  --lab-table-header-bg: #1e293b;
+  --lab-table-border: #3a3a5a;
+  --lab-code-bg: #1a1a2e;
+  --lab-status-ok: #4ecdc4;
+  --lab-status-ng: #e94560;
+
+  /* セマンティックカラー */
+  --lab-bg-primary: #1a1a2e;
+  --lab-bg-secondary: #16213e;
+  --lab-bg-tertiary: #0f3460;
+
+  --lab-text-primary: #e0e0e0;
+  --lab-text-secondary: #aaaaaa;
+  --lab-text-muted: #888888;
+
+  --lab-border: #475569;
+  --lab-border-light: #3a3a5a;
+
+  --lab-accent: #22d3ee;
+  --lab-accent-hover: #06b6d4;
+
+  /* 警告 */
+  --lab-warning-bg: #3d3520;
+  --lab-warning-border: #b37a00;
+  --lab-warning-text: #ffd54f;
+
+  /* Alert success */
+  --lab-success-bg: #1b3d1b;
+  --lab-success-border: #388e3c;
+  --lab-success-text: #81c784;
+
+  /* Alert error (light) */
+  --lab-error-bg-light: #3d1b1b;
+  --lab-error-border: #d32f2f;
+  --lab-error-text-light: #ef9a9a;
+
+  /* Alert info */
+  --lab-info-bg: #1a2a3d;
+  --lab-info-border: #1976d2;
+  --lab-info-text: #90caf9;
+
+  /* Button danger */
+  --lab-danger: #c62828;
+  --lab-danger-hover: #e53935;
+
+  /* Input */
+  --lab-input-border: #4a4a6a;
+  --lab-input-focus: #22d3ee;
+}

@@ -1,0 +1,58 @@
+.presetHeadingVuln {
+  color: var(--lab-status-ng);
+}
+
+.presetHeadingSecure {
+  color: var(--lab-status-ok);
+}
+
+.testActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.testDescription {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+}
+
+.customHint {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.customInputInline {
+  width: 6rem;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid var(--lab-input-border);
+  border-radius: 0.25rem;
+  background-color: var(--lab-bg-primary);
+  color: var(--lab-text-primary);
+  font-size: 0.875rem;
+  outline: none;
+}
+.customInputInline:focus {
+  border-color: var(--lab-input-focus);
+}
+
+.customResults {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.customResultCol {
+  flex: 1;
+}
+
+.labelVuln {
+  font-weight: 700;
+  color: var(--lab-status-ng);
+}
+
+.labelSecure {
+  font-weight: 700;
+  color: var(--lab-status-ok);
+}

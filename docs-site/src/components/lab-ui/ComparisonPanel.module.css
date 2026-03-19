@@ -1,0 +1,13 @@
+.wrapper {
+  margin-top: 2rem;
+}
+
+.vulnLabel {
+  color: var(--lab-vuln-text);
+  font-weight: 600;
+}
+
+.secureLabel {
+  color: var(--lab-secure-text);
+  font-weight: 600;
+}

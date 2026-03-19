@@ -293,7 +293,7 @@ const result = await pool.query(
 | ラボ | 関連性 |
 |------|--------|
 | [平文パスワード保存](../step03-auth/plaintext-password.md) | SQL インジェクションで取得したパスワードが平文の場合、即座に悪用可能。ハッシュ化されていれば被害を軽減できる |
-| [エラーメッセージからの情報漏洩](../step01-recon/error-message-leakage.md) | 詳細な SQL エラーメッセージが攻撃者にテーブル構造の手がかりを与える |
+| [エラーメッセージからの情報漏洩](../step01-recon/error-message-leakage) | 詳細な SQL エラーメッセージが攻撃者にテーブル構造の手がかりを与える |
 | [OS コマンドインジェクション](./command-injection.md) | 同じ「入力値がコードとして解釈される」パターンの別の攻撃。SQL の代わりにシェルコマンドが対象 |
 
 ---
