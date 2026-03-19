@@ -3,6 +3,8 @@ title: HTTP Header Information Leakage — HTTPレスポンスヘッダーから
 sidebar_position: 1
 ---
 
+import { HeaderLeakageLab } from '@site/src/components/labs/step01/HeaderLeakageLab';
+
 # HTTP Header Information Leakage — HTTPレスポンスヘッダーからの情報漏洩
 
 > Webサーバーのレスポンスヘッダーに含まれる技術情報（フレームワーク名やバージョン番号）が外部から丸見えになり、攻撃者がピンポイントで脆弱性を狙えるようになってしまう問題です。
@@ -230,7 +232,7 @@ app.use("*", async (c, next) => {
 | 脆弱エンドポイント | `/api/labs/header-leakage/vulnerable/` |
 | 安全エンドポイント | `/api/labs/header-leakage/secure/` |
 | バックエンド | `backend/src/labs/header-leakage.ts` |
-| フロントエンド | `frontend/src/pages/HeaderLeakage.tsx` |
+| フロントエンド | `docs-site/src/components/labs/step01/HeaderLeakageLab.tsx` |
 
 - 脆弱版: デフォルトのヘッダーをそのまま返す
 - 安全版: `X-Powered-By`, `Server` を削除し、セキュリティヘッダーを付与する
@@ -251,8 +253,8 @@ app.use("*", async (c, next) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [不要なヘッダー露出](header-exposure.md) | 同じHTTPヘッダーの問題を異なる観点（セキュリティヘッダーの欠如）で扱う |
-| [エラーメッセージからの情報漏洩](error-message-leakage.md) | エラーレスポンスのボディからも技術情報が漏洩する。ヘッダー漏洩と組み合わせると偵察精度が上がる |
+| [不要なヘッダー露出](./header-exposure) | 同じHTTPヘッダーの問題を異なる観点（セキュリティヘッダーの欠如）で扱う |
+| [エラーメッセージからの情報漏洩](./error-message-leakage) | エラーレスポンスのボディからも技術情報が漏洩する。ヘッダー漏洩と組み合わせると偵察精度が上がる |
 
 ---
 
@@ -260,3 +262,9 @@ app.use("*", async (c, next) => {
 
 - [OWASP - HTTP Headers](https://owasp.org/www-project-secure-headers/)
 - [CWE-200: Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html)
+
+---
+
+## ラボ体験
+
+<HeaderLeakageLab />

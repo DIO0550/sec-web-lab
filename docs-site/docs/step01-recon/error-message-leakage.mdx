@@ -3,6 +3,8 @@ title: Improper Error Handling — エラーメッセージからの情報漏洩
 sidebar_position: 3
 ---
 
+import { ErrorMessageLeakageLab } from '@site/src/components/labs/step01/ErrorMessageLeakageLab';
+
 # Improper Error Handling — エラーメッセージからの情報漏洩
 
 > アプリケーションがエラーを起こしたとき、SQL文やテーブル名、ファイルパスなどの内部情報がそのままユーザーに表示されてしまい、攻撃者にシステムの内部構造を教えてしまう問題です。
@@ -241,7 +243,7 @@ app.onError((err, c) => {
 | 脆弱エンドポイント | `/api/labs/error-message-leakage/vulnerable/users/:id` |
 | 安全エンドポイント | `/api/labs/error-message-leakage/secure/users/:id` |
 | バックエンド | `backend/src/labs/error-message-leakage.ts` |
-| フロントエンド | `frontend/src/pages/ErrorMessageLeakage.tsx` |
+| フロントエンド | `docs-site/src/components/labs/step01/ErrorMessageLeakageLab.tsx` |
 | DB | `.devcontainer/db/init.sql` に `users` テーブルを追加 |
 
 - A02 (Security Misconfiguration) / CWE-209 に分類される脆弱性
@@ -263,7 +265,7 @@ app.onError((err, c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [HTTPヘッダーからの情報漏洩](header-leakage.md) | ヘッダーから技術スタック、エラーメッセージからDB構造。両方合わせると偵察情報が大幅に充実する |
+| [HTTPヘッダーからの情報漏洩](./header-leakage) | ヘッダーから技術スタック、エラーメッセージからDB構造。両方合わせると偵察情報が大幅に充実する |
 | [SQLインジェクション](../step02-injection/sql-injection.md) | エラーメッセージから得たテーブル名・SQL構文を利用して、SQLインジェクション攻撃の精度を向上させる |
 
 ---
@@ -272,3 +274,9 @@ app.onError((err, c) => {
 
 - [OWASP - Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling)
 - [CWE-209: Generation of Error Message Containing Sensitive Information](https://cwe.mitre.org/data/definitions/209.html)
+
+---
+
+## ラボ体験
+
+<ErrorMessageLeakageLab />

@@ -3,6 +3,8 @@ title: Security Header Misconfiguration — セキュリティヘッダーの欠
 sidebar_position: 5
 ---
 
+import { HeaderExposureLab } from '@site/src/components/labs/step01/HeaderExposureLab';
+
 # Security Header Misconfiguration — セキュリティヘッダーの欠如による脆弱性
 
 > ブラウザが持つセキュリティ機能を有効にするためのHTTPレスポンスヘッダー（`X-Content-Type-Options` 等）が設定されておらず、XSSやクリックジャッキングなどの攻撃に対する防御層が欠けている問題です。
@@ -17,7 +19,7 @@ sidebar_position: 5
 | **攻撃例** | セキュリティヘッダーが欠如しているレスポンスを確認し、MIMEスニッフィングやクリックジャッキングの攻撃経路を特定する |
 | **技術スタック** | Hono API |
 | **難易度** | ★☆☆ 入門 |
-| **前提知識** | HTTPレスポンスヘッダーの基本（[HTTPヘッダーからの情報漏洩](header-leakage.md) を先に学ぶことを推奨） |
+| **前提知識** | HTTPレスポンスヘッダーの基本（[HTTPヘッダーからの情報漏洩](./header-leakage) を先に学ぶことを推奨） |
 
 ---
 
@@ -239,12 +241,12 @@ app.use("*", async (c, next) => {
 | 脆弱エンドポイント | `/api/labs/header-exposure/vulnerable/` |
 | 安全エンドポイント | `/api/labs/header-exposure/secure/` |
 | バックエンド | `backend/src/labs/header-exposure.ts` |
-| フロントエンド | `frontend/src/pages/HeaderExposure.tsx` |
+| フロントエンド | `docs-site/src/components/labs/step01/HeaderExposureLab.tsx` |
 
 - 脆弱版: セキュリティヘッダーなしでレスポンスを返す
 - 安全版: セキュリティヘッダーを付与してレスポンスを返す
 - DevTools の Network タブでも確認可能（ブラウザでの体験も推奨）
-- [HTTPヘッダーからの情報漏洩](header-leakage.md) と共通の図を参照
+- [HTTPヘッダーからの情報漏洩](./header-leakage) と共通の図を参照
 
 ---
 
@@ -252,7 +254,7 @@ app.use("*", async (c, next) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [HTTPヘッダーからの情報漏洩](header-leakage.md) | 不要なヘッダーの「除去」と、セキュリティヘッダーの「付与」はセットで行う。両方合わせてヘッダーの安全な管理になる |
+| [HTTPヘッダーからの情報漏洩](./header-leakage) | 不要なヘッダーの「除去」と、セキュリティヘッダーの「付与」はセットで行う。両方合わせてヘッダーの安全な管理になる |
 | [クリックジャッキング](../step07-design/clickjacking.md) | `X-Frame-Options` の欠如を直接悪用する攻撃。本ラボで学んだ防御策が直接役立つ |
 
 ---
@@ -261,3 +263,9 @@ app.use("*", async (c, next) => {
 
 - [OWASP - HTTP Headers](https://owasp.org/www-project-secure-headers/)
 - [CWE-693: Protection Mechanism Failure](https://cwe.mitre.org/data/definitions/693.html)
+
+---
+
+## ラボ体験
+
+<HeaderExposureLab />
