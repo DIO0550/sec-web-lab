@@ -1,0 +1,35 @@
+.statusText {
+  font-size: 0.875rem;
+}
+
+.statusOk {
+  color: var(--lab-status-ok);
+  font-weight: 700;
+}
+
+.statusNg {
+  color: var(--lab-status-ng);
+  font-weight: 700;
+}
+
+.htmlPreview {
+  background-color: #fff;
+  border: 1px solid var(--lab-input-border);
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  margin-top: 0.25rem;
+  max-height: 300px;
+  overflow: auto;
+}
+
+[data-theme='dark'] .htmlPreview {
+  background-color: var(--lab-bg-secondary);
+}
+
+.mb2 {
+  margin-bottom: 0.5rem;
+}
+
+.mt2 {
+  margin-top: 0.5rem;
+}

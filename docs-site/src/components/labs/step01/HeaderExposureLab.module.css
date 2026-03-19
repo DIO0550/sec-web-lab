@@ -1,0 +1,81 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.tableHeaderRow {
+  background-color: var(--lab-table-header-bg);
+  color: #fff;
+}
+
+.th {
+  padding: 0.375rem 0.5rem;
+  text-align: left;
+}
+
+.thCenter {
+  padding: 0.375rem 0.5rem;
+  text-align: center;
+  width: 60px;
+}
+
+.tr {
+  border-bottom: 1px solid var(--lab-table-border);
+}
+
+.td {
+  padding: 0.375rem 0.5rem;
+}
+
+.tdCenter {
+  padding: 0.375rem 0.5rem;
+  text-align: center;
+}
+
+.headerDescription {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+}
+
+.statusOk {
+  color: var(--lab-status-ok);
+  font-size: 1.125rem;
+}
+
+.statusNg {
+  color: var(--lab-status-ng);
+  font-size: 1.125rem;
+}
+
+.valuePresent {
+  color: var(--lab-status-ok);
+}
+
+.valueMissing {
+  color: var(--lab-status-ng);
+  font-style: italic;
+}
+
+/* 解説テーブル */
+.infoTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.infoHeaderRow {
+  background-color: var(--lab-code-bg);
+}
+
+.labLink {
+  color: var(--lab-accent);
+}
+.labLink:hover {
+  text-decoration: underline;
+}
+
+.noLink {
+  color: var(--lab-text-muted);
+}
