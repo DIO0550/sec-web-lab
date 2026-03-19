@@ -36,11 +36,11 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 1 | HTTPヘッダーからの情報漏洩 | ★☆☆ | 未実装 | [header-leakage](step01-recon/header-leakage.md) |
-| 2 | 機密ファイル露出 (.git/.env) | ★☆☆ | 未実装 | [sensitive-file-exposure](step01-recon/sensitive-file-exposure.md) |
-| 3 | エラーメッセージからの情報漏洩 | ★☆☆ | 未実装 | [error-message-leakage](step01-recon/error-message-leakage.md) |
-| 4 | ディレクトリリスティング | ★☆☆ | 未実装 | [directory-listing](step01-recon/directory-listing.md) |
-| 5 | 不要なヘッダー露出 | ★☆☆ | 未実装 | [header-exposure](step01-recon/header-exposure.md) |
+| 1 | HTTPヘッダーからの情報漏洩 | ★☆☆ | ラボ実装済 | [header-leakage](step01-recon/header-leakage) |
+| 2 | 機密ファイル露出 (.git/.env) | ★☆☆ | ラボ実装済 | [sensitive-file-exposure](step01-recon/sensitive-file-exposure) |
+| 3 | エラーメッセージからの情報漏洩 | ★☆☆ | ラボ実装済 | [error-message-leakage](step01-recon/error-message-leakage) |
+| 4 | ディレクトリリスティング | ★☆☆ | ラボ実装済 | [directory-listing](step01-recon/directory-listing) |
+| 5 | 不要なヘッダー露出 | ★☆☆ | ラボ実装済 | [header-exposure](step01-recon/header-exposure) |
 
 ---
 
