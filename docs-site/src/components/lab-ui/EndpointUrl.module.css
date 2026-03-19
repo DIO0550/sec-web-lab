@@ -1,0 +1,81 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.urlGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  min-width: 0;
+}
+
+.badge {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* メソッドごとのバッジ色 */
+.badgeGET {
+  background-color: #dcfce7;
+  color: #166534;
+}
+[data-theme='dark'] .badgeGET {
+  background-color: rgba(22, 101, 52, 0.3);
+  color: #4ade80;
+}
+
+.badgePOST {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+[data-theme='dark'] .badgePOST {
+  background-color: rgba(30, 64, 175, 0.3);
+  color: #60a5fa;
+}
+
+.badgePUT {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+[data-theme='dark'] .badgePUT {
+  background-color: rgba(146, 64, 14, 0.3);
+  color: #fbbf24;
+}
+
+.badgeDELETE {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+[data-theme='dark'] .badgeDELETE {
+  background-color: rgba(153, 27, 27, 0.3);
+  color: #f87171;
+}
+
+.badgePATCH {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+}
+[data-theme='dark'] .badgePATCH {
+  background-color: rgba(107, 33, 168, 0.3);
+  color: #c084fc;
+}
+
+.urlText {
+  color: var(--lab-text-primary);
+  word-break: break-all;
+}
+
+.action {
+  flex-shrink: 0;
+  margin-left: auto;
+}

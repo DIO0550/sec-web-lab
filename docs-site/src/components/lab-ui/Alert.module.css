@@ -1,0 +1,33 @@
+.alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.success {
+  background-color: var(--lab-success-bg);
+  border-color: var(--lab-success-border);
+  color: var(--lab-success-text);
+}
+
+.error {
+  background-color: var(--lab-error-bg-light);
+  border-color: var(--lab-error-border);
+  color: var(--lab-error-text-light);
+}
+
+.warning {
+  background-color: var(--lab-warning-bg);
+  border-color: var(--lab-warning-border);
+  color: var(--lab-warning-text);
+}
+
+.info {
+  background-color: var(--lab-info-bg);
+  border-color: var(--lab-info-border);
+  color: var(--lab-info-text);
+}

@@ -1,0 +1,19 @@
+.box {
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+}
+
+.box h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.default {
+  background-color: var(--lab-bg-tertiary);
+}
+
+.warning {
+  background-color: var(--lab-warning-bg);
+}
