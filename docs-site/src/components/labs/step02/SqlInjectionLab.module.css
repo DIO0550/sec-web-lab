@@ -1,0 +1,100 @@
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.inputFlex {
+  flex: 1;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.presets {
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.lab2Heading {
+  margin-top: 2rem;
+}
+
+.resultArea {
+  margin-top: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.resultMessage {
+  font-size: 0.875rem;
+}
+
+.resultCount {
+  font-size: 0.875rem;
+  color: var(--lab-text-muted);
+}
+
+.userJson {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.debugDetails {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.debugSummary {
+  cursor: pointer;
+  color: var(--lab-text-muted);
+}
+
+.debugCode {
+  display: block;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 0.25rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: var(--lab-status-ng);
+  margin-top: 0.25rem;
+}
+
+.resultTable {
+  font-size: 0.875rem;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.resultTh {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--lab-border);
+  text-align: left;
+  background-color: var(--lab-bg-secondary);
+}
+
+.resultTd {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--lab-border);
+}

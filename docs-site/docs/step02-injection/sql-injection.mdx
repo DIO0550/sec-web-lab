@@ -3,6 +3,8 @@ title: SQL Injection — ユーザー入力でデータベースを操る
 sidebar_position: 2
 ---
 
+import { SqlInjectionLab } from '@site/src/components/labs/step02/SqlInjectionLab';
+
 # SQL Injection — ユーザー入力でデータベースを操る
 
 > アプリに入力した文字がそのままデータベースへの命令文に組み込まれてしまうことで、本来見えないはずのデータを盗み出したり、認証をすり抜けたりできてしまう脆弱性を学びます。
@@ -246,7 +248,7 @@ const result = await pool.query(
 
 4. コードの差分を確認する
 
-   - `backend/src/labs/sql-injection.ts` の脆弱版と安全版を比較
+   - `backend/src/labs/step02-injection/sql-injection/` の脆弱版と安全版を比較
    - **どの行が違いを生んでいるか** に注目: `${input}` → `$1` + パラメータ配列
 
 ### 確認ポイント
@@ -268,8 +270,8 @@ const result = await pool.query(
 | 脆弱エンドポイント (検索) | `/api/labs/sql-injection/vulnerable/search` |
 | 安全エンドポイント (ログイン) | `/api/labs/sql-injection/secure/login` |
 | 安全エンドポイント (検索) | `/api/labs/sql-injection/secure/search` |
-| バックエンド | `backend/src/labs/sql-injection.ts` |
-| フロントエンド | `frontend/src/pages/SqlInjection.tsx` |
+| バックエンド | `backend/src/labs/step02-injection/sql-injection/` |
+| フロントエンド | `frontend/src/labs/step02-injection/pages/SqlInjection.tsx` |
 | DB | `.devcontainer/db/init.sql` の `users`, `posts` テーブルを使用 |
 
 - 脆弱版では `pool.query()` に文字列テンプレートリテラルで入力値を結合する
@@ -294,7 +296,7 @@ const result = await pool.query(
 |------|--------|
 | [平文パスワード保存](../step03-auth/plaintext-password.md) | SQL インジェクションで取得したパスワードが平文の場合、即座に悪用可能。ハッシュ化されていれば被害を軽減できる |
 | [エラーメッセージからの情報漏洩](../step01-recon/error-message-leakage) | 詳細な SQL エラーメッセージが攻撃者にテーブル構造の手がかりを与える |
-| [OS コマンドインジェクション](./command-injection.md) | 同じ「入力値がコードとして解釈される」パターンの別の攻撃。SQL の代わりにシェルコマンドが対象 |
+| [OS コマンドインジェクション](./command-injection) | 同じ「入力値がコードとして解釈される」パターンの別の攻撃。SQL の代わりにシェルコマンドが対象 |
 
 ---
 
@@ -302,3 +304,9 @@ const result = await pool.query(
 
 - [OWASP - SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection)
 - [CWE-89: Improper Neutralization of Special Elements used in an SQL Command](https://cwe.mitre.org/data/definitions/89.html)
+
+---
+
+## ラボ体験
+
+<SqlInjectionLab />

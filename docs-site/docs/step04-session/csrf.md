@@ -307,7 +307,7 @@ app.post('/api/change-password', async (c) => {
 |------|--------|
 | [Cookie 操作](./cookie-manipulation.md) | `SameSite` 属性が未設定の Cookie は CSRF 攻撃のクロスサイトリクエストでも送信されるため、CSRF の成立条件に直結する |
 | [セッションハイジャック](./session-hijacking.md) | CSRF がセッションの「悪用」であるのに対し、セッションハイジャックはセッションの「窃取」。どちらも Cookie ベースのセッション管理の弱点を突く |
-| [XSS (Stored XSS)](../step02-injection/xss.md) | XSS が成立する場合、攻撃者は JavaScript で CSRF トークンを読み取れるため、CSRF 対策がバイパスされる |
+| [XSS (Stored XSS)](../step02-injection/xss) | XSS が成立する場合、攻撃者は JavaScript で CSRF トークンを読み取れるため、CSRF 対策がバイパスされる |
 
 ---
 

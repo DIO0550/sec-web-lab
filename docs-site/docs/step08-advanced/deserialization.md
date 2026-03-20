@@ -347,7 +347,7 @@ function safeMerge(target: any, source: any) {
 | ラボ | 関連性 |
 |------|--------|
 | [SSTI](./ssti.md) | どちらもサーバーサイドでの任意コード実行に発展する脆弱性。SSTI はテンプレートエンジン経由、デシリアライゼーションはデータ復元処理経由 |
-| [コマンドインジェクション](../step02-injection/command-injection.md) | `eval()` 経由で `child_process` にアクセスすると OS コマンドインジェクションと同等の被害。攻撃の入り口は異なるが、最終的な影響は同じ |
+| [コマンドインジェクション](../step02-injection/command-injection) | `eval()` 経由で `child_process` にアクセスすると OS コマンドインジェクションと同等の被害。攻撃の入り口は異なるが、最終的な影響は同じ |
 | [Mass Assignment](../step05-access-control/mass-assignment.md) | プロトタイプ汚染と Mass Assignment は「意図しないプロパティの設定」という共通パターン。入力データのフィルタリングが対策の要 |
 
 ---

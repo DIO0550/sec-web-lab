@@ -336,7 +336,7 @@ app.post('/api/process', async (c) => {
 |------|--------|
 | [詳細エラーメッセージ露出](./error-messages.md) | スタックトレースはエラーメッセージ漏洩の一形態。本ラボではスタックトレースに特化し、error-messages ラボではDB構造やSQLクエリなどより広範な情報漏洩を扱う |
 | [ヘッダー情報漏洩](../step01-recon/header-exposure) | HTTP レスポンスヘッダーからサーバー情報が漏洩するケース。スタックトレースと合わせて偵察に利用される |
-| [SQL Injection](../step02-injection/sql-injection.md) | スタックトレースから得られたファイルパスやDB構造の情報が、SQL インジェクション攻撃を大幅に容易にする |
+| [SQL Injection](../step02-injection/sql-injection) | スタックトレースから得られたファイルパスやDB構造の情報が、SQL インジェクション攻撃を大幅に容易にする |
 
 ---
 
