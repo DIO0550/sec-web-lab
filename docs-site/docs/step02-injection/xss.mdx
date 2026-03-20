@@ -3,6 +3,8 @@ title: Cross-Site Scripting (XSS) — Webページにスクリプトを埋め込
 sidebar_position: 1
 ---
 
+import { XssLab } from '@site/src/components/labs/step02/XssLab';
+
 # Cross-Site Scripting (XSS) — Webページにスクリプトを埋め込む
 
 > 攻撃者が仕込んだJavaScriptが、被害者のブラウザ上で「そのWebサイトの一部として」実行されてしまうことで、Cookie の窃取やページの改ざんが行える脆弱性を学びます。
@@ -255,7 +257,7 @@ React の場合は JSX の `{}` 式がデフォルトでエスケープを行う
 
 3. コードの差分を確認する
 
-   - `backend/src/labs/xss.ts` の脆弱版と安全版を比較
+   - `backend/src/labs/step02-injection/xss/` の脆弱版と安全版を比較
    - **どの行が違いを生んでいるか** に注目: `${q}` → `${escapeHtml(q)}`
 
 ### 確認ポイント
@@ -277,8 +279,8 @@ React の場合は JSX の `{}` 式がデフォルトでエスケープを行う
 | 脆弱エンドポイント (Stored) | `/api/labs/xss/vulnerable/posts` |
 | 安全エンドポイント (Reflected) | `/api/labs/xss/secure/search` |
 | 安全エンドポイント (Stored) | `/api/labs/xss/secure/posts` |
-| バックエンド | `backend/src/labs/xss.ts` |
-| フロントエンド | `frontend/src/pages/Xss.tsx` |
+| バックエンド | `backend/src/labs/step02-injection/xss/` |
+| フロントエンド | `frontend/src/labs/step02-injection/pages/Xss.tsx` |
 | DB | `.devcontainer/db/init.sql` の `posts` テーブルを使用 |
 
 - Reflected XSS: Hono で `c.html()` を使って HTML を直接返す実装
@@ -302,7 +304,7 @@ React の場合は JSX の `{}` 式がデフォルトでエスケープを行う
 
 | ラボ | 関連性 |
 |------|--------|
-| [SQL インジェクション](./sql-injection.md) | 同じ「入力値がコードとして解釈される」パターン。SQL の代わりに HTML/JavaScript が対象 |
+| [SQL インジェクション](./sql-injection) | 同じ「入力値がコードとして解釈される」パターン。SQL の代わりに HTML/JavaScript が対象 |
 | [セッションハイジャック](../step04-session/session-hijacking.md) | XSS で窃取した Cookie を使ってセッションを乗っ取る攻撃。XSS は手段、セッションハイジャックは目的 |
 | [CSRF](../step04-session/csrf.md) | XSS が成立すれば CSRF トークンも JavaScript で取得できるため、CSRF 対策も突破される |
 | [クリックジャッキング](../step07-design/clickjacking.md) | XSS と組み合わせてフィッシングフォームを埋め込む等、複合攻撃に発展し得る |
@@ -313,3 +315,9 @@ React の場合は JSX の `{}` 式がデフォルトでエスケープを行う
 
 - [OWASP - Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/)
 - [CWE-79: Improper Neutralization of Input During Web Page Generation](https://cwe.mitre.org/data/definitions/79.html)
+
+---
+
+## ラボ体験
+
+<XssLab />

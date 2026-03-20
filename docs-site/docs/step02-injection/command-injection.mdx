@@ -3,6 +3,8 @@ title: OS Command Injection — ユーザー入力でサーバーのコマンド
 sidebar_position: 4
 ---
 
+import { CommandInjectionLab } from '@site/src/components/labs/step02/CommandInjectionLab';
+
 # OS Command Injection — ユーザー入力でサーバーのコマンドを操る
 
 > Webアプリの入力欄に特殊な文字列を入力することで、サーバー上で任意のOSコマンドを実行できてしまう脆弱性を学びます。ファイルの読み取りやシステム情報の取得、さらにはサーバーの完全な乗っ取りにまで発展し得る攻撃です。
@@ -219,7 +221,7 @@ execFile('ping', ['-c', '3', host], (err, stdout) => {
 
 3. コードの差分を確認する
 
-   - `backend/src/labs/command-injection.ts` の脆弱版と安全版を比較
+   - `backend/src/labs/step02-injection/command-injection/` の脆弱版と安全版を比較
    - **どの行が違いを生んでいるか** に注目: `exec()` → `execFile()` + 引数の配列化
 
 ### 確認ポイント
@@ -239,8 +241,8 @@ execFile('ping', ['-c', '3', host], (err, stdout) => {
 |------|------|
 | 脆弱エンドポイント | `/api/labs/command-injection/vulnerable/ping` |
 | 安全エンドポイント | `/api/labs/command-injection/secure/ping` |
-| バックエンド | `backend/src/labs/command-injection.ts` |
-| フロントエンド | `frontend/src/pages/CommandInjection.tsx` |
+| バックエンド | `backend/src/labs/step02-injection/command-injection/` |
+| フロントエンド | `frontend/src/labs/step02-injection/pages/CommandInjection.tsx` |
 
 - 脆弱版では `child_process.exec()` に文字列テンプレートリテラルでコマンドを構築
 - 安全版では `child_process.execFile()` に引数を配列として分離して渡す
@@ -261,8 +263,8 @@ execFile('ping', ['-c', '3', host], (err, stdout) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [SQL インジェクション](./sql-injection.md) | 同じ「入力値がコードとして解釈される」パターン。シェルの代わりに SQL が対象 |
-| [XSS](./xss.md) | 同じインジェクション系。ブラウザ側の JavaScript コンテキストが対象 |
+| [SQL インジェクション](./sql-injection) | 同じ「入力値がコードとして解釈される」パターン。シェルの代わりに SQL が対象 |
+| [XSS](./xss) | 同じインジェクション系。ブラウザ側の JavaScript コンテキストが対象 |
 | [SSRF](../step06-server-side/ssrf.md) | サーバーサイドのリソースにアクセスする攻撃。コマンドインジェクションで curl を実行すれば SSRF と同等の攻撃が可能 |
 
 ---
@@ -271,3 +273,9 @@ execFile('ping', ['-c', '3', host], (err, stdout) => {
 
 - [OWASP - OS Command Injection](https://owasp.org/www-community/attacks/Command_Injection)
 - [CWE-78: Improper Neutralization of Special Elements used in an OS Command](https://cwe.mitre.org/data/definitions/78.html)
+
+---
+
+## ラボ体験
+
+<CommandInjectionLab />
