@@ -289,7 +289,7 @@ app.post('/api/upload', async (c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [XSS](../step02-injection/xss.md) | アップロードしたHTMLファイルが同一オリジンで配信される場合、Stored XSSと同等の攻撃が可能になる |
+| [XSS](../step02-injection/xss) | アップロードしたHTMLファイルが同一オリジンで配信される場合、Stored XSSと同等の攻撃が可能になる |
 | [パストラバーサル](../step05-access-control/path-traversal.md) | ファイル名に `../../` を含めることで、意図しないディレクトリにファイルを書き込むパストラバーサル攻撃と組み合わせられる |
 
 ---

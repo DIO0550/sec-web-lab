@@ -467,7 +467,7 @@ const fetchProfile = async () => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [XSS (Stored / Reflected)](../step02-injection/xss.md) | Web Storage Abuse の起点となる脆弱性。XSS がなければ localStorage からのトークン窃取は発生しない。XSS 対策が最も重要な防御線 |
+| [XSS (Stored / Reflected)](../step02-injection/xss) | Web Storage Abuse の起点となる脆弱性。XSS がなければ localStorage からのトークン窃取は発生しない。XSS 対策が最も重要な防御線 |
 | [セッションハイジャック](../step04-session/session-hijacking.md) | Cookie にセッション ID を保存する場合でも HttpOnly 属性がなければ同様の窃取が可能。「トークンの保存場所」と「アクセス制御属性」の両方が重要 |
 | [Cookie 操作](../step04-session/cookie-manipulation.md) | HttpOnly、Secure、SameSite 属性の詳細。安全なトークン管理には Cookie 属性の正しい設定が不可欠 |
 | [JWT脆弱性](../step08-advanced/jwt-vulnerabilities.md) | JWT 自体のアルゴリズム混同や署名検証不備の問題。トークンの保存場所が安全でも、JWT の実装に脆弱性があれば攻撃は成立する |

@@ -383,7 +383,7 @@ function escapeHtml(str: string): string {
 
 | ラボ | 関連性 |
 |------|--------|
-| [Reflected XSS](../step02-injection/xss.md) | Unicode 正規化バイパスは XSS フィルタの回避手法の一つ。XSS の基本を理解した上で、フィルタ回避のテクニックとして学ぶ |
+| [Reflected XSS](../step02-injection/xss) | Unicode 正規化バイパスは XSS フィルタの回避手法の一つ。XSS の基本を理解した上で、フィルタ回避のテクニックとして学ぶ |
 | [SSTI](../step08-advanced/ssti.md) | テンプレートインジェクションでも Unicode 正規化を使ったフィルタ回避が適用される場合がある。入力サニタイズのバイパス手法として共通 |
 
 ---

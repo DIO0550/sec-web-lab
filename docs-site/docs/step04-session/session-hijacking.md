@@ -288,7 +288,7 @@ setCookie(c, 'session_id', sessionId, {
 
 | ラボ | 関連性 |
 |------|--------|
-| [XSS (Stored XSS)](../step02-injection/xss.md) | セッションハイジャックの起点となる XSS 脆弱性。XSS を防げばセッションハイジャックも防げる |
+| [XSS (Stored XSS)](../step02-injection/xss) | セッションハイジャックの起点となる XSS 脆弱性。XSS を防げばセッションハイジャックも防げる |
 | [Cookie 操作](./cookie-manipulation.md) | `HttpOnly`、`Secure`、`SameSite` 属性の詳細。Cookie 属性の設定がセッションハイジャックの難易度を大きく左右する |
 | [セッション固定](./session-fixation.md) | ハイジャックが「既存のセッション ID を盗む」のに対し、固定は「攻撃者の知っている ID を被害者に使わせる」。セッション乗っ取りの別のアプローチ |
 

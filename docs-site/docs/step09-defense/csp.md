@@ -460,7 +460,7 @@ app.post('/api/csp-report', async (c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [XSS](../step02-injection/xss.md) | CSP は XSS のエスケープ漏れに対する多層防御。XSS の仕組みを理解した上で CSP の効果を学ぶ |
+| [XSS](../step02-injection/xss) | CSP は XSS のエスケープ漏れに対する多層防御。XSS の仕組みを理解した上で CSP の効果を学ぶ |
 | [クリックジャッキング](../step07-design/clickjacking.md) | CSP の `frame-ancestors` ディレクティブはクリックジャッキング対策としても機能する。`X-Frame-Options` の現代的な代替 |
 | [セッションハイジャック](../step04-session/session-hijacking.md) | CSP がない環境で XSS が成功すると Cookie の窃取によるセッションハイジャックが可能。CSP は Cookie 窃取の防止にも貢献する |
 

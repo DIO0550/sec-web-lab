@@ -363,7 +363,7 @@ app.post('/api/calculate', async (c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [コマンドインジェクション](../step02-injection/command-injection.md) | コマンドインジェクションは OS シェル経由、eval インジェクションは JavaScript ランタイム経由でコードを実行する。eval から `child_process` にアクセスすればコマンドインジェクションと同等の被害になる |
+| [コマンドインジェクション](../step02-injection/command-injection) | コマンドインジェクションは OS シェル経由、eval インジェクションは JavaScript ランタイム経由でコードを実行する。eval から `child_process` にアクセスすればコマンドインジェクションと同等の被害になる |
 | [SSTI](../step08-advanced/ssti.md) | SSTI はテンプレートエンジンを経由した eval インジェクションの一種。テンプレートエンジンが内部で `eval()` や `Function` コンストラクタを使用している場合、本質的に同じ脆弱性 |
 | [安全でないデシリアライゼーション](../step08-advanced/deserialization.md) | デシリアライズ処理で `eval()` が使用されている場合、eval インジェクションと同じメカニズムで RCE が発生する。`node-serialize` の脆弱性はその典型例 |
 

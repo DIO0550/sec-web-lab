@@ -430,7 +430,7 @@ parentWindow.postMessage(
 
 | ラボ | 関連性 |
 |------|--------|
-| [XSS](../step02-injection/xss.md) | postMessage 経由の DOM-based XSS は XSS の一形態。受信データを `innerHTML` に挿入するパターンは Stored/Reflected XSS と同じ根本原因（ユーザー入力がコードとして解釈される）を持つ |
+| [XSS](../step02-injection/xss) | postMessage 経由の DOM-based XSS は XSS の一形態。受信データを `innerHTML` に挿入するパターンは Stored/Reflected XSS と同じ根本原因（ユーザー入力がコードとして解釈される）を持つ |
 | [クリックジャッキング](../step07-design/clickjacking.md) | 攻撃者が iframe で脆弱なページを埋め込む点が共通。`X-Frame-Options` による iframe 制限は postMessage 攻撃の経路を塞ぐ多層防御としても機能する |
 | [CORS 設定不備](../step06-server-side/cors-misconfiguration.md) | どちらもクロスオリジン通信のセキュリティに関する脆弱性。CORS はサーバーサイドの HTTP ヘッダー設定、postMessage はクライアントサイドの API 使用方法の問題 |
 
