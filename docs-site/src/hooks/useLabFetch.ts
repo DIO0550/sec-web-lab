@@ -45,6 +45,20 @@ export async function fetchText(url: string): Promise<TextResponse> {
   };
 }
 
+/** JSON POST リクエスト（ステータスコード + レスポンスボディを返す） */
+export async function postJson<T>(
+  url: string,
+  body: unknown,
+): Promise<{ status: number; body: T }> {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const json = await res.json();
+  return { status: res.status, body: json as T };
+}
+
 // --- カスタムフック ---
 
 /**
