@@ -1,0 +1,77 @@
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.inputFlex {
+  flex: 1;
+}
+
+.presets {
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.resultArea {
+  margin-top: 0.5rem;
+}
+
+.table {
+  font-size: 0.875rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.td {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--lab-border);
+}
+
+.tdLabel {
+  font-weight: 700;
+  width: 140px;
+}
+
+.statusOk {
+  color: var(--lab-status-ok);
+  font-weight: 700;
+}
+
+.statusNg {
+  color: var(--lab-status-ng);
+  font-weight: 700;
+}
+
+.redirectLink {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+}
+
+.redirectLink a {
+  margin-left: 0.25rem;
+}
+
+.linkNote {
+  margin-left: 0.5rem;
+  color: var(--lab-text-muted);
+}
+
+.checkpointText {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  overflow: auto;
+}

@@ -1,0 +1,90 @@
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.inputFlex {
+  flex: 1;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.presets {
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.lab2Heading {
+  margin-top: 2rem;
+}
+
+.checkpointText {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.htmlPreviewWrapper {
+  margin-top: 0.5rem;
+}
+
+.previewLabel {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  margin-bottom: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.htmlSource {
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  overflow: auto;
+  font-size: 0.75rem;
+  max-height: 200px;
+  white-space: pre-wrap;
+  background-color: var(--lab-bg-secondary);
+}
+
+.htmlSourceVuln {
+  color: var(--lab-status-ng);
+}
+
+.htmlSourceSecure {
+  color: var(--lab-status-ok);
+}
+
+/* 意図的にHTMLを直接描画するエリア（XSSの動作を体験するため） */
+.htmlPreview {
+  border: 2px solid;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  background-color: var(--lab-bg-primary);
+}
+
+.htmlPreviewVuln {
+  border-color: var(--lab-status-ng);
+}
+
+.htmlPreviewSecure {
+  border-color: var(--lab-status-ok);
+}
+
+.postsPreview {
+  max-height: 200px;
+  overflow: auto;
+}

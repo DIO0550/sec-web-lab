@@ -1,0 +1,104 @@
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.inputFlex {
+  flex: 1;
+}
+
+.presets {
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.resultArea {
+  margin-top: 0.5rem;
+}
+
+.statusOk {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--lab-status-ok);
+}
+
+.statusNg {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--lab-status-ng);
+}
+
+.output {
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  overflow: auto;
+  font-size: 0.75rem;
+  max-height: 300px;
+  white-space: pre-wrap;
+  background-color: var(--lab-bg-secondary);
+}
+
+.outputVuln {
+  color: var(--lab-status-ng);
+}
+
+.outputSecure {
+  color: var(--lab-status-ok);
+}
+
+.stderr {
+  background-color: var(--lab-error-bg);
+  color: var(--lab-error-text);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  overflow: auto;
+  font-size: 0.75rem;
+  max-height: 150px;
+  margin-top: 0.25rem;
+}
+
+.debugDetails {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.debugSummary {
+  cursor: pointer;
+  color: var(--lab-text-muted);
+}
+
+.debugCode {
+  display: block;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 0.25rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.metaTable {
+  font-size: 0.875rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.metaTh {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--lab-border);
+  text-align: left;
+  background-color: var(--lab-bg-secondary);
+}
+
+.metaTd {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--lab-border);
+}
