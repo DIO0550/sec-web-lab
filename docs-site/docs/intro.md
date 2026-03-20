@@ -51,12 +51,12 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 6 | Reflected XSS | ★☆☆ | 未実装 | [xss](step02-injection/xss.md) |
-| 7 | SQLインジェクション | ★☆☆ | 未実装 | [sql-injection](step02-injection/sql-injection.md) |
-| 8 | オープンリダイレクト | ★☆☆ | 未実装 | [open-redirect](step02-injection/open-redirect.md) |
-| 9 | Stored XSS | ★★☆ | 未実装 | [xss](step02-injection/xss.md) |
-| 10 | DOM-based XSS | ★★☆ | 未実装 | [xss](step02-injection/xss.md) |
-| 11 | OSコマンドインジェクション | ★★☆ | 未実装 | [command-injection](step02-injection/command-injection.md) |
+| 6 | Reflected XSS | ★☆☆ | ラボ実装済 | [xss](step02-injection/xss) |
+| 7 | SQLインジェクション | ★☆☆ | ラボ実装済 | [sql-injection](step02-injection/sql-injection) |
+| 8 | オープンリダイレクト | ★☆☆ | ラボ実装済 | [open-redirect](step02-injection/open-redirect) |
+| 9 | Stored XSS | ★★☆ | ラボ実装済 | [xss](step02-injection/xss) |
+| 10 | DOM-based XSS | ★★☆ | 未実装 | [xss](step02-injection/xss) |
+| 11 | OSコマンドインジェクション | ★★☆ | ラボ実装済 | [command-injection](step02-injection/command-injection) |
 | 12 | メールヘッダインジェクション | ★★☆ | 未実装 | [mail-header-injection](step02-injection/mail-header-injection.md) |
 | 13 | HTTP Parameter Pollution (HPP) | ★★☆ | 未実装 | [hpp](step02-injection/hpp.md) |
 | 14 | CSV Injection | ★★☆ | 未実装 | [csv-injection](step02-injection/csv-injection.md) |
