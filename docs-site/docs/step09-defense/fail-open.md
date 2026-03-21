@@ -286,7 +286,7 @@ app.use('/api/admin/*', async (c, next) => {
 | ラボ | 関連性 |
 |------|--------|
 | [詳細エラーメッセージ露出](./error-messages.md) | Fail-Open で通過したリクエストが詳細エラーを受け取ることで、さらなる攻撃の足がかりとなる |
-| [ブルートフォース](../step03-auth/brute-force.md) | 認証の例外処理とレート制限の両方が必要。Fail-Open はブルートフォースをより容易にする |
+| [ブルートフォース](../step03-auth/brute-force) | 認証の例外処理とレート制限の両方が必要。Fail-Open はブルートフォースをより容易にする |
 | [権限昇格](../step05-access-control/privilege-escalation.md) | Fail-Open による認証バイパスは、実質的に権限昇格と同じ被害をもたらす |
 
 ---
