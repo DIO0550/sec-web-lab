@@ -379,8 +379,8 @@ app.post('/login', async (c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [Session Hijacking](./session-hijacking.md) | セッションハイジャックは「セッション ID を盗む」攻撃であり、推測可能なセッション ID は「盗まなくても推測できる」ためさらに危険。両方の対策が必要 |
-| [Session Fixation](./session-fixation.md) | セッション固定は「攻撃者が知っている ID を被害者に使わせる」攻撃。推測可能なセッション ID はこの攻撃もさらに容易にする |
+| [Session Hijacking](./session-hijacking) | セッションハイジャックは「セッション ID を盗む」攻撃であり、推測可能なセッション ID は「盗まなくても推測できる」ためさらに危険。両方の対策が必要 |
+| [Session Fixation](./session-fixation) | セッション固定は「攻撃者が知っている ID を被害者に使わせる」攻撃。推測可能なセッション ID はこの攻撃もさらに容易にする |
 | [Token Replay](./token-replay.md) | 推測可能なセッション ID は一度推測されると、失効管理がなければ永続的に悪用される。両方の脆弱性が重なると被害が拡大する |
 
 ---

@@ -393,8 +393,8 @@ const authMiddleware = async (c, next) => {
 | ラボ | 関連性 |
 |------|--------|
 | [Token Replay](./token-replay.md) | トークン再利用攻撃は、セッション有効期限が長いほど攻撃ウィンドウが広がる。有効期限管理はトークン再利用対策の基盤となる |
-| [Session Hijacking](./session-hijacking.md) | 窃取されたセッション ID に有効期限がなければ、攻撃者は永久にそのセッションを使い続けられる。適切な有効期限はハイジャック被害を限定する |
-| [Cookie 操作](./cookie-manipulation.md) | Cookie の `Max-Age`、`Expires` 属性はセッション有効期限管理のクライアント側実装。サーバー側タイムアウトと合わせて二重の防御になる |
+| [Session Hijacking](./session-hijacking) | 窃取されたセッション ID に有効期限がなければ、攻撃者は永久にそのセッションを使い続けられる。適切な有効期限はハイジャック被害を限定する |
+| [Cookie 操作](./cookie-manipulation) | Cookie の `Max-Age`、`Expires` 属性はセッション有効期限管理のクライアント側実装。サーバー側タイムアウトと合わせて二重の防御になる |
 
 ---
 
