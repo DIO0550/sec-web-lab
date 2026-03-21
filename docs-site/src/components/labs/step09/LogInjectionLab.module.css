@@ -1,0 +1,33 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.textareaRow {
+  margin-bottom: 0.5rem;
+}
+
+.presetRow {
+  margin-bottom: 0.5rem;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.terminal {
+  margin-top: 0.5rem;
+  max-height: 250px;
+  overflow: auto;
+  background-color: #1e1e1e;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.logLine {
+  font-size: 0.75rem;
+  color: #d4d4d4;
+  font-family: monospace;
+}

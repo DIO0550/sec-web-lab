@@ -1,0 +1,94 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.sectionTitle {
+  margin-top: 1.5rem;
+}
+
+.inputGroup {
+  margin-bottom: 0.25rem;
+}
+
+.checkboxRow {
+  margin-bottom: 0.5rem;
+}
+
+.checkboxLabel {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.attackText {
+  color: var(--lab-status-ng);
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.smallText {
+  font-size: 0.875rem;
+}
+
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.roleDisplay {
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+.roleAdmin {
+  color: var(--lab-status-ng);
+}
+
+.roleUser {
+  color: var(--lab-status-ok);
+}
+
+.debugInfo {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.userTable {
+  width: 100%;
+  font-size: 0.75rem;
+  border-collapse: collapse;
+}
+
+.userTable th,
+.userTable td {
+  padding: 0.25rem;
+  border: 1px solid var(--lab-border);
+  text-align: left;
+}
+
+.userTable thead tr {
+  background-color: var(--lab-bg-secondary);
+}
+
+.adminRole {
+  font-weight: bold;
+  color: var(--lab-status-ng);
+}

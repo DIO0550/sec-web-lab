@@ -1,0 +1,39 @@
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+  max-height: 150px;
+}
+
+.originInput {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.presets {
+  margin-bottom: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.smallText {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.fromText {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.debugText {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+}

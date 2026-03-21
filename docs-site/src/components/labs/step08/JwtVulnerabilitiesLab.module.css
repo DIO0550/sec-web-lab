@@ -1,0 +1,38 @@
+.section {
+  margin-bottom: 0.75rem;
+}
+
+.tokenBlock {
+  margin-top: 0.25rem;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.smallText {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+}
+
+.debugText {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+}

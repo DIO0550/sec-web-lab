@@ -1,0 +1,68 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.sectionTitle {
+  margin-top: 1.5rem;
+}
+
+.inputGroup {
+  margin-bottom: 0.25rem;
+}
+
+.presetRow {
+  margin-bottom: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.smallText {
+  font-size: 0.875rem;
+}
+
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 200px;
+}
+
+.debugInfo {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}
+
+.fileListSection {
+  margin-bottom: 1rem;
+}
+
+.fileListBox {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.fileListTitle {
+  font-weight: bold;
+}
+
+.fileList {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.fileListItem {
+  font-family: monospace;
+}

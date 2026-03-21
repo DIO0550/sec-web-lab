@@ -1,0 +1,38 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.inputField {
+  margin-bottom: 0.25rem;
+}
+
+.presetRow {
+  margin-bottom: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.errorList {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  padding-left: 1.25rem;
+}
+
+.dataBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+}
+
+.debugText {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}

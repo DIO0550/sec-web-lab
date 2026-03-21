@@ -1,0 +1,49 @@
+.mb2 {
+  margin-bottom: 0.5rem;
+}
+
+.mt2 {
+  margin-top: 0.5rem;
+}
+
+.selectLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 0.5rem;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  outline: none;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.resultMessage {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.adminPre {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+}
+
+.debugMessage {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+}

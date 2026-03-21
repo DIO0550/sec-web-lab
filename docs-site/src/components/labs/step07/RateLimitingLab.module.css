@@ -1,0 +1,24 @@
+.mb2 {
+  margin-bottom: 0.5rem;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.resultScroll {
+  margin-top: 0.5rem;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.resultAlert {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.attemptsInfo {
+  opacity: 0.7;
+}
