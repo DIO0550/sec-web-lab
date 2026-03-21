@@ -1,0 +1,54 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.sessionInput {
+  margin-bottom: 0.75rem;
+  font-family: monospace;
+  font-size: 0.75rem;
+}
+
+.stepButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.resultList {
+  margin-top: 0.75rem;
+}
+
+.resultItem {
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.resultBold {
+  font-weight: bold;
+}
+
+.sessionId {
+  font-family: monospace;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.warningText {
+  color: var(--lab-warning-text);
+}
+
+.hijackSuccess {
+  color: var(--lab-status-ng);
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+.infoText {
+  color: var(--lab-status-ok);
+}
+
+.pointAlert {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+}

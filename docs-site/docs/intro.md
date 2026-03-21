@@ -86,10 +86,10 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 21 | Cookie操作 | ★☆☆ | 未実装 | [cookie-manipulation](step04-session/cookie-manipulation.md) |
-| 22 | セッション固定攻撃 | ★★☆ | 未実装 | [session-fixation](step04-session/session-fixation.md) |
-| 23 | セッションハイジャック | ★★☆ | 未実装 | [session-hijacking](step04-session/session-hijacking.md) |
-| 24 | CSRF | ★★☆ | 未実装 | [csrf](step04-session/csrf.md) |
+| 21 | Cookie操作 | ★☆☆ | ラボ実装済 | [cookie-manipulation](step04-session/cookie-manipulation) |
+| 22 | セッション固定攻撃 | ★★☆ | ラボ実装済 | [session-fixation](step04-session/session-fixation) |
+| 23 | セッションハイジャック | ★★☆ | ラボ実装済 | [session-hijacking](step04-session/session-hijacking) |
+| 24 | CSRF | ★★☆ | ラボ実装済 | [csrf](step04-session/csrf) |
 | 25 | トークンリプレイ（失効不備） | ★★☆ | 未実装 | [token-replay](step04-session/token-replay.md) |
 | 26 | セッション有効期限の不備 | ★☆☆ | 未実装 | [session-expiration](step04-session/session-expiration.md) |
 | 27 | 推測可能なセッションID | ★★☆ | 未実装 | [predictable-session-id](step04-session/predictable-session-id.md) |

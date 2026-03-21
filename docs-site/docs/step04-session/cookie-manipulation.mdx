@@ -3,6 +3,8 @@ title: Cookie Security Misconfiguration — Cookie属性の不備が招く複数
 sidebar_position: 1
 ---
 
+import { CookieManipulationLab } from '@site/src/components/labs/step04/CookieManipulationLab';
+
 # Cookie Security Misconfiguration — Cookie属性の不備が招く複数の攻撃経路
 
 > セッション Cookie に `HttpOnly`、`Secure`、`SameSite` 属性が設定されていないと、JavaScript からの読み取り、HTTP 平文通信での漏洩、クロスサイトでの送信が可能になり、各種攻撃の土台となってしまう問題を学びます。
@@ -277,9 +279,9 @@ setCookie(c, 'session_id', sessionId, {
 
 | ラボ | 関連性 |
 |------|--------|
-| [セッションハイジャック](./session-hijacking.md) | `HttpOnly` なしの Cookie は XSS で窃取可能。Cookie 属性の不備がセッションハイジャックの直接的な原因となる |
-| [CSRF](./csrf.md) | `SameSite` なしの Cookie はクロスサイトリクエストで自動送信される。CSRF 攻撃の成立条件に直結する |
-| [セッション固定](./session-fixation.md) | Cookie 属性の不備はセッション ID の注入・漏洩の経路を広げ、セッション固定攻撃を容易にする |
+| [セッションハイジャック](./session-hijacking) | `HttpOnly` なしの Cookie は XSS で窃取可能。Cookie 属性の不備がセッションハイジャックの直接的な原因となる |
+| [CSRF](./csrf) | `SameSite` なしの Cookie はクロスサイトリクエストで自動送信される。CSRF 攻撃の成立条件に直結する |
+| [セッション固定](./session-fixation) | Cookie 属性の不備はセッション ID の注入・漏洩の経路を広げ、セッション固定攻撃を容易にする |
 
 ---
 
@@ -289,3 +291,9 @@ setCookie(c, 'session_id', sessionId, {
 - [CWE-1004: Sensitive Cookie Without 'HttpOnly' Flag](https://cwe.mitre.org/data/definitions/1004.html)
 - [CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute](https://cwe.mitre.org/data/definitions/614.html)
 - [CWE-1275: Sensitive Cookie with Improper SameSite Attribute](https://cwe.mitre.org/data/definitions/1275.html)
+
+---
+
+## ラボ体験
+
+<CookieManipulationLab />

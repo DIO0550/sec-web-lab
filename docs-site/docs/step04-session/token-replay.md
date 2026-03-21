@@ -384,7 +384,7 @@ app.post('/refresh', async (c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [Session Hijacking](./session-hijacking.md) | セッションハイジャックで盗んだトークンは、ログアウト後も有効であればそのまま再利用できる。トークン窃取と再利用は連続した攻撃チェーンを形成する |
+| [Session Hijacking](./session-hijacking) | セッションハイジャックで盗んだトークンは、ログアウト後も有効であればそのまま再利用できる。トークン窃取と再利用は連続した攻撃チェーンを形成する |
 | [Session Expiration](./session-expiration.md) | セッション有効期限の不備とトークン再利用は密接に関連する。有効期限が長いほどトークン再利用の攻撃ウィンドウが広がる |
 | [XSS (Stored XSS)](../step02-injection/xss) | XSS で `localStorage` からトークンを窃取すると、そのトークンをログアウト後も再利用できる |
 

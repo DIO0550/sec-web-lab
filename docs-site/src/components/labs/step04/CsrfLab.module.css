@@ -1,0 +1,68 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.resetRow {
+  margin-bottom: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.smallText {
+  font-size: 0.75rem;
+}
+
+.profileSection {
+  margin-top: 0.75rem;
+}
+
+.profileBox {
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.attackSection {
+  margin-top: 0.75rem;
+}
+
+.legitSection {
+  margin-top: 0.75rem;
+}
+
+.attackTitle {
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.attackInput {
+  margin-bottom: 0.5rem;
+}
+
+.changeResultAlert {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.tokenRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tokenDisplay {
+  padding: 0.25rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: monospace;
+  margin-bottom: 0.5rem;
+  word-break: break-all;
+}
