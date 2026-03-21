@@ -70,11 +70,11 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 15 | デフォルト認証情報 | ★☆☆ | 未実装 | [default-credentials](step03-auth/default-credentials.md) |
-| 16 | 弱いパスワードポリシー | ★☆☆ | 未実装 | [weak-password-policy](step03-auth/weak-password-policy.md) |
-| 17 | ブルートフォース攻撃 | ★☆☆ | 未実装 | [brute-force](step03-auth/brute-force.md) |
-| 18 | 平文パスワード保存 | ★☆☆ | 未実装 | [plaintext-password](step03-auth/plaintext-password.md) |
-| 19 | 弱いハッシュ (MD5/SHA1) | ★★☆ | 未実装 | [weak-hash](step03-auth/weak-hash.md) |
+| 15 | デフォルト認証情報 | ★☆☆ | ラボ実装済 | [default-credentials](step03-auth/default-credentials) |
+| 16 | 弱いパスワードポリシー | ★☆☆ | ラボ実装済 | [weak-password-policy](step03-auth/weak-password-policy) |
+| 17 | ブルートフォース攻撃 | ★☆☆ | ラボ実装済 | [brute-force](step03-auth/brute-force) |
+| 18 | 平文パスワード保存 | ★☆☆ | ラボ実装済 | [plaintext-password](step03-auth/plaintext-password) |
+| 19 | 弱いハッシュ (MD5/SHA1) | ★★☆ | ラボ実装済 | [weak-hash](step03-auth/weak-hash) |
 | 20 | ユーザー名列挙 | ★☆☆ | 未実装 | [username-enumeration](step03-auth/username-enumeration.md) |
 
 ---

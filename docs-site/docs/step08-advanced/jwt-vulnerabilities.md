@@ -569,7 +569,7 @@ app.use('/api/protected/*', async (c, next) => {
 |------|--------|
 | [セッション固定](../step04-session/session-fixation.md) | JWT とセッション Cookie は認証の仕組みが異なるが、どちらもトークンの信頼性に関する脆弱性。セッション方式の違いによる攻撃手法の違いを比較できる |
 | [権限昇格](../step05-access-control/privilege-escalation.md) | JWT 改ざんは権限昇格の一手法。IDOR やロールチェックの不備と組み合わせて影響を拡大できる |
-| [弱いパスワードポリシー](../step03-auth/weak-password-policy.md) | JWT の弱い秘密鍵と弱いパスワードは「推測可能な秘密」という共通の問題パターン |
+| [弱いパスワードポリシー](../step03-auth/weak-password-policy) | JWT の弱い秘密鍵と弱いパスワードは「推測可能な秘密」という共通の問題パターン |
 
 ---
 

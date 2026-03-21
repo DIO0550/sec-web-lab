@@ -1,0 +1,89 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.lab2Heading {
+  margin-top: 2rem;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dictionaryNote {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  margin-top: 0.25rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.resultMessage {
+  font-size: 0.875rem;
+}
+
+.attemptsInfo {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 0.25rem;
+}
+
+.tableWrapper {
+  margin-top: 0.75rem;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.resultTable {
+  width: 100%;
+  font-size: 0.75rem;
+  border-collapse: collapse;
+}
+
+.resultTh {
+  padding: 0.25rem;
+  border: 1px solid var(--lab-border);
+  text-align: left;
+  background-color: var(--lab-bg-secondary);
+}
+
+.resultTd {
+  padding: 0.25rem;
+  border: 1px solid var(--lab-border);
+}
+
+.mono {
+  font-family: monospace;
+}
+
+.successRow {
+  background-color: var(--lab-success-bg);
+}
+
+.warningRow {
+  background-color: var(--lab-warning-bg);
+}
+
+.successText {
+  color: var(--lab-status-ng);
+  font-weight: bold;
+}
+
+.warningText {
+  color: var(--lab-warning-text);
+}
+
+.mutedText {
+  color: var(--lab-text-muted);
+}
