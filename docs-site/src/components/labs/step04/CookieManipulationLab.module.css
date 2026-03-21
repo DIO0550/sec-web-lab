@@ -1,0 +1,65 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.resultMessage {
+  font-size: 0.875rem;
+}
+
+.cookieAttrs {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.cookieSection {
+  margin-top: 0.75rem;
+}
+
+.cookieInfoBox {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.vulnLabel {
+  color: var(--lab-status-ng);
+}
+
+.protectLabel {
+  color: var(--lab-status-ok);
+}
+
+.infoList {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.documentCookieBox {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--lab-warning-bg);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.documentCookiePre {
+  margin: 0.25rem 0 0;
+  font-family: monospace;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

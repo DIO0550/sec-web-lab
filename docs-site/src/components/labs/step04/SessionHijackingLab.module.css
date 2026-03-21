@@ -1,0 +1,87 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.resetRow {
+  margin-bottom: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.smallText {
+  font-size: 0.75rem;
+}
+
+.sessionId {
+  font-family: monospace;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.documentCookieBox {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--lab-warning-bg);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.documentCookiePre {
+  margin: 0.25rem 0 0;
+  font-family: monospace;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.refreshBtn {
+  margin-top: 0.25rem;
+}
+
+.commentSection {
+  margin-top: 0.75rem;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.commentList {
+  margin-top: 0.75rem;
+}
+
+.commentItem {
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.commentAuthor {
+  font-weight: bold;
+}
+
+.commentDate {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+}
+
+.profileBox {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.profilePre {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+}
