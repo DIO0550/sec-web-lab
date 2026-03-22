@@ -572,8 +572,8 @@ try {
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [XXE](../step06-server-side/xxe.md) | XMLの文字エンコーディング宣言を悪用した攻撃。XMLパーサのエンコーディング処理の問題が情報漏洩につながる |
-| [CRLFインジェクション](../step06-server-side/crlf-injection.md) | 改行文字（CR: 0x0D, LF: 0x0A）の注入。文字コードレベルでの特殊文字の扱いが関連する |
+| [XXE](../step06-server-side/xxe.mdx) | XMLの文字エンコーディング宣言を悪用した攻撃。XMLパーサのエンコーディング処理の問題が情報漏洩につながる |
+| [CRLFインジェクション](../step06-server-side/crlf-injection.mdx) | 改行文字（CR: 0x0D, LF: 0x0A）の注入。文字コードレベルでの特殊文字の扱いが関連する |
 
 ---
 

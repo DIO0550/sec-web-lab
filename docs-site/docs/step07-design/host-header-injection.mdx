@@ -3,6 +3,8 @@ title: Host Header Injection — Hostヘッダ汚染によるリンク詐称
 sidebar_position: 11
 ---
 
+import { HostHeaderInjectionLab } from '@site/src/components/labs/step07/HostHeaderInjectionLab';
+
 # Host Header Injection — Hostヘッダ汚染によるリンク詐称
 
 > サーバーがHTTPリクエストの Host ヘッダをそのまま信頼してURLを組み立てると、攻撃者が偽のドメインを含むパスワードリセットリンクを生成させ、被害者のリセットトークンを盗み取れてしまう問題です。
@@ -255,6 +257,8 @@ app.use("*", async (c, next) => {
 | 異常な Host ヘッダの検知 | 検知 | 許可リストに含まれない `Host` ヘッダのリクエストをログに記録し、攻撃の試みを監視する |
 
 ---
+
+<HostHeaderInjectionLab />
 
 ## ハンズオン手順
 

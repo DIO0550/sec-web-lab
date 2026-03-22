@@ -3,6 +3,8 @@ title: SSRF Bypass — SSRFフィルタの回避テクニック
 sidebar_position: 7
 ---
 
+import { SsrfBypassLab } from '@site/src/components/labs/step06/SsrfBypassLab';
+
 # SSRF Bypass — SSRFフィルタの回避テクニック
 
 > SSRFの基本的な対策として導入されたブロックリスト（`localhost` や `127.0.0.1` の文字列マッチング）を、IPアドレスの代替表現やURLパーサの不整合を利用して回避できてしまう脆弱性を学びます。
@@ -294,6 +296,8 @@ app.get('/api/fetch-url', async (c) => {
 
 ---
 
+<SsrfBypassLab />
+
 ## ハンズオン手順
 
 ### Step 1: 脆弱バージョンで攻撃を体験
@@ -428,8 +432,8 @@ app.get('/api/fetch-url', async (c) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [SSRF](./ssrf.md) | 本ラボの前提。基本的なSSRFの仕組みと対策を理解した上で、その対策の回避手法を学ぶ |
-| [XXE](./xxe.md) | XXEの外部エンティティ参照でもSSRFと同等の内部アクセスが可能であり、同様のフィルタ回避テクニックが適用できる |
+| [SSRF](./ssrf.mdx) | 本ラボの前提。基本的なSSRFの仕組みと対策を理解した上で、その対策の回避手法を学ぶ |
+| [XXE](./xxe.mdx) | XXEの外部エンティティ参照でもSSRFと同等の内部アクセスが可能であり、同様のフィルタ回避テクニックが適用できる |
 
 ---
 

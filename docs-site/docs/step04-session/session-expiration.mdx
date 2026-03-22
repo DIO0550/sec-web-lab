@@ -3,6 +3,8 @@ title: Session Expiration — セッション有効期限の不備
 sidebar_position: 6
 ---
 
+import { SessionExpirationLab } from '@site/src/components/labs/step04/SessionExpirationLab';
+
 # Session Expiration — セッション有効期限の不備
 
 > セッションに有効期限が設定されていない、または極端に長いために、放置されたセッションが永久に有効な状態となり、再認証なしでアクセスされ続ける脆弱性を学びます。
@@ -269,6 +271,10 @@ const authMiddleware = async (c, next) => {
 
 ---
 
+## ラボ体験
+
+<SessionExpirationLab />
+
 ## ハンズオン手順
 
 ### Step 1: 脆弱バージョンで攻撃を体験
@@ -392,7 +398,7 @@ const authMiddleware = async (c, next) => {
 
 | ラボ | 関連性 |
 |------|--------|
-| [Token Replay](./token-replay.md) | トークン再利用攻撃は、セッション有効期限が長いほど攻撃ウィンドウが広がる。有効期限管理はトークン再利用対策の基盤となる |
+| [Token Replay](./token-replay.mdx) | トークン再利用攻撃は、セッション有効期限が長いほど攻撃ウィンドウが広がる。有効期限管理はトークン再利用対策の基盤となる |
 | [Session Hijacking](./session-hijacking) | 窃取されたセッション ID に有効期限がなければ、攻撃者は永久にそのセッションを使い続けられる。適切な有効期限はハイジャック被害を限定する |
 | [Cookie 操作](./cookie-manipulation) | Cookie の `Max-Age`、`Expires` 属性はセッション有効期限管理のクライアント側実装。サーバー側タイムアウトと合わせて二重の防御になる |
 

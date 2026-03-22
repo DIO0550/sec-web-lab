@@ -8,7 +8,6 @@ services:
     command: sleep infinity
     ports:
       - "13000:3000"
-      - "13001:3001"
       - "15173:5173"
     depends_on:
       db:

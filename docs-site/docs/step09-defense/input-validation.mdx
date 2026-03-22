@@ -366,7 +366,7 @@ type RegisterInput = z.infer<typeof registerSchema>;
 | [XSS](../step02-injection/xss) | 入力バリデーションの欠如が XSS ペイロードの注入を許す。バリデーションは入力側、エスケープは出力側の防御 |
 | [SQL インジェクション](../step02-injection/sql-injection) | バリデーション不備で SQL 特殊文字が処理に到達する。バリデーションとパラメータ化クエリの両方が必要 |
 | [コマンドインジェクション](../step02-injection/command-injection) | シェルコマンドへの入力バリデーション不備により OS コマンドが注入される |
-| [パストラバーサル](../step05-access-control/path-traversal.md) | ファイルパスのバリデーション不備で `../` による上位ディレクトリへのアクセスが可能になる |
+| [パストラバーサル](../step05-access-control/path-traversal.mdx) | ファイルパスのバリデーション不備で `../` による上位ディレクトリへのアクセスが可能になる |
 
 ---
 

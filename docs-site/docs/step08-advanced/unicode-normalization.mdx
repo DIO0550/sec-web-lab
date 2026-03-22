@@ -3,6 +3,8 @@ title: Unicode Normalization Bypass — Unicode正規化によるフィルタ回
 sidebar_position: 8
 ---
 
+import { UnicodeNormalizationLab } from '@site/src/components/labs/step08/UnicodeNormalizationLab';
+
 # Unicode Normalization Bypass — Unicode正規化によるフィルタ回避
 
 > 入力フィルタをすり抜けるために、全角文字やホモグリフ（見た目が似た別の文字）を利用し、アプリケーションの正規化処理後にブロックリストを回避する攻撃を学びます。
@@ -261,6 +263,8 @@ function escapeHtml(str: string): string {
 
 ---
 
+<UnicodeNormalizationLab />
+
 ## ハンズオン手順
 
 ### Step 1: 脆弱バージョンで攻撃を体験
@@ -384,7 +388,7 @@ function escapeHtml(str: string): string {
 | ラボ | 関連性 |
 |------|--------|
 | [Reflected XSS](../step02-injection/xss) | Unicode 正規化バイパスは XSS フィルタの回避手法の一つ。XSS の基本を理解した上で、フィルタ回避のテクニックとして学ぶ |
-| [SSTI](../step08-advanced/ssti.md) | テンプレートインジェクションでも Unicode 正規化を使ったフィルタ回避が適用される場合がある。入力サニタイズのバイパス手法として共通 |
+| [SSTI](../step08-advanced/ssti.mdx) | テンプレートインジェクションでも Unicode 正規化を使ったフィルタ回避が適用される場合がある。入力サニタイズのバイパス手法として共通 |
 
 ---
 
