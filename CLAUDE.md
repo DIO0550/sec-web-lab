@@ -64,7 +64,7 @@ pnpm typecheck       # 型チェック
 # ドキュメントサイト
 cd docs-site
 pnpm install         # 依存インストール
-pnpm start           # 開発サーバー起動 (port 3001)
+pnpm start           # 開発サーバー起動 (port 5173)
 pnpm build           # プロダクションビルド
 pnpm typecheck       # 型チェック
 ```
