@@ -1,0 +1,51 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.inputRow {
+  margin-bottom: 0.5rem;
+}
+
+.presetRow {
+  margin-bottom: 0.5rem;
+}
+
+.resultBox {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: var(--lab-bg-secondary);
+  border: 1px solid var(--lab-border);
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  overflow: auto;
+  word-break: break-all;
+}
+
+.debugInfo {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}
+
+.riskList {
+  margin-top: 0.25rem;
+  padding-left: 1.25rem;
+}
+
+.sectionSpacing {
+  margin-top: 0.5rem;
+}

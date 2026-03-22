@@ -1,0 +1,34 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.logList {
+  margin-top: 0.5rem;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.logEntry {
+  font-size: 0.75rem;
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.logEntryWarn {
+  composes: logEntry;
+  background-color: var(--lab-warning-bg, #fef9c3);
+}
+
+.logEntryInfo {
+  composes: logEntry;
+  background-color: var(--lab-bg-secondary);
+}

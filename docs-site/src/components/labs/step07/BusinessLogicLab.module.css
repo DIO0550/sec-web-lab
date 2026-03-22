@@ -1,0 +1,47 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.mb2 {
+  margin-bottom: 0.5rem;
+}
+
+.resultScroll {
+  margin-top: 0.5rem;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.resultAlert {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.mono {
+  font-family: monospace;
+  margin-top: 0.25rem;
+}
+
+.italic {
+  font-style: italic;
+  margin-top: 0.25rem;
+  opacity: 0.7;
+}
+
+.selectLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 0.5rem;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  outline: none;
+}

@@ -1,0 +1,60 @@
+.hint {
+  font-size: 0.75rem;
+  color: var(--lab-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.resultBox {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+}
+
+.resultSuccess {
+  background-color: var(--lab-success-bg, #d4edda);
+  border: 1px solid var(--lab-status-ok);
+}
+
+.resultError {
+  background-color: var(--lab-error-bg, #f8d7da);
+  border: 1px solid var(--lab-status-ng);
+}
+
+.resultTitle {
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.debugSection {
+  margin-top: 0.5rem;
+}
+
+.debugMessage {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}
+
+.cookieDisplay {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-family: monospace;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.riskList {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  color: var(--lab-status-ng);
+}
+
+.headersPre {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+}

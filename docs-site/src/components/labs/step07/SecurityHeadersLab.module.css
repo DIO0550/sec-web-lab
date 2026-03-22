@@ -1,0 +1,50 @@
+.resultBox {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: var(--lab-bg-secondary);
+  border: 1px solid var(--lab-border);
+}
+
+.sectionTitle {
+  font-weight: bold;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.headerTitle {
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.pre {
+  font-size: 0.75rem;
+  overflow: auto;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: var(--ifm-background-color);
+}
+
+.missingSection {
+  margin-top: 0.5rem;
+}
+
+.missingTitle {
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: var(--lab-status-ng);
+}
+
+.missingList {
+  font-size: 0.75rem;
+  color: var(--lab-status-ng);
+}
+
+.debugMessage {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}

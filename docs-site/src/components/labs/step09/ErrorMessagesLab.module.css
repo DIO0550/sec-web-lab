@@ -1,0 +1,51 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.resultList {
+  margin-top: 0.5rem;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.resultItem {
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: 4px;
+}
+
+.resultItemSuccess {
+  composes: resultItem;
+  background-color: var(--lab-status-ok-bg, #dcfce7);
+}
+
+.resultItemError {
+  composes: resultItem;
+  background-color: var(--lab-status-ng-bg, #fee2e2);
+}
+
+.resultMessage {
+  font-weight: bold;
+}
+
+.stackTrace {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  overflow: auto;
+  max-height: 100px;
+}
+
+.debugText {
+  color: var(--lab-text-muted);
+  font-style: italic;
+  margin-top: 0.25rem;
+}

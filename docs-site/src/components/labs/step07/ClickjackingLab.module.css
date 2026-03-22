@@ -1,0 +1,72 @@
+.resultBox {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: var(--lab-bg-secondary);
+  border: 1px solid var(--lab-border);
+}
+
+.sectionTitle {
+  font-weight: bold;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.pre {
+  font-size: 0.75rem;
+  overflow: auto;
+}
+
+.debugMessage {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  font-style: italic;
+}
+
+.attackSim {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px dashed var(--lab-border);
+  border-radius: 4px;
+}
+
+.attackSimTitle {
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.attackSimDesc {
+  font-size: 0.75rem;
+  color: var(--lab-text-secondary);
+}
+
+.attackDemo {
+  position: relative;
+  background-color: var(--lab-bg-secondary);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.attackDemoText {
+  font-size: 0.875rem;
+}
+
+.attackDemoButton {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.attackDemoNote {
+  font-size: 0.75rem;
+  color: var(--lab-text-muted);
+  margin-top: 0.5rem;
+}

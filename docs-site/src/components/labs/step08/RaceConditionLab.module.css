@@ -1,0 +1,34 @@
+.stockInfo {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--lab-bg-secondary);
+  border-radius: 4px;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.resultList {
+  margin-top: 0.5rem;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.resultItem {
+  font-size: 0.75rem;
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-radius: 4px;
+}
+
+.resultSuccess {
+  background-color: color-mix(in srgb, var(--lab-status-ok) 15%, transparent);
+}
+
+.resultError {
+  background-color: color-mix(in srgb, var(--lab-status-ng) 15%, transparent);
+}
