@@ -481,15 +481,15 @@ sec-web-labの開発環境では、フロントエンド（`http://localhost:517
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [CORS Misconfiguration](../step06-server-side/cors-misconfiguration.md) | CORSの誤設定（Originエコーバック等）によるデータ窃取。Access-Control-Allow-Origin と Access-Control-Allow-Credentials の危険な組み合わせを体験する |
+| [CORS Misconfiguration](../step06-server-side/cors-misconfiguration.mdx) | CORSの誤設定（Originエコーバック等）によるデータ窃取。Access-Control-Allow-Origin と Access-Control-Allow-Credentials の危険な組み合わせを体験する |
 
 ### 受動的攻撃
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [CSRF](../step04-session/csrf.md) | SOPが防げない攻撃の代表例。フォーム送信がSOPの例外であること、Cookieの自動送信がCSRFを可能にすることを体験する |
+| [CSRF](../step04-session/csrf.mdx) | SOPが防げない攻撃の代表例。フォーム送信がSOPの例外であること、Cookieの自動送信がCSRFを可能にすることを体験する |
 | [XSS](../step02-injection/xss) | 注入されたスクリプトが同一オリジンで実行されるため、SOPの保護を受けられないことを体験する |
-| [クリックジャッキング](../step07-design/clickjacking.md) | iframeによるクロスオリジン埋め込みがSOPの例外であることを悪用した攻撃を体験する |
+| [クリックジャッキング](../step07-design/clickjacking.mdx) | iframeによるクロスオリジン埋め込みがSOPの例外であることを悪用した攻撃を体験する |
 
 ### オープンリダイレクト
 

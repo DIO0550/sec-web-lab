@@ -423,8 +423,8 @@ app.use("/api/settings/*", authMiddleware, noCacheMiddleware);
 | ラボ | 関連性 |
 |------|--------|
 | [HTTPでの機密データ送信](sensitive-data-http.mdx) | 通信経路でのデータ保護という観点で共通。本ラボはキャッシュによる残存、sensitive-data-http は平文通信による傍受が問題 |
-| [セキュリティヘッダー](../step06-server-side/cors-misconfiguration.md) | HTTPレスポンスヘッダーの設定不備が脆弱性の原因となる点が共通。キャッシュ制御も CORS 設定もサーバー側のヘッダー管理の問題 |
-| [セッションハイジャック](../step04-session/session-hijacking.md) | キャッシュに残存したセッション情報やプロフィールデータが、セッションハイジャックの足がかり（個人情報の収集）に利用される可能性がある |
+| [セキュリティヘッダー](../step06-server-side/cors-misconfiguration.mdx) | HTTPレスポンスヘッダーの設定不備が脆弱性の原因となる点が共通。キャッシュ制御も CORS 設定もサーバー側のヘッダー管理の問題 |
+| [セッションハイジャック](../step04-session/session-hijacking.mdx) | キャッシュに残存したセッション情報やプロフィールデータが、セッションハイジャックの足がかり（個人情報の収集）に利用される可能性がある |
 
 ---
 
