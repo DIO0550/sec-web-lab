@@ -3,6 +3,8 @@ title: Username Enumeration — ユーザー名の存在確認による情報漏
 sidebar_position: 6
 ---
 
+import { UsernameEnumerationLab } from '@site/src/components/labs/step03/UsernameEnumerationLab';
+
 # Username Enumeration — ユーザー名の存在確認による情報漏洩
 
 > ログインの失敗メッセージやレスポンス時間の違いから、そのユーザー名がシステムに登録されているかどうかを攻撃者が特定できてしまう脆弱性を学びます。
@@ -274,6 +276,10 @@ app.post('/login', async (c) => {
 | ユーザー名にメールアドレスを使わない | 多層防御 | メールアドレスが推測しやすい場合、ランダムなユーザー ID を使うことで候補リストの作成を困難にする |
 
 ---
+
+## ラボ体験
+
+<UsernameEnumerationLab />
 
 ## ハンズオン手順
 

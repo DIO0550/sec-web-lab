@@ -1,0 +1,28 @@
+.description {
+  font-size: 0.875rem;
+  color: var(--lab-text-secondary);
+}
+
+.inputGroup {
+  margin-bottom: 0.5rem;
+}
+
+.presets {
+  margin-bottom: 0.5rem;
+}
+
+.resultAlert {
+  margin-top: 0.5rem;
+}
+
+.codeBlock {
+  font-size: 0.75rem;
+  background-color: var(--lab-bg-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 200px;
+}
