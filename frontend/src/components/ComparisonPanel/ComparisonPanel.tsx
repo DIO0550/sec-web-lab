@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Tabs } from "./Tabs";
+import { Tabs } from "@/components/Tabs";
 
 type Props = {
   vulnerableContent: ReactNode;

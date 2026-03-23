@@ -1,4 +1,3 @@
-export { Step09Index } from "./pages/Step09Index";
 export { ErrorMessages } from "./pages/ErrorMessages";
 export { StackTrace } from "./pages/StackTrace";
 export { Logging } from "./pages/Logging";

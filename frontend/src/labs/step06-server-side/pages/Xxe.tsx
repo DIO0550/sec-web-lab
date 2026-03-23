@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
 import { PresetButtons } from "@/components/PresetButtons";
 import { Textarea } from "@/components/Textarea";
 import { Alert } from "@/components/Alert";
-import { ExpandableSection } from "../../../components/ExpandableSection";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ExpandableSection } from "@/components/ExpandableSection";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 
 const BASE = "/api/labs/xxe";
 

@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { fetchText } from "../../../hooks/useLabFetch";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { JsonTextViewer } from "../../../components/ResponseViewer";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Tabs } from "../../../components/Tabs";
+import { fetchText } from "@/hooks/useLabFetch";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { JsonTextViewer } from "@/components/ResponseViewer";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { Tabs } from "@/components/Tabs";
 import { Input } from "@/components/Input";
-import { ExpandableSection } from "../../../components/ExpandableSection";
-import { EndpointUrl } from "../../../components/EndpointUrl";
+import { ExpandableSection } from "@/components/ExpandableSection";
+import { EndpointUrl } from "@/components/EndpointUrl";
 
 type FetchResult = { status: number; body: string } | null;
 

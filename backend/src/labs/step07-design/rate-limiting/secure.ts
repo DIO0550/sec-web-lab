@@ -1,12 +1,10 @@
 import { Hono } from "hono";
 import { USERS, loginAttempts } from "./shared.js";
+import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION_MS } from "../../shared/constants.js";
 
 const app = new Hono();
 
 // --- 安全バージョン ---
-
-const MAX_ATTEMPTS = 5;
-const LOCK_DURATION_MS = 15 * 60 * 1000; // 15分
 
 // ✅ IP単位のレート制限 + アカウントロック
 app.post("/login", async (c) => {
@@ -46,12 +44,12 @@ app.post("/login", async (c) => {
   record.lastAttempt = now;
 
   // ✅ 上限超過でアカウントロック
-  if (record.count >= MAX_ATTEMPTS) {
-    record.lockedUntil = now + LOCK_DURATION_MS;
+  if (record.count >= MAX_LOGIN_ATTEMPTS) {
+    record.lockedUntil = now + LOCKOUT_DURATION_MS;
     loginAttempts.set(key, record);
     return c.json({
       success: false,
-      message: `ログイン試行回数の上限(${MAX_ATTEMPTS}回)に達しました。15分間ロックされます`,
+      message: `ログイン試行回数の上限(${MAX_LOGIN_ATTEMPTS}回)に達しました。15分間ロックされます`,
       locked: true,
       attemptsUsed: record.count,
     }, 429);
@@ -61,7 +59,7 @@ app.post("/login", async (c) => {
   return c.json({
     success: false,
     message: "ユーザー名またはパスワードが違います",
-    attemptsRemaining: MAX_ATTEMPTS - record.count,
+    attemptsRemaining: MAX_LOGIN_ATTEMPTS - record.count,
   }, 401);
 });
 

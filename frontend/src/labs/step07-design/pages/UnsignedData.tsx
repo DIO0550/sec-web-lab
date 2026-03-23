@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Select } from "@/components/Select";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 
 const BASE = "/api/labs/unsigned-data";
 

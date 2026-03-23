@@ -1,14 +1,11 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
+import { useMobileDetect } from "@/hooks/useMobileDetect";
+import { useSidebarResize } from "@/hooks/useSidebarResize";
 
 const SIDEBAR_STORAGE_KEY = "sec-web-lab-sidebar";
-const SIDEBAR_WIDTH_STORAGE_KEY = "sec-web-lab-sidebar-width";
-const SIDEBAR_MIN_WIDTH = 150;
-const SIDEBAR_MAX_WIDTH = 400;
-const SIDEBAR_DEFAULT_WIDTH = 240;
 const SIDEBAR_COLLAPSED_WIDTH = 56;
-const BREAKPOINT = 1024;
 
 function getInitialCollapsed(): boolean {
   try {
@@ -18,41 +15,26 @@ function getInitialCollapsed(): boolean {
   }
 }
 
-function getInitialWidth(): number {
-  try {
-    const stored = localStorage.getItem(SIDEBAR_WIDTH_STORAGE_KEY);
-    if (stored === null) return SIDEBAR_DEFAULT_WIDTH;
-    const parsed = Number(stored);
-    if (isNaN(parsed)) return SIDEBAR_DEFAULT_WIDTH;
-    return Math.min(SIDEBAR_MAX_WIDTH, Math.max(SIDEBAR_MIN_WIDTH, parsed));
-  } catch {
-    return SIDEBAR_DEFAULT_WIDTH;
-  }
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isCollapsed, setIsCollapsed] = useState(getInitialCollapsed);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < BREAKPOINT : false
-  );
-  const [sidebarWidth, setSidebarWidth] = useState(getInitialWidth);
-  const [isDragging, setIsDragging] = useState(false);
 
-  const sidebarWidthRef = useRef(sidebarWidth);
-  const sidebarRef = useRef<HTMLElement>(null);
-  const rafIdRef = useRef<number>(0);
+  const { isMobile } = useMobileDetect();
+  const {
+    sidebarWidth,
+    isDragging,
+    sidebarRef,
+    handleMouseDown,
+    handleKeyDown,
+    handleDoubleClick,
+    SIDEBAR_MIN_WIDTH,
+    SIDEBAR_MAX_WIDTH,
+  } = useSidebarResize();
 
-  // ウィンドウリサイズ監視
+  // デスクトップに戻ったらモバイルサイドバーを閉じる
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < BREAKPOINT;
-      setIsMobile(mobile);
-      if (!mobile) setIsMobileOpen(false);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    if (!isMobile) setIsMobileOpen(false);
+  }, [isMobile]);
 
   // モバイルオーバーレイ時の body スクロール抑止
   useEffect(() => {
@@ -69,128 +51,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
   // Esc キーでモバイルサイドバーを閉じる
   useEffect(() => {
     if (!isMobileOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsMobileOpen(false);
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleEscKey);
+    return () => document.removeEventListener("keydown", handleEscKey);
   }, [isMobileOpen]);
-
-  // ドラッグ中の mousemove / mouseup / touch イベント管理
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleDragMove = (e: MouseEvent | TouchEvent) => {
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      rafIdRef.current = requestAnimationFrame(() => {
-        const clientX =
-          "touches" in e ? e.touches[0].clientX : e.clientX;
-        const newWidth = Math.min(
-          SIDEBAR_MAX_WIDTH,
-          Math.max(SIDEBAR_MIN_WIDTH, clientX)
-        );
-        sidebarWidthRef.current = newWidth;
-        if (sidebarRef.current) {
-          sidebarRef.current.style.width = `${newWidth}px`;
-        }
-      });
-    };
-
-    const handleDragEnd = () => {
-      setIsDragging(false);
-      document.body.style.userSelect = "";
-      document.body.style.cursor = "";
-
-      const finalWidth = sidebarWidthRef.current;
-      setSidebarWidth(finalWidth);
-      try {
-        localStorage.setItem(
-          SIDEBAR_WIDTH_STORAGE_KEY,
-          String(finalWidth)
-        );
-      } catch {
-        // localStorage に書き込めない場合は無視
-      }
-
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = 0;
-      }
-    };
-
-    document.addEventListener("mousemove", handleDragMove);
-    document.addEventListener("mouseup", handleDragEnd);
-    document.addEventListener("touchmove", handleDragMove);
-    document.addEventListener("touchend", handleDragEnd);
-    document.addEventListener("touchcancel", handleDragEnd);
-
-    return () => {
-      document.removeEventListener("mousemove", handleDragMove);
-      document.removeEventListener("mouseup", handleDragEnd);
-      document.removeEventListener("touchmove", handleDragMove);
-      document.removeEventListener("touchend", handleDragEnd);
-      document.removeEventListener("touchcancel", handleDragEnd);
-      // クリーンアップ時にも body スタイルを確実に復元
-      document.body.style.userSelect = "";
-      document.body.style.cursor = "";
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = 0;
-      }
-    };
-  }, [isDragging]);
-
-  const handleDragStart = useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
-      e.preventDefault();
-      sidebarWidthRef.current = sidebarWidth;
-      setIsDragging(true);
-      document.body.style.userSelect = "none";
-      document.body.style.cursor = "col-resize";
-    },
-    [sidebarWidth]
-  );
-
-  // キーボードによるリサイズ（左右キーで 10px ずつ調整）
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      const step = 10;
-      let newWidth = sidebarWidth;
-      if (e.key === "ArrowLeft") {
-        newWidth = Math.max(SIDEBAR_MIN_WIDTH, sidebarWidth - step);
-      } else if (e.key === "ArrowRight") {
-        newWidth = Math.min(SIDEBAR_MAX_WIDTH, sidebarWidth + step);
-      } else if (e.key === "Home") {
-        newWidth = SIDEBAR_MIN_WIDTH;
-      } else if (e.key === "End") {
-        newWidth = SIDEBAR_MAX_WIDTH;
-      } else {
-        return;
-      }
-      e.preventDefault();
-      setSidebarWidth(newWidth);
-      sidebarWidthRef.current = newWidth;
-      try {
-        localStorage.setItem(SIDEBAR_WIDTH_STORAGE_KEY, String(newWidth));
-      } catch {
-        // localStorage に書き込めない場合は無視
-      }
-    },
-    [sidebarWidth]
-  );
-
-  const handleDoubleClick = useCallback(() => {
-    setSidebarWidth(SIDEBAR_DEFAULT_WIDTH);
-    sidebarWidthRef.current = SIDEBAR_DEFAULT_WIDTH;
-    try {
-      localStorage.setItem(
-        SIDEBAR_WIDTH_STORAGE_KEY,
-        String(SIDEBAR_DEFAULT_WIDTH)
-      );
-    } catch {
-      // localStorage に書き込めない場合は無視
-    }
-  }, []);
 
   const toggleCollapse = useCallback(() => {
     setIsCollapsed((prev) => {
@@ -244,8 +110,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {!isCollapsed && (
           <div
             className="hidden lg:flex items-stretch w-1 flex-shrink-0 cursor-col-resize group focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-            onMouseDown={handleDragStart}
-            onTouchStart={handleDragStart}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleMouseDown}
             onDoubleClick={handleDoubleClick}
             onKeyDown={handleKeyDown}
             role="separator"

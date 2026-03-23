@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
-import { getJson } from "../../../utils/api";
+import { ResultTable } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
+import { getJson } from "@/utils/api";
 
 const BASE = "/api/labs/mass-assignment";
 
@@ -188,28 +189,22 @@ export function MassAssignment() {
         </Button>
       </div>
       <ExpandableSection isOpen={!!users}>
-        <table className="w-full text-xs border-collapse">
-          <thead>
-            <tr className="bg-code-bg">
-              <th className="p-1 border border-table-border text-left">ID</th>
-              <th className="p-1 border border-table-border text-left">username</th>
-              <th className="p-1 border border-table-border text-left">email</th>
-              <th className="p-1 border border-table-border text-left">role</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.users.map((u) => (
-              <tr key={u.id}>
-                <td className="p-1 border border-table-border">{u.id}</td>
-                <td className="p-1 border border-table-border">{u.username}</td>
-                <td className="p-1 border border-table-border">{u.email}</td>
-                <td className={`p-1 border border-table-border font-bold ${u.role === "admin" ? "text-status-ng" : ""}`}>
-                  {u.role}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ResultTable<{ id: number; username: string; email: string; role: string }>
+          columns={[
+            { key: "id", label: "ID" },
+            { key: "username", label: "username" },
+            { key: "email", label: "email" },
+            { key: "role", label: "role" },
+          ]}
+          data={users?.users ?? []}
+          className="text-xs"
+          rowKey="id"
+          getCellClassName={(col, row) =>
+            col.key === "role"
+              ? `font-bold ${row.role === "admin" ? "text-status-ng" : ""}`
+              : ""
+          }
+        />
       </ExpandableSection>
 
       <CheckpointBox>

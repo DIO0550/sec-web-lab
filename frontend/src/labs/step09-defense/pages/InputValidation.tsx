@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 
 const BASE = "/api/labs/input-validation";
 

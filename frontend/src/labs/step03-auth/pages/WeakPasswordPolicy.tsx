@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ResultTable } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
-import { postJson } from "../../../utils/api";
+import { postJson } from "@/utils/api";
 
 const BASE = "/api/labs/weak-password-policy";
 
@@ -166,28 +167,33 @@ function StrengthChecker({
 
       <ExpandableSection isOpen={results.length > 0}>
         <div className="mt-3">
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="bg-code-bg">
-                <th className="p-1 border border-table-border text-left">パスワード</th>
-                <th className="p-1 border border-table-border text-left">長さ</th>
-                <th className="p-1 border border-table-border text-left">判定</th>
-                <th className="p-1 border border-table-border text-left">理由</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((r, i) => (
-                <tr key={i} className={r.valid ? "bg-success-bg" : "bg-error-bg-light"}>
-                  <td className="p-1 border border-table-border font-mono">{r.password}</td>
-                  <td className="p-1 border border-table-border">{r.length}</td>
-                  <td className="p-1 border border-table-border">
-                    {r.valid ? <span className="text-success-text">OK</span> : <span className="text-error-text-light">NG</span>}
-                  </td>
-                  <td className="p-1 border border-table-border">{r.reason ?? "-"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ResultTable<StrengthResult>
+            columns={[
+              { key: "password", label: "パスワード" },
+              { key: "length", label: "長さ" },
+              { key: "valid", label: "判定" },
+              { key: "reason", label: "理由" },
+            ]}
+            data={results}
+            className="text-xs"
+            getRowClassName={(row) =>
+              row.valid ? "bg-success-bg" : "bg-error-bg-light"
+            }
+            getCellClassName={(col) =>
+              col.key === "password" ? "font-mono" : ""
+            }
+            renderCell={(col, _value, row) => {
+              if (col.key === "valid") {
+                return row.valid
+                  ? <span className="text-success-text">OK</span>
+                  : <span className="text-error-text-light">NG</span>;
+              }
+              if (col.key === "reason") {
+                return <>{row.reason ?? "-"}</>;
+              }
+              return undefined;
+            }}
+          />
         </div>
       </ExpandableSection>
     </div>

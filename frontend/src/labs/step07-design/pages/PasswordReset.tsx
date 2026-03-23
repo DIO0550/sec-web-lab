@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { Tabs } from "../../../components/Tabs";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { Tabs } from "@/components/Tabs";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
-import { postJson } from "../../../utils/api";
+import { postJson } from "@/utils/api";
 
 const BASE = "/api/labs/password-reset";
 

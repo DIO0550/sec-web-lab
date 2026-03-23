@@ -1,13 +1,13 @@
 import { useState, useCallback } from "react";
-import { fetchText, type TextResponse } from "../../../hooks/useLabFetch";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { TextViewer } from "../../../components/ResponseViewer";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
-import { Tabs } from "../../../components/Tabs";
-import { EndpointUrl } from "../../../components/EndpointUrl";
+import { fetchText, type TextResponse } from "@/hooks/useLabFetch";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { TextViewer } from "@/components/ResponseViewer";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
+import { Tabs } from "@/components/Tabs";
+import { EndpointUrl } from "@/components/EndpointUrl";
 
 const BASE = "/api/labs/directory-listing";
 const SENSITIVE_FILES = ["config.bak", "database.sql", ".htpasswd", ".env.backup"];

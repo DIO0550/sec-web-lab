@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { CredentialsFields } from "@/components/CredentialsFields";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
 import { PresetButtons } from "@/components/PresetButtons";
 import { DebugInfo } from "@/components/DebugInfo";
 import { ResultTable } from "@/components/ResultTable";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
+import { ExpandableSection } from "@/components/ExpandableSection";
 
 const BASE = "/api/labs/sql-injection";
 
@@ -62,19 +63,13 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <Input
-          label="ユーザー名:"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mb-1"
-        />
-        <Input
-          label="パスワード:"
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-1"
+        <CredentialsFields
+          username={username}
+          password={password}
+          onUsernameChange={setUsername}
+          onPasswordChange={setPassword}
+          usernameLabel="ユーザー名:"
+          passwordLabel="パスワード:"
         />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン

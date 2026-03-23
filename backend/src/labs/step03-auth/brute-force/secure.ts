@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { getPool } from "../../../db/pool.js";
+import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION_MS } from "../../shared/constants.js";
 
 const app = new Hono();
 
@@ -9,26 +10,23 @@ const app = new Hono();
 // 本番では Redis 等の外部ストアを使用する
 const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
 
-const MAX_ATTEMPTS = 5;
-const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15分
-
 // ✅ レート制限の状態を確認するエンドポイント（デモ用）
 app.get("/status", (c) => {
   const ip = c.req.header("x-forwarded-for") ?? "127.0.0.1";
   const attempts = loginAttempts.get(ip);
 
   if (!attempts) {
-    return c.json({ ip, attempts: 0, maxAttempts: MAX_ATTEMPTS, locked: false });
+    return c.json({ ip, attempts: 0, maxAttempts: MAX_LOGIN_ATTEMPTS, locked: false });
   }
 
   const timeSinceLast = Date.now() - attempts.lastAttempt;
-  const locked = attempts.count >= MAX_ATTEMPTS && timeSinceLast < LOCKOUT_DURATION_MS;
+  const locked = attempts.count >= MAX_LOGIN_ATTEMPTS && timeSinceLast < LOCKOUT_DURATION_MS;
   const remainingMs = locked ? LOCKOUT_DURATION_MS - timeSinceLast : 0;
 
   return c.json({
     ip,
     attempts: attempts.count,
-    maxAttempts: MAX_ATTEMPTS,
+    maxAttempts: MAX_LOGIN_ATTEMPTS,
     locked,
     remainingSeconds: Math.ceil(remainingMs / 1000),
   });
@@ -52,15 +50,15 @@ app.post("/login", async (c) => {
     return c.json({ success: false, message: "ユーザー名とパスワードを入力してください" }, 400);
   }
 
-  // ✅ レート制限チェック: 15分以内にMAX_ATTEMPTS回以上失敗していたら拒否
+  // ✅ レート制限チェック: 15分以内にMAX_LOGIN_ATTEMPTS回以上失敗していたら拒否
   const attempts = loginAttempts.get(ip);
-  if (attempts && attempts.count >= MAX_ATTEMPTS) {
+  if (attempts && attempts.count >= MAX_LOGIN_ATTEMPTS) {
     const timeSinceLast = Date.now() - attempts.lastAttempt;
     if (timeSinceLast < LOCKOUT_DURATION_MS) {
       const remainingSec = Math.ceil((LOCKOUT_DURATION_MS - timeSinceLast) / 1000);
       return c.json({
         success: false,
-        message: `試行回数の上限（${MAX_ATTEMPTS}回）に達しました。${remainingSec}秒後に再試行してください。`,
+        message: `試行回数の上限（${MAX_LOGIN_ATTEMPTS}回）に達しました。${remainingSec}秒後に再試行してください。`,
         locked: true,
         remainingSeconds: remainingSec,
       }, 429);
@@ -81,12 +79,12 @@ app.post("/login", async (c) => {
       const newCount = current.count + 1;
       loginAttempts.set(ip, { count: newCount, lastAttempt: Date.now() });
 
-      const remaining = MAX_ATTEMPTS - newCount;
+      const remaining = MAX_LOGIN_ATTEMPTS - newCount;
       return c.json({
         success: false,
         message: `ユーザー名またはパスワードが違います（残り${remaining > 0 ? remaining : 0}回）`,
         attemptsUsed: newCount,
-        maxAttempts: MAX_ATTEMPTS,
+        maxAttempts: MAX_LOGIN_ATTEMPTS,
       }, 401);
     }
 
