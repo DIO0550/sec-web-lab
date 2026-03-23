@@ -50,6 +50,11 @@ export async function fetchText(url: string): Promise<TextResponse> {
 /**
  * ラボの脆弱/安全エンドポイントを比較テストするフック
  *
+ * @deprecated useComparisonFetch を使用してください。
+ * このフックはカスタム fetcher と文字列ベースの loading key を持つため、
+ * useComparisonFetch（JSON前提 + boolean loading）への単純置換は不可。
+ * HeaderExposure.tsx と HeaderLeakage.tsx のみが使用中。
+ *
  * @example
  * const { vulnerable, secure, loading, fetchVulnerable, fetchSecure } =
  *   useLabFetch<HeaderResponse>("/api/labs/header-leakage", fetchJsonWithHeaders);
@@ -99,6 +104,9 @@ export function useLabFetch<T>(
 
 /**
  * 複数のテストケースを脆弱/安全で比較するフック
+ *
+ * @deprecated useComparisonFetch を使用してください。
+ * SensitiveFileExposure.tsx, DirectoryListing.tsx, ErrorMessageLeakage.tsx が使用中。
  *
  * @example
  * const { results, runTest, runAll, loading } =
