@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
 import { Input } from "@/components/Input";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { ExpandableSection } from "@/components/ExpandableSection";
 
 const BASE = "/api/labs/open-redirect";
 

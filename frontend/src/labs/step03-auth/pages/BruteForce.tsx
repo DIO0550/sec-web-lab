@@ -1,14 +1,15 @@
 import { useState, useCallback } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
+import { CredentialsFields } from "@/components/CredentialsFields";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
-import { postJson } from "../../../utils/api";
+import { ResultTable } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
+import { postJson } from "@/utils/api";
 
 const BASE = "/api/labs/brute-force";
 
@@ -24,6 +25,13 @@ type LoginResult = {
 
 type BruteForceLog = {
   password: string;
+  result: LoginResult;
+};
+
+type BruteForceRow = {
+  num: number;
+  password: string;
+  resultLabel: string;
   result: LoginResult;
 };
 
@@ -56,19 +64,11 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <Input
-          label="ユーザー名"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mb-1"
-        />
-        <Input
-          label="パスワード"
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-1"
+        <CredentialsFields
+          username={username}
+          password={password}
+          onUsernameChange={setUsername}
+          onPasswordChange={setPassword}
         />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン
@@ -126,34 +126,38 @@ function DictionaryAttack({
 
       <ExpandableSection isOpen={logs.length > 0}>
         <div className="mt-3 max-h-[300px] overflow-auto">
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="bg-code-bg">
-                <th className="p-1 border border-table-border text-left">#</th>
-                <th className="p-1 border border-table-border text-left">パスワード</th>
-                <th className="p-1 border border-table-border text-left">結果</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map((log, i) => (
-                <tr key={i} className={log.result.success ? "bg-success-bg" : log.result.locked ? "bg-warning-bg" : ""}>
-                  <td className="p-1 border border-table-border">{i + 1}</td>
-                  <td className="p-1 border border-table-border font-mono">
-                    {log.password}
-                  </td>
-                  <td className="p-1 border border-table-border">
-                    {log.result.success ? (
-                      <span className="text-status-ng font-bold">突破成功!</span>
-                    ) : log.result.locked ? (
-                      <span className="text-warning-text">ブロック (429)</span>
-                    ) : (
-                      <span className="text-text-muted">失敗</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ResultTable<BruteForceRow>
+            columns={[
+              { key: "num", label: "#" },
+              { key: "password", label: "パスワード" },
+              { key: "resultLabel", label: "結果" },
+            ]}
+            data={logs.map((log, i) => ({
+              num: i + 1,
+              password: log.password,
+              resultLabel: "",
+              result: log.result,
+            }))}
+            className="text-xs"
+            getRowClassName={(row) =>
+              row.result.success ? "bg-success-bg" : row.result.locked ? "bg-warning-bg" : ""
+            }
+            getCellClassName={(col) =>
+              col.key === "password" ? "font-mono" : ""
+            }
+            renderCell={(col, _value, row) => {
+              if (col.key === "resultLabel") {
+                if (row.result.success) {
+                  return <span className="text-status-ng font-bold">突破成功!</span>;
+                }
+                if (row.result.locked) {
+                  return <span className="text-warning-text">ブロック (429)</span>;
+                }
+                return <span className="text-text-muted">失敗</span>;
+              }
+              return undefined;
+            }}
+          />
         </div>
       </ExpandableSection>
     </div>

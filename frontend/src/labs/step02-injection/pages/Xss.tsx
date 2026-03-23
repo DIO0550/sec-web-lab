@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { PresetButtons } from "@/components/PresetButtons";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
-import { getJson } from "../../../utils/api";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
+import { getJson } from "@/utils/api";
+import { ExpandableSection } from "@/components/ExpandableSection";
 
 const BASE = "/api/labs/xss";
 

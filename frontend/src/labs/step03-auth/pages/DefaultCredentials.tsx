@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Button } from "@/components/Button";
+import { CredentialsFields } from "@/components/CredentialsFields";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ResultTable } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
-import { postJson, getJson } from "../../../utils/api";
+import { postJson, getJson } from "@/utils/api";
 
 const BASE = "/api/labs/default-credentials";
 
@@ -61,19 +63,11 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <Input
-          label="ユーザー名"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mb-1"
-        />
-        <Input
-          label="パスワード"
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-1"
+        <CredentialsFields
+          username={username}
+          password={password}
+          onUsernameChange={setUsername}
+          onPasswordChange={setPassword}
         />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン
@@ -233,24 +227,18 @@ export function DefaultCredentials() {
           デフォルト認証情報を表示
         </FetchButton>
         <ExpandableSection isOpen={!!defaults}>
-          <table className="w-full text-xs border-collapse mt-3">
-            <thead>
-              <tr className="bg-code-bg">
-                <th className="p-1 border border-table-border text-left">username</th>
-                <th className="p-1 border border-table-border text-left">password</th>
-                <th className="p-1 border border-table-border text-left">情報源</th>
-              </tr>
-            </thead>
-            <tbody>
-              {defaults?.credentials.map((cred, i) => (
-                <tr key={i}>
-                  <td className="p-1 border border-table-border">{cred.username}</td>
-                  <td className="p-1 border border-table-border font-mono">{cred.password}</td>
-                  <td className="p-1 border border-table-border text-xs">{cred.source}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ResultTable<DefaultCred>
+            columns={[
+              { key: "username", label: "username" },
+              { key: "password", label: "password" },
+              { key: "source", label: "情報源" },
+            ]}
+            data={defaults?.credentials ?? []}
+            className="text-xs mt-3"
+            getCellClassName={(col) =>
+              col.key === "password" ? "font-mono" : ""
+            }
+          />
         </ExpandableSection>
       </div>
 

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
 import { Input } from "@/components/Input";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ResultTable } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
 import { DebugInfo } from "@/components/DebugInfo";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { ExpandableSection } from "@/components/ExpandableSection";
 
 const BASE = "/api/labs/command-injection";
 
@@ -24,6 +25,16 @@ const presets = [
   { label: "; cat /etc/passwd", host: "127.0.0.1; cat /etc/passwd" },
   { label: "&& whoami", host: "127.0.0.1 && whoami" },
   { label: "$(id)", host: "$(id)" },
+];
+
+type ShellMeta = { char: string; meaning: string; example: string };
+
+const shellMetaChars: ShellMeta[] = [
+  { char: ";", meaning: "コマンド区切り", example: "ping 127.0.0.1; cat /etc/passwd" },
+  { char: "&&", meaning: "前のコマンドが成功したら実行", example: "ping 127.0.0.1 && whoami" },
+  { char: "||", meaning: "前のコマンドが失敗したら実行", example: "ping invalid || whoami" },
+  { char: "|", meaning: "パイプ", example: "ping 127.0.0.1 | head -1" },
+  { char: "$()", meaning: "コマンド置換", example: "ping $(whoami)" },
 ];
 
 // --- Pingフォーム ---
@@ -127,42 +138,20 @@ export function CommandInjection() {
       />
 
       <CheckpointBox variant="warning" title="シェルメタ文字の一覧">
-        <table className="text-sm border-collapse w-full">
-          <thead>
-            <tr className="bg-code-bg">
-              <th className="p-1 px-2 border border-table-border text-left">文字</th>
-              <th className="p-1 px-2 border border-table-border text-left">意味</th>
-              <th className="p-1 px-2 border border-table-border text-left">例</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="p-1 px-2 border border-table-border"><code>;</code></td>
-              <td className="p-1 px-2 border border-table-border">コマンド区切り</td>
-              <td className="p-1 px-2 border border-table-border"><code>ping 127.0.0.1; cat /etc/passwd</code></td>
-            </tr>
-            <tr>
-              <td className="p-1 px-2 border border-table-border"><code>&&</code></td>
-              <td className="p-1 px-2 border border-table-border">前のコマンドが成功したら実行</td>
-              <td className="p-1 px-2 border border-table-border"><code>ping 127.0.0.1 && whoami</code></td>
-            </tr>
-            <tr>
-              <td className="p-1 px-2 border border-table-border"><code>||</code></td>
-              <td className="p-1 px-2 border border-table-border">前のコマンドが失敗したら実行</td>
-              <td className="p-1 px-2 border border-table-border"><code>ping invalid || whoami</code></td>
-            </tr>
-            <tr>
-              <td className="p-1 px-2 border border-table-border"><code>|</code></td>
-              <td className="p-1 px-2 border border-table-border">パイプ</td>
-              <td className="p-1 px-2 border border-table-border"><code>ping 127.0.0.1 | head -1</code></td>
-            </tr>
-            <tr>
-              <td className="p-1 px-2 border border-table-border"><code>$()</code></td>
-              <td className="p-1 px-2 border border-table-border">コマンド置換</td>
-              <td className="p-1 px-2 border border-table-border"><code>ping $(whoami)</code></td>
-            </tr>
-          </tbody>
-        </table>
+        <ResultTable<ShellMeta>
+          columns={[
+            { key: "char", label: "文字" },
+            { key: "meaning", label: "意味" },
+            { key: "example", label: "例" },
+          ]}
+          data={shellMetaChars}
+          renderCell={(col, value) => {
+            if (col.key === "char" || col.key === "example") {
+              return <code>{String(value)}</code>;
+            }
+            return undefined;
+          }}
+        />
       </CheckpointBox>
 
       <CheckpointBox>

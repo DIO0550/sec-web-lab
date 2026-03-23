@@ -1,10 +1,10 @@
-import { useLabFetch, fetchJsonWithHeaders } from "../../../hooks/useLabFetch";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { HeaderViewer } from "../../../components/ResponseViewer";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { EndpointUrl } from "../../../components/EndpointUrl";
+import { useLabFetch, fetchJsonWithHeaders } from "@/hooks/useLabFetch";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { HeaderViewer } from "@/components/ResponseViewer";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { EndpointUrl } from "@/components/EndpointUrl";
 
 export function HeaderLeakage() {
   const { vulnerable, secure, loading, isLoading, fetchVulnerable, fetchSecure } =

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { useLabFetch, fetchJsonWithHeaders, type HeaderResponse } from "../../../hooks/useLabFetch";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
-import { EndpointUrl } from "../../../components/EndpointUrl";
+import { useLabFetch, fetchJsonWithHeaders, type HeaderResponse } from "@/hooks/useLabFetch";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
+import { EndpointUrl } from "@/components/EndpointUrl";
 
 // チェックするセキュリティヘッダーの定義
 const SECURITY_HEADERS = [

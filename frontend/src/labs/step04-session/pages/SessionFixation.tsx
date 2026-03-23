@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Alert } from "@/components/Alert";
-import { ExpandableSection } from "../../../components/ExpandableSection";
-import { postJsonWithCredentials, getJson } from "../../../utils/api";
+import { ExpandableSection } from "@/components/ExpandableSection";
+import { postJsonWithCredentials, getJson } from "@/utils/api";
 
 const BASE = "/api/labs/session-fixation";
 

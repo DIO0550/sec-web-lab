@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
-import { Input } from "@/components/Input";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
+import { CredentialsFields } from "@/components/CredentialsFields";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ResultTable } from "@/components/ResultTable";
+import type { Column } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 import { PresetButtons } from "@/components/PresetButtons";
 
 const BASE = "/api/labs/plaintext-password";
@@ -36,6 +38,13 @@ const loginPresets = [
   { label: "user1 / password1", username: "user1", password: "password1" },
 ];
 
+const userColumns: Column<User>[] = [
+  { key: "username", label: "username" },
+  { key: "password", label: "password" },
+  { key: "email", label: "email" },
+  { key: "role", label: "role" },
+];
+
 // --- ユーザー一覧パネル ---
 function UsersPanel({
   mode,
@@ -60,28 +69,17 @@ function UsersPanel({
 
       <ExpandableSection isOpen={!!result?.users}>
         <div className="mt-3">
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="bg-code-bg">
-                <th className="p-1 border border-table-border text-left">username</th>
-                <th className="p-1 border border-table-border text-left">password</th>
-                <th className="p-1 border border-table-border text-left">email</th>
-                <th className="p-1 border border-table-border text-left">role</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result?.users.map((u) => (
-                <tr key={u.id}>
-                  <td className="p-1 border border-table-border">{u.username}</td>
-                  <td className={`p-1 border border-table-border font-mono text-xs break-all ${mode === "vulnerable" ? "bg-error-bg-light" : "bg-success-bg"}`}>
-                    {u.password}
-                  </td>
-                  <td className="p-1 border border-table-border">{u.email}</td>
-                  <td className="p-1 border border-table-border">{u.role}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ResultTable<User>
+            columns={userColumns}
+            data={result?.users ?? []}
+            className="text-xs"
+            rowKey="id"
+            getCellClassName={(col) =>
+              col.key === "password"
+                ? `font-mono text-xs break-all ${mode === "vulnerable" ? "bg-error-bg-light" : "bg-success-bg"}`
+                : ""
+            }
+          />
           {result?._debug && (
             <div className="mt-2 text-xs text-text-muted italic">
               {result?._debug.message}
@@ -111,19 +109,11 @@ function LoginForm({
   return (
     <div>
       <div className="mb-3">
-        <Input
-          label="ユーザー名"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mb-1"
-        />
-        <Input
-          label="パスワード"
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-1"
+        <CredentialsFields
+          username={username}
+          password={password}
+          onUsernameChange={setUsername}
+          onPasswordChange={setPassword}
         />
         <FetchButton onClick={() => onSubmit(mode, username, password)} disabled={isLoading}>
           ログイン

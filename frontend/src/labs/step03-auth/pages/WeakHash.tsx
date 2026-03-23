@@ -1,11 +1,13 @@
-import { LabLayout } from "../../../components/LabLayout";
-import { ComparisonPanel } from "../../../components/ComparisonPanel";
-import { FetchButton } from "../../../components/FetchButton";
-import { CheckpointBox } from "../../../components/CheckpointBox";
-import { ExpandableSection } from "../../../components/ExpandableSection";
+import { LabLayout } from "@/components/LabLayout";
+import { ComparisonPanel } from "@/components/ComparisonPanel";
+import { FetchButton } from "@/components/FetchButton";
+import { CheckpointBox } from "@/components/CheckpointBox";
+import { ExpandableSection } from "@/components/ExpandableSection";
 import { Button } from "@/components/Button";
 import { Alert } from "@/components/Alert";
-import { useComparisonFetch } from "../../../hooks/useComparisonFetch";
+import { ResultTable } from "@/components/ResultTable";
+import type { Column } from "@/components/ResultTable";
+import { useComparisonFetch } from "@/hooks/useComparisonFetch";
 
 const BASE = "/api/labs/weak-hash";
 
@@ -33,6 +35,15 @@ type CrackResult = {
   _debug?: { message?: string; hint?: string; reasons?: string[] };
 };
 
+type UserRow = User & { action: string };
+
+const userColumns: Column<UserRow>[] = [
+  { key: "username", label: "username" },
+  { key: "password", label: "password (hash)" },
+  { key: "hashAlgorithm", label: "algorithm" },
+  { key: "action", label: "action" },
+];
+
 // --- ユーザー一覧パネル ---
 function UsersPanel({
   mode,
@@ -59,36 +70,31 @@ function UsersPanel({
 
       <ExpandableSection isOpen={!!result?.users}>
         <div className="mt-3">
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="bg-code-bg">
-                <th className="p-1 border border-table-border text-left">username</th>
-                <th className="p-1 border border-table-border text-left">password (hash)</th>
-                <th className="p-1 border border-table-border text-left">algorithm</th>
-                <th className="p-1 border border-table-border text-left">action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result?.users.map((u) => (
-                <tr key={u.id}>
-                  <td className="p-1 border border-table-border">{u.username}</td>
-                  <td className={`p-1 border border-table-border font-mono text-xs break-all ${mode === "vulnerable" ? "bg-warning-bg" : "bg-success-bg"}`}>
-                    {u.password}
-                  </td>
-                  <td className="p-1 border border-table-border text-xs">{u.hashAlgorithm}</td>
-                  <td className="p-1 border border-table-border">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onCrack(u.password)}
-                    >
-                      逆引き
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ResultTable<UserRow>
+            columns={userColumns}
+            data={(result?.users ?? []).map((u) => ({ ...u, action: "" }))}
+            className="text-xs"
+            rowKey="id"
+            getCellClassName={(col) =>
+              col.key === "password"
+                ? `font-mono text-xs break-all ${mode === "vulnerable" ? "bg-warning-bg" : "bg-success-bg"}`
+                : ""
+            }
+            renderCell={(col, _value, row) => {
+              if (col.key === "action") {
+                return (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onCrack(row.password)}
+                  >
+                    逆引き
+                  </Button>
+                );
+              }
+              return undefined;
+            }}
+          />
           {result?._debug && (
             <div className="mt-2 text-xs text-text-muted italic">
               {result?._debug.message}
