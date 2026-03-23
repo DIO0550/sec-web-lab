@@ -1,4 +1,3 @@
-export { Step07Index } from "./pages/Step07Index";
 export { RateLimiting } from "./pages/RateLimiting";
 export { Clickjacking } from "./pages/Clickjacking";
 export { SensitiveDataHttp } from "./pages/SensitiveDataHttp";

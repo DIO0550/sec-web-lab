@@ -14,6 +14,7 @@ export type Step = {
   name: string;
   shortName: string;
   description: string;
+  intro: string;
   path: string;
   icon: string;
 };
@@ -29,6 +30,8 @@ const STEP_DEFINITIONS: Step[] = [
     shortName: "Recon",
     description:
       "攻撃者がターゲットの情報を収集するフェーズで悪用される脆弱性を体験",
+    intro:
+      "攻撃者がターゲットの情報を収集するフェーズで悪用される脆弱性を体験します。各ラボには<strong>脆弱バージョン</strong>と<strong>安全バージョン</strong>があり、攻撃と防御の両方を学べます。",
     path: "/step01",
     icon: "🔍",
   },
@@ -38,22 +41,28 @@ const STEP_DEFINITIONS: Step[] = [
     shortName: "Injection",
     description:
       "SQL Injection, XSS, コマンドインジェクション等の入力値を悪用した攻撃",
+    intro:
+      "ユーザーの入力値がSQL文・HTML・シェルコマンド等のコードとして解釈されてしまう脆弱性を体験します。各ラボには<strong>脆弱バージョン</strong>と<strong>安全バージョン</strong>があり、攻撃と防御の両方を学べます。",
     path: "/step02",
     icon: "💉",
   },
   {
     id: "step03",
-    name: "Step 03: Auth (認証)",
+    name: "Step 03: Authentication (認証)",
     shortName: "Auth",
     description: "認証の欠陥を悪用した攻撃",
+    intro:
+      "パスワードの保存方法・認証の仕組みに関する脆弱性を体験します。平文保存、弱いハッシュ、ブルートフォース、デフォルト認証情報、弱いパスワードポリシーなど、認証に関わる代表的な問題を<strong>脆弱バージョン</strong>と<strong>安全バージョン</strong>で学べます。",
     path: "/step03",
     icon: "🔑",
   },
   {
     id: "step04",
-    name: "Step 04: Session (セッション管理)",
+    name: "Step 04: Session Management (セッション管理)",
     shortName: "Session",
     description: "セッション管理の脆弱性を悪用した攻撃",
+    intro:
+      "Cookieベースのセッション管理に関する脆弱性を体験します。Cookie属性の不備、セッション固定、セッションハイジャック、CSRFなど、セッション管理に関わる代表的な問題を<strong>脆弱バージョン</strong>と<strong>安全バージョン</strong>で学べます。",
     path: "/step04",
     icon: "🍪",
   },
@@ -62,33 +71,41 @@ const STEP_DEFINITIONS: Step[] = [
     name: "Step 05: Access Control (アクセス制御)",
     shortName: "Access",
     description: "アクセス制御の不備を悪用した攻撃",
+    intro:
+      "認可（Authorization）に関する脆弱性を体験します。認証（ログイン）が成功しても、「誰が何にアクセスしてよいか」の制御が不十分だと、他ユーザーのデータへの不正アクセスや権限昇格が可能になります。各ラボで<strong>脆弱バージョン</strong>と<strong>安全バージョン</strong>を比較して学べます。",
     path: "/step05",
     icon: "🚪",
   },
   {
     id: "step06",
-    name: "Step 06: Server-Side (サーバーサイド攻撃)",
+    name: "Step 06: Server-Side Attacks (サーバーサイド攻撃)",
     shortName: "Server",
     description:
       "SSRF, XXE, ファイルアップロード等のサーバーサイド脆弱性を体験",
+    intro:
+      "サーバーサイドで発生する脆弱性を体験します。SSRF、XXE、ファイルアップロード、CRLFインジェクションなど、サーバーの内部機能や設定を悪用した攻撃とその対策を学びます。",
     path: "/step06",
     icon: "🖥️",
   },
   {
     id: "step07",
-    name: "Step 07: Design & Logic (設計とロジック)",
+    name: "Step 07: Design & Logic (設計とロジックの問題)",
     shortName: "Design",
     description:
       "レート制限、ビジネスロジック、セキュリティヘッダー等の設計上の問題",
+    intro:
+      "アプリケーションの設計やビジネスロジックに起因する脆弱性を体験します。レート制限の欠如、不適切なキャッシュ制御、セキュリティヘッダーの未設定など、実装ミスだけでなく設計段階で防ぐべき問題を学びます。",
     path: "/step07",
     icon: "⚙️",
   },
   {
     id: "step08",
-    name: "Step 08: Advanced (高度な攻撃)",
+    name: "Step 08: Advanced Techniques (高度な攻撃テクニック)",
     shortName: "Advanced",
     description:
       "JWT改ざん、SSTI、レースコンディション、Prototype Pollution等の高度な手法",
+    intro:
+      "より高度な攻撃テクニックを体験します。JWT改ざん、テンプレートインジェクション、レースコンディション、Prototype Pollutionなど、実際の脆弱性診断で発見される高度な脆弱性を学びます。",
     path: "/step08",
     icon: "⚡",
   },
@@ -98,6 +115,8 @@ const STEP_DEFINITIONS: Step[] = [
     shortName: "Defense",
     description:
       "エラーハンドリング、ログ管理、CSP、入力バリデーション等の防御手法",
+    intro:
+      "守りの観点からセキュリティを強化する方法を体験します。適切なエラーハンドリング、ログ管理、Fail-Closed設計、CSP、入力バリデーションなど、攻撃を防ぐための防御的な実装パターンを学びます。",
     path: "/step09",
     icon: "🛡️",
   },
