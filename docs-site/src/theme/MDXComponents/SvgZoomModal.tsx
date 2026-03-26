@@ -5,6 +5,8 @@ import styles from './SvgZoomModal.module.css';
 type Props = {
   src: string;
   alt: string;
+  width?: number | string;
+  height?: number | string;
   onClose: () => void;
 };
 
@@ -63,16 +65,64 @@ function clampTranslate(
   };
 }
 
+// インラインスタイル定義（CSS Modulesが@layerで優先度低下する場合のフォールバック）
+const overlayStyle: React.CSSProperties = {
+  position: 'fixed',
+  inset: 0,
+  zIndex: 9999,
+  background: 'rgba(0, 0, 0, 0.8)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
+const modalStyle: React.CSSProperties = {
+  position: 'relative',
+  maxWidth: '100vw',
+  maxHeight: '100vh',
+  overflow: 'hidden',
+};
+
+const closeButtonStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: 8,
+  right: 8,
+  zIndex: 1,
+  background: 'rgba(0, 0, 0, 0.5)',
+  color: 'white',
+  border: 'none',
+  borderRadius: '50%',
+  width: 36,
+  height: 36,
+  cursor: 'pointer',
+  fontSize: 18,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  lineHeight: 1,
+};
+
+const imageBaseStyle: React.CSSProperties = {
+  display: 'block',
+  maxWidth: '100vw',
+  maxHeight: '100vh',
+  objectFit: 'contain',
+  touchAction: 'none',
+  userSelect: 'none',
+  transformOrigin: 'center center',
+};
+
 /**
  * SVG画像をモーダルオーバーレイで拡大表示し、ズーム・パン操作を提供するコンポーネント
  * @param props - src: 画像URL, alt: 代替テキスト, onClose: 閉じるコールバック
  * @returns モーダルのPortal、またはSSR時はnull
  */
-export function SvgZoomModal({ src, alt, onClose }: Props) {
+export function SvgZoomModal({ src, alt, width, height, onClose }: Props) {
   const [scale, setScale] = useState(1);
   const [translateX, setTranslateX] = useState(0);
   const [translateY, setTranslateY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const dragStartRef = useRef({ x: 0, y: 0 });
   const translateStartRef = useRef({ x: 0, y: 0 });
@@ -88,13 +138,15 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
   const imageRef = useRef<HTMLImageElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  // SSR ガード
-  if (typeof document === 'undefined') return null;
-
   const resetTransform = useCallback(() => {
     setScale(1);
     setTranslateX(0);
     setTranslateY(0);
+  }, []);
+
+  // SSR ガード: hooks の後に配置し、useEffect でクライアント判定
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   // Escape キー
@@ -150,17 +202,17 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
   }, []);
 
   /** 2つのポインター間の距離を算出する */
-  const getPointerDistance = (p1: PointerEvent, p2: PointerEvent) => {
+  const getPointerDistance = useCallback((p1: PointerEvent, p2: PointerEvent) => {
     const dx = p1.clientX - p2.clientX;
     const dy = p1.clientY - p2.clientY;
     return Math.sqrt(dx * dx + dy * dy);
-  };
+  }, []);
 
   /** 2つのポインターの中心座標を算出する */
-  const getPointerMidpoint = (p1: PointerEvent, p2: PointerEvent) => ({
+  const getPointerMidpoint = useCallback((p1: PointerEvent, p2: PointerEvent) => ({
     x: (p1.clientX + p2.clientX) / 2,
     y: (p1.clientY + p2.clientY) / 2,
-  });
+  }), []);
 
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
@@ -227,7 +279,7 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
         }
       }
     },
-    [translateX, translateY, scale, resetTransform],
+    [translateX, translateY, scale, resetTransform, getPointerDistance, getPointerMidpoint],
   );
 
   const handlePointerMove = useCallback(
@@ -274,7 +326,7 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
         setTranslateY(clamped.ty);
       }
     },
-    [isDragging, scale, translateX, translateY],
+    [isDragging, scale, translateX, translateY, getPointerDistance, getPointerMidpoint],
   );
 
   /** ポインター解放時の共通クリーンアップ */
@@ -334,9 +386,13 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
     [onClose],
   );
 
+  // SSR時はportalを使わない（hydration対策）
+  if (!mounted) return null;
+
   return createPortal(
     <div
       className={styles.overlay}
+      style={overlayStyle}
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
@@ -345,11 +401,13 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
       <div
         ref={modalRef}
         className={styles.modal}
+        style={modalStyle}
         onClick={(e) => e.stopPropagation()}
       >
         <button
           ref={closeButtonRef}
           className={styles.closeButton}
+          style={closeButtonStyle}
           onClick={onClose}
           aria-label="閉じる"
           type="button"
@@ -360,8 +418,12 @@ export function SvgZoomModal({ src, alt, onClose }: Props) {
           ref={imageRef}
           src={src}
           alt={alt}
+          width={width}
+          height={height}
           className={`${styles.image}${isDragging ? ` ${styles.dragging}` : ''}`}
           style={{
+            ...imageBaseStyle,
+            cursor: isDragging ? 'grabbing' : 'grab',
             transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
           }}
           onWheel={handleWheel}

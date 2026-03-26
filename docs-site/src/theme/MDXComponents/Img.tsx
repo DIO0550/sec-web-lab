@@ -44,7 +44,7 @@ export default function Img(props: ComponentProps<'img'>) {
         <img {...rest} src={src} alt={alt} />
       </button>
       {modalSrc && (
-        <SvgZoomModal src={modalSrc} alt={alt || ''} onClose={handleClose} />
+        <SvgZoomModal src={modalSrc} alt={alt || ''} width={props.width} height={props.height} onClose={handleClose} />
       )}
     </>
   );
