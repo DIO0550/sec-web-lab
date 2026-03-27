@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 200" width="1100" height="200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <style>text { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }</style>
+  </defs>
+  <rect width="1100" height="200" rx="10" fill="url(#bg)"/>
+
+  <rect x="20" y="15" width="6" height="24" rx="3" fill="#f97316"/>
+  <text x="36" y="33" fill="#f8fafc" font-size="15" font-weight="700">Step 8: 高度な攻撃テクニック — エキスパートへの道</text>
+  <rect x="420" y="18" width="50" height="20" rx="10" fill="#f9731620" stroke="#f97316" stroke-width="1"/>
+  <text x="445" y="32" text-anchor="middle" fill="#fb923c" font-size="10" font-weight="700">★★★</text>
+
+  <!-- 5 technique cards -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="55" width="185" height="100" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1.2"/>
+    <text x="132" y="80" text-anchor="middle" fill="#f97316" font-size="22">🔑</text>
+    <text x="132" y="100" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">JWT 改ざん</text>
+    <text x="132" y="116" text-anchor="middle" fill="#94a3b8" font-size="9">alg=none / 弱い鍵</text>
+    <text x="132" y="130" text-anchor="middle" fill="#94a3b8" font-size="9">Claim 検証不備</text>
+    <rect x="55" y="140" width="50" height="12" rx="6" fill="#7c2d1220" stroke="#f97316" stroke-width="0.5"/>
+    <text x="80" y="150" text-anchor="middle" fill="#fb923c" font-size="7" font-weight="600">3 ラボ</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="245" y="55" width="185" height="100" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1.2"/>
+    <text x="337" y="80" text-anchor="middle" fill="#f97316" font-size="22">📝</text>
+    <text x="337" y="100" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">SSTI</text>
+    <text x="337" y="116" text-anchor="middle" fill="#94a3b8" font-size="9">テンプレートエンジンを</text>
+    <text x="337" y="130" text-anchor="middle" fill="#94a3b8" font-size="9">悪用してRCE</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="450" y="55" width="185" height="100" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1.2"/>
+    <text x="542" y="80" text-anchor="middle" fill="#f97316" font-size="22">⚡</text>
+    <text x="542" y="100" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">レースコンディション</text>
+    <text x="542" y="116" text-anchor="middle" fill="#94a3b8" font-size="9">並行処理の隙を</text>
+    <text x="542" y="130" text-anchor="middle" fill="#94a3b8" font-size="9">突いた二重処理</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="655" y="55" width="185" height="100" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1.2"/>
+    <text x="747" y="80" text-anchor="middle" fill="#f97316" font-size="22">🧬</text>
+    <text x="747" y="100" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">Prototype Pollution</text>
+    <text x="747" y="116" text-anchor="middle" fill="#94a3b8" font-size="9">オブジェクトの</text>
+    <text x="747" y="130" text-anchor="middle" fill="#94a3b8" font-size="9">プロトタイプ汚染</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="860" y="55" width="205" height="100" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1.2"/>
+    <text x="962" y="80" text-anchor="middle" fill="#f97316" font-size="22">🎯</text>
+    <text x="962" y="100" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">その他の高度テクニック</text>
+    <g fill="#94a3b8" font-size="9">
+      <text x="882" y="118">• デシリアライゼーション</text>
+      <text x="882" y="134">• ReDoS · postMessage</text>
+      <text x="882" y="150">• Unicode正規化バイパス</text>
+    </g>
+  </g>
+
+  <text x="550" y="185" text-anchor="middle" fill="#475569" font-size="10">ここまでの知識を前提にした上級テクニック — 実務でも発見が難しい脆弱性に挑戦</text>
+</svg>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 200" width="1100" height="200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glow-green">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#22c55e" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22c55e"/>
+    </marker>
+    <style>text { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }</style>
+  </defs>
+  <rect width="1100" height="200" rx="10" fill="url(#bg)"/>
+
+  <rect x="20" y="15" width="6" height="24" rx="3" fill="#22c55e"/>
+  <text x="36" y="33" fill="#f8fafc" font-size="15" font-weight="700">Step 9: 守りを固める — ログ・例外処理・防御設計</text>
+
+  <!-- 攻撃 -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="58" width="120" height="65" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.2"/>
+    <text x="100" y="84" text-anchor="middle" fill="#ef4444" font-size="18">⚔️</text>
+    <text x="100" y="103" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">攻撃</text>
+    <text x="100" y="116" text-anchor="middle" fill="#fca5a5" font-size="9">Step 1〜8 の手法</text>
+  </g>
+
+  <line x1="160" y1="90" x2="210" y2="90" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+
+  <!-- 防御層 -->
+  <g filter="url(#glow-green)">
+    <rect x="215" y="50" width="590" height="110" rx="10" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+    <text x="510" y="72" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">🛡️ 防御層（Defense in Depth）</text>
+    <g font-size="10">
+      <rect x="235" y="82" width="125" height="60" rx="6" fill="#052e16" stroke="#22c55e80" stroke-width="0.8"/>
+      <text x="297" y="100" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">📋 エラー処理</text>
+      <text x="297" y="116" text-anchor="middle" fill="#94a3b8" font-size="8">詳細エラー隠蔽</text>
+      <text x="297" y="130" text-anchor="middle" fill="#94a3b8" font-size="8">スタックトレース非公開</text>
+      <rect x="370" y="82" width="125" height="60" rx="6" fill="#052e16" stroke="#22c55e80" stroke-width="0.8"/>
+      <text x="432" y="100" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">📊 ログ監視</text>
+      <text x="432" y="116" text-anchor="middle" fill="#94a3b8" font-size="8">適切なログ記録</text>
+      <text x="432" y="130" text-anchor="middle" fill="#94a3b8" font-size="8">ログインジェクション対策</text>
+      <rect x="505" y="82" width="125" height="60" rx="6" fill="#052e16" stroke="#22c55e80" stroke-width="0.8"/>
+      <text x="567" y="100" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">🔒 CSP</text>
+      <text x="567" y="116" text-anchor="middle" fill="#94a3b8" font-size="8">Content Security</text>
+      <text x="567" y="130" text-anchor="middle" fill="#94a3b8" font-size="8">Policy 設定</text>
+      <rect x="640" y="82" width="125" height="60" rx="6" fill="#052e16" stroke="#22c55e80" stroke-width="0.8"/>
+      <text x="702" y="100" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">✅ バリデーション</text>
+      <text x="702" y="116" text-anchor="middle" fill="#94a3b8" font-size="8">入力値検証</text>
+      <text x="702" y="130" text-anchor="middle" fill="#94a3b8" font-size="8">Fail-Close 設計</text>
+    </g>
+  </g>
+
+  <line x1="805" y1="90" x2="855" y2="90" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- 安全なアプリ -->
+  <g filter="url(#shadow)">
+    <rect x="860" y="50" width="205" height="110" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="962" y="80" text-anchor="middle" fill="#22c55e" font-size="28">🏰</text>
+    <text x="962" y="106" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">安全なアプリ</text>
+    <text x="962" y="124" text-anchor="middle" fill="#86efac" font-size="10">多層防御で保護</text>
+    <text x="962" y="140" text-anchor="middle" fill="#94a3b8" font-size="9">攻撃者の視点から</text>
+    <text x="962" y="153" text-anchor="middle" fill="#94a3b8" font-size="9">防御の重要性を理解</text>
+  </g>
+
+  <text x="550" y="187" text-anchor="middle" fill="#475569" font-size="10">攻撃を学んだ最後に、防御側の視点を強化 — 適切なエラーハンドリングとログ記録の重要性</text>
+</svg>
