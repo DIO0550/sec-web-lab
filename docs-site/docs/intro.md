@@ -9,7 +9,89 @@ slug: /
 ローカル環境 (Hono + React + PostgreSQL) で実験可能な脆弱性を、学習しやすい順番に並べています。
 前のステップの知識が後のステップで活きる構成になっているので、上から順に進めるのがおすすめです。
 
-![学習ロードマップ全体図](diagrams/learning-roadmap.svg)
+<div class="roadmap">
+  <a class="roadmap-step" href="#step-1-偵察フェーズ--webアプリの情報を集めよう" style={{"--step-color":"#3b82f6"}}>
+    <span class="roadmap-step__badge roadmap-step__badge--start">START</span>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">01</span>
+      <span class="roadmap-step__title">偵察フェーズ</span>
+    </span>
+    <span class="roadmap-step__desc">Webアプリの情報を集める</span>
+    <span class="roadmap-step__meta">★☆☆ 入門 · 5 ラボ</span>
+  </a>
+  <a class="roadmap-step" href="#step-2-はじめてのインジェクション--入力を操る基本技術" style={{"--step-color":"#ef4444"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">02</span>
+      <span class="roadmap-step__title">インジェクション</span>
+    </span>
+    <span class="roadmap-step__desc">入力を操る基本技術</span>
+    <span class="roadmap-step__meta">★☆☆〜★★☆ · 9 ラボ</span>
+  </a>
+  <a class="roadmap-step" href="#step-3-認証を突破する--ログインの弱点を知る" style={{"--step-color":"#f59e0b"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">03</span>
+      <span class="roadmap-step__title">認証突破</span>
+    </span>
+    <span class="roadmap-step__desc">ログインの弱点を知る</span>
+    <span class="roadmap-step__meta">★☆☆〜★★☆ · 6 ラボ</span>
+  </a>
+  <div class="roadmap-arrow-row roadmap-arrow-row--right">
+    <span class="roadmap-arrow-row__icon"><span class="roadmap-arrow-row__line"></span><span class="roadmap-arrow-row__chevron">&#9660;</span></span>
+  </div>
+  <a class="roadmap-step" href="#step-6-サーバーサイド攻撃--サーバーの弱点を突く" style={{"--step-color":"#06b6d4"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">06</span>
+      <span class="roadmap-step__title">サーバーサイド攻撃</span>
+    </span>
+    <span class="roadmap-step__desc">サーバーの弱点を突く</span>
+    <span class="roadmap-step__meta">★★☆〜★★★ · 8 ラボ</span>
+  </a>
+  <a class="roadmap-step" href="#step-5-アクセス制御を突破する--権限の壁を超える" style={{"--step-color":"#ec4899"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">05</span>
+      <span class="roadmap-step__title">アクセス制御突破</span>
+    </span>
+    <span class="roadmap-step__desc">権限の壁を超える</span>
+    <span class="roadmap-step__meta">★☆☆〜★★☆ · 4 ラボ</span>
+  </a>
+  <a class="roadmap-step" href="#step-4-セッションを奪う--なりすましの技術" style={{"--step-color":"#8b5cf6"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">04</span>
+      <span class="roadmap-step__title">セッション奪取</span>
+    </span>
+    <span class="roadmap-step__desc">なりすましの技術</span>
+    <span class="roadmap-step__meta">★☆☆〜★★☆ · 7 ラボ</span>
+  </a>
+  <div class="roadmap-arrow-row roadmap-arrow-row--left">
+    <span class="roadmap-arrow-row__icon"><span class="roadmap-arrow-row__line"></span><span class="roadmap-arrow-row__chevron">&#9660;</span></span>
+  </div>
+  <a class="roadmap-step" href="#step-7-設計とロジックの問題--仕様の穴を見つける" style={{"--step-color":"#84cc16"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">07</span>
+      <span class="roadmap-step__title">設計とロジックの問題</span>
+    </span>
+    <span class="roadmap-step__desc">仕様の穴を見つける</span>
+    <span class="roadmap-step__meta">★☆☆〜★★☆ · 12 ラボ</span>
+  </a>
+  <a class="roadmap-step" href="#step-8-高度な攻撃テクニック--エキスパートへの道" style={{"--step-color":"#f97316"}}>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">08</span>
+      <span class="roadmap-step__title">高度な攻撃テクニック</span>
+    </span>
+    <span class="roadmap-step__desc">エキスパートへの道</span>
+    <span class="roadmap-step__meta">★★★ 上級 · 10 ラボ</span>
+  </a>
+  <a class="roadmap-step" href="#step-9-守りを固める--ログ例外処理防御設計" style={{"--step-color":"#22c55e"}}>
+    <span class="roadmap-step__badge roadmap-step__badge--goal">GOAL</span>
+    <span class="roadmap-step__header">
+      <span class="roadmap-step__number">09</span>
+      <span class="roadmap-step__title">守りを固める</span>
+    </span>
+    <span class="roadmap-step__desc">ログ・例外処理・防御設計</span>
+    <span class="roadmap-step__meta">★☆☆〜★★☆ · 7 ラボ</span>
+  </a>
+  <div class="roadmap-footer">全 68 ラボ ｜ 入門から上級まで段階的に学習</div>
+</div>
 
 ## 凡例
 
@@ -28,7 +110,119 @@ slug: /
 > 68のラボは大きく4つのカテゴリに分類できます。
 > ステップ順に学ぶのが基本ですが、興味のあるカテゴリから探すこともできます。
 
-![攻撃カテゴリマップ](diagrams/category-map.svg)
+<div class="category-map">
+  <div class="category-card" style={{"--cat-color":"#ef4444"}}>
+    <div class="category-card__header">
+      <span class="category-card__icon">&#9000;</span>
+      <span class="category-card__title">入力操作系</span>
+      <span class="category-card__subtitle">Input Manipulation</span>
+      <span class="category-card__badge">15 ラボ</span>
+    </div>
+    <div class="category-card__steps">主に Step 2, 6, 8</div>
+    <hr class="category-card__divider" />
+    <ul class="category-card__labs">
+      <li>Reflected XSS</li>
+      <li>CSVインジェクション</li>
+      <li>Stored XSS</li>
+      <li>evalインジェクション</li>
+      <li>DOM-based XSS</li>
+      <li>SSTI</li>
+      <li>SQLインジェクション</li>
+      <li>オープンリダイレクト</li>
+      <li>OSコマンドインジェクション</li>
+      <li>Prototype Pollution</li>
+      <li>メールヘッダインジェクション</li>
+      <li>Unicode正規化バイパス</li>
+      <li>CRLFインジェクション</li>
+      <li>ReDoS</li>
+      <li>HPP</li>
+    </ul>
+  </div>
+  <div class="category-card" style={{"--cat-color":"#8b5cf6"}}>
+    <div class="category-card__header">
+      <span class="category-card__icon">&#9919;</span>
+      <span class="category-card__title">認証・セッション系</span>
+      <span class="category-card__subtitle">Auth &amp; Session</span>
+      <span class="category-card__badge">18 ラボ</span>
+    </div>
+    <div class="category-card__steps">主に Step 3, 4, 8</div>
+    <hr class="category-card__divider" />
+    <ul class="category-card__labs">
+      <li>デフォルト認証情報</li>
+      <li>セッションハイジャック</li>
+      <li>弱いパスワードポリシー</li>
+      <li>CSRF</li>
+      <li>ブルートフォース攻撃</li>
+      <li>トークンリプレイ</li>
+      <li>平文パスワード保存</li>
+      <li>セッション有効期限の不備</li>
+      <li>弱いハッシュ (MD5/SHA1)</li>
+      <li>推測可能なセッションID</li>
+      <li>ユーザー名列挙</li>
+      <li>JWT改ざん</li>
+      <li>Cookie操作</li>
+      <li>JWT alg=none / 弱い鍵</li>
+      <li>セッション固定攻撃</li>
+      <li>JWT Claim 検証不備</li>
+    </ul>
+  </div>
+  <div class="category-card" style={{"--cat-color":"#f59e0b"}}>
+    <div class="category-card__header">
+      <span class="category-card__icon">&#9881;</span>
+      <span class="category-card__title">設定・設計系</span>
+      <span class="category-card__subtitle">Config &amp; Design</span>
+      <span class="category-card__badge">17 ラボ</span>
+    </div>
+    <div class="category-card__steps">主に Step 1, 7</div>
+    <hr class="category-card__divider" />
+    <ul class="category-card__labs">
+      <li>HTTPヘッダー情報漏洩</li>
+      <li>不要なHTTPメソッド許可</li>
+      <li>機密ファイル露出</li>
+      <li>キャッシュ制御の不備</li>
+      <li>エラーメッセージ漏洩</li>
+      <li>Web Storageの不適切な使用</li>
+      <li>ディレクトリリスティング</li>
+      <li>Host Header Injection</li>
+      <li>不要なヘッダー露出</li>
+      <li>X-Forwarded-For 信頼ミス</li>
+      <li>セキュリティヘッダ未設定</li>
+      <li>レート制限なし</li>
+      <li>クリックジャッキング</li>
+      <li>推測可能なパスワードリセット</li>
+      <li>HTTPでの機密データ送信</li>
+      <li>署名なしデータの信頼</li>
+    </ul>
+  </div>
+  <div class="category-card" style={{"--cat-color":"#06b6d4"}}>
+    <div class="category-card__header">
+      <span class="category-card__icon">&#9874;</span>
+      <span class="category-card__title">サーバーサイド系</span>
+      <span class="category-card__subtitle">Server-Side</span>
+      <span class="category-card__badge">18 ラボ</span>
+    </div>
+    <div class="category-card__steps">主に Step 5, 6, 8, 9</div>
+    <hr class="category-card__divider" />
+    <ul class="category-card__labs">
+      <li>SSRF</li>
+      <li>Zip Slip</li>
+      <li>SSRFバイパス</li>
+      <li>CORS設定ミス</li>
+      <li>XXE</li>
+      <li>レースコンディション</li>
+      <li>ファイルアップロード攻撃</li>
+      <li>デシリアライゼーション</li>
+      <li>IDOR</li>
+      <li>ビジネスロジックの欠陥</li>
+      <li>パストラバーサル</li>
+      <li>Fail-Open</li>
+      <li>権限昇格</li>
+      <li>詳細エラーメッセージ露出</li>
+      <li>Mass Assignment</li>
+      <li>ログ不足 / ログインジェクション</li>
+    </ul>
+  </div>
+</div>
 
 ---
 
