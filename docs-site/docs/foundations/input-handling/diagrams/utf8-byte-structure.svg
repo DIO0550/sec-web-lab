@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bg)" rx="0"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#f8fafc" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="18" font-weight="bold">UTF-8 バイト構造</text>
+
+  <!-- Column headers -->
+  <text x="60" y="68" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold">バイト数</text>
+  <text x="180" y="68" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold">バイトパターン</text>
+  <text x="580" y="68" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold">範囲</text>
+  <text x="720" y="68" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold">例</text>
+  <line x1="30" y1="76" x2="770" y2="76" stroke="#334155" stroke-width="1"/>
+
+  <!-- Row 1: 1 byte (ASCII) - Blue -->
+  <rect x="30" y="85" width="740" height="60" rx="10" fill="rgba(59,130,246,0.06)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="75" y="120" text-anchor="middle" fill="#93c5fd" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="bold">1</text>
+  <!-- Byte box -->
+  <rect x="160" y="97" width="150" height="36" rx="8" fill="#1e1b2e" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="172" y="120" fill="#3b82f6" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">0</text>
+  <text x="186" y="120" fill="#93c5fd" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxxx</text>
+  <!-- Range -->
+  <text x="580" y="120" fill="#e2e8f0" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">U+0000 - U+007F</text>
+  <!-- Example -->
+  <text x="720" y="120" fill="#93c5fd" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">A</text>
+
+  <!-- Row 2: 2 bytes - Cyan -->
+  <rect x="30" y="155" width="740" height="60" rx="10" fill="rgba(6,182,212,0.06)" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="75" y="190" text-anchor="middle" fill="#67e8f9" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="bold">2</text>
+  <!-- Byte box 1 -->
+  <rect x="160" y="167" width="150" height="36" rx="8" fill="#1e1b2e" stroke="#06b6d4" stroke-width="2" filter="url(#shadow)"/>
+  <text x="172" y="190" fill="#06b6d4" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">110</text>
+  <text x="203" y="190" fill="#67e8f9" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxx</text>
+  <!-- Byte box 2 -->
+  <rect x="320" y="167" width="150" height="36" rx="8" fill="#1e1b2e" stroke="#06b6d4" stroke-width="2" filter="url(#shadow)"/>
+  <text x="332" y="190" fill="#06b6d4" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">10</text>
+  <text x="354" y="190" fill="#67e8f9" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxx</text>
+  <!-- Range -->
+  <text x="580" y="190" fill="#e2e8f0" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">U+0080 - U+07FF</text>
+  <!-- Example -->
+  <text x="720" y="190" fill="#67e8f9" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">&#xA9;</text>
+
+  <!-- Row 3: 3 bytes (Japanese) - Purple -->
+  <rect x="30" y="225" width="740" height="60" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="75" y="260" text-anchor="middle" fill="#d8b4fe" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="bold">3</text>
+  <!-- Byte box 1 -->
+  <rect x="160" y="237" width="120" height="36" rx="8" fill="#1e1b2e" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+  <text x="172" y="260" fill="#a855f7" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">1110</text>
+  <text x="210" y="260" fill="#d8b4fe" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxx</text>
+  <!-- Byte box 2 -->
+  <rect x="290" y="237" width="120" height="36" rx="8" fill="#1e1b2e" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+  <text x="302" y="260" fill="#a855f7" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">10</text>
+  <text x="324" y="260" fill="#d8b4fe" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxx</text>
+  <!-- Byte box 3 -->
+  <rect x="420" y="237" width="120" height="36" rx="8" fill="#1e1b2e" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+  <text x="432" y="260" fill="#a855f7" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">10</text>
+  <text x="454" y="260" fill="#d8b4fe" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxx</text>
+  <!-- Range -->
+  <text x="580" y="260" fill="#e2e8f0" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">U+0800 - U+FFFF</text>
+  <!-- Example -->
+  <text x="720" y="260" fill="#d8b4fe" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">&#x3042;</text>
+
+  <!-- Row 4: 4 bytes (Emoji) - Orange -->
+  <rect x="30" y="295" width="740" height="60" rx="10" fill="rgba(249,115,22,0.06)" stroke="#f97316" stroke-width="1.5"/>
+  <text x="75" y="330" text-anchor="middle" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="bold">4</text>
+  <!-- Byte box 1 -->
+  <rect x="160" y="307" width="100" height="36" rx="8" fill="#1e1b2e" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+  <text x="172" y="330" fill="#f97316" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">11110</text>
+  <text x="216" y="330" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxx</text>
+  <!-- Byte box 2 -->
+  <rect x="268" y="307" width="100" height="36" rx="8" fill="#1e1b2e" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+  <text x="280" y="330" fill="#f97316" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">10</text>
+  <text x="302" y="330" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxx</text>
+  <!-- Byte box 3 -->
+  <rect x="376" y="307" width="100" height="36" rx="8" fill="#1e1b2e" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+  <text x="388" y="330" fill="#f97316" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">10</text>
+  <text x="410" y="330" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxx</text>
+  <!-- Byte box 4 -->
+  <rect x="484" y="307" width="100" height="36" rx="8" fill="#1e1b2e" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+  <text x="496" y="330" fill="#f97316" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">10</text>
+  <text x="518" y="330" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13">xxxxxx</text>
+  <!-- Range -->
+  <text x="612" y="330" text-anchor="middle" fill="#e2e8f0" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">U+10000 -</text>
+  <text x="612" y="346" text-anchor="middle" fill="#e2e8f0" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">U+10FFFF</text>
+  <!-- Example -->
+  <text x="720" y="330" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="bold">&#x1F600;</text>
+
+  <!-- Notes -->
+  <rect x="30" y="375" width="740" height="55" rx="10" fill="rgba(59,130,246,0.06)" stroke="#334155" stroke-width="1"/>
+  <text x="50" y="398" fill="#93c5fd" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold">&#x2139;</text>
+  <text x="70" y="398" fill="#e2e8f0" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">先頭バイトのビットパターンでバイト数が決まる</text>
+  <text x="50" y="418" fill="#fca5a5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold">&#x26A0;</text>
+  <text x="70" y="418" fill="#fca5a5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">不正なバイト列（非最短形式）はデコーダが拒否すべき</text>
+</svg>

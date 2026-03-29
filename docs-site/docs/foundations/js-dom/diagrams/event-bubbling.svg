@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowUp" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto-start-reverse">
+      <path d="M0,6 L4,0 L8,6" fill="#f97316" stroke="none"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="380" fill="url(#bg)" rx="0"/>
+
+  <!-- Title -->
+  <text x="300" y="32" text-anchor="middle" fill="#f8fafc" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="18" font-weight="bold">イベント伝搬（バブリング）</text>
+
+  <!-- document layer -->
+  <rect x="40" y="50" width="420" height="290" rx="12" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="55" y="70" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">document</text>
+
+  <!-- body layer -->
+  <rect x="60" y="80" width="380" height="245" rx="12" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="75" y="100" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12">&lt;body&gt;</text>
+
+  <!-- div#parent layer -->
+  <rect x="80" y="110" width="340" height="200" rx="12" fill="rgba(59,130,246,0.08)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="135" fill="#93c5fd" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="bold">&lt;div id="parent"&gt;</text>
+  <text x="100" y="155" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="11">ここでもイベントを受け取れる</text>
+
+  <!-- button element -->
+  <rect x="130" y="200" width="240" height="80" rx="10" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="250" y="235" text-anchor="middle" fill="#d8b4fe" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="bold">&lt;button&gt;</text>
+  <text x="250" y="258" text-anchor="middle" fill="#94a3b8" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="11">クリックした要素</text>
+
+  <!-- Bubbling arrows on the right side -->
+  <!-- Arrow from button to div#parent -->
+  <line x1="500" y1="245" x2="500" y2="145" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowUp)"/>
+  <text x="515" y="200" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="bold">1</text>
+
+  <!-- Arrow from div#parent to body -->
+  <line x1="500" y1="130" x2="500" y2="95" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowUp)"/>
+  <text x="515" y="118" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="bold">2</text>
+
+  <!-- Arrow from body to document -->
+  <line x1="500" y1="82" x2="500" y2="62" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowUp)"/>
+  <text x="515" y="77" fill="#fdba74" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="bold">3</text>
+
+  <!-- Bubbling label -->
+  <text x="540" y="200" fill="#f97316" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="bold" transform="rotate(-90,545,200)">バブリング</text>
+
+  <!-- Click indicator -->
+  <circle cx="250" cy="240" r="4" fill="#a855f7" opacity="0.6">
+    <animate attributeName="r" values="4;12;4" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

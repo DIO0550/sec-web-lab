@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f97316"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="32" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700">共通鍵暗号と鍵の配送問題</text>
+  <text x="400" y="50" text-anchor="middle" fill="#94a3b8" font-size="11">Symmetric Key Encryption &amp; Key Distribution Problem</text>
+
+  <!-- ====== Top Section: Encryption/Decryption Flow ====== -->
+  <rect x="30" y="64" width="740" height="140" rx="10" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1" filter="url(#shadow)" opacity="0.9"/>
+  <text x="55" y="86" fill="#93c5fd" font-size="12" font-weight="600">暗号化・復号フロー</text>
+
+  <!-- Plaintext (left) -->
+  <g transform="translate(100, 140)">
+    <rect x="-42" y="-20" width="84" height="40" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="600">平文</text>
+    <text x="0" y="12" text-anchor="middle" fill="#22c55e" font-size="8">Plaintext</text>
+  </g>
+
+  <!-- Arrow to encrypt -->
+  <line x1="148" y1="140" x2="218" y2="140" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Encrypt box -->
+  <g transform="translate(280, 140)">
+    <rect x="-50" y="-24" width="100" height="48" rx="8" fill="#0f172a" stroke="#f97316" stroke-width="1.2"/>
+    <text x="0" y="-4" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">共通鍵で</text>
+    <text x="0" y="10" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">暗号化</text>
+  </g>
+
+  <!-- Arrow to ciphertext -->
+  <line x1="336" y1="140" x2="396" y2="140" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Ciphertext -->
+  <g transform="translate(455, 140)">
+    <rect x="-48" y="-20" width="96" height="40" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="600">暗号文</text>
+    <text x="0" y="12" text-anchor="middle" fill="#ef4444" font-size="8">Ciphertext</text>
+  </g>
+
+  <!-- Arrow to decrypt -->
+  <line x1="509" y1="140" x2="569" y2="140" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Decrypt box -->
+  <g transform="translate(630, 140)">
+    <rect x="-50" y="-24" width="100" height="48" rx="8" fill="#0f172a" stroke="#f97316" stroke-width="1.2"/>
+    <text x="0" y="-4" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">同じ共通鍵で</text>
+    <text x="0" y="10" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">復号</text>
+  </g>
+
+  <!-- Arrow to plaintext -->
+  <line x1="686" y1="140" x2="728" y2="140" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Plaintext (right) -->
+  <text x="748" y="144" fill="#4ade80" font-size="11" font-weight="600">平文</text>
+
+  <!-- Key icon between encrypt and decrypt -->
+  <g transform="translate(455, 96)">
+    <rect x="-60" y="-12" width="120" height="24" rx="6" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+    <!-- Key icon -->
+    <g transform="translate(-40, 0)">
+      <circle cx="0" cy="0" r="4" fill="none" stroke="#f97316" stroke-width="1.2"/>
+      <line x1="4" y1="0" x2="14" y2="0" stroke="#f97316" stroke-width="1.2"/>
+      <line x1="12" y1="0" x2="12" y2="3" stroke="#f97316" stroke-width="1"/>
+    </g>
+    <text x="14" y="4" text-anchor="middle" fill="#fdba74" font-size="9" font-weight="600">同一の共通鍵</text>
+  </g>
+
+  <!-- ====== Bottom Section: Key Distribution Problem ====== -->
+  <rect x="30" y="224" width="740" height="176" rx="10" fill="#1e1b2e" stroke="#ef4444" stroke-width="1" filter="url(#shadow)" opacity="0.9"/>
+  <rect x="42" y="232" width="108" height="18" rx="9" fill="#ef4444" opacity="0.15"/>
+  <text x="96" y="245" text-anchor="middle" fill="#fca5a5" font-size="9" font-weight="600">KEY DISTRIBUTION</text>
+  <text x="170" y="245" fill="#94a3b8" font-size="10">鍵の配送問題</text>
+
+  <!-- Alice -->
+  <g transform="translate(130, 310)" filter="url(#shadow)">
+    <rect x="-48" y="-26" width="96" height="56" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="1.2"/>
+    <g transform="translate(-20, -6)">
+      <circle cx="0" cy="-6" r="7" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <path d="M-8,14 Q-8,4 0,2 Q8,4 8,14" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+    </g>
+    <text x="16" y="-4" fill="#d8b4fe" font-size="11" font-weight="600">Alice</text>
+    <text x="0" y="16" text-anchor="middle" fill="#94a3b8" font-size="8">共通鍵を送りたい</text>
+  </g>
+
+  <!-- Arrow Alice -> Bob -->
+  <line x1="184" y1="302" x2="500" y2="302" stroke="#f97316" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowOrange)"/>
+  <rect x="290" y="284" width="120" height="22" rx="6" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+  <!-- Key icon -->
+  <g transform="translate(316, 295)">
+    <circle cx="0" cy="0" r="4" fill="none" stroke="#f97316" stroke-width="1"/>
+    <line x1="4" y1="0" x2="12" y2="0" stroke="#f97316" stroke-width="1"/>
+    <line x1="10" y1="0" x2="10" y2="2.5" stroke="#f97316" stroke-width="0.8"/>
+  </g>
+  <text x="360" y="299" text-anchor="middle" fill="#fdba74" font-size="9" font-weight="600">共通鍵を送信</text>
+
+  <!-- Bob -->
+  <g transform="translate(560, 310)" filter="url(#shadow)">
+    <rect x="-48" y="-26" width="96" height="56" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1.2"/>
+    <g transform="translate(-20, -6)">
+      <circle cx="0" cy="-6" r="7" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+      <path d="M-8,14 Q-8,4 0,2 Q8,4 8,14" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+    </g>
+    <text x="16" y="-4" fill="#93c5fd" font-size="11" font-weight="600">Bob</text>
+    <text x="0" y="16" text-anchor="middle" fill="#94a3b8" font-size="8">鍵を受け取りたい</text>
+  </g>
+
+  <!-- Attacker intercepting -->
+  <g transform="translate(350, 352)">
+    <line x1="0" y1="-20" x2="0" y2="-8" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <rect x="-105" y="-8" width="210" height="48" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.2" filter="url(#shadow)"/>
+    <g transform="translate(-78, 16)">
+      <path d="M-8,-10 Q0,-16 8,-10 L8,-2 Q0,2 -8,-2 Z" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <circle cx="-2.5" cy="-5" r="1.2" fill="#ef4444"/>
+      <circle cx="2.5" cy="-5" r="1.2" fill="#ef4444"/>
+    </g>
+    <text x="10" y="8" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">攻撃者が鍵を盗聴</text>
+    <text x="10" y="24" text-anchor="middle" fill="#94a3b8" font-size="8">以降の暗号化通信がすべて解読される</text>
+  </g>
+
+</svg>

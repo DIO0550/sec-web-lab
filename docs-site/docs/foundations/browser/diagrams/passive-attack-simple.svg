@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="380" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="38" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700">Passive Attack Flow</text>
+  <text x="400" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">受動的攻撃 — 被害者のブラウザを経由して攻撃する</text>
+
+  <!-- Attacker -->
+  <g transform="translate(110, 185)" filter="url(#shadow)">
+    <rect x="-65" y="-45" width="130" height="110" rx="12" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, -5)">
+      <path d="M-13,-17 Q0,-28 13,-17 L13,-4 Q0,2 -13,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+      <circle cx="-4" cy="-9" r="1.8" fill="#ef4444"/>
+      <circle cx="4" cy="-9" r="1.8" fill="#ef4444"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#ef4444" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="52" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">攻撃者</text>
+  </g>
+
+  <!-- Trap Site -->
+  <g transform="translate(320, 185)" filter="url(#shadow)">
+    <rect x="-65" y="-45" width="130" height="110" rx="12" fill="#1e1b2e" stroke="#f97316" stroke-width="1.5"/>
+    <g transform="translate(0, -8)">
+      <rect x="-22" y="-18" width="44" height="32" rx="4" fill="none" stroke="#f97316" stroke-width="1.5"/>
+      <line x1="-22" y1="-8" x2="22" y2="-8" stroke="#f97316" stroke-width="1"/>
+      <circle cx="-15" cy="-13" r="2" fill="#ef4444"/><circle cx="-8" cy="-13" r="2" fill="#f59e0b"/><circle cx="-1" cy="-13" r="2" fill="#22c55e"/>
+      <text x="0" y="6" text-anchor="middle" fill="#f97316" font-size="8" font-weight="600">&lt;script&gt;</text>
+    </g>
+    <text x="0" y="46" text-anchor="middle" fill="#fdba74" font-size="12" font-weight="700">罠サイト</text>
+    <text x="0" y="58" text-anchor="middle" fill="#f97316" font-size="9" opacity="0.7">罠メール</text>
+  </g>
+
+  <!-- Victim Browser -->
+  <g transform="translate(530, 185)" filter="url(#shadow)">
+    <rect x="-65" y="-45" width="130" height="110" rx="12" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <g transform="translate(0, -5)">
+      <circle cx="0" cy="-9" r="13" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+      <circle cx="-4" cy="-11" r="1.5" fill="#a855f7"/>
+      <circle cx="4" cy="-11" r="1.5" fill="#a855f7"/>
+      <path d="M-4,-4 Q0,1 4,-4" fill="none" stroke="#a855f7" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M-17,36 Q-17,14 0,10 Q17,14 17,36" fill="none" stroke="#a855f7" stroke-width="2"/>
+      <line x1="-17" y1="36" x2="17" y2="36" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="46" text-anchor="middle" fill="#d8b4fe" font-size="12" font-weight="700">被害者の</text>
+    <text x="0" y="58" text-anchor="middle" fill="#d8b4fe" font-size="12" font-weight="700">ブラウザ</text>
+  </g>
+
+  <!-- Legitimate Server -->
+  <g transform="translate(700, 185)" filter="url(#shadow)">
+    <rect x="-55" y="-45" width="110" height="110" rx="12" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, 0)">
+      <rect x="-20" y="-28" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-22" r="2" fill="#3b82f6"/><circle cx="-5" cy="-22" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="-12" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="-6" r="2" fill="#3b82f6"/><circle cx="-5" cy="-6" r="2" fill="#3b82f6"/>
+      <rect x="-20" y="4" width="40" height="12" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="-12" cy="10" r="2" fill="#3b82f6"/><circle cx="-5" cy="10" r="2" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="46" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="700">正規</text>
+    <text x="0" y="58" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="700">サーバー</text>
+  </g>
+
+  <!-- Step 1: Attacker -> Trap Site -->
+  <line x1="180" y1="170" x2="250" y2="170" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  <circle cx="215" cy="148" r="14" fill="#ef4444"/>
+  <text x="215" y="153" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+  <text x="215" y="134" text-anchor="middle" fill="#fca5a5" font-size="9">罠を設置</text>
+
+  <!-- Step 2: Victim -> Trap Site -->
+  <path d="M 467 160 Q 420 100 330 140" fill="none" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
+  <circle cx="410" cy="108" r="14" fill="#a855f7"/>
+  <text x="410" y="113" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+  <text x="410" y="94" text-anchor="middle" fill="#d8b4fe" font-size="9">アクセス</text>
+
+  <!-- Step 3: Victim -> Server -->
+  <line x1="600" y1="185" x2="640" y2="185" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
+  <circle cx="620" cy="165" r="14" fill="#a855f7"/>
+  <text x="620" y="170" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+
+  <!-- Label for step 3 -->
+  <rect x="545" y="296" width="170" height="32" rx="8" fill="#451a03" stroke="#f97316" stroke-width="0.8"/>
+  <text x="630" y="316" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">被害者の権限でリクエスト</text>
+
+  <!-- Key point box -->
+  <g transform="translate(280, 340)" filter="url(#shadow)">
+    <rect x="-220" y="-16" width="440" height="32" rx="8" fill="#1e1b2e" stroke="#334155" stroke-width="1"/>
+    <text x="0" y="3" text-anchor="middle" fill="#94a3b8" font-size="10.5">正規ユーザーのブラウザから正規のリクエストが送信 → サーバーから見ると正常なリクエストと区別がつきにくい</text>
+  </g>
+</svg>
