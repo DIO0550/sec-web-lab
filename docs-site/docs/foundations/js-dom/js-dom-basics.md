@@ -11,7 +11,7 @@ sidebar_position: 1
 
 ## DOMとは
 
-**DOM（Document Object Model）**は、HTMLドキュメントをプログラムから操作するためのAPIである。ブラウザはHTMLを解析してDOMツリー（木構造）を構築し、JavaScriptからこのツリーを読み書きできるようにする。
+<strong>DOM（Document Object Model）</strong>は、HTMLドキュメントをプログラムから操作するためのAPIである。ブラウザはHTMLを解析してDOMツリー（木構造）を構築し、JavaScriptからこのツリーを読み書きできるようにする。
 
 <div class="dom-tree">
   <div><span class="dom-tree__node dom-tree__node--element">Document</span></div>
@@ -114,7 +114,7 @@ element.onclick = (event) => {
 
 ### イベント伝搬（バブリング）
 
-DOMイベントは子要素から親要素に**バブリング（伝搬）**する。
+DOMイベントは子要素から親要素に<strong>バブリング（伝搬）</strong>する。
 
 ```
 クリックイベントの伝搬:
