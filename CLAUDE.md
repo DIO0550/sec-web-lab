@@ -45,16 +45,20 @@ docs-site/                → Docusaurus ドキュメントサイト
 ## コマンド
 
 ```bash
+# root (pnpm workspace)
+pnpm install         # 全パッケージの依存を一括インストール
+pnpm dev             # backend (port 3000) + docs-site (port 5173) を並列起動
+```
+
+```bash
 # バックエンド
 cd backend
-pnpm install         # 依存インストール
 pnpm dev             # 開発サーバー起動 (port 3000)
 pnpm typecheck       # 型チェック
 pnpm db:seed         # テストデータ投入
 
 # フロントエンド
 cd frontend
-pnpm install         # 依存インストール
 pnpm dev             # 開発サーバー起動 (port 5173)
 pnpm build           # プロダクションビルド
 pnpm typecheck       # 型チェック
@@ -63,7 +67,6 @@ pnpm typecheck       # 型チェック
 ```bash
 # ドキュメントサイト
 cd docs-site
-pnpm install         # 依存インストール
 pnpm start           # 開発サーバー起動 (port 5173)
 pnpm build           # プロダクションビルド
 pnpm typecheck       # 型チェック
