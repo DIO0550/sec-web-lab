@@ -11,7 +11,7 @@ sidebar_position: 1
 
 ## DOMとは
 
-**DOM（Document Object Model）**は、HTMLドキュメントをプログラムから操作するためのAPIである。ブラウザはHTMLを解析してDOMツリー（木構造）を構築し、JavaScriptからこのツリーを読み書きできるようにする。
+<strong>DOM（Document Object Model）</strong>は、HTMLドキュメントをプログラムから操作するためのAPIである。ブラウザはHTMLを解析してDOMツリー（木構造）を構築し、JavaScriptからこのツリーを読み書きできるようにする。
 
 <div class="dom-tree">
   <div><span class="dom-tree__node dom-tree__node--element">Document</span></div>
@@ -22,24 +22,7 @@ sidebar_position: 1
   <div style="margin-left:4.5rem"><span class="dom-tree__node dom-tree__node--danger">&lt;script&gt;</span> → <span class="dom-tree__node dom-tree__node--danger">innerHTML で注入された場合 XSS</span></div>
 </div>
 
-```
-HTMLソース:
-<html>
-  <body>
-    <h1>タイトル</h1>
-    <p id="content">本文</p>
-  </body>
-</html>
-
-DOMツリー:
-Document
- └── html
-      └── body
-           ├── h1
-           │    └── "タイトル"
-           └── p#content
-                └── "本文"
-```
+![DOMツリー](./diagrams/dom-tree.svg)
 
 ---
 
@@ -114,16 +97,9 @@ element.onclick = (event) => {
 
 ### イベント伝搬（バブリング）
 
-DOMイベントは子要素から親要素に**バブリング（伝搬）**する。
+DOMイベントは子要素から親要素に<strong>バブリング（伝搬）</strong>する。
 
-```
-クリックイベントの伝搬:
-
-  document
-    └── body
-         └── div#parent     ← ここでもイベントを受け取れる
-              └── button     ← クリックした要素
-```
+![イベント伝搬（バブリング）](./diagrams/event-bubbling.svg)
 
 ```javascript
 // 親要素でイベントを委譲して処理する（イベントデリゲーション）
@@ -175,16 +151,7 @@ const value = obj[propertyName];
 
 JavaScriptのオブジェクトは、**プロトタイプ**と呼ばれる別のオブジェクトへの内部リンクを持つ。プロパティへのアクセス時、オブジェクト自身にプロパティがなければ、プロトタイプチェーンを辿って探索する。
 
-```
-プロトタイプチェーンの例:
-
-myObj
- ├── name: "Alice"
- └── [[Prototype]] → Object.prototype
-                      ├── toString()
-                      ├── hasOwnProperty()
-                      └── [[Prototype]] → null
-```
+![プロトタイプチェーン](./diagrams/prototype-chain.svg)
 
 ```javascript
 const myObj = { name: "Alice" };

@@ -24,7 +24,7 @@ API:          https://api.example.com     (ポート443、異なるホスト)
 API:          http://localhost:3000       (Hono、異なるポート)
 ```
 
-SOPのままでは、フロントエンドからAPIへの `fetch` リクエストのレスポンスが読めない。CORSは、サーバーが**「このオリジンからのアクセスは許可する」**と明示的に宣言することで、SOPを安全に緩和する仕組みである。
+SOPのままでは、フロントエンドからAPIへの `fetch` リクエストのレスポンスが読めない。CORSは、サーバーが<strong>「このオリジンからのアクセスは許可する」</strong>と明示的に宣言することで、SOPを安全に緩和する仕組みである。
 
 ---
 
@@ -225,37 +225,7 @@ app.use('*', async (c, next) => {
 
 ## CORSプリフライトのシーケンス図
 
-```
-ブラウザ (https://app.example.com)              サーバー (https://api.example.com)
-    |                                                |
-    |  [非単純リクエストを検出]                         |
-    |                                                |
-    |  OPTIONS /api/data                             |
-    |  Origin: https://app.example.com               |
-    |  Access-Control-Request-Method: POST           |
-    |  Access-Control-Request-Headers: Content-Type   |
-    |───────────────────────────────────────────────→|
-    |                                                | [オリジンを検証]
-    |  204 No Content                                |
-    |  Access-Control-Allow-Origin: https://app...   |
-    |  Access-Control-Allow-Methods: POST            |
-    |  Access-Control-Allow-Headers: Content-Type    |
-    |  Access-Control-Max-Age: 86400                 |
-    |←───────────────────────────────────────────────|
-    |                                                |
-    |  [プリフライトOK → 実リクエスト送信]               |
-    |                                                |
-    |  POST /api/data                                |
-    |  Origin: https://app.example.com               |
-    |  Content-Type: application/json                |
-    |  {"key": "value"}                              |
-    |───────────────────────────────────────────────→|
-    |                                                |
-    |  200 OK                                        |
-    |  Access-Control-Allow-Origin: https://app...   |
-    |  {"result": "success"}                         |
-    |←───────────────────────────────────────────────|
-```
+![CORSプリフライトリクエスト シーケンス](./diagrams/cors-preflight-sequence.svg)
 
 ---
 

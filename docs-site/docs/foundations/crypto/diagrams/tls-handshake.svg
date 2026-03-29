@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 520" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="750" height="520" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="375" y="32" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700">TLSハンドシェイク（TLS 1.3）</text>
+  <text x="375" y="50" text-anchor="middle" fill="#94a3b8" font-size="11">TLS 1.3 Handshake Sequence</text>
+
+  <!-- Client lifeline -->
+  <g transform="translate(150, 80)" filter="url(#shadow)">
+    <rect x="-60" y="-16" width="120" height="40" rx="10" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="0" y="0" text-anchor="middle" fill="#d8b4fe" font-size="13" font-weight="700">クライアント</text>
+    <text x="0" y="14" text-anchor="middle" fill="#a855f7" font-size="9">Client</text>
+  </g>
+  <line x1="150" y1="106" x2="150" y2="490" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+
+  <!-- Server lifeline -->
+  <g transform="translate(580, 80)" filter="url(#shadow)">
+    <rect x="-60" y="-16" width="120" height="40" rx="10" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="0" y="0" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">サーバー</text>
+    <text x="0" y="14" text-anchor="middle" fill="#3b82f6" font-size="9">Server</text>
+  </g>
+  <line x1="580" y1="106" x2="580" y2="490" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+
+  <!-- Step 1: ClientHello -->
+  <line x1="160" y1="145" x2="568" y2="145" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
+  <circle cx="120" cy="145" r="14" fill="#a855f7"/>
+  <text x="120" y="150" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+  <rect x="240" y="126" width="250" height="28" rx="6" fill="#0f172a" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="365" y="140" text-anchor="middle" fill="#d8b4fe" font-size="10" font-weight="600">ClientHello</text>
+  <text x="365" y="150" text-anchor="middle" fill="#94a3b8" font-size="8">対応する暗号スイート一覧</text>
+
+  <!-- Steps 2-4: ServerHello + Certificate + Key Exchange -->
+  <line x1="570" y1="200" x2="162" y2="200" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="610" cy="200" r="14" fill="#3b82f6"/>
+  <text x="610" y="205" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+  <rect x="230" y="180" width="270" height="28" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="365" y="194" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="600">ServerHello</text>
+  <text x="365" y="204" text-anchor="middle" fill="#94a3b8" font-size="8">選択した暗号スイート</text>
+
+  <line x1="570" y1="240" x2="162" y2="240" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="610" cy="240" r="14" fill="#3b82f6"/>
+  <text x="610" y="245" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+  <rect x="260" y="226" width="210" height="20" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="365" y="240" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="600">サーバー証明書</text>
+
+  <line x1="570" y1="278" x2="162" y2="278" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <circle cx="610" cy="278" r="14" fill="#3b82f6"/>
+  <text x="610" y="283" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+  <rect x="260" y="264" width="210" height="20" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="365" y="278" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="600">鍵交換パラメータ</text>
+
+  <!-- Steps 5-6: Certificate Verification + Key Exchange Complete -->
+  <line x1="160" y1="338" x2="568" y2="338" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
+  <circle cx="120" cy="338" r="14" fill="#a855f7"/>
+  <text x="120" y="343" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">5</text>
+  <rect x="250" y="318" width="230" height="28" rx="6" fill="#0f172a" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="365" y="332" text-anchor="middle" fill="#d8b4fe" font-size="10" font-weight="600">証明書を検証</text>
+  <text x="365" y="342" text-anchor="middle" fill="#94a3b8" font-size="8">CA署名チェーンを確認</text>
+
+  <line x1="160" y1="376" x2="568" y2="376" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
+  <circle cx="120" cy="376" r="14" fill="#a855f7"/>
+  <text x="120" y="381" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">6</text>
+  <rect x="250" y="362" width="230" height="20" rx="6" fill="#0f172a" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="365" y="376" text-anchor="middle" fill="#d8b4fe" font-size="10" font-weight="600">鍵交換完了（共通鍵を共有）</text>
+
+  <!-- Final: Encrypted communication -->
+  <rect x="110" y="420" width="510" height="50" rx="10" fill="#052e16" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- Double arrows -->
+  <line x1="180" y1="445" x2="280" y2="445" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="550" y1="445" x2="450" y2="445" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <!-- Lock icon -->
+  <g transform="translate(365, 438)">
+    <rect x="-6" y="0" width="12" height="9" rx="2" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+    <path d="M-3,0 L-3,-4 Q0,-8 3,-4 L3,0" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+  </g>
+  <text x="365" y="462" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="700">以降は共通鍵で暗号化通信</text>
+
+  <!-- Note -->
+  <text x="375" y="498" text-anchor="middle" fill="#64748b" font-size="9">TLS 1.3 では 1-RTT でハンドシェイクが完了（TLS 1.2 より高速）</text>
+
+</svg>

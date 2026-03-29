@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowRedR" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="300" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="32" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700">MITM（中間者）攻撃</text>
+  <text x="400" y="50" text-anchor="middle" fill="#94a3b8" font-size="11">Man-in-the-Middle Attack</text>
+
+  <!-- Original path (dimmed dashed) -->
+  <path d="M 170 90 Q 400 55 630 90" fill="none" stroke="#64748b" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.3" marker-end="url(#arrowGray)"/>
+  <text x="400" y="68" text-anchor="middle" fill="#64748b" font-size="8" opacity="0.5">本来の通信経路</text>
+
+  <!-- Client card -->
+  <g transform="translate(120, 140)" filter="url(#shadow)">
+    <rect x="-70" y="-40" width="140" height="90" rx="10" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5"/>
+    <g transform="translate(0, -8)">
+      <circle cx="0" cy="-8" r="10" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+      <circle cx="-3" cy="-10" r="1.2" fill="#a855f7"/>
+      <circle cx="3" cy="-10" r="1.2" fill="#a855f7"/>
+      <path d="M-3,-5 Q0,-2 3,-5" fill="none" stroke="#a855f7" stroke-width="1" stroke-linecap="round"/>
+      <path d="M-12,22 Q-12,8 0,5 Q12,8 12,22" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+    </g>
+    <text x="0" y="30" text-anchor="middle" fill="#d8b4fe" font-size="12" font-weight="700">クライアント</text>
+    <text x="0" y="43" text-anchor="middle" fill="#a855f7" font-size="8">Client</text>
+  </g>
+
+  <!-- Attacker card -->
+  <g transform="translate(400, 140)" filter="url(#shadow)">
+    <rect x="-78" y="-40" width="156" height="90" rx="10" fill="#1e1b2e" stroke="#ef4444" stroke-width="1.5"/>
+    <g transform="translate(0, -8)">
+      <path d="M-10,-14 Q0,-22 10,-14 L10,-4 Q0,1 -10,-4 Z" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+      <circle cx="-3" cy="-8" r="1.5" fill="#ef4444"/>
+      <circle cx="3" cy="-8" r="1.5" fill="#ef4444"/>
+      <path d="M-12,22 Q-12,8 0,5 Q12,8 12,22" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+    </g>
+    <text x="0" y="30" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="700">攻撃者</text>
+    <text x="0" y="43" text-anchor="middle" fill="#ef4444" font-size="8">Attacker (MITM)</text>
+  </g>
+
+  <!-- Server card -->
+  <g transform="translate(680, 140)" filter="url(#shadow)">
+    <rect x="-70" y="-40" width="140" height="90" rx="10" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5"/>
+    <g transform="translate(0, -4)">
+      <rect x="-16" y="-16" width="32" height="10" rx="2" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+      <circle cx="-9" cy="-11" r="1.5" fill="#3b82f6"/><circle cx="-4" cy="-11" r="1.5" fill="#3b82f6"/>
+      <rect x="-16" y="-3" width="32" height="10" rx="2" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+      <circle cx="-9" cy="2" r="1.5" fill="#3b82f6"/><circle cx="-4" cy="2" r="1.5" fill="#3b82f6"/>
+    </g>
+    <text x="0" y="30" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="700">サーバー</text>
+    <text x="0" y="43" text-anchor="middle" fill="#3b82f6" font-size="8">Server</text>
+  </g>
+
+  <!-- Bidirectional arrows: Client <-> Attacker -->
+  <line x1="196" y1="128" x2="316" y2="128" stroke="#ef4444" stroke-width="2" stroke-dasharray="7,3" marker-end="url(#arrowRed)"/>
+  <line x1="316" y1="152" x2="196" y2="152" stroke="#ef4444" stroke-width="2" stroke-dasharray="7,3" marker-end="url(#arrowRed)"/>
+
+  <!-- Bidirectional arrows: Attacker <-> Server -->
+  <line x1="484" y1="128" x2="604" y2="128" stroke="#ef4444" stroke-width="2" stroke-dasharray="7,3" marker-end="url(#arrowRed)"/>
+  <line x1="604" y1="152" x2="484" y2="152" stroke="#ef4444" stroke-width="2" stroke-dasharray="7,3" marker-end="url(#arrowRed)"/>
+
+  <!-- Attack details box -->
+  <g transform="translate(400, 258)" filter="url(#shadow)">
+    <rect x="-200" y="-22" width="400" height="48" rx="8" fill="#1e1b2e" stroke="#ef4444" stroke-width="1"/>
+    <!-- Left info -->
+    <g transform="translate(-100, 0)">
+      <rect x="-80" y="-12" width="160" height="28" rx="6" fill="#451a03" stroke="#f97316" stroke-width="0.6"/>
+      <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">通信内容を盗聴・改ざん</text>
+      <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="8">パスワード、Cookie、個人情報を窃取</text>
+    </g>
+    <!-- Right info -->
+    <g transform="translate(100, 0)">
+      <rect x="-80" y="-12" width="160" height="28" rx="6" fill="#451a03" stroke="#f97316" stroke-width="0.6"/>
+      <text x="0" y="-1" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">偽の証明書を提示</text>
+      <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="8">クライアントを欺いて接続させる</text>
+    </g>
+  </g>
+
+</svg>

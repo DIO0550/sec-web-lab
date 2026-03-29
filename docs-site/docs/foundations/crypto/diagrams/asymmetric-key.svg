@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="400" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="32" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700">公開鍵暗号とデジタル署名</text>
+  <text x="400" y="50" text-anchor="middle" fill="#94a3b8" font-size="11">Asymmetric Key Encryption &amp; Digital Signature</text>
+
+  <!-- ====== Top Section: Encryption Flow ====== -->
+  <rect x="30" y="64" width="740" height="135" rx="10" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1" filter="url(#shadow)" opacity="0.9"/>
+  <text x="55" y="86" fill="#93c5fd" font-size="12" font-weight="600">暗号化フロー (Encryption)</text>
+
+  <!-- Plaintext -->
+  <g transform="translate(90, 138)">
+    <rect x="-36" y="-18" width="72" height="36" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="600">平文</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="132" y1="138" x2="192" y2="138" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Encrypt with Bob's public key -->
+  <g transform="translate(270, 138)">
+    <rect x="-64" y="-24" width="128" height="48" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1.2"/>
+    <!-- Key icon (public) -->
+    <g transform="translate(-40, 0)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="5" y1="0" x2="14" y2="0" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="12" y1="0" x2="12" y2="3" stroke="#3b82f6" stroke-width="1"/>
+    </g>
+    <text x="4" y="-4" text-anchor="middle" fill="#93c5fd" font-size="9" font-weight="600">Bobの公開鍵で</text>
+    <text x="4" y="10" text-anchor="middle" fill="#93c5fd" font-size="9" font-weight="600">暗号化</text>
+  </g>
+  <!-- Label: anyone can use -->
+  <text x="270" y="100" text-anchor="middle" fill="#64748b" font-size="8">誰でも入手可能</text>
+
+  <!-- Arrow -->
+  <line x1="340" y1="138" x2="410" y2="138" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Ciphertext -->
+  <g transform="translate(470, 138)">
+    <rect x="-46" y="-18" width="92" height="36" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="600">暗号文</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="522" y1="138" x2="582" y2="138" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Decrypt with Bob's private key -->
+  <g transform="translate(660, 138)">
+    <rect x="-64" y="-24" width="128" height="48" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1.2"/>
+    <!-- Key icon (private) -->
+    <g transform="translate(-40, 0)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="5" y1="0" x2="14" y2="0" stroke="#22c55e" stroke-width="1.2"/>
+      <line x1="10" y1="0" x2="10" y2="3" stroke="#22c55e" stroke-width="1"/>
+      <line x1="13" y1="0" x2="13" y2="3" stroke="#22c55e" stroke-width="1"/>
+    </g>
+    <text x="4" y="-4" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600">Bobの秘密鍵で</text>
+    <text x="4" y="10" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600">復号</text>
+  </g>
+  <!-- Label: only Bob has it -->
+  <text x="660" y="100" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="600">Bobだけが持つ</text>
+
+  <!-- Result arrow and text -->
+  <text x="748" y="142" fill="#4ade80" font-size="10" font-weight="600">平文</text>
+
+  <!-- ====== Bottom Section: Digital Signature Flow ====== -->
+  <rect x="30" y="216" width="740" height="168" rx="10" fill="#1e1b2e" stroke="#a855f7" stroke-width="1" filter="url(#shadow)" opacity="0.9"/>
+  <text x="55" y="238" fill="#d8b4fe" font-size="12" font-weight="600">デジタル署名フロー (Digital Signature)</text>
+
+  <!-- Data (left) -->
+  <g transform="translate(90, 298)">
+    <rect x="-36" y="-18" width="72" height="36" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#d8b4fe" font-size="11" font-weight="600">データ</text>
+  </g>
+
+  <!-- Arrow to sign -->
+  <line x1="132" y1="298" x2="192" y2="298" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <!-- Sign with sender's private key -->
+  <g transform="translate(270, 298)">
+    <rect x="-64" y="-24" width="128" height="48" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="1.2"/>
+    <g transform="translate(-40, 0)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <line x1="5" y1="0" x2="14" y2="0" stroke="#a855f7" stroke-width="1.2"/>
+      <line x1="10" y1="0" x2="10" y2="3" stroke="#a855f7" stroke-width="1"/>
+      <line x1="13" y1="0" x2="13" y2="3" stroke="#a855f7" stroke-width="1"/>
+    </g>
+    <text x="4" y="-4" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="600">送信者の秘密鍵で</text>
+    <text x="4" y="10" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="600">署名</text>
+  </g>
+  <text x="270" y="260" text-anchor="middle" fill="#a855f7" font-size="8" font-weight="600">送信者だけが持つ</text>
+
+  <!-- Arrow -->
+  <line x1="340" y1="298" x2="410" y2="298" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <!-- Data + Signature -->
+  <g transform="translate(470, 298)">
+    <rect x="-46" y="-20" width="92" height="40" rx="8" fill="#0f172a" stroke="#f97316" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">データ</text>
+    <text x="0" y="12" text-anchor="middle" fill="#fdba74" font-size="10" font-weight="600">+ 署名</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="522" y1="298" x2="582" y2="298" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Verify with sender's public key -->
+  <g transform="translate(660, 298)">
+    <rect x="-64" y="-24" width="128" height="48" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1.2"/>
+    <g transform="translate(-40, 0)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="5" y1="0" x2="14" y2="0" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="12" y1="0" x2="12" y2="3" stroke="#3b82f6" stroke-width="1"/>
+    </g>
+    <text x="4" y="-4" text-anchor="middle" fill="#93c5fd" font-size="9" font-weight="600">送信者の公開鍵で</text>
+    <text x="4" y="10" text-anchor="middle" fill="#93c5fd" font-size="9" font-weight="600">検証</text>
+  </g>
+  <text x="660" y="260" text-anchor="middle" fill="#64748b" font-size="8">誰でも検証可能</text>
+
+  <!-- Result -->
+  <g transform="translate(660, 358)">
+    <rect x="-50" y="-10" width="100" height="22" rx="6" fill="#052e16" stroke="#22c55e" stroke-width="0.8"/>
+    <text x="0" y="5" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600">有効 / 無効</text>
+  </g>
+
+</svg>
