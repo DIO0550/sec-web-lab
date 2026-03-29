@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter ./backend --filter ./docs-site -r --parallel dev"
+  }
+}
