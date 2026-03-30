@@ -7,12 +7,13 @@
 const SVG_ZOOM_ATTR = 'data-svg-zoom-bound';
 
 /**
- * URLからクエリパラメータ・ハッシュを除去し、.svg で終わるかを判定する
+ * SVG画像かどうかを判定する（ファイルURL・data URI両対応）
  * @param src - 画像のsrc属性
  * @returns SVG画像の場合true
  */
 function isSvgSrc(src: string | undefined | null): boolean {
   if (!src) return false;
+  if (src.startsWith('data:image/svg+xml')) return true;
   const pathname = src.split('?')[0].split('#')[0];
   return pathname.toLowerCase().endsWith('.svg');
 }
