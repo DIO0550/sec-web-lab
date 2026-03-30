@@ -41,11 +41,30 @@ function createModal(src: string, alt: string): HTMLDivElement {
   img.src = src;
   img.alt = alt;
   Object.assign(img.style, {
-    width: '95vw',
-    maxHeight: '95vh',
-    objectFit: 'contain',
     display: 'block',
+    objectFit: 'contain',
   });
+
+  /** 画像読み込み後にビューポートに最大フィットするサイズを計算して適用する */
+  const fitToViewport = (): void => {
+    const vw = window.innerWidth * 0.95;
+    const vh = window.innerHeight * 0.95;
+    const ratio = img.naturalWidth / img.naturalHeight;
+
+    let w = vw;
+    let h = vw / ratio;
+    if (h > vh) {
+      h = vh;
+      w = vh * ratio;
+    }
+
+    img.style.width = `${w}px`;
+    img.style.height = `${h}px`;
+  };
+
+  img.addEventListener('load', fitToViewport);
+  // base64 data URI は同期的に読み込まれる場合がある
+  if (img.complete && img.naturalWidth > 0) fitToViewport();
 
   const closeBtn = document.createElement('button');
   closeBtn.textContent = '\u00d7';

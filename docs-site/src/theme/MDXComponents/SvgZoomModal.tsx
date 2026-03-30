@@ -104,8 +104,6 @@ const closeButtonStyle: React.CSSProperties = {
 
 const imageBaseStyle: React.CSSProperties = {
   display: 'block',
-  width: '95vw',
-  maxHeight: '95vh',
   objectFit: 'contain',
   touchAction: 'none',
   userSelect: 'none',
@@ -123,6 +121,7 @@ export function SvgZoomModal({ src, alt, width, height, onClose }: Props) {
   const [translateY, setTranslateY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [fittedSize, setFittedSize] = useState<{ width: number; height: number } | null>(null);
 
   const dragStartRef = useRef({ x: 0, y: 0 });
   const translateStartRef = useRef({ x: 0, y: 0 });
@@ -418,13 +417,27 @@ export function SvgZoomModal({ src, alt, width, height, onClose }: Props) {
           ref={imageRef}
           src={src}
           alt={alt}
-          width={width}
-          height={height}
+          width={fittedSize?.width ?? width}
+          height={fittedSize?.height ?? height}
           className={`${styles.image}${isDragging ? ` ${styles.dragging}` : ''}`}
           style={{
             ...imageBaseStyle,
+            ...(fittedSize ? { width: fittedSize.width, height: fittedSize.height } : {}),
             cursor: isDragging ? 'grabbing' : 'grab',
             transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
+          }}
+          onLoad={(e) => {
+            const img = e.currentTarget;
+            const vw = window.innerWidth * 0.95;
+            const vh = window.innerHeight * 0.95;
+            const ratio = img.naturalWidth / img.naturalHeight;
+            let w = vw;
+            let h = vw / ratio;
+            if (h > vh) {
+              h = vh;
+              w = vh * ratio;
+            }
+            setFittedSize({ width: w, height: h });
           }}
           onWheel={handleWheel}
           onPointerDown={handlePointerDown}
