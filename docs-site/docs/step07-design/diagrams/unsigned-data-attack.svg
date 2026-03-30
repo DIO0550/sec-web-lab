@@ -87,7 +87,7 @@
   <text x="115" y="167" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
 
   <!-- Cookie tamper label -->
-  <g transform="translate(115, 140)">
+  <g transform="translate(115, 130)">
     <rect x="-68" y="-12" width="136" height="18" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="0.8" opacity="0.9"/>
     <text x="0" y="2" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="'Fira Code', monospace">role=user → role=admin</text>
   </g>

@@ -94,9 +94,9 @@
   <text x="248" y="227" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
 
   <!-- Step 3: Server → Attacker (大量の失敗レスポンス) -->
-  <path d="M 324 260 L 171 260" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
-  <circle cx="248" cy="260" r="16" fill="#3b82f6"/>
-  <text x="248" y="265" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+  <path d="M 324 268 L 171 268" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <circle cx="248" cy="268" r="16" fill="#3b82f6"/>
+  <text x="248" y="273" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
 
   <!-- Step 4: Attacker → Server (line Y=282 - 正しいパスワードがヒット) -->
   <path d="M 171 282 L 324 282" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
