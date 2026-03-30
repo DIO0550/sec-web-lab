@@ -145,7 +145,7 @@
   <path d="M 200 540 Q 400 610 589 310" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="8,4" marker-end="url(#arrowPurple)"/>
   <circle cx="380" cy="580" r="14" fill="#a855f7"/>
   <text x="380" y="585" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
-  <text x="420" cy="600" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="600">
+  <text x="420" y="600" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="600">
     <tspan x="420" y="600">Cookie付きCSRF</tspan>
   </text>
 
