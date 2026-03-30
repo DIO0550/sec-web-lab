@@ -104,8 +104,8 @@ const closeButtonStyle: React.CSSProperties = {
 
 const imageBaseStyle: React.CSSProperties = {
   display: 'block',
-  maxWidth: '100vw',
-  maxHeight: '100vh',
+  width: '95vw',
+  maxHeight: '95vh',
   objectFit: 'contain',
   touchAction: 'none',
   userSelect: 'none',

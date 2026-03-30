@@ -41,7 +41,7 @@ function createModal(src: string, alt: string): HTMLDivElement {
   img.src = src;
   img.alt = alt;
   Object.assign(img.style, {
-    maxWidth: '95vw',
+    width: '95vw',
     maxHeight: '95vh',
     objectFit: 'contain',
     display: 'block',

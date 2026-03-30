@@ -40,7 +40,7 @@
 
 .image {
   display: block;
-  max-width: 95vw;
+  width: 95vw;
   max-height: 95vh;
   object-fit: contain;
   touch-action: none;
