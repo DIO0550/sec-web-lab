@@ -80,7 +80,7 @@ const modalStyle: React.CSSProperties = {
   position: 'relative',
   maxWidth: '100vw',
   maxHeight: '100vh',
-  overflow: 'hidden',
+  overflow: 'visible',
 };
 
 const closeButtonStyle: React.CSSProperties = {
