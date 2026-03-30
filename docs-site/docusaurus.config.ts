@@ -48,6 +48,8 @@ const config: Config = {
     locales: ['ja'],
   },
 
+  clientModules: ['./src/clientModules/svgZoomGlobal.ts'],
+
   plugins: [proxyPlugin],
 
   presets: [
