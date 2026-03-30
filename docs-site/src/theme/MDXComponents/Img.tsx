@@ -9,6 +9,7 @@ import { SvgZoomModal } from './SvgZoomModal';
  */
 function isSvgSrc(src: string | undefined): boolean {
   if (!src) return false;
+  if (src.startsWith('data:image/svg+xml')) return true;
   const pathname = src.split('?')[0].split('#')[0];
   return pathname.toLowerCase().endsWith('.svg');
 }

@@ -138,7 +138,7 @@
   </g>
 
   <!-- Malicious request URL bar -->
-  <g transform="translate(248, 170)">
+  <g transform="translate(248, 185)">
     <rect x="-145" y="-14" width="290" height="28" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1"/>
     <text x="0" y="4" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="'Fira Code', monospace">
       <tspan fill="#ef4444">POST</tspan><tspan fill="#93c5fd"> /reset </tspan><tspan fill="#ef4444">Host: evil.example</tspan>
