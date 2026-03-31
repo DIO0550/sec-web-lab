@@ -1,0 +1,153 @@
+.container {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 8px;
+  background: var(--lab-bg-primary);
+}
+
+.questionText {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--lab-text-primary);
+  line-height: 1.6;
+}
+
+.questionNumber {
+  color: var(--lab-accent);
+  margin-right: 0.5rem;
+  font-weight: 700;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 6px;
+  background: var(--lab-bg-secondary);
+  color: var(--lab-text-primary);
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+  transition: border-color 0.15s, background-color 0.15s;
+  line-height: 1.5;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--lab-accent);
+  background: var(--lab-bg-tertiary);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.optionLabel {
+  font-weight: 700;
+  color: var(--lab-text-secondary);
+  min-width: 1.5rem;
+}
+
+.selected {
+  border-color: var(--lab-accent);
+  background: color-mix(in srgb, var(--lab-accent) 20%, var(--lab-bg-primary));
+  color: var(--lab-accent);
+  font-weight: 600;
+}
+
+.selected .optionLabel {
+  color: var(--lab-accent);
+}
+
+.correct {
+  border-color: var(--lab-success-border);
+  background: var(--lab-success-bg);
+}
+
+.correct .optionLabel {
+  color: var(--lab-success-text);
+}
+
+.wrong {
+  border-color: var(--lab-error-border);
+  background: var(--lab-error-bg-light);
+}
+
+.wrong .optionLabel {
+  color: var(--lab-error-text-light);
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.feedbackCorrect {
+  background: var(--lab-success-bg);
+  border: 1px solid var(--lab-success-border);
+}
+
+.feedbackWrong {
+  background: var(--lab-error-bg-light);
+  border: 1px solid var(--lab-error-border);
+}
+
+.feedbackUnanswered {
+  background: var(--lab-warning-bg);
+  border: 1px solid var(--lab-warning-border);
+}
+
+.feedbackStatus {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.feedbackCorrect .feedbackStatus {
+  color: var(--lab-success-text);
+}
+
+.feedbackWrong .feedbackStatus {
+  color: var(--lab-error-text-light);
+}
+
+.feedbackUnanswered .feedbackStatus {
+  color: var(--lab-warning-text);
+}
+
+.explanation {
+  color: var(--lab-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.referenceLink {
+  color: var(--lab-accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.referenceLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .option {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}

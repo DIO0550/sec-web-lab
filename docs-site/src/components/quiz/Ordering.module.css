@@ -1,0 +1,175 @@
+.container {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 8px;
+  background: var(--lab-bg-primary);
+}
+
+.questionText {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--lab-text-primary);
+  line-height: 1.6;
+}
+
+.questionNumber {
+  color: var(--lab-accent);
+  margin-right: 0.5rem;
+  font-weight: 700;
+}
+
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 6px;
+  background: var(--lab-bg-secondary);
+  gap: 0.75rem;
+  transition: background-color 0.15s, border-color 0.15s, opacity 0.15s,
+    box-shadow 0.15s;
+}
+
+.draggable {
+  cursor: grab;
+}
+
+.draggable:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  opacity: 0.5;
+  border-color: var(--lab-accent);
+  background: color-mix(in srgb, var(--lab-accent) 10%, var(--lab-bg-secondary));
+}
+
+.dragOver {
+  border-color: var(--lab-accent);
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+}
+
+.dragHandle {
+  color: var(--lab-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  user-select: none;
+  min-width: 1rem;
+  text-align: center;
+}
+
+.itemText {
+  flex: 1;
+  color: var(--lab-text-primary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.moveButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.moveButton {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 4px;
+  background: var(--lab-bg-tertiary);
+  color: var(--lab-text-secondary);
+  cursor: pointer;
+  font-size: 0.65rem;
+  line-height: 1;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.moveButton:hover:not(:disabled) {
+  border-color: var(--lab-accent);
+  color: var(--lab-accent);
+}
+
+.moveButton:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.feedbackCorrect {
+  background: var(--lab-success-bg);
+  border: 1px solid var(--lab-success-border);
+}
+
+.feedbackWrong {
+  background: var(--lab-error-bg-light);
+  border: 1px solid var(--lab-error-border);
+}
+
+.feedbackUnanswered {
+  background: var(--lab-warning-bg);
+  border: 1px solid var(--lab-warning-border);
+}
+
+.feedbackStatus {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.feedbackCorrect .feedbackStatus {
+  color: var(--lab-success-text);
+}
+
+.feedbackWrong .feedbackStatus {
+  color: var(--lab-error-text-light);
+}
+
+.feedbackUnanswered .feedbackStatus {
+  color: var(--lab-warning-text);
+}
+
+.explanation {
+  color: var(--lab-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.referenceLink {
+  color: var(--lab-accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.referenceLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .item {
+    padding: 0.625rem 0.75rem;
+  }
+
+  .dragHandle {
+    display: none;
+  }
+}
