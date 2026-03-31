@@ -1,0 +1,73 @@
+.container {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--lab-border);
+  border-radius: 8px;
+  background: var(--lab-bg-primary);
+  text-align: center;
+}
+
+.scoreCard {
+  margin-bottom: 1.5rem;
+}
+
+.scoreLabel {
+  font-size: 0.9rem;
+  color: var(--lab-text-secondary);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scoreValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--lab-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.percentage {
+  font-size: 1.25rem;
+  color: var(--lab-text-secondary);
+}
+
+.perfect {
+  color: var(--lab-success-text);
+}
+
+.perfect .scoreValue {
+  color: var(--lab-success-text);
+}
+
+.perfectMessage {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--lab-success-text);
+}
+
+.resetButton {
+  padding: 0.625rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--lab-accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.resetButton:hover {
+  background: var(--lab-accent-hover);
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .scoreValue {
+    font-size: 2rem;
+  }
+}

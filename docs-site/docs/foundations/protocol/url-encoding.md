@@ -1,6 +1,6 @@
 ---
 title: URLエンコーディングとReferer
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # URLエンコーディングとReferer
@@ -52,7 +52,7 @@ curl -G http://localhost:3000/api/search --data-urlencode "q=セキュリティ"
 
 ブラウザは、リンクのクリックやリソースの読み込み時に、遷移元のURLを `Referer` ヘッダとして送信する。
 
-```
+```http
 GET /page2 HTTP/1.1
 Host: example.com
 Referer: https://example.com/page1?token=secret123
@@ -62,7 +62,7 @@ Referer: https://example.com/page1?token=secret123
 
 RefererヘッダにはURLのクエリ文字列も含まれるため、URLにセンシティブな情報が含まれている場合、外部サイトに漏洩する。
 
-```
+```http
 # ユーザーが以下のURLでパスワードリセットページにアクセスしている場合
 https://example.com/reset?token=a1b2c3d4e5
 
@@ -74,7 +74,7 @@ Referer: https://example.com/reset?token=a1b2c3d4e5
 
 ### 対策
 
-```
+```http
 # Referrer-Policy ヘッダでRefererの送信を制御
 Referrer-Policy: no-referrer              # Referer を一切送らない
 Referrer-Policy: same-origin              # 同一オリジンにのみ送信
