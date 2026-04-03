@@ -1,6 +1,6 @@
 ---
 title: Directory Listing — ディレクトリリスティングによる情報漏洩
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 import { DirectoryListingLab } from '@site/src/components/labs/step01/DirectoryListingLab';
@@ -258,6 +258,14 @@ app.use("/static/*", serveStatic({ root: "./" }));
 |------|--------|
 | [機密ファイル露出](./sensitive-file-exposure) | ディレクトリリスティングで機密ファイルの存在を確認した後、直接アクセスで内容を取得する |
 | [HTTPヘッダーからの情報漏洩](./header-leakage) | ヘッダー漏洩で技術スタック、ディレクトリ一覧でファイル構成。組み合わせると偵察情報が網羅的になる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [ディレクトリリスティング - 理解度テスト](./directory-listing-quiz)
 
 ---
 

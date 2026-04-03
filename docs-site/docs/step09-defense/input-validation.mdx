@@ -1,6 +1,6 @@
 ---
 title: Input Validation — 入力バリデーション設計の原則
-sidebar_position: 7
+sidebar_position: 13
 ---
 
 import { InputValidationLab } from '@site/src/components/labs/step09/InputValidationLab';
@@ -367,6 +367,14 @@ type RegisterInput = z.infer<typeof registerSchema>;
 | [SQL インジェクション](../step02-injection/sql-injection) | バリデーション不備で SQL 特殊文字が処理に到達する。バリデーションとパラメータ化クエリの両方が必要 |
 | [コマンドインジェクション](../step02-injection/command-injection) | シェルコマンドへの入力バリデーション不備により OS コマンドが注入される |
 | [パストラバーサル](../step05-access-control/path-traversal.mdx) | ファイルパスのバリデーション不備で `../` による上位ディレクトリへのアクセスが可能になる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Input Validation - 理解度テスト](./input-validation-quiz)
 
 ---
 

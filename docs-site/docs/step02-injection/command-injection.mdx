@@ -1,6 +1,6 @@
 ---
 title: OS Command Injection — ユーザー入力でサーバーのコマンドを操る
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 import { CommandInjectionLab } from '@site/src/components/labs/step02/CommandInjectionLab';
@@ -266,6 +266,14 @@ execFile('ping', ['-c', '3', host], (err, stdout) => {
 | [SQL インジェクション](./sql-injection) | 同じ「入力値がコードとして解釈される」パターン。シェルの代わりに SQL が対象 |
 | [XSS](./xss) | 同じインジェクション系。ブラウザ側の JavaScript コンテキストが対象 |
 | [SSRF](../step06-server-side/ssrf.mdx) | サーバーサイドのリソースにアクセスする攻撃。コマンドインジェクションで curl を実行すれば SSRF と同等の攻撃が可能 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [OS Command Injection - 理解度テスト](./command-injection-quiz)
 
 ---
 

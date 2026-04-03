@@ -1,6 +1,6 @@
 ---
 title: Content Security Policy — ブラウザにコンテンツの実行ルールを指示する
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 import { CspLab } from '@site/src/components/labs/step09/CspLab';
@@ -465,6 +465,14 @@ app.post('/api/csp-report', async (c) => {
 | [XSS](../step02-injection/xss) | CSP は XSS のエスケープ漏れに対する多層防御。XSS の仕組みを理解した上で CSP の効果を学ぶ |
 | [クリックジャッキング](../step07-design/clickjacking.mdx) | CSP の `frame-ancestors` ディレクティブはクリックジャッキング対策としても機能する。`X-Frame-Options` の現代的な代替 |
 | [セッションハイジャック](../step04-session/session-hijacking.mdx) | CSP がない環境で XSS が成功すると Cookie の窃取によるセッションハイジャックが可能。CSP は Cookie 窃取の防止にも貢献する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Content Security Policy - 理解度テスト](./csp-quiz)
 
 ---
 

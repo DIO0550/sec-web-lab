@@ -1,6 +1,6 @@
 ---
 title: Open Redirect — 信頼されたURLからフィッシングサイトへ誘導する
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 import { OpenRedirectLab } from '@site/src/components/labs/step02/OpenRedirectLab';
@@ -273,6 +273,14 @@ app.get('/redirect', (c) => {
 |------|--------|
 | [XSS](./xss) | XSS で `document.location` を変更すればオープンリダイレクトと同等のことが可能。オープンリダイレクトは「サーバー側のリダイレクト」版 |
 | [SSRF](../step06-server-side/ssrf.mdx) | サーバーサイドでの URL パラメータ操作。オープンリダイレクトがクライアント向けの誘導なのに対し、SSRF はサーバーに内部リソースへのアクセスを強制する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Open Redirect - 理解度テスト](./open-redirect-quiz)
 
 ---
 

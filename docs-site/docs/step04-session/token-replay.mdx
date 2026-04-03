@@ -1,6 +1,6 @@
 ---
 title: Token Replay — ログアウト後のトークン再利用
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { TokenReplayLab } from '@site/src/components/labs/step04/TokenReplayLab';
@@ -248,6 +248,14 @@ app.post('/refresh', async (c) => {
 | リフレッシュトークンローテーション | 多層防御 | リフレッシュ時に古いトークンを無効化し新しいトークンを発行する。リフレッシュトークンの再利用を検知可能 |
 | トークンの安全な保管 | 多層防御 | `localStorage` ではなく `HttpOnly` Cookie にトークンを保存し、XSS によるトークン窃取を防止する |
 | 異常検知 | 検知 | 同一トークンが異なる IP やデバイスから使用された場合にアラートを発し、トークンを自動失効させる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [トークンリプレイ - 理解度テスト](./token-replay-quiz)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Mail Header Injection — メールヘッダーに改行コードを注入してスパムの踏み台にする
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { MailHeaderInjectionLab } from '@site/src/components/labs/step02/MailHeaderInjectionLab';
@@ -420,6 +420,14 @@ app.post('/api/labs/mail-header-injection/secure/send', async (c) => {
 |------|--------|
 | [CRLFインジェクション](../step06-server-side/crlf-injection.mdx) | 同じ CRLF 注入の手法だが、対象が HTTP レスポンスヘッダー。メールヘッダーインジェクションはメールプロトコルに対する CRLF 注入であり、攻撃の原理（改行コードが構造の区切りとして機能する）は共通 |
 | [OSコマンドインジェクション](./command-injection) | 同じインジェクション系の脆弱性。ユーザー入力がプロトコルやシステムの制御構造として解釈されるという共通パターン。コマンドインジェクションではシェルのメタ文字、メールヘッダーインジェクションでは CRLF が制御文字として機能する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Mail Header Injection - 理解度テスト](./mail-header-injection-quiz)
 
 ---
 

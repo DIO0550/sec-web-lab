@@ -1,6 +1,6 @@
 ---
 title: Fail-Open — エラー時にアクセスを許可してしまう設計ミス
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { FailOpenLab } from '@site/src/components/labs/step09/FailOpenLab';
@@ -290,6 +290,14 @@ app.use('/api/admin/*', async (c, next) => {
 | [詳細エラーメッセージ露出](./error-messages.mdx) | Fail-Open で通過したリクエストが詳細エラーを受け取ることで、さらなる攻撃の足がかりとなる |
 | [ブルートフォース](../step03-auth/brute-force) | 認証の例外処理とレート制限の両方が必要。Fail-Open はブルートフォースをより容易にする |
 | [権限昇格](../step05-access-control/privilege-escalation.mdx) | Fail-Open による認証バイパスは、実質的に権限昇格と同じ被害をもたらす |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Fail-Open - 理解度テスト](./fail-open-quiz)
 
 ---
 

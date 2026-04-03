@@ -1,6 +1,6 @@
 ---
 title: Security Headers — セキュリティレスポンスヘッダの未設定・設定ミス
-sidebar_position: 8
+sidebar_position: 15
 ---
 
 import { SecurityHeadersLab } from '@site/src/components/labs/step07/SecurityHeadersLab';
@@ -453,6 +453,14 @@ app.use("*", async (c, next) => {
 | [クリックジャッキング](clickjacking.mdx) | `X-Frame-Options` と `CSP frame-ancestors` の欠如がクリックジャッキングの直接的な原因。本ラボのセキュリティヘッダー設定がクリックジャッキング防御の根幹となる |
 | [HTTPヘッダーからの情報漏洩](../step01-recon/header-leakage) | 不要なヘッダーの「除去」（header-leakage）と、セキュリティヘッダーの「付与」（本ラボ）はセットで行うべき。両方合わせてヘッダーの安全な管理になる |
 | [セキュリティヘッダーの欠如](../step01-recon/header-exposure) | 偵察フェーズでセキュリティヘッダーの欠如を発見する方法を扱う。本ラボは欠如が見つかった場合の影響と対策を深く掘り下げる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [セキュリティヘッダー - 理解度テスト](./security-headers-quiz)
 
 ---
 

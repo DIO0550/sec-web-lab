@@ -1,6 +1,6 @@
 ---
 title: Improper Error Handling — エラーメッセージからの情報漏洩
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 import { ErrorMessageLeakageLab } from '@site/src/components/labs/step01/ErrorMessageLeakageLab';
@@ -267,6 +267,14 @@ app.onError((err, c) => {
 |------|--------|
 | [HTTPヘッダーからの情報漏洩](./header-leakage) | ヘッダーから技術スタック、エラーメッセージからDB構造。両方合わせると偵察情報が大幅に充実する |
 | [SQLインジェクション](../step02-injection/sql-injection) | エラーメッセージから得たテーブル名・SQL構文を利用して、SQLインジェクション攻撃の精度を向上させる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [エラーメッセージからの情報漏洩 - 理解度テスト](./error-message-leakage-quiz)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Zip Slip — ZIP展開によるパストラバーサル
-sidebar_position: 8
+sidebar_position: 15
 ---
 
 import { ZipSlipLab } from '@site/src/components/labs/step06/ZipSlipLab';
@@ -376,6 +376,14 @@ app.post('/api/upload-zip', async (c) => {
 |------|--------|
 | [ファイルアップロード](./file-upload.mdx) | Zip Slipはファイルアップロード機能の一種であり、ファイルアップロードの脆弱性（拡張子検証の欠如、MIMEタイプ偽装等）と組み合わせて攻撃される場合がある |
 | [SSRF](./ssrf.mdx) | 展開されたファイルがサーバーによって読み込まれる場合（設定ファイル等）、SSRFと組み合わせた攻撃チェーンが可能。例: 展開したファイルでWebhook URLを書き換えてSSRFを引き起こす |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Zip Slip - 理解度テスト](./zip-slip-quiz)
 
 ---
 

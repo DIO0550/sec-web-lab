@@ -1,6 +1,6 @@
 ---
 title: Mass Assignment — リクエストに余計なフィールドを追加して権限を奪う
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 import { MassAssignmentLab } from '@site/src/components/labs/step05/MassAssignmentLab';
@@ -299,6 +299,14 @@ app.post('/api/register', async (c) => {
 | [IDOR](./idor.mdx) | IDORで他ユーザーのデータにアクセスし、Mass Assignmentで権限を変更するという複合攻撃が可能 |
 | [権限昇格](./privilege-escalation.mdx) | Mass Assignmentによる `role` フィールドの改ざんは、権限昇格の一手法である |
 | [パストラバーサル](./path-traversal.mdx) | 同じ「クライアント入力を信頼しすぎる」パターンの別の脆弱性 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Mass Assignment - 理解度テスト](./mass-assignment-quiz)
 
 ---
 

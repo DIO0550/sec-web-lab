@@ -1,6 +1,6 @@
 ---
 title: Host Header Injection — Hostヘッダ汚染によるリンク詐称
-sidebar_position: 11
+sidebar_position: 21
 ---
 
 import { HostHeaderInjectionLab } from '@site/src/components/labs/step07/HostHeaderInjectionLab';
@@ -390,6 +390,14 @@ app.use("*", async (c, next) => {
 |------|--------|
 | [パスワードリセットトークン推測](password-reset.mdx) | 同じパスワードリセットフローを対象とした脆弱性。トークン推測はトークン生成の問題、Host ヘッダインジェクションはURL生成の問題であり、両方が揃うとリセット機能全体が危殆化する |
 | [X-Forwarded-For Trust](xff-trust.mdx) | 同じくHTTPヘッダをサーバーが無条件に信頼する問題。`Host` ヘッダと `X-Forwarded-For` ヘッダはどちらもクライアントが操作可能であり、「リクエストヘッダを信頼しない」という共通の教訓がある |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Hostヘッダインジェクション - 理解度テスト](./host-header-injection-quiz)
 
 ---
 

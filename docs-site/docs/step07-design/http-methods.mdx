@@ -1,6 +1,6 @@
 ---
 title: Unnecessary HTTP Methods — 不要なHTTPメソッドが許可されておりリソースの不正操作が可能
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 import { HttpMethodsLab } from '@site/src/components/labs/step07/HttpMethodsLab';
@@ -396,6 +396,14 @@ app.all('/api/users/*', (c) => {
 |------|--------|
 | [ビジネスロジックの欠陥](business-logic.mdx) | メソッド制限とビジネスロジックの検証は共に「意図しない操作を防ぐ」設計の問題。メソッド制限はリクエストレベル、ビジネスロジックはアプリケーションレベルの防御 |
 | [署名なしデータの信頼](unsigned-data.mdx) | クライアントからのリクエストを無条件に信頼する点で共通。メソッド制限ではリクエストの種類、署名なしデータではリクエストの内容が検証されていない |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [不要なHTTPメソッド - 理解度テスト](./http-methods-quiz)
 
 ---
 

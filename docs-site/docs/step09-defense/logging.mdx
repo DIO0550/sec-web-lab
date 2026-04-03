@@ -1,6 +1,6 @@
 ---
 title: ログなし / 不十分なログ — セキュリティイベントが記録されない
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 import { LoggingLab } from '@site/src/components/labs/step09/LoggingLab';
@@ -312,6 +312,14 @@ app.post('/api/login', async (c) => {
 | [ブルートフォース](../step03-auth/brute-force) | ログがなければブルートフォース攻撃を検知できない。本ラボはその検知基盤を構築する |
 | [ログインジェクション](./log-injection.mdx) | ログを記録していても、ログインジェクションにより改ざんされる可能性がある。入力値のサニタイズも必要 |
 | [詳細エラーメッセージ露出](./error-messages.mdx) | エラーの詳細はクライアントに返さずログに記録すべき。本ラボのログ基盤はエラーログの安全な記録にも活用できる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [ログなし / 不十分なログ - 理解度テスト](./logging-quiz)
 
 ---
 

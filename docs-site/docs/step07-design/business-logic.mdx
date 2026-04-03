@@ -1,6 +1,6 @@
 ---
 title: Business Logic Flaws — アプリケーション固有のビジネスロジックに欠陥があり意図しない操作が可能
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 import { BusinessLogicLab } from '@site/src/components/labs/step07/BusinessLogicLab';
@@ -401,6 +401,14 @@ app.post("/order", async (c) => {
 | [署名なしデータの信頼](unsigned-data.mdx) | ビジネスロジックの欠陥と同様に、クライアントから送信されたデータ（Cookie、hidden フィールド等）をサーバー側で検証せずに信頼する問題。価格の改ざんは両方のラボに共通するテーマ |
 | [レート制限なし](rate-limiting.mdx) | レート制限がない場合、ビジネスロジックの欠陥を自動化して大量の不正注文を短時間で実行できる。両方の対策を組み合わせることで防御が強化される |
 | [レースコンディション](../step08-advanced/race-condition.mdx) | 在庫チェックと更新の間のタイミング差を突く攻撃。ビジネスロジックの欠陥の一形態であり、トランザクション制御による対策が共通する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [ビジネスロジックの欠陥 - 理解度テスト](./business-logic-quiz)
 
 ---
 

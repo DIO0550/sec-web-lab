@@ -1,6 +1,6 @@
 ---
 title: X-Forwarded-For Trust — プロキシヘッダ信頼ミスによるレート制限回避
-sidebar_position: 12
+sidebar_position: 23
 ---
 
 import { XffTrustLab } from '@site/src/components/labs/step07/XffTrustLab';
@@ -425,6 +425,14 @@ app.use("*", async (c, next) => {
 | [Host Header Injection](host-header-injection.mdx) | 同じくHTTPヘッダをサーバーが無条件に信頼する問題。`Host` ヘッダはURL生成、`X-Forwarded-For` はIP特定に悪用されるが、「リクエストヘッダを信頼しない」という共通の教訓がある |
 | [レート制限なし](rate-limiting.mdx) | このラボはレート制限が実装されているが回避される問題。レート制限なしのラボと組み合わせて、「レート制限の有無」と「レート制限の正しい実装」の両面から理解を深められる |
 | [パスワードリセットトークン推測](password-reset.mdx) | レート制限の回避はブルートフォース攻撃を可能にし、推測可能なトークンと組み合わさるとパスワードリセット機能の完全な突破につながる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [X-Forwarded-For信頼の問題 - 理解度テスト](./xff-trust-quiz)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Trusting Unsigned Client Data — クライアントデータを署名なしで信頼し権限昇格やデータ改ざんが可能
-sidebar_position: 7
+sidebar_position: 13
 ---
 
 import { UnsignedDataLab } from '@site/src/components/labs/step07/UnsignedDataLab';
@@ -371,6 +371,14 @@ app.get("/admin", async (c) => {
 | [ビジネスロジックの欠陥](business-logic.mdx) | 価格改ざんはビジネスロジックの欠陥とも密接に関連する。サーバー側でのバリデーション不足が共通の根本原因 |
 | [CSRF](../step04-session/csrf.mdx) | CSRFもCookieの自動送信を悪用する攻撃。署名なしデータの信頼ではCookie値の改ざんが、CSRFではCookieの自動送信がそれぞれ問題となる |
 | [Cookie操作](../step04-session/cookie-manipulation.mdx) | Cookieの仕組みと改ざん手法を詳しく学べるラボ。本ラボの前提知識として有用 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [署名なしデータの信頼 - 理解度テスト](./unsigned-data-quiz)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: CSV Injection (Formula Injection) — エクスポート機能を通じた攻撃コードの埋め込み
-sidebar_position: 7
+sidebar_position: 13
 ---
 
 import { CsvInjectionLab } from '@site/src/components/labs/step02/CsvInjectionLab';
@@ -395,6 +395,14 @@ app.get('/export', async (c) => {
 |------|--------|
 | [XSS (クロスサイトスクリプティング)](./xss) | XSS は「ブラウザ上で JavaScript が実行される」注入攻撃、CSV Injection は「スプレッドシート上で数式が実行される」注入攻撃。どちらも「出力先コンテキストに応じたエスケープの不足」が根本原因 |
 | [OS コマンドインジェクション](./command-injection) | CSV Injection の DDE 攻撃では最終的に OS コマンドが実行される。コマンドインジェクションと同じ被害レベルに達する可能性がある |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [CSV Injection - 理解度テスト](./csv-injection-quiz)
 
 ---
 

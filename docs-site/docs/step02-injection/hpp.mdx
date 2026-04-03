@@ -1,6 +1,6 @@
 ---
 title: HTTP Parameter Pollution (HPP) — 同じパラメータの重複で検証をすり抜ける
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 import { HppLab } from '@site/src/components/labs/step02/HppLab';
@@ -385,6 +385,14 @@ app.post('/register', async (c) => {
 |------|--------|
 | [SQL Injection](./sql-injection) | 同じ「入力値の不適切な処理」カテゴリ。SQLi は入力がコードとして解釈される問題、HPP は入力の参照先が検証と実行で異なる問題 |
 | [オープンリダイレクト](./open-redirect) | HPP でリダイレクト先 URL パラメータを汚染し、オープンリダイレクトを誘発するケースがある |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [HTTP Parameter Pollution (HPP) - 理解度テスト](./hpp-quiz)
 
 ---
 

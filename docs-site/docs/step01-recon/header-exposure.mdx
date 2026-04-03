@@ -1,6 +1,6 @@
 ---
 title: Security Header Misconfiguration — セキュリティヘッダーの欠如による脆弱性
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { HeaderExposureLab } from '@site/src/components/labs/step01/HeaderExposureLab';
@@ -256,6 +256,14 @@ app.use("*", async (c, next) => {
 |------|--------|
 | [HTTPヘッダーからの情報漏洩](./header-leakage) | 不要なヘッダーの「除去」と、セキュリティヘッダーの「付与」はセットで行う。両方合わせてヘッダーの安全な管理になる |
 | [クリックジャッキング](../step07-design/clickjacking.mdx) | `X-Frame-Options` の欠如を直接悪用する攻撃。本ラボで学んだ防御策が直接役立つ |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [セキュリティヘッダーの欠如 - 理解度テスト](./header-exposure-quiz)
 
 ---
 

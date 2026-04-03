@@ -1,6 +1,6 @@
 ---
 title: Clickjacking — 透明iframeによるUI偽装でユーザーに意図しない操作をさせる攻撃
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import { ClickjackingLab } from '@site/src/components/labs/step07/ClickjackingLab';
@@ -259,6 +259,14 @@ app.use("*", async (c, next) => {
 |------|--------|
 | [CSRF](../step04-session/csrf.mdx) | CSRF も被害者に意図しないリクエストを送らせる攻撃。クリックジャッキングは「クリック」を悪用し、CSRF は「リクエスト」を直接偽造する違いがある |
 | [HTTPでの機密データ送信](sensitive-data-http.mdx) | セキュリティヘッダーの未設定が脆弱性の原因となる点が共通 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [クリックジャッキング - 理解度テスト](./clickjacking-quiz)
 
 ---
 

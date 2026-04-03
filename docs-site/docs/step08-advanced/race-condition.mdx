@@ -1,6 +1,6 @@
 ---
 title: Race Condition (TOCTOU) — チェックと処理のタイミング差を悪用して制約を回避する
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 import { RaceConditionLab } from '@site/src/components/labs/step08/RaceConditionLab';
@@ -321,6 +321,14 @@ app.post('/purchase', async (c) => {
 |------|--------|
 | [SQL インジェクション](../step02-injection/sql-injection) | どちらも DB 操作に関わる脆弱性。SQL インジェクションはクエリの改ざん、レースコンディションはクエリの実行順序の問題 |
 | [ビジネスロジックの欠陥](../step07-design/business-logic.mdx) | レースコンディションはビジネスロジックの制約をタイミング攻撃で回避する手法。設計レベルの防御が共通して重要 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Race Condition (TOCTOU) - 理解度テスト](./race-condition-quiz)
 
 ---
 
