@@ -1,9 +1,7 @@
 ---
 title: Fail-Open — エラー時にアクセスを許可してしまう設計ミス
-sidebar_position: 9
+sidebar_position: 7
 ---
-
-import { FailOpenLab } from '@site/src/components/labs/step09/FailOpenLab';
 
 # Fail-Open — エラー時にアクセスを許可してしまう設計ミス
 
@@ -190,74 +188,6 @@ app.use('/api/admin/*', async (c, next) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 認証エラーを誘発することで、未認証のまま管理者リソースにアクセスできることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. 不正なトークンで管理者エンドポイントにアクセスする
-
-   ```bash
-   # 不正なトークン形式で認証エラーを誘発
-   curl http://localhost:3000/api/labs/fail-open/vulnerable/admin/dashboard \
-     -H "Authorization: Bearer INVALID.TOKEN"
-   ```
-
-3. 結果を確認する
-
-   - 管理者ダッシュボードのデータが返される（200 OK）
-   - 認証が成功していないにもかかわらずアクセスが許可されている
-   - **この結果が意味すること**: 認証ミドルウェアの例外が握りつぶされ、Fail-Open でリクエストが通過した
-
-4. トークンなしでも試す
-
-   ```bash
-   curl http://localhost:3000/api/labs/fail-open/vulnerable/admin/dashboard
-   ```
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じリクエストが Fail-Close により拒否されることを確認する
-
-1. 安全なエンドポイントに同じリクエストを送信する
-
-   ```bash
-   curl http://localhost:3000/api/labs/fail-open/secure/admin/dashboard \
-     -H "Authorization: Bearer INVALID.TOKEN"
-   ```
-
-2. 結果を確認する
-
-   - `500 Internal Server Error` が返され、アクセスが拒否される
-   - 認証処理の例外時に明示的にエラーレスポンスが返されている
-
-3. 正規のトークンでアクセスできることを確認する
-
-   - 正しいトークンの場合のみ管理者ダッシュボードにアクセスできる
-
-4. コードの差分を確認する
-
-   - `backend/src/labs/step09-defense/fail-open.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: `next()` の位置と catch ブロックの処理
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] Fail-Open と Fail-Close の違いは何か
-- [ ] `next()` の配置位置がセキュリティにどう影響するか
-- [ ] 認証サービスの障害時にアプリケーションはどう振る舞うべきか
-- [ ] catch ブロックで明示的にエラーを返すことがなぜ重要か
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -293,6 +223,14 @@ app.use('/api/admin/*', async (c, next) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./fail-open-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -306,8 +244,3 @@ app.use('/api/admin/*', async (c, next) => {
 - [OWASP - Error Handling](https://owasp.org/www-community/Improper_Error_Handling)
 - [CWE-636: Not Failing Securely (Failing Open)](https://cwe.mitre.org/data/definitions/636.html)
 
----
-
-## ラボ体験
-
-<FailOpenLab />

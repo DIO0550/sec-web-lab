@@ -1,9 +1,7 @@
 ---
 title: Unnecessary HTTP Methods — 不要なHTTPメソッドが許可されておりリソースの不正操作が可能
-sidebar_position: 7
+sidebar_position: 10
 ---
-
-import { HttpMethodsLab } from '@site/src/components/labs/step07/HttpMethodsLab';
 
 # Unnecessary HTTP Methods — 不要なHTTPメソッドが許可されておりリソースの不正操作が可能
 
@@ -253,117 +251,6 @@ app.all('/api/users/*', (c) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 不要なメソッドを使ってリソースの削除・情報取得が成功することを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. OPTIONS リクエストで対応メソッドを偵察する
-
-   ```bash
-   curl -X OPTIONS http://localhost:3000/api/labs/http-methods/vulnerable/users/1 -i
-   ```
-
-3. 結果を確認する
-
-   - `Allow` ヘッダーに `GET, POST, PUT, DELETE, OPTIONS, TRACE` が含まれている
-   - **この結果が意味すること**: このエンドポイントが本来不要なメソッドまで受け付けていることが攻撃者に露見する
-
-4. DELETE リクエストでリソースを削除する
-
-   ```bash
-   curl -X DELETE http://localhost:3000/api/labs/http-methods/vulnerable/users/1
-   ```
-
-5. 結果を確認する
-
-   - `{ "message": "ユーザー ID:1 を削除しました" }` が返される
-   - 認証なしで他ユーザーのリソースが削除できてしまっている
-
-6. TRACE リクエストで Cookie 情報を窃取する
-
-   ```bash
-   curl -X TRACE http://localhost:3000/api/labs/http-methods/vulnerable/users/1 \
-     -H "Cookie: session_id=secret-session-value"
-   ```
-
-7. 結果を確認する
-
-   - レスポンスに `Cookie: session_id=secret-session-value` がそのまま含まれている
-   - **この結果が意味すること**: TRACE のエコーバック機能により、リクエストヘッダーの機密情報がレスポンスに露出する
-
-8. PUT リクエストで他ユーザーのデータを上書きする
-
-   ```bash
-   curl -X PUT http://localhost:3000/api/labs/http-methods/vulnerable/users/1 \
-     -H "Content-Type: application/json" \
-     -d '{"username": "attacker", "email": "attacker@evil.com"}'
-   ```
-
-9. 結果を確認する
-
-   - ユーザー ID:1 のデータが攻撃者の情報に書き換えられている
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 不要なメソッドが拒否され、認証・認可なしでは操作が失敗することを確認する
-
-1. OPTIONS リクエストで安全版の対応メソッドを確認する
-
-   ```bash
-   curl -X OPTIONS http://localhost:3000/api/labs/http-methods/secure/users/1 -i
-   ```
-
-2. 結果を確認する
-
-   - `Allow` ヘッダーに `GET` のみが含まれている
-   - TRACE, DELETE, PUT などの不要なメソッドが除外されている
-
-3. DELETE リクエストを試みる
-
-   ```bash
-   curl -X DELETE http://localhost:3000/api/labs/http-methods/secure/users/1 -i
-   ```
-
-4. 結果を確認する
-
-   - `405 Method Not Allowed` が返される
-   - リソースは削除されていない
-
-5. TRACE リクエストを試みる
-
-   ```bash
-   curl -X TRACE http://localhost:3000/api/labs/http-methods/secure/users/1 \
-     -H "Cookie: session_id=secret-session-value" -i
-   ```
-
-6. 結果を確認する
-
-   - `405 Method Not Allowed` が返され、Cookie 情報はレスポンスに含まれていない
-
-7. コードの差分を確認する
-
-   - `backend/src/labs/step07-design/http-methods.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: `app.all()` → `app.get()` + 認証ミドルウェア
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] `app.all()` と `app.get()` の違いは何か。なぜ `app.all()` が危険なのか
-- [ ] TRACE メソッドがなぜ本番環境で無効化すべきなのか（XST 攻撃の仕組みを説明できるか）
-- [ ] OPTIONS レスポンスの `Allow` ヘッダーが攻撃者にとってどのような情報になるか
-- [ ] メソッド制限だけでは不十分な理由は何か（認証・認可が必要な理由を説明できるか）
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -399,6 +286,14 @@ app.all('/api/users/*', (c) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./http-methods-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -412,8 +307,3 @@ app.all('/api/users/*', (c) => {
 - [OWASP - Test HTTP Methods](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/06-Test_HTTP_Methods)
 - [CWE-749: Exposed Dangerous Method or Function](https://cwe.mitre.org/data/definitions/749.html)
 
----
-
-## ラボ体験
-
-<HttpMethodsLab />

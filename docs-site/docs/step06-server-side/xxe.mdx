@@ -1,9 +1,7 @@
 ---
 title: XXE (XML External Entity) — XML外部エンティティによるファイル読み取り
-sidebar_position: 3
+sidebar_position: 16
 ---
-
-import { XxeLab } from '@site/src/components/labs/step06/XxeLab';
 
 # XXE (XML External Entity) — XML外部エンティティによるファイル読み取り
 
@@ -171,73 +169,6 @@ app.post('/api/import', async (c) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: XXE攻撃でサーバー上の `/etc/passwd` ファイルを読み取れることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. XXEペイロードを含むXMLを送信する
-
-   ```bash
-   curl -X POST http://localhost:3000/api/labs/xxe/vulnerable/import \
-     -H "Content-Type: application/xml" \
-     -d '<?xml version="1.0"?>
-   <!DOCTYPE foo [
-     <!ENTITY xxe SYSTEM "file:///etc/passwd">
-   ]>
-   <import><data>&xxe;</data></import>'
-   ```
-
-3. 結果を確認する
-
-   - レスポンスに `/etc/passwd` の内容が含まれる
-   - `root:x:0:0:root:/root:/bin/bash` のようなシステムユーザー情報が表示される
-   - **この結果が意味すること**: XMLパーサーが外部エンティティを解決し、サーバーのファイルシステムから直接ファイルを読み取っている
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じXXE攻撃が外部エンティティ無効化により失敗することを確認する
-
-1. 安全なエンドポイントで同じ攻撃を試みる
-
-   ```bash
-   curl -X POST http://localhost:3000/api/labs/xxe/secure/import \
-     -H "Content-Type: application/xml" \
-     -d '<?xml version="1.0"?>
-   <!DOCTYPE foo [
-     <!ENTITY xxe SYSTEM "file:///etc/passwd">
-   ]>
-   <import><data>&xxe;</data></import>'
-   ```
-
-2. 結果を確認する
-
-   - `&xxe;` がそのまま文字列として扱われるか、エラーが返される
-   - `/etc/passwd` の内容は含まれない
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/step06-server-side/xxe.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: `processEntities: false` の設定
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] XXEが発生するための条件は何か（XMLのエンティティ機能とパーサー設定の関係）
-- [ ] 攻撃者はどんなXMLを送り、パーサー内部でどう処理され、結果として何が起きるか
-- [ ] なぜJSONではXXEが発生しないのか
-- [ ] 安全な実装は「なぜ」この攻撃を無効化するのか（エンティティ処理の無効化がどう機能するか）
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -272,6 +203,14 @@ app.post('/api/import', async (c) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./xxe-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -285,8 +224,3 @@ app.post('/api/import', async (c) => {
 - [OWASP - XXE](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing)
 - [CWE-611: Improper Restriction of XML External Entity Reference](https://cwe.mitre.org/data/definitions/611.html)
 
----
-
-## ラボ体験
-
-<XxeLab />

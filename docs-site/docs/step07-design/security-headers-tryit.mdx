@@ -1,0 +1,104 @@
+---
+title: Security Headers — セキュリティレスポンスヘッダの未設定・設定ミス - 実際に試す
+sidebar_position: 20
+---
+
+import { SecurityHeadersLab } from '@site/src/components/labs/step07/SecurityHeadersLab';
+
+# Security Headers — セキュリティレスポンスヘッダの未設定・設定ミス - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<SecurityHeadersLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: セキュリティヘッダーが欠如していることを確認し、それがどんな攻撃を許容するか理解する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 脆弱なエンドポイントのレスポンスヘッダーを `curl -I` で確認する
+
+   ```bash
+   # レスポンスヘッダーだけを取得する
+   curl -I http://localhost:3000/api/labs/security-headers/vulnerable/page
+   ```
+
+3. レスポンスヘッダーを分析する
+
+   - `Content-Security-Policy` が存在するか
+   - `Strict-Transport-Security` が存在するか
+   - `X-Content-Type-Options` が存在するか
+   - `X-Frame-Options` が存在するか
+   - `Referrer-Policy` が存在するか
+   - `Permissions-Policy` が存在するか
+   - **この結果が意味すること**: これらのヘッダーが全て欠如していると、ブラウザの保護機能は何も有効になっておらず、XSS・クリックジャッキング・MIMEスニッフィング等の攻撃に対する多層防御がゼロの状態
+
+4. ブラウザの DevTools でも確認する
+
+   ```
+   http://localhost:5173/labs/security-headers
+   ```
+
+   - DevTools の **Network** タブでレスポンスを選択し、**Headers** タブを確認する
+   - **Console** タブに CSP 違反の警告が表示されないこと（CSP 自体がないため警告も出ない）を確認する
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: セキュリティヘッダーが適切に設定されており、ブラウザの保護機能が有効化されていることを確認する
+
+1. 安全なエンドポイントのレスポンスヘッダーを確認する
+
+   ```bash
+   # 安全なバージョンのレスポンスヘッダーを取得
+   curl -I http://localhost:3000/api/labs/security-headers/secure/page
+   ```
+
+2. 脆弱版と安全版のヘッダーを並べて比較する
+
+   ```bash
+   # 脆弱版と安全版を並べて比較
+   echo "=== 脆弱版 ==="
+   curl -sI http://localhost:3000/api/labs/security-headers/vulnerable/page
+
+   echo "=== 安全版 ==="
+   curl -sI http://localhost:3000/api/labs/security-headers/secure/page
+   ```
+
+   - 安全版では CSP, HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy が返されることを確認する
+   - 各ヘッダーの値がどのような制限をブラウザに指示しているか読み解く
+
+3. ブラウザの DevTools で CSP の効果を確認する
+
+   - 安全版のページで DevTools の **Console** タブを開く
+   - CSP 違反のレポートが表示される場合、どのリソースが制限されているかを確認する
+   - インラインスクリプトを DevTools Console から実行しようとして、CSP によりブロックされることを確認する
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step07-design/security-headers.ts` の脆弱版と安全版を比較
+   - **セキュリティヘッダーの追加が多層防御をどう形成しているか** に注目する
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] セキュリティヘッダーがないとブラウザの保護機能が働かないのはなぜか（ブラウザの「明示的な指示がなければ保護しない」設計）
+- [ ] CSP が XSS の被害をどのように軽減するか（インラインスクリプトのブロック、外部スクリプト読み込みの制限）
+- [ ] X-Frame-Options と CSP frame-ancestors の違い、それぞれの利点と制限
+- [ ] CSP をいきなり enforce で導入するのが危険な理由と、report-only による段階的導入の手順
+- [ ] セキュリティヘッダーは「多層防御」の一部であり、これだけで全ての攻撃を防げるわけではない理由
+
+---
+
+[← ラボに戻る](./security-headers)

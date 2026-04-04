@@ -1,9 +1,7 @@
 ---
 title: スタックトレース漏洩 — エラー時にアプリの内部構造が丸見えになる
-sidebar_position: 3
+sidebar_position: 19
 ---
-
-import { StackTraceLab } from '@site/src/components/labs/step09/StackTraceLab';
 
 # スタックトレース漏洩 — エラー時にアプリの内部構造が丸見えになる
 
@@ -198,72 +196,6 @@ app.onError((err, c) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 不正なリクエストにより、スタックトレース（ファイルパス・内部関数名・ライブラリ情報）がレスポンスに含まれることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. 不正なリクエストを送信してエラーを誘発する
-
-   ```bash
-   # null を送信してスタックトレースを取得
-   curl -X POST http://localhost:3000/api/labs/stack-trace/vulnerable/process \
-     -H "Content-Type: application/json" \
-     -d '{"input": null}'
-   ```
-
-3. 結果を確認する
-
-   - レスポンスにスタックトレースが含まれている
-   - ファイルパス (`/app/backend/src/labs/...`) からプロジェクト構成が推測できる
-   - 内部関数名やライブラリ名が確認できる
-   - **この結果が意味すること**: 攻撃者はエラーを誘発するだけで、アプリケーションの内部構造・使用技術・コードの配置を把握できてしまう
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じリクエストでもスタックトレースが漏洩せず、エラーIDのみ返されることを確認する
-
-1. 安全なエンドポイントに同じリクエストを送信する
-
-   ```bash
-   curl -X POST http://localhost:3000/api/labs/stack-trace/secure/process \
-     -H "Content-Type: application/json" \
-     -d '{"input": null}'
-   ```
-
-2. 結果を確認する
-
-   - 汎用的なエラーメッセージとエラーIDのみが返される
-   - スタックトレース、ファイルパス、内部関数名は含まれていない
-
-3. サーバーログを確認する
-
-   - サーバーのコンソールにはエラーの詳細（スタックトレース含む）が記録されている
-   - エラーIDでログを検索すれば原因を特定できる
-
-4. コードの差分を確認する
-
-   - `backend/src/labs/step09-defense/stack-trace.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: catch ブロックでの `error.stack` の取り扱い
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] スタックトレースから攻撃者はどのような情報を得られるか（具体的に3つ以上）
-- [ ] 開発環境と本番環境でエラーハンドリングを切り替える必要がある理由
-- [ ] エラーID システムがセキュリティとデバッグをどう両立させるか
-- [ ] グローバルエラーハンドラーが個別の try-catch だけよりも堅牢な理由
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -300,6 +232,14 @@ app.onError((err, c) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./stack-trace-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -313,8 +253,3 @@ app.onError((err, c) => {
 - [OWASP - Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling)
 - [CWE-209: Generation of Error Message Containing Sensitive Information](https://cwe.mitre.org/data/definitions/209.html)
 
----
-
-## ラボ体験
-
-<StackTraceLab />

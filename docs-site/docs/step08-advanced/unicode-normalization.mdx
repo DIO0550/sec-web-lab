@@ -1,9 +1,7 @@
 ---
 title: Unicode Normalization Bypass — Unicode正規化によるフィルタ回避
-sidebar_position: 15
+sidebar_position: 22
 ---
-
-import { UnicodeNormalizationLab } from '@site/src/components/labs/step08/UnicodeNormalizationLab';
 
 # Unicode Normalization Bypass — Unicode正規化によるフィルタ回避
 
@@ -263,99 +261,6 @@ function escapeHtml(str: string): string {
 
 ---
 
-<UnicodeNormalizationLab />
-
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 全角文字を使ってブロックリストを回避し、XSS を成立させることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. まず通常の XSS ペイロードがブロックされることを確認する
-
-   ```bash
-   # 半角の <script> タグ — ブロックリストで検出される
-   curl -X POST http://localhost:3000/api/labs/unicode-normalization/vulnerable/comment \
-     -H "Content-Type: application/json" \
-     -d '{"body": "<script>alert(1)</script>"}'
-   # → 403 Forbidden — { "error": "禁止された文字列が含まれています" }
-   ```
-
-3. 全角文字でブロックリストを回避する
-
-   ```bash
-   # 全角文字の ＜ｓｃｒｉｐｔ＞ — ブロックリストをバイパス
-   curl -X POST http://localhost:3000/api/labs/unicode-normalization/vulnerable/comment \
-     -H "Content-Type: application/json" \
-     -d '{"body": "＜ｓｃｒｉｐｔ＞alert(document.cookie)＜/ｓｃｒｉｐｔ＞"}'
-   # → 200 OK — コメントが保存され、正規化後に <script> として実行される
-   ```
-
-4. 全角 URL スキームでリンクフィルタを回避する
-
-   ```bash
-   # "javascript:" のブロックリストを全角文字で回避
-   curl -X POST http://localhost:3000/api/labs/unicode-normalization/vulnerable/link \
-     -H "Content-Type: application/json" \
-     -d '{"url": "ｊａｖａｓｃｒｉｐｔ：alert(1)"}'
-   # → 200 OK — リンクが保存され、正規化後に javascript: スキームとして実行される
-   ```
-
-5. 結果を確認する
-
-   - ブラウザで `http://localhost:5173/labs/step08-advanced/unicode-normalization` にアクセスし、コメント一覧を表示する
-   - 全角文字で投稿したコメントが正規化されてスクリプトが実行される
-   - DevTools の Console タブでスクリプトの実行を確認する
-   - **この結果が意味すること**: フィルタは半角の `script` しか検出できず、全角の `ｓｃｒｉｐｔ` をすり抜ける。正規化後に `script` になるが、フィルタは既に通過済み
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じ攻撃が失敗することを確認する
-
-1. 同じ全角ペイロードを安全なエンドポイントに送信する
-
-   ```bash
-   # 全角文字の攻撃ペイロード
-   curl -X POST http://localhost:3000/api/labs/unicode-normalization/secure/comment \
-     -H "Content-Type: application/json" \
-     -d '{"body": "＜ｓｃｒｉｐｔ＞alert(document.cookie)＜/ｓｃｒｉｐｔ＞"}'
-   # → 403 Forbidden — { "error": "許可されていない文字が含まれています" }
-   ```
-
-2. 安全なバージョンの処理順序を確認する
-
-   ```bash
-   # 通常のテキスト（許可される文字のみ）
-   curl -X POST http://localhost:3000/api/labs/unicode-normalization/secure/comment \
-     -H "Content-Type: application/json" \
-     -d '{"body": "これは安全なコメントです。Hello World!"}'
-   # → 200 OK — 正常に保存される
-   ```
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/step08-advanced/unicode-normalization.ts` の脆弱版と安全版を比較
-   - **処理順序の違い** に注目: 脆弱版は「フィルタ → 正規化」、安全版は「正規化 → フィルタ」
-   - **フィルタ方式の違い** に注目: 脆弱版はブロックリスト、安全版はアローリスト
-   - **出力処理の違い** に注目: 安全版は HTML エスケープを追加
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] Unicode 正規化（特に NFKC）が全角文字やリガチャに対してどのような変換を行うか
-- [ ] 「フィルタ → 正規化」の順序がなぜ脆弱なのか（具体的な入力例で説明できるか）
-- [ ] ブロックリスト方式が Unicode の文字の多様性に対して根本的に弱い理由は何か
-- [ ] 安全な実装の 3 つの防御層（正規化ファースト・アローリスト・出力エスケープ）がそれぞれ何を防いでいるか
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -389,6 +294,14 @@ function escapeHtml(str: string): string {
 |------|--------|
 | [Reflected XSS](../step02-injection/xss) | Unicode 正規化バイパスは XSS フィルタの回避手法の一つ。XSS の基本を理解した上で、フィルタ回避のテクニックとして学ぶ |
 | [SSTI](../step08-advanced/ssti.mdx) | テンプレートインジェクションでも Unicode 正規化を使ったフィルタ回避が適用される場合がある。入力サニタイズのバイパス手法として共通 |
+
+---
+
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./unicode-normalization-tryit)
 
 ---
 

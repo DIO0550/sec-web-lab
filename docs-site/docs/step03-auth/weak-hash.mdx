@@ -1,9 +1,7 @@
 ---
 title: Weak Hash Algorithm — MD5/SHA1 でハッシュしても安全ではない理由
-sidebar_position: 9
+sidebar_position: 13
 ---
-
-import { WeakHashLab } from '@site/src/components/labs/step03/WeakHashLab';
 
 # Weak Hash Algorithm — MD5/SHA1 でハッシュしても安全ではない理由
 
@@ -176,82 +174,6 @@ MD5 では `createHash('md5').update(password).digest('hex')` が数ナノ秒で
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: MD5 でハッシュ化されたパスワードがレインボーテーブルで逆引きできることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. MD5 でハッシュ化されたパスワードを確認する
-
-   ```bash
-   # MD5ハッシュが保存されたユーザー一覧を取得
-   curl http://localhost:3000/api/labs/weak-hash/vulnerable/users
-   ```
-
-3. 結果を確認する
-
-   - パスワードが `0192023a7bbd73250516f069df18b500` のような 32 文字の 16 進数で表示される
-   - 一見すると安全に見えるが…
-
-4. ハッシュ値の逆引きを体験する
-
-   ```bash
-   # アプリ内のレインボーテーブル検索エンドポイントを使用
-   curl "http://localhost:3000/api/labs/weak-hash/vulnerable/crack?hash=0192023a7bbd73250516f069df18b500"
-   ```
-
-5. 結果を確認する
-
-   - `admin123` という元のパスワードが返される
-   - **この結果が意味すること**: MD5 ハッシュは事前計算済みの対応表で即座に逆引き可能
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: bcrypt でハッシュ化されたパスワードがレインボーテーブルで逆引きできないことを確認する
-
-1. bcrypt ハッシュが保存されたユーザー一覧を取得する
-
-   ```bash
-   curl http://localhost:3000/api/labs/weak-hash/secure/users
-   ```
-
-2. 結果を確認する
-
-   - パスワードが `$2b$12$K...` という bcrypt 形式で表示される
-   - 同じパスワード `admin123` でも MD5 とはまったく異なるハッシュ値
-   - さらに、同じパスワードを持つ別ユーザーでもハッシュ値が異なる（ソルトのため）
-
-3. 逆引きを試みる
-
-   ```bash
-   curl "http://localhost:3000/api/labs/weak-hash/secure/crack?hash=\$2b\$12\$K..."
-   ```
-
-   - 逆引きが失敗する（対応表に存在しない）
-
-4. コードの差分を確認する
-
-   - `backend/src/labs/weak-hash.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: `createHash('md5')` → `bcrypt.hash()`
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] MD5/SHA1 がパスワードハッシュに不適切な理由（「速すぎる」とはどういう意味か）
-- [ ] レインボーテーブルはなぜ MD5 には有効で bcrypt には無効なのか
-- [ ] ソルトの役割は何か（「同じパスワードでも異なるハッシュ」がなぜ重要か）
-- [ ] コスト係数（ストレッチング）は GPU 攻撃に対してどう防御するのか
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -297,14 +219,17 @@ MD5 では `createHash('md5').update(password).digest('hex')` が数ナノ秒で
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./weak-hash-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
 
 - [弱いハッシュアルゴリズム - 理解度テスト](./weak-hash-quiz)
 
----
-
-## ラボ体験
-
-<WeakHashLab />

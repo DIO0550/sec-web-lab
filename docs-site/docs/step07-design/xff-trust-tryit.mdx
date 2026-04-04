@@ -1,0 +1,127 @@
+---
+title: X-Forwarded-For Trust — プロキシヘッダ信頼ミスによるレート制限回避 - 実際に試す
+sidebar_position: 35
+---
+
+import { XffTrustLab } from '@site/src/components/labs/step07/XffTrustLab';
+
+# X-Forwarded-For Trust — プロキシヘッダ信頼ミスによるレート制限回避 - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<XffTrustLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: `X-Forwarded-For` ヘッダを偽装してIPベースのレート制限を回避し、無制限にリクエストを送信できることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. まずレート制限が機能していることを確認する
+
+   ```bash
+   # X-Forwarded-For なしで11回リクエストを送信（10回目以降でブロックされる）
+   for i in $(seq 1 11); do
+     echo "=== リクエスト ${i} ==="
+     curl -s -X POST http://localhost:3000/api/labs/xff-trust/vulnerable/login \
+       -H "Content-Type: application/json" \
+       -d '{"username": "admin", "password": "wrong"}'
+     echo ""
+   done
+   ```
+
+   最初の10回は `401 Unauthorized`（パスワード不正）が返り、11回目で `429 Too Many Requests`（レート制限）が返ることを確認する。
+
+3. `X-Forwarded-For` ヘッダを偽装してレート制限を回避する
+
+   ```bash
+   # リクエストごとに異なる X-Forwarded-For を設定して制限を回避
+   for i in $(seq 1 30); do
+     FAKE_IP="10.${i}.0.1"
+     echo "=== リクエスト ${i} (IP: ${FAKE_IP}) ==="
+     curl -s -X POST http://localhost:3000/api/labs/xff-trust/vulnerable/login \
+       -H "X-Forwarded-For: ${FAKE_IP}" \
+       -H "Content-Type: application/json" \
+       -d '{"username": "admin", "password": "wrong"}'
+     echo ""
+   done
+   ```
+
+4. 結果を確認する
+
+   - 30回すべてのリクエストが `401 Unauthorized` を返し、`429` が一度も返されないことを確認する
+   - レート制限が完全に回避されている
+   - **この結果が意味すること**: 攻撃者は `X-Forwarded-For` の値を変えるだけで無制限にリクエストを送信できる。IPベースのレート制限が事実上無効化され、パスワード総当たり攻撃が可能になる
+
+5. 監査ログへの影響を確認する
+
+   ```bash
+   # サーバーのログ出力を確認し、偽のIPが記録されていることを確認する
+   # ログには 10.1.0.1, 10.2.0.1, 10.3.0.1... と偽のIPが記録されている
+   ```
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ `X-Forwarded-For` 偽装が信頼プロキシ検証により無効化され、レート制限が正しく機能することを確認する
+
+1. 安全なエンドポイントに偽の `X-Forwarded-For` を設定してリクエストする
+
+   ```bash
+   # X-Forwarded-For を偽装しても、安全版ではソケットIPが使われる
+   for i in $(seq 1 15); do
+     FAKE_IP="10.${i}.0.1"
+     echo "=== リクエスト ${i} (偽IP: ${FAKE_IP}) ==="
+     curl -s -X POST http://localhost:3000/api/labs/xff-trust/secure/login \
+       -H "X-Forwarded-For: ${FAKE_IP}" \
+       -H "Content-Type: application/json" \
+       -d '{"username": "admin", "password": "wrong"}'
+     echo ""
+   done
+   ```
+
+2. 結果を確認する
+
+   - 最初の10回は `401 Unauthorized` が返り、11回目以降で `429 Too Many Requests` が返ることを確認する
+   - `X-Forwarded-For` の値を変えてもレート制限が回避できない
+   - サーバーがクライアントの実際の接続元IPをレート制限に使用しているため
+
+3. 信頼できるプロキシ経由のリクエストをシミュレーションする
+
+   ```bash
+   # 信頼プロキシのIPが正しく設定されている場合の動作を確認
+   # （開発環境では直接接続のためソケットIPが使われる）
+   curl -v -X POST http://localhost:3000/api/labs/xff-trust/secure/login \
+     -H "X-Forwarded-For: 203.0.113.50, 10.0.0.1" \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "wrong"}'
+   ```
+
+   信頼プロキシ `10.0.0.1` がリストに含まれている場合、`203.0.113.50` が信頼できないIPとして採用される。含まれていない場合はソケットのリモートアドレスが使用される。
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step07-design/xff-trust.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `split(",")[0]`（左端を採用）→ `getClientIp()` 関数（信頼プロキシを考慮した右端からの走査）
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] `X-Forwarded-For` ヘッダはなぜクライアントが自由に設定できるのか、そしてなぜ先頭値を信頼してはいけないのか
+- [ ] 「右端の信頼できないIP」を採用する方式がなぜ安全なのか、具体的なヘッダ値の例を使って説明できるか
+- [ ] 信頼できるプロキシのリストが必要な理由と、リストの管理方法を説明できるか
+- [ ] IPアドレスだけに依存しないレート制限が重要な理由を説明できるか（多層防御の考え方）
+
+---
+
+[← ラボに戻る](./xff-trust)

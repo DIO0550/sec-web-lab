@@ -1,9 +1,7 @@
 ---
 title: SSRF Bypass — SSRFフィルタの回避テクニック
-sidebar_position: 13
+sidebar_position: 19
 ---
-
-import { SsrfBypassLab } from '@site/src/components/labs/step06/SsrfBypassLab';
 
 # SSRF Bypass — SSRFフィルタの回避テクニック
 
@@ -296,113 +294,6 @@ app.get('/api/fetch-url', async (c) => {
 
 ---
 
-<SsrfBypassLab />
-
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 文字列マッチングによるSSRFブロックリストを、IPアドレスの代替表現やURLパーサの不整合を利用して回避できることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. まず、基本的なSSRFが文字列マッチングでブロックされることを確認する
-
-   ```bash
-   # localhost は文字列マッチングでブロックされる
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://localhost:8080/admin"
-   # → 403 {"error": "アクセスが拒否されました"}
-
-   # 127.0.0.1 もブロックされる
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://127.0.0.1:8080/admin"
-   # → 403 {"error": "アクセスが拒否されました"}
-   ```
-
-3. 16進数表現でブロックリストを回避する
-
-   ```bash
-   # 0x7f000001 は 127.0.0.1 の16進数表現
-   # ブロックリストに含まれないためフィルタを通過する
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://0x7f000001/"
-   ```
-
-4. 他の代替表現でも回避を試みる
-
-   ```bash
-   # 8進数表現 (0177.0.0.1 = 127.0.0.1)
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://0177.0.0.1/"
-
-   # IPv6ループバック ([::1] = 127.0.0.1)
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://[::1]/"
-
-   # 10進整数表現 (2130706433 = 127.0.0.1)
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://2130706433/"
-   ```
-
-5. URLエンコーディングによる回避を試みる
-
-   ```bash
-   # 127.0.0.1 をURLエンコード
-   curl "http://localhost:3000/api/labs/ssrf-bypass/vulnerable/fetch?url=http://%31%32%37%2e%30%2e%30%2e%31/"
-   ```
-
-6. 結果を確認する
-
-   - `localhost` や `127.0.0.1` はブロックされたが、代替表現ではフィルタを通過して内部サービスにアクセスできる
-   - **この結果が意味すること**: 文字列マッチングによるブロックリストは、同一アドレスの無数の表現形式を全て網羅できないため、根本的な対策にならない
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: DNS解決後のIPアドレス検証により、全ての代替表現が同一のプライベートIPとして検出・拒否されることを確認する
-
-1. 安全なエンドポイントで全ての回避手法を試みる
-
-   ```bash
-   # 16進数表現 → DNS解決後に 127.0.0.1 として検出される
-   curl "http://localhost:3000/api/labs/ssrf-bypass/secure/fetch?url=http://0x7f000001/"
-   # → 403 {"error": "内部ネットワークへのアクセスは許可されていません"}
-
-   # 8進数表現
-   curl "http://localhost:3000/api/labs/ssrf-bypass/secure/fetch?url=http://0177.0.0.1/"
-   # → 403
-
-   # IPv6ループバック
-   curl "http://localhost:3000/api/labs/ssrf-bypass/secure/fetch?url=http://[::1]/"
-   # → 403
-
-   # 10進整数表現
-   curl "http://localhost:3000/api/labs/ssrf-bypass/secure/fetch?url=http://2130706433/"
-   # → 403
-   ```
-
-2. 外部のURLは正常に取得できることを確認する
-
-   ```bash
-   curl "http://localhost:3000/api/labs/ssrf-bypass/secure/fetch?url=https://example.com/"
-   # → 200 正常にコンテンツが取得される
-   ```
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/step06-server-side/ssrf-bypass.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: 文字列マッチング vs DNS解決後のIPアドレス検証
-   - 安全版では `dns.resolve4()` でホスト名を実際のIPに解決し、そのIPがプライベートIPレンジに含まれるかを判定している
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] `127.0.0.1` を表現する方法が何通りあるか、それぞれの形式（16進数、8進数、IPv6、10進整数）を説明できるか
-- [ ] 文字列マッチングによるブロックリストが根本的に不十分である理由を説明できるか
-- [ ] DNS Rebindingがどのように検証をバイパスするか、そのタイミング問題を説明できるか
-- [ ] DNS解決後のIPアドレス検証が「なぜ」全ての代替表現に対して有効なのか（文字列の形式に関係なく、最終的にOSが解決するIPアドレスは同一であるため）
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -434,6 +325,14 @@ app.get('/api/fetch-url', async (c) => {
 |------|--------|
 | [SSRF](./ssrf.mdx) | 本ラボの前提。基本的なSSRFの仕組みと対策を理解した上で、その対策の回避手法を学ぶ |
 | [XXE](./xxe.mdx) | XXEの外部エンティティ参照でもSSRFと同等の内部アクセスが可能であり、同様のフィルタ回避テクニックが適用できる |
+
+---
+
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./ssrf-bypass-tryit)
 
 ---
 
