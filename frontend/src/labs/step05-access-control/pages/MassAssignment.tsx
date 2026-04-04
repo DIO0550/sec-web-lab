@@ -83,7 +83,7 @@ function RegisterForm({
           <div className="text-sm">{result?.message}</div>
           {result?.user && (
             <div className="mt-2">
-              <pre className="text-xs bg-code-bg p-2 rounded overflow-auto">
+              <pre className="text-xs bg-code-bg text-code-text p-2 rounded overflow-auto">
                 {JSON.stringify(result?.user, null, 2)}
               </pre>
               <div className={`text-sm font-bold mt-1 ${result?.user.role === "admin" ? "text-status-ng" : "text-status-ok"}`}>

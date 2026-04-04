@@ -93,7 +93,7 @@ function LoginForm({
         >
           <div className="text-sm">{result?.message}</div>
           {result?.user && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2">
               {JSON.stringify(result.user, null, 2)}
             </pre>
           )}

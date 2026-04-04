@@ -38,7 +38,7 @@ function StoragePanel({
           {result?.token && (
             <div className="mt-2">
               <div className="text-xs font-bold">レスポンスに含まれるトークン:</div>
-              <pre className="text-xs bg-code-bg p-2 rounded mt-1 overflow-auto break-all">{result?.token}</pre>
+              <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-1 overflow-auto break-all">{result?.token}</pre>
               <div className="text-xs text-error-text-light mt-1">
                 → フロントエンドがlocalStorage.setItem("token", ...) で保存する想定
               </div>

@@ -37,7 +37,7 @@ function RacePanel({
   return (
     <div>
       {stockInfo && (
-        <div className="text-sm mb-2 p-2 bg-code-bg rounded">
+        <div className="text-sm mb-2 p-2 bg-code-bg text-code-text rounded">
           在庫: {stockInfo.stock}個 / 購入数: {stockInfo.purchases}
         </div>
       )}

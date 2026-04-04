@@ -63,7 +63,7 @@ function XxePanel({
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "パース成功" : "拒否"} className="mt-2">
           {result?.message && <div className="text-sm mt-1">{result?.message}</div>}
           {result?.parsed && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result?.parsed, null, 2)}
             </pre>
           )}

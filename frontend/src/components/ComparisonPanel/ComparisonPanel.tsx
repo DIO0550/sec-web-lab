@@ -11,7 +11,7 @@ type Props = {
  */
 export function ComparisonPanel({ vulnerableContent, secureContent }: Props) {
   return (
-    <div className="mt-8">
+    <div className="mt-8 bg-bg-primary rounded-xl shadow-sm p-6 border border-border-light">
       <Tabs
         keepMounted
         tabs={[

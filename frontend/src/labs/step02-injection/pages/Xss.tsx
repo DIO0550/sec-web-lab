@@ -53,7 +53,7 @@ function HtmlPreview({
       </pre>
       <div className="text-xs text-text-muted mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
       <div
-        className={`border-2 p-3 rounded bg-white ${mode === "vulnerable" ? "border-error-border" : "border-success-border"}`}
+        className={`border-2 p-3 rounded bg-bg-primary ${mode === "vulnerable" ? "border-error-border" : "border-success-border"}`}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
@@ -167,7 +167,7 @@ function StoredXssTest({
           </pre>
           <div className="text-xs text-text-muted mt-2 mb-1">ブラウザでの描画結果 (dangerouslySetInnerHTML):</div>
           <div
-            className={`border-2 p-3 rounded bg-white max-h-[200px] overflow-auto ${mode === "vulnerable" ? "border-error-border" : "border-success-border"}`}
+            className={`border-2 p-3 rounded bg-bg-primary max-h-[200px] overflow-auto ${mode === "vulnerable" ? "border-error-border" : "border-success-border"}`}
             dangerouslySetInnerHTML={{ __html: posts?.postsHtml ?? "" }}
           />
         </div>

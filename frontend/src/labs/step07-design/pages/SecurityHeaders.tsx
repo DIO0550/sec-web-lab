@@ -32,12 +32,12 @@ function HeaderPanel({
       </FetchButton>
 
       <ExpandableSection isOpen={!!result}>
-        <div className="mt-2 p-3 rounded bg-code-bg border">
+        <div className="mt-2 p-3 rounded bg-code-bg text-code-text border">
           <div className="font-bold text-sm mb-2">レスポンス情報</div>
           {result?.headers && (
             <div>
               <div className="text-xs font-bold mb-1">設定されたヘッダー:</div>
-              <pre className="text-xs overflow-auto bg-white p-2 rounded">
+              <pre className="text-xs overflow-auto bg-bg-primary p-2 rounded">
                 {Object.entries(result?.headers ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}
               </pre>
             </div>

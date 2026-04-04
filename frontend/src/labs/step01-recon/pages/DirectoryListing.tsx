@@ -75,7 +75,7 @@ export function DirectoryListing() {
                     </div>
                     {isHtml ? (
                       <div
-                        className="bg-white border border-input-border p-3 rounded mt-1 max-h-[300px] overflow-auto"
+                        className="bg-bg-primary border border-input-border p-3 rounded mt-1 max-h-[300px] overflow-auto"
                         dangerouslySetInnerHTML={{ __html: listing?.body ?? "" }}
                       />
                     ) : (

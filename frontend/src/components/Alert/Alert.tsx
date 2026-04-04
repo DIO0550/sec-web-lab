@@ -29,9 +29,9 @@ export function Alert({
 }: Props) {
   return (
     <div
-      className={`p-4 rounded-lg border ${variantStyles[variant]} ${className}`.trim()}
+      className={`p-4 rounded-xl border-l-4 ${variantStyles[variant]} ${className}`.trim()}
     >
-      {title && <div className="font-bold">{title}</div>}
+      {title && <div className="font-semibold">{title}</div>}
       {children}
     </div>
   );

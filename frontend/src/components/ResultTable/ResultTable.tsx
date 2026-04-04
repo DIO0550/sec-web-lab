@@ -47,33 +47,35 @@ export function ResultTable<T extends Record<string, unknown>>({
   }
 
   return (
-    <table className={`w-full text-sm border-collapse ${className}`.trim()}>
-      <thead>
-        <tr className="bg-table-header-bg">
-          {columns.map((col) => (
-            <th key={col.key} className="p-2 px-3 border border-table-border text-left font-medium">
-              {col.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, i) => (
-          <tr key={rowKey ? String(row[rowKey]) : i} className={getRowClassName?.(row, i) ?? ""}>
-            {columns.map((col) => {
-              const custom = renderCell?.(col, row[col.key], row, i);
-              return (
-                <td
-                  key={col.key}
-                  className={`p-2 px-3 border border-table-border ${getCellClassName?.(col, row) ?? ""}`.trim()}
-                >
-                  {custom !== undefined ? custom : String(row[col.key] ?? "")}
-                </td>
-              );
-            })}
+    <div className={`rounded-xl overflow-hidden border border-table-border ${className}`.trim()}>
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="bg-table-header-bg">
+            {columns.map((col) => (
+              <th key={col.key} className="p-2.5 px-3 text-left font-semibold text-text-secondary border-b border-table-border">
+                {col.label}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((row, i) => (
+            <tr key={rowKey ? String(row[rowKey]) : i} className={`transition-colors hover:bg-bg-secondary/50 ${getRowClassName?.(row, i) ?? ""}`.trim()}>
+              {columns.map((col) => {
+                const custom = renderCell?.(col, row[col.key], row, i);
+                return (
+                  <td
+                    key={col.key}
+                    className={`p-2.5 px-3 border-b border-table-border ${getCellClassName?.(col, row) ?? ""}`.trim()}
+                  >
+                    {custom !== undefined ? custom : String(row[col.key] ?? "")}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

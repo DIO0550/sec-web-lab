@@ -167,7 +167,7 @@ export function OpenRedirect() {
         <p className="text-sm text-text-secondary">
           攻撃者は以下のようなURLを作成し、被害者にメールやSNSで送信します:
         </p>
-        <pre className="text-xs bg-white p-2 rounded overflow-auto">
+        <pre className="text-xs bg-bg-primary p-2 rounded overflow-auto">
           {`https://trusted-site.com/redirect?url=https://evil-site.com/login`}
         </pre>
         <p className="text-sm text-text-secondary">

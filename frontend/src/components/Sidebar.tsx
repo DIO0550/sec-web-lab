@@ -56,7 +56,7 @@ export function Sidebar({
       <div className="hidden lg:flex items-center justify-end px-2 py-1.5 border-b border-border-light">
         <button
           onClick={onToggleCollapse}
-          className="p-1 rounded hover:bg-sidebar-hover text-text-muted transition-colors duration-150"
+          className="p-1 rounded-md hover:bg-sidebar-hover text-text-muted transition-all duration-200"
           aria-label={isCollapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"}
           title={isCollapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"}
         >
@@ -88,7 +88,7 @@ export function Sidebar({
               <Link
                 to={step.path}
                 onClick={onNavigate}
-                className={`w-full flex items-center justify-center px-2 py-2 text-sm no-underline transition-colors duration-150 relative ${
+                className={`w-full flex items-center justify-center px-2 py-2 text-sm no-underline transition-all duration-200 relative ${
                   isStepActive(step)
                     ? "bg-sidebar-active text-text-primary font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
                     : "text-text-secondary hover:bg-sidebar-hover"
@@ -101,7 +101,7 @@ export function Sidebar({
             ) : (
               <button
                 onClick={() => toggleStep(step.id)}
-                className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm transition-colors duration-150 relative ${
+                className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm transition-all duration-200 relative ${
                   isStepActive(step)
                     ? "bg-sidebar-active text-text-primary font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
                     : "text-text-secondary hover:bg-sidebar-hover"
@@ -142,7 +142,7 @@ export function Sidebar({
                 <Link
                   to={step.path}
                   onClick={onNavigate}
-                  className={`block pl-9 pr-4 py-2 text-sm no-underline truncate transition-colors duration-150 relative ${
+                  className={`block pl-9 pr-4 py-2 text-sm no-underline truncate transition-all duration-200 relative ${
                     location.pathname === step.path
                       ? "text-text-primary bg-sidebar-active font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
                       : "text-text-muted hover:bg-sidebar-hover hover:text-text-primary"
@@ -156,7 +156,7 @@ export function Sidebar({
                     key={lab.id}
                     to={lab.path}
                     onClick={onNavigate}
-                    className={`block pl-9 pr-4 py-2 text-sm no-underline truncate transition-colors duration-150 relative ${
+                    className={`block pl-9 pr-4 py-2 text-sm no-underline truncate transition-all duration-200 relative ${
                       isLabActive(lab.path)
                         ? "text-text-primary bg-sidebar-active font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
                         : "text-text-muted hover:bg-sidebar-hover hover:text-text-primary"

@@ -44,7 +44,7 @@ export function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className={`cursor-pointer rounded-lg transition-colors ${variantStyles[variant]} ${sizeStyles[size]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`.trim()}
+      className={`cursor-pointer rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 ${variantStyles[variant]} ${sizeStyles[size]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`.trim()}
     >
       {children}
     </button>

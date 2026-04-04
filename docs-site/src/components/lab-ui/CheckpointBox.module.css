@@ -1,7 +1,8 @@
 .box {
   margin-top: 2.5rem;
   padding: 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
 }
 
 .box h3 {

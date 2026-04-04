@@ -20,7 +20,7 @@ export function TextViewer({ result }: TextViewerProps) {
         </span>
       </div>
       <pre
-        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all text-xs max-h-[300px]`}
+        className={`${isError ? "bg-error-bg text-error-text" : "bg-vuln-bg text-vuln-text"} p-4 rounded-xl overflow-auto whitespace-pre-wrap break-all text-xs max-h-[300px]`}
         /* max-h-[300px]: テキストレスポンスの最大表示高さ。長いレスポンスをスクロール可能にする */
       >
         {result.body}

@@ -54,7 +54,7 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
   const { theme, toggleTheme } = useThemeContext();
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-5 bg-bg-secondary border-b border-border-light shadow-sm">
+    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-5 bg-bg-primary/80 backdrop-blur-sm border-b border-border-light shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
       {/* 左側: ハンバーガー + ロゴ */}
       <div className="flex items-center gap-3">
         <button
@@ -66,7 +66,7 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
         </button>
         <Link
           to="/"
-          className="text-lg font-extrabold no-underline text-accent"
+          className="text-lg font-semibold no-underline text-accent"
         >
           sec-web-lab
         </Link>
@@ -78,7 +78,7 @@ export function Header({ onToggleSidebar, isSidebarOpen }: HeaderProps) {
       {/* 右側: テーマトグル */}
       <button
         onClick={toggleTheme}
-        className="p-1.5 rounded hover:bg-sidebar-hover text-text-primary"
+        className="p-1.5 rounded-md hover:bg-bg-secondary text-text-secondary hover:text-text-primary transition-all duration-200"
         aria-label={
           theme === "dark" ? "ライトモードに切り替え" : "ダークモードに切り替え"
         }

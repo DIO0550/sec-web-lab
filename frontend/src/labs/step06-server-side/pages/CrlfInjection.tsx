@@ -49,7 +49,7 @@ function CrlfPanel({
 
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title="Locationヘッダー" className="mt-2">
-          <pre className="text-xs bg-code-bg p-2 rounded mt-1 overflow-auto">{result?.locationHeader}</pre>
+          <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-1 overflow-auto">{result?.locationHeader}</pre>
           {result?.sanitized !== undefined && (
             <div className="text-xs mt-1">
               {result?.sanitized ? "改行コードが除去されました" : "サニタイズなし"}

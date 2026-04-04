@@ -32,11 +32,11 @@ function CachePanel({
       </FetchButton>
 
       <ExpandableSection isOpen={!!result}>
-        <div className="mt-2 p-3 rounded bg-code-bg border">
+        <div className="mt-2 p-3 rounded bg-code-bg text-code-text border">
           {result?.profile && (
             <div>
               <div className="text-xs font-bold mb-1">個人情報:</div>
-              <pre className="text-xs overflow-auto bg-white p-2 rounded">
+              <pre className="text-xs overflow-auto bg-bg-primary p-2 rounded">
                 {JSON.stringify(result?.profile, null, 2)}
               </pre>
             </div>
@@ -44,7 +44,7 @@ function CachePanel({
           {result?.headers && (
             <div className="mt-2">
               <div className="text-xs font-bold mb-1">キャッシュ制御ヘッダー:</div>
-              <pre className="text-xs overflow-auto bg-white p-2 rounded">
+              <pre className="text-xs overflow-auto bg-bg-primary p-2 rounded">
                 {Object.entries(result?.headers ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}
               </pre>
             </div>

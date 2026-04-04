@@ -109,10 +109,10 @@ export function Tabs({
       >
         {tabs.map((tab, i) => {
           const isActive = tab.id === activeId;
-          const baseClasses = `px-5 py-2.5 text-sm font-medium transition-colors duration-200 -mb-px ${
+          const baseClasses = `px-5 py-2.5 text-sm font-medium transition-all duration-200 -mb-px ${
             isActive
-              ? "border-b-2 border-accent"
-              : "border-b-2 border-transparent text-text-muted hover:text-text-primary hover:bg-bg-secondary rounded-t"
+              ? "border-b-2 border-accent text-accent"
+              : "border-b-2 border-transparent text-text-muted hover:text-text-primary hover:bg-bg-secondary/50 rounded-t"
           }`;
 
           if (closable) {

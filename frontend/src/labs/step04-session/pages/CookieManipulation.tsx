@@ -105,7 +105,7 @@ function LoginForm({
           </FetchButton>
 
           <ExpandableSection isOpen={!!cookieInfo}>
-            <div className="mt-2 p-2 bg-code-bg rounded text-xs">
+            <div className="mt-2 p-2 bg-code-bg text-code-text rounded text-xs">
               {cookieInfo?.vulnerabilities && (
                 <div>
                   <strong className="text-status-ng">脆弱性:</strong>

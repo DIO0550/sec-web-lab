@@ -14,15 +14,16 @@
   flex: 1;
   min-width: 280px;
   border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 8px;
+  border-radius: 0.75rem;
   overflow: hidden;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
+  transition: all 0.2s;
 }
 
 .http-message__title {
   padding: 0.5rem 1rem;
-  font-weight: 700;
+  font-weight: 600;
   font-family: var(--ifm-font-family-base);
   font-size: 0.9rem;
 }
@@ -70,9 +71,10 @@
 .auth-card {
   flex: 1;
   min-width: 250px;
-  border-radius: 10px;
+  border-radius: 0.75rem;
   padding: 1.2rem;
   text-align: center;
+  transition: all 0.2s;
 }
 
 .auth-card--authn {
@@ -92,7 +94,7 @@
 
 .auth-card__title {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.3rem;
 }
 
@@ -125,10 +127,11 @@
 
 .cookie-flow__step {
   padding: 0.8rem 1rem;
-  border-radius: 8px;
+  border-radius: 0.75rem;
   text-align: center;
   min-width: 140px;
   font-size: 0.85rem;
+  transition: all 0.2s;
 }
 
 .cookie-flow__step--server {
@@ -165,9 +168,10 @@
 .input-processing__card {
   flex: 1;
   min-width: 200px;
-  border-radius: 10px;
+  border-radius: 0.75rem;
   padding: 1rem;
   text-align: center;
+  transition: all 0.2s;
 }
 
 .input-processing__card--validate {
@@ -192,7 +196,7 @@
 
 .input-processing__title {
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.3rem;
 }
 
@@ -220,8 +224,9 @@
   margin: 1.5rem 0;
   padding: 1.2rem;
   border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 8px;
+  border-radius: 0.75rem;
   background: var(--ifm-color-emphasis-100);
+  transition: all 0.2s;
 }
 
 .dom-tree__node {

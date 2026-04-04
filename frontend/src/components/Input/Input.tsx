@@ -23,7 +23,7 @@ export function Input({ label, error, className = "", ...rest }: Props) {
       )}
       <input
         {...rest}
-        className="py-2 px-3 border border-input-border rounded-lg w-full bg-bg-primary text-text-primary focus:border-input-focus focus:ring-1 focus:ring-input-focus outline-none"
+        className="py-2 px-3 border border-input-border rounded-md w-full bg-bg-primary text-text-primary transition-all duration-200 focus:border-input-focus focus:ring-2 focus:ring-accent/20 outline-none"
       />
       {error && (
         <p className="text-error-text-light text-xs mt-1">{error}</p>
