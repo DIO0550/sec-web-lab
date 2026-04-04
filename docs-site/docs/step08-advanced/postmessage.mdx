@@ -1,9 +1,7 @@
 ---
 title: postMessage 脆弱性 — クロスオリジン通信のオリジン検証不備
-sidebar_position: 13
+sidebar_position: 7
 ---
-
-import { PostmessageLab } from '@site/src/components/labs/step08/PostmessageLab';
 
 # postMessage 脆弱性 — クロスオリジン通信のオリジン検証不備
 
@@ -318,91 +316,6 @@ parentWindow.postMessage(
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: オリジン検証なしの postMessage ハンドラーに対して、攻撃者のサイトから偽メッセージを注入できることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev &
-   cd frontend && pnpm dev &
-   ```
-
-2. ブラウザで脆弱なページにアクセスする
-
-   ```
-   http://localhost:5173/labs/postmessage
-   ```
-
-   - ページの「脆弱バージョン」タブを選択する
-   - DevTools の Console を開いておく
-
-3. 攻撃を体験する — 画面上の「攻撃シミュレーション」ボタンをクリックする
-
-   攻撃者のサイトを模擬するフレームが、脆弱なページに対して postMessage を送信する。
-
-   ```typescript
-   // 攻撃シミュレーション — 偽のメッセージを送信
-   targetFrame.contentWindow.postMessage(
-     { action: 'updateProfile', data: { email: 'evil@attacker.com' } },
-     '*'
-   );
-   ```
-
-4. 結果を確認する
-
-   - 脆弱なページ上の表示が攻撃者のメッセージ内容に書き換わる
-   - DevTools Console に `message` イベントのログが表示される — `event.origin` が攻撃者のオリジンであることを確認
-   - **この結果が意味すること**: `event.origin` を検証していないため、任意のオリジンからメッセージを注入できる。実際の攻撃ではプロフィール変更や設定改ざんが行われる
-
-5. DOM-based XSS を試す
-
-   ```typescript
-   // innerHTML にHTMLペイロードが注入される
-   targetFrame.contentWindow.postMessage(
-     { action: 'showNotification', html: '<img src=x onerror=alert("XSS")>' },
-     '*'
-   );
-   ```
-
-   - `alert("XSS")` が実行されることを確認する
-   - `innerHTML` でメッセージ内容を挿入しているため、任意の JavaScript が実行可能
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じ攻撃がオリジン検証と型チェックにより失敗することを確認する
-
-1. ページの「安全バージョン」タブに切り替える
-
-2. 同じ攻撃を試みる
-
-   - 「攻撃シミュレーション」ボタンをクリックする
-
-3. 結果を確認する
-
-   - ページの内容は変化しない
-   - DevTools Console に「不正なオリジンからのメッセージを拒否」のログが表示される
-   - `event.origin` のチェックにより、信頼できないオリジンからのメッセージが無視されている
-
-4. コードの差分を確認する
-
-   - `frontend/src/labs/step08-advanced/pages/PostMessage.tsx` の脆弱版と安全版を比較
-   - **オリジン検証の有無**、**型ガード関数の存在**、**`innerHTML` vs `textContent`** に注目する
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] `event.origin` はなぜ信頼できるのか（ブラウザが保証する値であり、送信側が偽造できない理由）
-- [ ] `targetOrigin: "*"` が危険な理由は何か（どのウィンドウにもメッセージが届く仕組み）
-- [ ] オリジン検証を行っていても `innerHTML` を使うとなぜ危険か（正規オリジンが侵害された場合のリスク）
-- [ ] 安全な実装は「なぜ」この攻撃を無効化するのか（`event.origin` チェック + 型ガード + `textContent` の三重の防御）
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -438,6 +351,14 @@ parentWindow.postMessage(
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./postmessage-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -452,8 +373,3 @@ parentWindow.postMessage(
 - [CWE-345: Insufficient Verification of Data Authenticity](https://cwe.mitre.org/data/definitions/345.html)
 - [MDN - Window: postMessage() method](https://developer.mozilla.org/ja/docs/Web/API/Window/postMessage)
 
----
-
-## ラボ体験
-
-<PostmessageLab />

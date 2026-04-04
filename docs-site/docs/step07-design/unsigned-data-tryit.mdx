@@ -1,0 +1,107 @@
+---
+title: Trusting Unsigned Client Data — クライアントデータを署名なしで信頼し権限昇格やデータ改ざんが可能 - 実際に試す
+sidebar_position: 26
+---
+
+import { UnsignedDataLab } from '@site/src/components/labs/step07/UnsignedDataLab';
+
+# Trusting Unsigned Client Data — クライアントデータを署名なしで信頼し権限昇格やデータ改ざんが可能 - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<UnsignedDataLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: 署名なしCookieとhidden fieldの改ざんによって権限昇格・価格改ざんが可能であることを確認する
+
+1. 開発サーバーを起動する
+
+2. ブラウザでラボページにアクセスし、一般ユーザーとしてログインする
+
+   ```bash
+   # ブラウザでアクセス
+   open http://localhost:5173/labs/unsigned-data
+   ```
+
+3. DevToolsを開き、Cookieを確認する
+
+   - Application > Cookies で `role=user` のCookieが設定されていることを確認
+   - 値が平文で保存されており、署名がないことに注目する
+
+4. Cookieの値を改ざんする
+
+   ```javascript
+   // DevToolsのConsoleで実行
+   document.cookie = "role=admin; path=/";
+   ```
+
+5. 管理者エンドポイントにリクエストを送信する
+
+   ```bash
+   curl http://localhost:3000/api/labs/unsigned-data/vulnerable/admin \
+     -H "Cookie: role=admin"
+   ```
+
+   - 管理者用の機密データが返ってくることを確認する
+   - **この結果が意味すること**: 署名のないCookieはいくらでも改ざんでき、サーバーはそれを検知できない
+
+6. Hidden Fieldの改ざんも試す
+
+   - DevToolsのElements タブで `<input type="hidden" name="price" value="1000">` を見つける
+   - `value` を `1` に変更し、フォームを送信する
+   - 1,000円の商品が1円で購入できてしまうことを確認する
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 署名付きCookieが改ざんを検知し、サーバー側の値参照により不正購入を防ぐことを確認する
+
+1. 安全なエンドポイントにアクセスする
+
+   ```bash
+   # 署名付きCookieで正規のリクエスト
+   curl http://localhost:3000/api/labs/unsigned-data/secure/admin \
+     -H "Cookie: role=user"
+   ```
+
+   - 一般ユーザーとして403エラーが返ることを確認する
+
+2. Cookie値を改ざんして再度リクエストする
+
+   ```bash
+   # 署名なしで role=admin に改ざん
+   curl http://localhost:3000/api/labs/unsigned-data/secure/admin \
+     -H "Cookie: role=admin"
+   ```
+
+   - `Tampered` エラー（403）が返り、改ざんが検知されていることを確認する
+
+3. 価格改ざんも試す
+
+   - 安全版では hidden field の価格ではなくサーバー側のDB値が使われることを確認する
+   - DevToolsで hidden field を書き換えてフォームを送信しても、正規の価格で処理されることを確認する
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step07-design/unsigned-data.ts` の脆弱版と安全版を比較
+   - **署名付きCookieの導入とサーバー側データ参照** が攻撃を防いでいることに注目する
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] CookieやHidden Fieldがクライアント側で自由に改ざんできる理由は何か
+- [ ] 署名なしCookieと署名付きCookieの違いは何か（HMACの仕組みを含む）
+- [ ] 攻撃者がDevToolsでCookieを改ざんしたとき、サーバーはどのように検知するか
+- [ ] 価格や権限などの重要な値を安全に扱うための設計原則は何か（サーバー側が正の情報源）
+- [ ] JWTとセッション管理のそれぞれの利点・欠点は何か
+
+---
+
+[← ラボに戻る](./unsigned-data)

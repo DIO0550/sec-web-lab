@@ -51,7 +51,7 @@ function CalcPanel({
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "実行結果" : "エラー"} className="mt-2">
           {result?.expression && <div className="text-xs text-text-secondary mt-1">式: {result?.expression}</div>}
           {result?.result && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">{result?.result}</pre>
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto">{result?.result}</pre>
           )}
           {result?.message && <div className="text-sm mt-1">{result?.message}</div>}
           {result?._debug && (

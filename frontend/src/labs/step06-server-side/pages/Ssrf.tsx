@@ -52,7 +52,7 @@ function FetchPanel({
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? `レスポンス取得 (${result?.status})` : "リクエストブロック"} className="mt-2">
           {result?.message && <div className="text-sm mt-1">{result?.message}</div>}
           {result?.body && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px]">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto max-h-[200px]">
               {result?.body.substring(0, 500)}
             </pre>
           )}

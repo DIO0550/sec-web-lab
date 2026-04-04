@@ -39,7 +39,7 @@ function HttpPanel({
             <div className="mt-2">
               <div className="text-xs text-text-muted italic">{result?._debug.message}</div>
               {result?._debug.cookie && (
-                <div className="text-xs mt-1 font-mono bg-code-bg p-1 rounded">{result?._debug.cookie}</div>
+                <div className="text-xs mt-1 font-mono bg-code-bg text-code-text p-1 rounded">{result?._debug.cookie}</div>
               )}
               {result?._debug.risks && (
                 <ul className="text-xs mt-1 text-error-text-light">
@@ -49,7 +49,7 @@ function HttpPanel({
             </div>
           )}
           {result?.protectedHeaders && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result?.protectedHeaders, null, 2)}
             </pre>
           )}

@@ -14,13 +14,13 @@ export function HeaderViewer({ result, mode }: HeaderViewerProps) {
   return (
     <div className="mt-4">
       <h4>レスポンスヘッダー</h4>
-      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all`}>
+      <pre className={`${isVuln ? "bg-vuln-bg text-vuln-text" : "bg-secure-bg text-secure-text"} p-4 rounded-xl overflow-auto whitespace-pre-wrap break-all`}>
         {Object.entries(result.headers)
           .map(([k, v]) => `${k}: ${v}`)
           .join("\n")}
       </pre>
       <h4>レスポンスボディ</h4>
-      <pre className="bg-bg-secondary p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all">
+      <pre className="bg-bg-secondary p-4 rounded-xl overflow-auto whitespace-pre-wrap break-all">
         {JSON.stringify(result.body, null, 2)}
       </pre>
     </div>

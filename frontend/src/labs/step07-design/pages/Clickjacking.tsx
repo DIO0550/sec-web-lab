@@ -32,7 +32,7 @@ function ClickPanel({
       </FetchButton>
 
       <ExpandableSection isOpen={!!result}>
-        <div className={`mt-2 p-3 rounded bg-code-bg border`}>
+        <div className={`mt-2 p-3 rounded bg-code-bg text-code-text border`}>
           <div className="font-bold text-sm mb-2">レスポンスヘッダー</div>
           {result?._debug?.headers && (
             <pre className="text-xs overflow-auto">

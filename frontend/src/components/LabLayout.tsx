@@ -15,7 +15,7 @@ export function LabLayout({ title, subtitle, description, children }: Props) {
   return (
     <div>
       <div className="mb-8">
-        <h2 className="text-2xl font-bold border-l-4 border-accent pl-3">
+        <h2 className="text-2xl font-semibold border-l-4 border-accent pl-3">
           {title}
         </h2>
         <p className="text-sm text-accent font-medium mt-1.5">

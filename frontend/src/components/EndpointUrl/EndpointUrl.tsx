@@ -30,7 +30,7 @@ const METHOD_STYLES: Record<HttpMethod, string> = {
 export function EndpointUrl({ method = "GET", children, action, className = "" }: Props) {
   return (
     <div
-      className={`flex items-center gap-3 bg-bg-secondary rounded-lg px-3 py-2 ${className}`}
+      className={`flex items-center gap-3 bg-bg-secondary rounded-md px-3 py-2 border border-border-light ${className}`}
     >
       <span className="inline-flex items-center gap-2 font-mono text-sm min-w-0">
         <span

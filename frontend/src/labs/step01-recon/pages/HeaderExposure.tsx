@@ -152,7 +152,7 @@ export function HeaderExposure() {
       <CheckpointBox title="各ヘッダーの役割" variant="warning">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="bg-code-bg">
+            <tr className="bg-code-bg text-code-text">
               <th className="py-1.5 px-2 text-left">ヘッダー</th>
               <th className="py-1.5 px-2 text-left">欠如した場合のリスク</th>
               <th className="py-1.5 px-2 text-left">攻撃を体験</th>

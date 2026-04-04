@@ -67,6 +67,7 @@
 
 .infoHeaderRow {
   background-color: var(--lab-code-bg);
+  color: var(--lab-code-text);
 }
 
 .labLink {

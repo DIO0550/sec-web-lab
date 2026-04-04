@@ -10,8 +10,8 @@ type Props = {
 
 /** バリアントごとのスタイルマッピング */
 const variantStyles: Record<NonNullable<Props["variant"]>, string> = {
-  default: "bg-bg-primary rounded-lg p-5 shadow-sm",
-  bordered: "bg-bg-primary border border-border-light rounded-lg p-5 shadow-sm",
+  default: "bg-bg-primary rounded-xl p-6 shadow-sm",
+  bordered: "bg-bg-primary border border-border-light rounded-xl p-6 shadow-sm",
 };
 
 /** インタラクティブカード用のスタイル（to 指定時のみ適用） */

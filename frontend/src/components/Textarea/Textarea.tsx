@@ -30,7 +30,7 @@ export function Textarea({
       <textarea
         rows={rows}
         {...rest}
-        className={`py-2 px-3 border border-input-border rounded-lg w-full bg-bg-primary text-text-primary focus:border-input-focus focus:ring-1 focus:ring-input-focus outline-none ${mono ? "font-mono text-xs" : ""}`}
+        className={`py-2 px-3 border border-input-border rounded-md w-full bg-bg-primary text-text-primary transition-all duration-200 focus:border-input-focus focus:ring-2 focus:ring-accent/20 outline-none ${mono ? "font-mono text-xs" : ""}`}
       />
     </div>
   );

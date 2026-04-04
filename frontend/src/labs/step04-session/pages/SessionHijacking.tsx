@@ -169,7 +169,7 @@ function HijackingDemo({
         <div className="mt-3">
           <strong className="text-xs">コメント一覧:</strong>
           {comments.map((c) => (
-            <div key={c.id} className="p-2 mt-1 bg-code-bg rounded text-xs">
+            <div key={c.id} className="p-2 mt-1 bg-code-bg text-code-text rounded text-xs">
               <div className="font-bold">{c.username}</div>
               {mode === "vulnerable" ? (
                 // ⚠️ 脆弱版: dangerouslySetInnerHTML で XSS が発動する
@@ -186,7 +186,7 @@ function HijackingDemo({
 
       {/* プロフィール結果 */}
       <ExpandableSection isOpen={!!profileResult}>
-        <div className="mt-2 p-2 bg-code-bg rounded text-xs">
+        <div className="mt-2 p-2 bg-code-bg text-code-text rounded text-xs">
           <strong>プロフィール:</strong>
           <pre className="m-0 mt-1 text-xs">
             {JSON.stringify(profileResult, null, 2)}

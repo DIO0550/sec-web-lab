@@ -1,9 +1,7 @@
 ---
 title: Clickjacking — 透明iframeによるUI偽装でユーザーに意図しない操作をさせる攻撃
-sidebar_position: 3
+sidebar_position: 7
 ---
-
-import { ClickjackingLab } from '@site/src/components/labs/step07/ClickjackingLab';
 
 # Clickjacking — 透明iframeによるUI偽装でユーザーに意図しない操作をさせる攻撃
 
@@ -166,68 +164,6 @@ app.use("*", async (c, next) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 透明 iframe を使って被害者に意図しない操作をさせられることを確認する
-
-1. 開発サーバーを起動する
-
-2. 脆弱なエンドポイントのレスポンスヘッダーを確認する
-
-   ```bash
-   curl -I http://localhost:3000/api/labs/clickjacking/vulnerable/target
-   ```
-
-   - `X-Frame-Options` ヘッダーが存在しないことを確認する
-
-3. 攻撃者用の罠ページにアクセスする
-
-   ```bash
-   # ブラウザで罠ページにアクセス
-   open http://localhost:5173/labs/clickjacking
-   ```
-
-4. 罠ページの「当選おめでとう」ボタンをクリックする
-
-   - ブラウザの DevTools で iframe の存在を確認する（Elements タブ）
-   - iframe の `opacity` を変更して、透明な正規サイトが重なっていることを視覚的に確認する
-   - **この結果が意味すること**: ユーザーは自分が何をクリックしたか全く認識できない
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: `X-Frame-Options` ヘッダーにより iframe 埋め込みが拒否されることを確認する
-
-1. 安全なエンドポイントのレスポンスヘッダーを確認する
-
-   ```bash
-   curl -I http://localhost:3000/api/labs/clickjacking/secure/target
-   ```
-
-   - `X-Frame-Options: DENY` が返ることを確認する
-
-2. 同じ罠ページから安全なバージョンを読み込もうとする
-
-   - ブラウザの DevTools Console に iframe のブロックエラーが表示されることを確認する
-   - iframe 内のコンテンツが表示されないことを確認する
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/clickjacking.ts` の脆弱版と安全版を比較
-   - **ヘッダー1行の追加** が攻撃を完全に防いでいることに注目する
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] クリックジャッキングが成立するための条件は何か（iframe 埋め込み許可 + CSS による透明化）
-- [ ] 攻撃者は何を用意し、被害者のブラウザで何が起き、正規サイトで何が実行されるか
-- [ ] `X-Frame-Options` と `CSP frame-ancestors` の違いと、それぞれの利点
-- [ ] なぜ Frame-busting JS だけでは不十分なのか（`sandbox` 属性による無効化）
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -262,6 +198,14 @@ app.use("*", async (c, next) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./clickjacking-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -277,8 +221,3 @@ app.use("*", async (c, next) => {
 - [MDN - X-Frame-Options](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-Frame-Options)
 - [MDN - CSP frame-ancestors](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors)
 
----
-
-## ラボ体験
-
-<ClickjackingLab />

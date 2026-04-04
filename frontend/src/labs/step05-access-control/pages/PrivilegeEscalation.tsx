@@ -142,12 +142,12 @@ export function PrivilegeEscalation() {
         >
           {result?.message && <div className="text-sm">{result?.message}</div>}
           {type === "users" && result && "users" in result && result.users && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px]">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto max-h-[200px]">
               {JSON.stringify(result.users, null, 2)}
             </pre>
           )}
           {type === "settings" && result && "settings" in result && result.settings && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result.settings, null, 2)}
             </pre>
           )}

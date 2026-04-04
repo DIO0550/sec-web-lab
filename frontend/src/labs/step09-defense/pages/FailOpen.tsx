@@ -28,7 +28,7 @@ function FailPanel({ mode, result, authDown, isLoading, onAccess, onToggle }: { 
             {result?.success ? "アクセス成功" : "アクセス拒否"}
           </div>
           <div className="text-sm mt-1">{result?.message}</div>
-          {result?.data && <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
+          {result?.data && <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto">{JSON.stringify(result.data, null, 2)}</pre>}
           {result?._debug && <div className="mt-2 text-xs text-text-muted italic">{result._debug.message}</div>}
         </div>
       </ExpandableSection>

@@ -30,7 +30,7 @@ export function DebugInfo({
     <details className={`mt-2 ${className}`.trim()}>
       <summary className="text-xs text-text-muted cursor-pointer">{summary}</summary>
       {codeField && debug[codeField] != null && (
-        <pre className="text-xs bg-code-bg text-vuln-text p-3 rounded-lg">
+        <pre className="text-xs bg-code-bg text-code-text text-vuln-text p-3 rounded-lg">
           {String(debug[codeField])}
         </pre>
       )}

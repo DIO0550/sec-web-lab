@@ -6,7 +6,7 @@
   background-color: var(--lab-vuln-bg);
   color: var(--lab-vuln-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -16,7 +16,7 @@
   background-color: var(--lab-secure-bg);
   color: var(--lab-secure-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -25,7 +25,7 @@
 .preBody {
   background-color: var(--lab-bg-secondary);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -50,7 +50,7 @@
   background-color: var(--lab-error-bg);
   color: var(--lab-error-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -62,7 +62,7 @@
   background-color: var(--lab-vuln-bg);
   color: var(--lab-vuln-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -91,7 +91,7 @@
   background-color: var(--lab-vuln-bg);
   color: var(--lab-vuln-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -103,7 +103,7 @@
   background-color: var(--lab-vuln-bg);
   color: var(--lab-secure-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;

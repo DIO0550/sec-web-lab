@@ -1,9 +1,7 @@
 ---
 title: Race Condition (TOCTOU) — チェックと処理のタイミング差を悪用して制約を回避する
-sidebar_position: 5
+sidebar_position: 13
 ---
-
-import { RaceConditionLab } from '@site/src/components/labs/step08/RaceConditionLab';
 
 # Race Condition (TOCTOU) — チェックと処理のタイミング差を悪用して制約を回避する
 
@@ -212,83 +210,6 @@ app.post('/purchase', async (c) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 同時リクエストにより、残高以上の購入が成功することを確認する
-
-1. 開発サーバーを起動し、テストデータを投入する
-
-   ```bash
-   cd backend && pnpm dev
-   pnpm db:seed
-   ```
-
-2. 残高を確認する
-
-   ```bash
-   curl http://localhost:3000/api/labs/race-condition/vulnerable/balance
-   # → { "balance": 100 }
-   ```
-
-3. 同時に 2 つの購入リクエストを送信する
-
-   ```bash
-   # 100円の商品を同時に2回購入（残高は100円しかない）
-   curl -X POST http://localhost:3000/api/labs/race-condition/vulnerable/purchase \
-     -H "Content-Type: application/json" \
-     -d '{"itemId": 1, "price": 100}' &
-   curl -X POST http://localhost:3000/api/labs/race-condition/vulnerable/purchase \
-     -H "Content-Type: application/json" \
-     -d '{"itemId": 1, "price": 100}' &
-   wait
-   ```
-
-4. 結果を確認する
-
-   - 両方のリクエストが `200 OK`（購入完了）を返す
-   - 残高を再度確認すると `-100` になっている
-   - **この結果が意味すること**: 排他制御がないため、2 つのリクエストが同じ残高（100 円）を読み取り、両方が「残高十分」と判断してしまった
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じ攻撃が排他制御により失敗することを確認する
-
-1. テストデータをリセットし、安全なエンドポイントに対して同じ攻撃を試みる
-
-   ```bash
-   pnpm db:seed
-   curl -X POST http://localhost:3000/api/labs/race-condition/secure/purchase \
-     -H "Content-Type: application/json" \
-     -d '{"itemId": 1, "price": 100}' &
-   curl -X POST http://localhost:3000/api/labs/race-condition/secure/purchase \
-     -H "Content-Type: application/json" \
-     -d '{"itemId": 1, "price": 100}' &
-   wait
-   ```
-
-2. 結果を確認する
-
-   - 1 つ目のリクエストは `200 OK`、2 つ目は `400 Bad Request`（残高不足）を返す
-   - 残高は `0` で、マイナスにはならない
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/step08-advanced/race-condition.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: `SELECT` vs `SELECT ... FOR UPDATE`
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] TOCTOU 問題とは何か（「チェック時」と「使用時」の状態が異なる問題）
-- [ ] なぜ同時リクエストで両方のチェックが通過してしまうのか
-- [ ] `SELECT FOR UPDATE` は「なぜ」この攻撃を無効化するのか（行ロックがどう機能するか）
-- [ ] レートリミットだけでは根本対策にならない理由は何か
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -324,6 +245,14 @@ app.post('/purchase', async (c) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./race-condition-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -337,8 +266,3 @@ app.post('/purchase', async (c) => {
 - [OWASP - Race Conditions](https://owasp.org/www-community/vulnerabilities/Race_Conditions)
 - [CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition](https://cwe.mitre.org/data/definitions/367.html)
 
----
-
-## ラボ体験
-
-<RaceConditionLab />

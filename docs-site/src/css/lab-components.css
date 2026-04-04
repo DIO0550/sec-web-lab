@@ -21,7 +21,8 @@
   /* テーブル・コード・ステータス */
   --lab-table-header-bg: #f8fafc;
   --lab-table-border: #e5e7eb;
-  --lab-code-bg: #f5f5f5;
+  --lab-code-bg: #1e293b;
+  --lab-code-text: #e2e8f0;
   --lab-status-ok: #008800;
   --lab-status-ng: #cc0000;
 
@@ -30,9 +31,9 @@
   --lab-bg-secondary: #f8fafc;
   --lab-bg-tertiary: #f1f5f9;
 
-  --lab-text-primary: #1a1a1a;
-  --lab-text-secondary: #666666;
-  --lab-text-muted: #888888;
+  --lab-text-primary: #0f172a;
+  --lab-text-secondary: #64748b;
+  --lab-text-muted: #94a3b8;
 
   --lab-border: #e2e8f0;
   --lab-border-light: #e5e7eb;
@@ -67,6 +68,10 @@
   /* Input */
   --lab-input-border: #d1d5db;
   --lab-input-focus: #06b6d4;
+
+  /* ステータス表示用背景 (ラボ CSS Module で使用) */
+  --lab-status-ok-bg: #dcfce7;
+  --lab-status-ng-bg: #fee2e2;
 }
 
 [data-theme='dark'] {
@@ -85,7 +90,8 @@
   /* テーブル・コード・ステータス */
   --lab-table-header-bg: #1e293b;
   --lab-table-border: #3a3a5a;
-  --lab-code-bg: #1a1a2e;
+  --lab-code-bg: #0f172a;
+  --lab-code-text: #e2e8f0;
   --lab-status-ok: #4ecdc4;
   --lab-status-ng: #e94560;
 
@@ -131,4 +137,8 @@
   /* Input */
   --lab-input-border: #4a4a6a;
   --lab-input-focus: #22d3ee;
+
+  /* ステータス表示用背景 */
+  --lab-status-ok-bg: #166534;
+  --lab-status-ng-bg: #7f1d1d;
 }

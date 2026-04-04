@@ -1,0 +1,85 @@
+---
+title: "Path Traversal — `../` でサーバーの秘密ファイルを読み取る - 実際に試す"
+sidebar_position: 8
+---
+
+import { PathTraversalLab } from '@site/src/components/labs/step05/PathTraversalLab';
+
+# Path Traversal — `../` でサーバーの秘密ファイルを読み取る - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<PathTraversalLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: `../` を使って、公開ディレクトリ外のシステムファイルを読み取れることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 正規のファイルダウンロードを確認する
+
+   ```bash
+   # 正常なファイル取得
+   curl "http://localhost:3000/api/labs/path-traversal/vulnerable/files?name=sample.txt"
+   ```
+
+3. パストラバーサル攻撃を実行する
+
+   ```bash
+   # ../を使ってサーバーの /etc/passwd を読み取る
+   curl "http://localhost:3000/api/labs/path-traversal/vulnerable/files?name=../../../etc/passwd"
+
+   # 環境変数ファイルを読み取る
+   curl "http://localhost:3000/api/labs/path-traversal/vulnerable/files?name=../../.env"
+   ```
+
+4. 結果を確認する
+
+   - `/etc/passwd` の内容（ユーザー一覧）が表示される
+   - `.env` ファイルにAPI キーやDB接続情報が含まれている場合、それも取得できる
+   - **この結果が意味すること**: `../` によってファイルパスが公開ディレクトリの外に「脱出」し、サーバー上の任意のファイルにアクセスできてしまう
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃がパス検証により失敗することを確認する
+
+1. 安全なエンドポイントで同じ攻撃を試みる
+
+   ```bash
+   # 同じ攻撃を安全なバージョンに対して実行
+   curl "http://localhost:3000/api/labs/path-traversal/secure/files?name=../../../etc/passwd"
+   ```
+
+2. 結果を確認する
+
+   - `403 Forbidden` が返され、「アクセスが拒否されました」とエラーになる
+   - 正規のファイル名（`sample.txt`）を指定した場合は正常にファイルが返される
+
+3. コードの差分を確認する
+
+   - `backend/src/labs/step05-access-control/path-traversal.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `path.resolve()` + `startsWith()` による検証
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] パストラバーサルが発生するための条件は何か
+- [ ] `../../../etc/passwd` が入力されたとき、サーバー内部でパスがどう解決され、なぜシステムファイルにアクセスできるのか
+- [ ] 根本原因は「パスの処理」のどこにあるか（`../` のフィルタリングだけでは不十分な理由を説明できるか）
+- [ ] `path.resolve()` + `startsWith()` は「なぜ」この攻撃を無効化するのか
+
+---
+
+[← ラボに戻る](./path-traversal)

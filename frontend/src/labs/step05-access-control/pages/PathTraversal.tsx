@@ -68,7 +68,7 @@ function FileForm({
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "ファイル取得成功" : "取得失敗"} className="mt-2">
           {result?.message && <div className="text-sm">{result?.message}</div>}
           {result?.content && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto max-h-[200px] whitespace-pre-wrap">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto max-h-[200px] whitespace-pre-wrap">
               {result?.content}
             </pre>
           )}
@@ -127,7 +127,7 @@ export function PathTraversal() {
           ファイル一覧を表示
         </FetchButton>
         <ExpandableSection isOpen={!!fileList}>
-          <div className="mt-2 p-2 bg-code-bg rounded text-xs">
+          <div className="mt-2 p-2 bg-code-bg text-code-text rounded text-xs">
             <strong>uploads/ 内のファイル:</strong>
             <ul className="m-0 pl-4">
               {fileList?.files.map((f) => (

@@ -48,7 +48,7 @@ function CorsPanel({
       <ExpandableSection isOpen={!!result}>
         <Alert variant={result?.success ? "success" : "error"} title={result?.success ? "データ取得成功" : "アクセス拒否"} className="mt-2">
           {result?.profile && (
-            <pre className="text-xs bg-code-bg p-2 rounded mt-2 overflow-auto">
+            <pre className="text-xs bg-code-bg text-code-text p-2 rounded mt-2 overflow-auto">
               {JSON.stringify(result?.profile, null, 2)}
             </pre>
           )}

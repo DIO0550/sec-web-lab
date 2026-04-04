@@ -1,0 +1,79 @@
+---
+title: ログインジェクション --- ユーザー入力でログを改ざんする - 実際に試す
+sidebar_position: 14
+---
+
+import { LogInjectionLab } from '@site/src/components/labs/step09/LogInjectionLab';
+
+# ログインジェクション --- ユーザー入力でログを改ざんする - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<LogInjectionLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: 改行コードを含むユーザー名を送信し、ログに偽のエントリが挿入されることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 改行コードを含むユーザー名でログイン試行する
+
+   ```bash
+   # 改行コードを含むユーザー名でリクエスト送信
+   curl -X POST http://localhost:3000/api/labs/log-injection/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin\n[INFO] Login success: user=admin", "password": "wrong"}'
+   ```
+
+3. サーバーのコンソールログを確認する
+
+   - ログに2行のエントリが記録されている
+   - 1行目は実際の失敗ログ、2行目は攻撃者が注入した偽エントリ
+   - **この結果が意味すること**: 攻撃者は任意のログエントリを偽造でき、監査証跡を改ざんできる
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じリクエストを送信しても、改行が除去されてログが改ざんされないことを確認する
+
+1. 安全なエンドポイントに同じリクエストを送信する
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/log-injection/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin\n[INFO] Login success: user=admin", "password": "wrong"}'
+   ```
+
+2. サーバーのコンソールログを確認する
+
+   - ログは1行のエントリとして記録されている
+   - 改行文字が除去され、偽のエントリが挿入されていない
+   - ユーザー名が `admin[INFO] Login success: user=admin` のように1行に収まっている
+
+3. コードの差分を確認する
+
+   - `backend/src/labs/step09-defense/log-injection.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `sanitizeForLog()` 関数の有無
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] 改行文字がログに与える影響と、なぜ偽エントリが挿入できるのか
+- [ ] テキスト形式のログと構造化ログ（JSON）のセキュリティ上の違い
+- [ ] `sanitizeForLog()` が除去すべき文字の種類とその理由
+- [ ] ログの完全性が損なわれた場合、インシデント対応にどのような影響があるか
+
+---
+
+[← ラボに戻る](./log-injection)

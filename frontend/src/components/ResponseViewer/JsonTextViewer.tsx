@@ -21,7 +21,7 @@ export function JsonTextViewer({ result }: JsonTextViewerProps) {
         {result.status}
       </span>
       <pre
-        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-4 rounded-lg overflow-auto whitespace-pre-wrap break-all text-xs max-h-[200px]`}
+        className={`bg-vuln-bg ${isError ? "text-vuln-text" : "text-secure-text"} p-4 rounded-xl overflow-auto whitespace-pre-wrap break-all text-xs max-h-[200px]`}
         /* max-h-[200px]: JSONレスポンスの最大表示高さ。コンパクトな表示を維持するため TextViewer より小さい値を使用 */
       >
         {formatted}

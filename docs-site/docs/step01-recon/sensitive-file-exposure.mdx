@@ -1,9 +1,7 @@
 ---
 title: Sensitive File Exposure — 機密ファイルの露出 (.git / .env / robots.txt)
-sidebar_position: 3
+sidebar_position: 4
 ---
-
-import { SensitiveFileExposureLab } from '@site/src/components/labs/step01/SensitiveFileExposureLab';
 
 # Sensitive File Exposure — 機密ファイルの露出 (.git / .env / robots.txt)
 
@@ -170,64 +168,6 @@ app.use("*", async (c, next) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: 機密ファイルの内容がWebから直接取得できることを確認する
-
-1. 開発サーバーを起動する
-
-2. 機密ファイルへの直接アクセスを試みる
-
-   ```bash
-   # .env ファイルへのアクセス
-   curl http://localhost:3000/api/labs/sensitive-file-exposure/vulnerable/.env
-
-   # .git/HEAD へのアクセス
-   curl http://localhost:3000/api/labs/sensitive-file-exposure/vulnerable/.git/HEAD
-
-   # robots.txt へのアクセス
-   curl http://localhost:3000/api/labs/sensitive-file-exposure/vulnerable/robots.txt
-   ```
-
-3. 返却された内容を確認する
-
-   - `.env` にDB接続情報やAPIキーが含まれているか
-   - `.git/HEAD` からリポジトリの存在が確認できるか
-   - `robots.txt` に管理画面等の隠しパスが記載されていないか
-   - **この結果が意味すること**: 攻撃者はブラウザだけでDB認証情報を取得し、ソースコードを復元できる
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じアクセスが 403 Forbidden で拒否されることを確認する
-
-1. 安全なエンドポイントに同じリクエストを送る
-
-   ```bash
-   # 同じアクセスを安全なバージョンに対して実行
-   curl http://localhost:3000/api/labs/sensitive-file-exposure/secure/.env
-   curl http://localhost:3000/api/labs/sensitive-file-exposure/secure/.git/HEAD
-   ```
-
-2. レスポンスが 403 Forbidden であることを確認する
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/sensitive-file-exposure.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目（パスフィルタリングのミドルウェア）
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] `.env` や `.git/` が公開される条件は何か（静的ファイル配信の設定ミス）
-- [ ] 攻撃者は何にアクセスし、取得した情報をどう悪用するか
-- [ ] パスフィルタリングがなぜ効果的か（ファイルシステムへの到達前に遮断）
-- [ ] デプロイ時の除外と Secrets Manager がなぜ「多層防御」として重要か
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -261,6 +201,14 @@ app.use("*", async (c, next) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./sensitive-file-exposure-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -274,8 +222,3 @@ app.use("*", async (c, next) => {
 - [OWASP - Information Disclosure](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/)
 - [CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory](https://cwe.mitre.org/data/definitions/538.html)
 
----
-
-## ラボ体験
-
-<SensitiveFileExposureLab />

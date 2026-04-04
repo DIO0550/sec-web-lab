@@ -1,9 +1,7 @@
 ---
 title: CRLF Injection (HTTP Header Injection) — HTTPレスポンスヘッダーへの改行コード注入
-sidebar_position: 7
+sidebar_position: 4
 ---
-
-import { CrlfInjectionLab } from '@site/src/components/labs/step06/CrlfInjectionLab';
 
 # CRLF Injection (HTTP Header Injection) — HTTPレスポンスヘッダーへの改行コード注入
 
@@ -170,62 +168,6 @@ app.get('/api/redirect', (c) => {
 
 ---
 
-## ハンズオン手順
-
-### Step 1: 脆弱バージョンで攻撃を体験
-
-**ゴール**: CRLFインジェクションでSet-Cookieヘッダーを注入できることを確認する
-
-1. 開発サーバーを起動する
-
-   ```bash
-   cd backend && pnpm dev
-   ```
-
-2. 改行コードを含むリクエストを送信する
-
-   ```bash
-   # CRLFインジェクションでSet-Cookieヘッダーを注入
-   curl -v "http://localhost:3000/api/labs/crlf-injection/vulnerable/redirect?url=http://example.com%0d%0aSet-Cookie:admin=true"
-   ```
-
-3. 結果を確認する
-
-   - レスポンスヘッダーに `Set-Cookie: admin=true` が含まれる
-   - `-v` オプションでHTTPヘッダーの全体を確認できる
-   - **この結果が意味すること**: 改行コードがHTTPヘッダーの境界として解釈され、攻撃者が指定した任意のヘッダーがレスポンスに追加されている
-
-### Step 2: 安全バージョンで防御を確認
-
-**ゴール**: 同じ攻撃が改行コード除去により失敗することを確認する
-
-1. 安全なエンドポイントで同じ攻撃を試みる
-
-   ```bash
-   curl -v "http://localhost:3000/api/labs/crlf-injection/secure/redirect?url=http://example.com%0d%0aSet-Cookie:admin=true"
-   ```
-
-2. 結果を確認する
-
-   - `Set-Cookie: admin=true` がレスポンスヘッダーに含まれない
-   - 改行コードが除去され、Location ヘッダーの値が単一の文字列として処理されている
-
-3. コードの差分を確認する
-
-   - `backend/src/labs/step06-server-side/crlf-injection.ts` の脆弱版と安全版を比較
-   - **どの行が違いを生んでいるか** に注目: `.replace(/[\r\n]/g, '')` の改行コード除去
-
-### 確認ポイント
-
-以下を自分の言葉で説明できれば、このラボは完了です:
-
-- [ ] CRLFインジェクションが発生するための条件は何か（HTTPの構造と改行コードの関係）
-- [ ] 攻撃者は何を入力し、サーバー内部でどう処理され、HTTPレスポンスがどう変わるか
-- [ ] この攻撃がセッション固定やキャッシュポイズニングにどう発展するか
-- [ ] 安全な実装は「なぜ」この攻撃を無効化するのか（改行コード除去がHTTP構造をどう保護するか）
-
----
-
 ## 実装メモ
 
 | 項目 | パス |
@@ -259,6 +201,14 @@ app.get('/api/redirect', (c) => {
 
 ---
 
+## 実際に試す
+
+このラボの攻撃と防御を実際に体験できます。
+
+[→ 実際に試す](./crlf-injection-tryit)
+
+---
+
 ## 理解度テスト
 
 学んだ内容をクイズで確認してみましょう:
@@ -272,8 +222,3 @@ app.get('/api/redirect', (c) => {
 - [OWASP - HTTP Response Splitting](https://owasp.org/www-community/attacks/HTTP_Response_Splitting)
 - [CWE-113: Improper Neutralization of CRLF Sequences in HTTP Headers](https://cwe.mitre.org/data/definitions/113.html)
 
----
-
-## ラボ体験
-
-<CrlfInjectionLab />

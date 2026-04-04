@@ -12,7 +12,7 @@
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: color 0.2s, border-color 0.2s;
+  transition: all 0.2s;
   margin-bottom: -1px;
   border-bottom: 2px solid transparent;
   cursor: pointer;
@@ -32,10 +32,12 @@
 
 .tabActive {
   border-bottom-color: var(--lab-accent);
-  color: var(--lab-text-primary);
+  color: var(--lab-accent);
+  font-weight: 600;
 }
 .tabActive:hover {
   background-color: transparent;
+  color: var(--lab-accent);
 }
 
 /* Closable tab wrapper */
@@ -46,7 +48,7 @@
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: color 0.2s, border-color 0.2s;
+  transition: all 0.2s;
   margin-bottom: -1px;
   border-bottom: 2px solid transparent;
   cursor: pointer;

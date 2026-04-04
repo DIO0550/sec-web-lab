@@ -20,7 +20,7 @@ export function StepIndexPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold border-l-4 border-accent pl-3">
+      <h2 className="text-2xl font-semibold border-l-4 border-accent pl-3">
         {step.name}
       </h2>
       <p dangerouslySetInnerHTML={{ __html: step.intro }} />
