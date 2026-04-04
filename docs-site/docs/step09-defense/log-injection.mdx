@@ -1,6 +1,6 @@
 ---
 title: ログインジェクション --- ユーザー入力でログを改ざんする
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 import { LogInjectionLab } from '@site/src/components/labs/step09/LogInjectionLab';
@@ -306,6 +306,14 @@ app.post('/api/login', async (c) => {
 | [詳細エラーメッセージ露出](./error-messages.mdx) | エラーメッセージがログに記録される際にサニタイズされていないと、ログインジェクションの対象になりうる |
 | [XSS (クロスサイトスクリプティング)](../step02-injection/xss) | ログビューアーがブラウザで表示される場合、ログに注入された JavaScript が XSS として実行される可能性がある (Stored XSS via Log) |
 | [ログ記録](./logging.mdx) | 適切なログ記録の実践と、ログインジェクション対策は表裏一体の関係にある |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [ログインジェクション - 理解度テスト](./log-injection-quiz)
 
 ---
 

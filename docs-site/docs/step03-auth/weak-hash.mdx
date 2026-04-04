@@ -1,6 +1,6 @@
 ---
 title: Weak Hash Algorithm — MD5/SHA1 でハッシュしても安全ではない理由
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { WeakHashLab } from '@site/src/components/labs/step03/WeakHashLab';
@@ -294,6 +294,14 @@ MD5 では `createHash('md5').update(password).digest('hex')` が数ナノ秒で
 - [OWASP - Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 - [CWE-328: Use of Weak Hash](https://cwe.mitre.org/data/definitions/328.html)
 - [CWE-916: Use of Password Hash With Insufficient Computational Effort](https://cwe.mitre.org/data/definitions/916.html)
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [弱いハッシュアルゴリズム - 理解度テスト](./weak-hash-quiz)
 
 ---
 

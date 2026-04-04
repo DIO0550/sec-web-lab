@@ -1,6 +1,6 @@
 ---
 title: eval Injection — ユーザー入力をコードとして実行してしまう
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 import { EvalInjectionLab } from '@site/src/components/labs/step06/EvalInjectionLab';
@@ -368,6 +368,14 @@ app.post('/api/calculate', async (c) => {
 | [コマンドインジェクション](../step02-injection/command-injection) | コマンドインジェクションは OS シェル経由、eval インジェクションは JavaScript ランタイム経由でコードを実行する。eval から `child_process` にアクセスすればコマンドインジェクションと同等の被害になる |
 | [SSTI](../step08-advanced/ssti.mdx) | SSTI はテンプレートエンジンを経由した eval インジェクションの一種。テンプレートエンジンが内部で `eval()` や `Function` コンストラクタを使用している場合、本質的に同じ脆弱性 |
 | [安全でないデシリアライゼーション](../step08-advanced/deserialization.mdx) | デシリアライズ処理で `eval()` が使用されている場合、eval インジェクションと同じメカニズムで RCE が発生する。`node-serialize` の脆弱性はその典型例 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [eval Injection - 理解度テスト](./eval-injection-quiz)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Sensitive File Exposure — 機密ファイルの露出 (.git / .env / robots.txt)
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import { SensitiveFileExposureLab } from '@site/src/components/labs/step01/SensitiveFileExposureLab';
@@ -258,6 +258,14 @@ app.use("*", async (c, next) => {
 |------|--------|
 | [ディレクトリリスティング](./directory-listing) | ディレクトリ一覧が公開されると、機密ファイルの存在を確認しやすくなる |
 | [HTTPヘッダーからの情報漏洩](./header-leakage) | ヘッダー漏洩と機密ファイル露出を組み合わせると、偵察フェーズの効率が飛躍的に向上する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [機密ファイルの露出 - 理解度テスト](./sensitive-file-exposure-quiz)
 
 ---
 

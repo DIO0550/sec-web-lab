@@ -1,6 +1,6 @@
 ---
 title: CORS Misconfiguration — オリジン間リソース共有の設定不備
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { CorsMisconfigurationLab } from '@site/src/components/labs/step06/CorsMisconfigurationLab';
@@ -262,6 +262,14 @@ app.use('*', cors({
 |------|--------|
 | [CSRF](../step04-session/csrf.mdx) | CORSの設定ミスとCSRFは密接に関連する。CORSが正しく設定されていてもCSRFは防げない場合があり、逆もまた同様 |
 | [セッション管理](../step04-session/session-fixation.mdx) | CORS設定ミスにより攻撃者がセッション情報にアクセスできると、セッションハイジャックにつながる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [CORS設定不備 - 理解度テスト](./cors-misconfiguration-quiz)
 
 ---
 

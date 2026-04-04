@@ -1,6 +1,6 @@
 ---
 title: Session Expiration — セッション有効期限の不備
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 import { SessionExpirationLab } from '@site/src/components/labs/step04/SessionExpirationLab';
@@ -268,6 +268,14 @@ const authMiddleware = async (c, next) => {
 | 重要操作時の再認証 | 多層防御 | パスワード変更やメールアドレス変更などの重要操作時に、現在のパスワード入力を求める。セッションが盗まれても被害を限定できる |
 | 同時セッション数の制限 | 多層防御 | 1ユーザーあたりのアクティブセッション数を制限し、新しいログイン時に古いセッションを無効化する |
 | セッション活動ログの監視 | 検知 | 長期間放置後に突然アクティブになったセッションを異常として検知し、アラートを発する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [セッション有効期限 - 理解度テスト](./session-expiration-quiz)
 
 ---
 

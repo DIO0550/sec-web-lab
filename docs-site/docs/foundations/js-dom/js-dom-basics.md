@@ -231,6 +231,14 @@ const safeMap = Object.create(null);
 
 ---
 
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [JavaScript・DOMの基礎 - 理解度テスト](./js-dom-basics-quiz)
+
+---
+
 ## 参考資料
 
 - [MDN - Document Object Model (DOM)](https://developer.mozilla.org/ja/docs/Web/API/Document_Object_Model)

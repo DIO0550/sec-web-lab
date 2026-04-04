@@ -1,6 +1,6 @@
 ---
 title: Unrestricted File Upload — ファイルアップロードの検証不備
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 import { FileUploadLab } from '@site/src/components/labs/step06/FileUploadLab';
@@ -293,6 +293,14 @@ app.post('/api/upload', async (c) => {
 |------|--------|
 | [XSS](../step02-injection/xss) | アップロードしたHTMLファイルが同一オリジンで配信される場合、Stored XSSと同等の攻撃が可能になる |
 | [パストラバーサル](../step05-access-control/path-traversal.mdx) | ファイル名に `../../` を含めることで、意図しないディレクトリにファイルを書き込むパストラバーサル攻撃と組み合わせられる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [ファイルアップロードの検証不備 - 理解度テスト](./file-upload-quiz)
 
 ---
 

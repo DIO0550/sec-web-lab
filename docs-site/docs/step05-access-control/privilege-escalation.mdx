@@ -1,6 +1,6 @@
 ---
 title: Privilege Escalation — 一般ユーザーが管理者の操作を実行する
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 import { PrivilegeEscalationLab } from '@site/src/components/labs/step05/PrivilegeEscalationLab';
@@ -332,6 +332,14 @@ app.route('/api/admin', admin);
 | [IDOR](./idor.mdx) | IDOR が水平方向（同じ権限レベルの他ユーザー）の認可不備であるのに対し、権限昇格は垂直方向（上位権限）の認可不備。どちらもアクセス制御の欠如が原因 |
 | [Mass Assignment](./mass-assignment.mdx) | Mass Assignment で `role` フィールドを改ざんすることは、権限昇格の一手法。API経由でロールを変更し、永続的な管理者アクセスを得られる |
 | [CSRF](../step04-session/csrf.mdx) | 管理者のブラウザに CSRF 攻撃を仕掛けることで、管理者権限の操作を攻撃者が間接的に実行するという複合攻撃が可能 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [権限昇格 (Privilege Escalation) - 理解度テスト](./privilege-escalation-quiz)
 
 ---
 

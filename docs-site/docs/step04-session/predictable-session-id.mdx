@@ -1,6 +1,6 @@
 ---
 title: Predictable Session ID — 推測可能なセッションID
-sidebar_position: 7
+sidebar_position: 13
 ---
 
 import { PredictableSessionIdLab } from '@site/src/components/labs/step04/PredictableSessionIdLab';
@@ -236,6 +236,14 @@ app.post('/login', async (c) => {
 | レート制限 | 多層防御 | 無効なセッション ID での連続アクセスを検知し、IP ごとにレート制限をかける。総当たり攻撃の速度を大幅に低下させる |
 | セッション ID の長さ検証 | 多層防御 | 認証ミドルウェアでセッション ID のフォーマット（UUID v4 形式等）を検証し、不正な形式のリクエストを早期に弾く |
 | 総当たり検知・アラート | 検知 | 短時間に大量の無効セッション ID でのアクセスを検知し、攻撃者の IP をブロックする仕組みを導入する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [推測可能なセッションID - 理解度テスト](./predictable-session-id-quiz)
 
 ---
 

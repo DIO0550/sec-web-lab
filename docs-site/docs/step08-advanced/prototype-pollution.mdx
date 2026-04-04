@@ -1,6 +1,6 @@
 ---
 title: Prototype Pollution — オブジェクトの原型を汚染して全体に影響を与える
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 import { PrototypePollutionLab } from '@site/src/components/labs/step08/PrototypePollutionLab';
@@ -398,6 +398,14 @@ function mergeToMap(source: Record<string, unknown>): Map<string, unknown> {
 | [Mass Assignment](../step05-access-control/mass-assignment.mdx) | Prototype Pollution と Mass Assignment は「ユーザーが意図しないプロパティを設定する」という共通パターン。Mass Assignment は DB フィールドへの注入、Prototype Pollution はプロトタイプチェーンへの注入 |
 | [安全でないデシリアライゼーション](./deserialization.mdx) | デシリアライゼーション処理の中で深いマージが使われる場合、Prototype Pollution が発生する。また、Prototype Pollution から RCE に発展するシナリオはデシリアライゼーション攻撃と被害が重なる |
 | [SSTI](./ssti.mdx) | どちらもサーバーサイドでの RCE に発展し得る脆弱性。SSTI はテンプレートエンジン経由、Prototype Pollution はプロトタイプチェーン経由で攻撃が成立する |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Prototype Pollution - 理解度テスト](./prototype-pollution-quiz)
 
 ---
 

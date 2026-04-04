@@ -1,6 +1,6 @@
 ---
 title: CRLF Injection (HTTP Header Injection) — HTTPレスポンスヘッダーへの改行コード注入
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 import { CrlfInjectionLab } from '@site/src/components/labs/step06/CrlfInjectionLab';
@@ -256,6 +256,14 @@ app.get('/api/redirect', (c) => {
 |------|--------|
 | [XSS](../step02-injection/xss) | CRLFインジェクションでレスポンスボディを注入できる場合、XSSと同等の攻撃が可能。`\r\n\r\n` で空行を作り、その後に `<script>` を注入する |
 | [セッション固定](../step04-session/session-fixation.mdx) | `Set-Cookie` ヘッダーの注入により、攻撃者が管理するセッションIDを被害者に強制的に使わせるセッション固定攻撃につながる |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [CRLF Injection - 理解度テスト](./crlf-injection-quiz)
 
 ---
 

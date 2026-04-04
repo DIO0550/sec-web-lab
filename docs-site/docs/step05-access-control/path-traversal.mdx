@@ -1,6 +1,6 @@
 ---
 title: "Path Traversal — `../` でサーバーの秘密ファイルを読み取る"
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import { PathTraversalLab } from '@site/src/components/labs/step05/PathTraversalLab';
@@ -295,6 +295,14 @@ app.get('/api/files', async (c) => {
 | [ディレクトリリスティング](../step01-recon/directory-listing) | ディレクトリリスティングでファイル構造を把握した後、パストラバーサルで非公開ファイルにアクセスするという段階的な攻撃が可能 |
 | [IDOR](./idor.mdx) | 同じ「サーバーがクライアント入力を信頼しすぎる」パターン。IDORがリソースIDの書き換えであるのに対し、パストラバーサルはファイルパスの書き換え |
 | [OSコマンドインジェクション](../step02-injection/command-injection) | パストラバーサルで設定ファイルを読み取り、その情報を使ってコマンドインジェクションを行うという複合攻撃が可能 |
+
+---
+
+## 理解度テスト
+
+学んだ内容をクイズで確認してみましょう:
+
+- [Path Traversal - 理解度テスト](./path-traversal-quiz)
 
 ---
 
