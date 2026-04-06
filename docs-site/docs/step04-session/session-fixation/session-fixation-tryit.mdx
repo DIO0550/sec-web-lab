@@ -1,0 +1,106 @@
+---
+title: Session Fixation — 攻撃者が仕込んだセッションIDで被害者をログインさせる - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { SessionFixationLab } from '@site/src/components/labs/step04/SessionFixationLab';
+
+# Session Fixation — 攻撃者が仕込んだセッションIDで被害者をログインさせる - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<SessionFixationLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: 攻撃者が指定したセッション ID で被害者がログインすると、攻撃者が同じ ID でアクセスできることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 攻撃者としてセッション ID を準備する
+
+   ```bash
+   # 攻撃者が知っているセッションIDを設定して被害者にURLを送る想定
+   curl -v http://localhost:3000/api/labs/session-fixation/vulnerable/login-page \
+     -b "session_id=attacker-fixed-session"
+   ```
+
+3. 被害者としてそのセッション ID でログインする
+
+   ```bash
+   # 被害者が攻撃者の指定したセッションIDでログイン
+   curl -X POST http://localhost:3000/api/labs/session-fixation/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -b "session_id=attacker-fixed-session" \
+     -d '{"username": "alice", "password": "alice123"}'
+   ```
+
+4. 攻撃者が同じセッション ID でアクセスする
+
+   ```bash
+   # 攻撃者が同じセッションIDで被害者のプロフィールにアクセス
+   curl http://localhost:3000/api/labs/session-fixation/vulnerable/profile \
+     -b "session_id=attacker-fixed-session"
+   ```
+
+5. 結果を確認する
+
+   - 攻撃者が alice のプロフィール情報を取得できる
+   - セッション ID はログイン前後で変わっていない
+   - **この結果が意味すること**: ログイン前にセッション ID を知っていた攻撃者が、被害者のログイン後にそのセッションを利用できてしまう
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃がセッション ID の再生成により失敗することを確認する
+
+1. 安全なエンドポイントで同じ手順を試みる
+
+   ```bash
+   # 被害者が攻撃者の指定したセッションIDでログイン（安全版）
+   curl -v -X POST http://localhost:3000/api/labs/session-fixation/secure/login \
+     -H "Content-Type: application/json" \
+     -b "session_id=attacker-fixed-session" \
+     -d '{"username": "alice", "password": "alice123"}'
+   ```
+
+2. レスポンスの `Set-Cookie` ヘッダーを確認する
+
+   - 新しいセッション ID が発行されている（`attacker-fixed-session` とは異なる値）
+   - 古いセッション ID は無効化されている
+
+3. 攻撃者が古いセッション ID でアクセスを試みる
+
+   ```bash
+   # 攻撃者が元のセッションIDでアクセスを試みる → 失敗する
+   curl http://localhost:3000/api/labs/session-fixation/secure/profile \
+     -b "session_id=attacker-fixed-session"
+   ```
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step04-session/session-fixation.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: ログイン時の `randomBytes()` による新 ID 生成と古い ID の `delete()`
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] セッション固定攻撃が成立するための条件は何か（セッション ID の再生成がない + 外部からの ID 注入が可能）
+- [ ] 攻撃者はどのようにして被害者のブラウザにセッション ID を注入するのか
+- [ ] セッション ID の再生成は「なぜ」この攻撃を無効化するのか（古い ID と新しい ID の関係を説明できるか）
+- [ ] セッション固定とセッションハイジャックの違いは何か
+
+---
+
+[← ラボに戻る](./session-fixation.mdx)

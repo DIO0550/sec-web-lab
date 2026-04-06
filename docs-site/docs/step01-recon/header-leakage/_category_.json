@@ -1,0 +1,7 @@
+{
+  "label": "HTTPレスポンスヘッダーからの情報漏洩",
+  "position": 1,
+  "link": {
+    "type": "generated-index"
+  }
+}

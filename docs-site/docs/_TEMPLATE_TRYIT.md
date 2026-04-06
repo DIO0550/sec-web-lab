@@ -8,15 +8,24 @@
   {lab-name}-tryit.mdx
 
   ■ 配置場所
-  docs-site/docs/{stepNN-xxx}/ （既存ラボドキュメントと同じディレクトリ）
+  docs-site/docs/{stepNN-xxx}/{lab-name}/ （ラボ単位のサブディレクトリ内）
+
+  ■ サブディレクトリ構成
+  各ラボは {stepNN-xxx}/{lab-name}/ サブディレクトリ内に3ファイル組で配置する:
+  - {lab-name}.mdx        (sidebar_position: 1) — 解説
+  - {lab-name}-tryit.mdx  (sidebar_position: 2) — 実際に試す
+  - {lab-name}-quiz.mdx   (sidebar_position: 3) — 理解度テスト
+
+  ■ _category_.json
+  サブディレクトリには _category_.json を配置する:
+  {"label": "日本語のラボ名", "position": N}
 
   ■ frontmatter
   - title: 既存ドキュメントの title に " - 実際に試す" を付与
-  - sidebar_position: ラボドキュメントの sidebar_position + 1
-    （3ページ構成: ラボ=3k-2, tryit=3k-1, quiz=3k）
+  - sidebar_position: 2 （常に固定）
 
   ■ サイドバー順序
-  ラボドキュメント → 実際に試す → 理解度テスト
+  ラボドキュメント (1) → 実際に試す (2) → 理解度テスト (3)
 -->
 
 ---

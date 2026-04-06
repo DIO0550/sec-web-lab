@@ -253,7 +253,7 @@ sec-web-labの開発環境では、フロントエンド（`http://localhost:517
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [CORS Misconfiguration](../../step06-server-side/cors-misconfiguration.mdx) | CORSの誤設定（Originエコーバック等）によるデータ窃取。Access-Control-Allow-Origin と Access-Control-Allow-Credentials の危険な組み合わせを体験する |
+| [CORS Misconfiguration](../../step06-server-side/cors-misconfiguration/cors-misconfiguration.mdx) | CORSの誤設定（Originエコーバック等）によるデータ窃取。Access-Control-Allow-Origin と Access-Control-Allow-Credentials の危険な組み合わせを体験する |
 
 ---
 

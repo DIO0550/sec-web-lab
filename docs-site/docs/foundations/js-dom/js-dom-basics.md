@@ -227,7 +227,7 @@ const safeMap = Object.create(null);
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [XSS](../../step02-injection/xss) | DOM操作（innerHTML等）によるスクリプト注入、イベントハンドラの悪用 |
+| [XSS](../../step02-injection/xss/xss.mdx) | DOM操作（innerHTML等）によるスクリプト注入、イベントハンドラの悪用 |
 
 ---
 

@@ -169,10 +169,10 @@ app.delete('/api/users/:id', async (c) => {
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [デフォルト認証情報](../../step03-auth/default-credentials) | 認証の基本、Basic認証 |
-| [ブルートフォース攻撃](../../step03-auth/brute-force) | 認証の仕組み、パスワードの強度 |
-| [脆弱なパスワードポリシー](../../step03-auth/weak-password-policy) | 認証の要件 |
-| [平文パスワード保存](../../step03-auth/plaintext-password) | 認証情報の安全な管理 |
+| [デフォルト認証情報](../../step03-auth/default-credentials/default-credentials.mdx) | 認証の基本、Basic認証 |
+| [ブルートフォース攻撃](../../step03-auth/brute-force/brute-force.mdx) | 認証の仕組み、パスワードの強度 |
+| [脆弱なパスワードポリシー](../../step03-auth/weak-password-policy/weak-password-policy.mdx) | 認証の要件 |
+| [平文パスワード保存](../../step03-auth/plaintext-password/plaintext-password.mdx) | 認証情報の安全な管理 |
 
 ---
 

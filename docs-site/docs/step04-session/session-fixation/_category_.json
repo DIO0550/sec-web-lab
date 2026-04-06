@@ -1,0 +1,7 @@
+{
+  "label": "攻撃者が仕込んだセッションIDで被害者をログインさせる",
+  "position": 5,
+  "link": {
+    "type": "generated-index"
+  }
+}

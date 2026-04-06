@@ -1,0 +1,116 @@
+---
+title: Cache Control — キャッシュ制御の不備による情報漏洩 - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { CacheControlLab } from '@site/src/components/labs/step07/CacheControlLab';
+
+# Cache Control — キャッシュ制御の不備による情報漏洩 - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<CacheControlLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: キャッシュ制御ヘッダーが未設定の状態で、レスポンスがキャッシュされていることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 脆弱なエンドポイントのレスポンスヘッダーを確認する
+
+   ```bash
+   # レスポンスヘッダーだけを表示
+   curl -I http://localhost:3000/api/labs/cache-control/vulnerable/profile \
+     -H "Cookie: session_id=test-session"
+   ```
+
+3. レスポンスヘッダーを観察する
+
+   - `Cache-Control` ヘッダーが存在しないことを確認する
+   - `Pragma` ヘッダーが存在しないことを確認する
+   - `Expires` ヘッダーが存在しないことを確認する
+   - **この結果が意味すること**: ブラウザや CDN はこのレスポンスを自由にキャッシュできる状態
+
+4. ブラウザで動作を確認する
+
+   - ブラウザで `http://localhost:5173/labs/cache-control` にアクセスする
+   - 脆弱バージョンのプロフィールページを表示する
+   - DevTools の **Network** タブを開き、プロフィール API のレスポンスヘッダーを確認する
+   - ページを離れてから「戻る」ボタンを押し、キャッシュからプロフィールが表示されることを確認する
+   - Network タブで「戻る」操作時にネットワークリクエストが発生していないことを確認する（`(disk cache)` と表示される）
+
+5. DevTools の Application タブでキャッシュを確認する
+
+   - **Application** → **Cache Storage** または **Back/forward cache** セクションを確認する
+   - レスポンスがキャッシュに保存されていることを確認する
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じアクセスパターンで、キャッシュ制御ヘッダーによりレスポンスがキャッシュされないことを確認する
+
+1. 安全なエンドポイントのレスポンスヘッダーを確認する
+
+   ```bash
+   curl -I http://localhost:3000/api/labs/cache-control/secure/profile \
+     -H "Cookie: session_id=test-session"
+   ```
+
+2. レスポンスヘッダーの違いを確認する
+
+   - `Cache-Control: no-store, no-cache, must-revalidate, private` が設定されていることを確認する
+   - `Pragma: no-cache` が設定されていることを確認する
+   - `Expires: 0` が設定されていることを確認する
+
+3. 脆弱バージョンと安全バージョンのヘッダーを並べて比較する
+
+   ```bash
+   # 脆弱バージョン
+   echo "=== 脆弱バージョン ==="
+   curl -sI http://localhost:3000/api/labs/cache-control/vulnerable/profile \
+     -H "Cookie: session_id=test-session"
+
+   echo ""
+
+   # 安全バージョン
+   echo "=== 安全バージョン ==="
+   curl -sI http://localhost:3000/api/labs/cache-control/secure/profile \
+     -H "Cookie: session_id=test-session"
+   ```
+
+4. ブラウザで安全バージョンの動作を確認する
+
+   - 安全バージョンのプロフィールページを表示する
+   - ページを離れてから「戻る」ボタンを押す
+   - Network タブでサーバーへの再リクエストが発生していることを確認する（`(disk cache)` ではなく実際のリクエスト）
+   - **この違いが意味すること**: `no-store` によりブラウザがレスポンスをキャッシュに保存しないため、毎回サーバーに問い合わせが行われる
+
+5. コードの差分を確認する
+
+   - `backend/src/labs/step07-design/cache-control.ts` の脆弱版と安全版を比較
+   - **ヘッダー設定の3行** が攻撃を防いでいることに注目する
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] `Cache-Control` ヘッダーが未設定の場合、ブラウザや CDN がどのようにレスポンスを扱うか
+- [ ] 共有 PC で「戻る」ボタンにより情報漏洩が起きる仕組み（ログアウトがキャッシュを消去しない理由）
+- [ ] `no-store` と `no-cache` の違い、それぞれがどのレベルのキャッシュに影響するか
+- [ ] `private` ディレクティブが CDN キャッシュによる情報漏洩をどのように防ぐか
+- [ ] `Pragma: no-cache` が必要な理由（HTTP/1.0 互換性）
+
+---
+
+[← ラボに戻る](./cache-control.mdx)

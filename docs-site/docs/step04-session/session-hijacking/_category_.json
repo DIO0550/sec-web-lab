@@ -1,0 +1,7 @@
+{
+  "label": "XSSで盗んだセッションIDで他人になりすます",
+  "position": 6,
+  "link": {
+    "type": "generated-index"
+  }
+}

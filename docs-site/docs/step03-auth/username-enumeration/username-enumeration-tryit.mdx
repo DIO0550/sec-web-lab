@@ -1,0 +1,143 @@
+---
+title: Username Enumeration — ユーザー名の存在確認による情報漏洩 - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { UsernameEnumerationLab } from '@site/src/components/labs/step03/UsernameEnumerationLab';
+
+# Username Enumeration — ユーザー名の存在確認による情報漏洩 - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<UsernameEnumerationLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: エラーメッセージの違いとレスポンス時間の差から、存在するユーザー名を特定できることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 存在するユーザー名と存在しないユーザー名でログインを試み、エラーメッセージを比較する
+
+   ```bash
+   # 存在するユーザー名で間違ったパスワードを送信
+   curl -s -X POST http://localhost:3000/api/labs/username-enumeration/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "wrongpassword"}'
+   ```
+
+   ```bash
+   # 存在しないユーザー名で同じリクエストを送信
+   curl -s -X POST http://localhost:3000/api/labs/username-enumeration/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "nonexistent_user", "password": "wrongpassword"}'
+   ```
+
+3. エラーメッセージを比較する
+
+   - 存在するユーザー名 → `{"error": "パスワードが違います"}`
+   - 存在しないユーザー名 → `{"error": "ユーザーが見つかりません"}`
+   - **この結果が意味すること**: 攻撃者はメッセージの違いだけで、ユーザー名の存在を確認できる
+
+4. ユーザー名の列挙スクリプトを実行する
+
+   ```bash
+   # ユーザー名候補リストでスキャン
+   for user in admin alice bob charlie test info support root; do
+     result=$(curl -s -X POST http://localhost:3000/api/labs/username-enumeration/vulnerable/login \
+       -H "Content-Type: application/json" \
+       -d "{\"username\":\"$user\",\"password\":\"dummy\"}")
+     echo "$result" | grep -q "パスワードが違います" \
+       && echo "[存在する] $user" \
+       || echo "[存在しない] $user"
+   done
+   ```
+
+5. タイミング攻撃も試す
+
+   ```bash
+   # レスポンス時間を計測して比較
+   echo "=== 存在するユーザー ==="
+   time curl -s -o /dev/null -X POST http://localhost:3000/api/labs/username-enumeration/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "wrongpassword"}'
+
+   echo "=== 存在しないユーザー ==="
+   time curl -s -o /dev/null -X POST http://localhost:3000/api/labs/username-enumeration/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "nonexistent_user", "password": "wrongpassword"}'
+   ```
+
+   - 存在するユーザーへのリクエストは bcrypt 比較により約 50-100ms 遅い
+   - **この結果が意味すること**: メッセージを統一してもレスポンス時間で判別できてしまう
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃でユーザー名の存在を判別できないことを確認する
+
+1. 安全なエンドポイントで同じテストを実行する
+
+   ```bash
+   # 存在するユーザー名
+   curl -s -X POST http://localhost:3000/api/labs/username-enumeration/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "wrongpassword"}'
+
+   # 存在しないユーザー名
+   curl -s -X POST http://localhost:3000/api/labs/username-enumeration/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "nonexistent_user", "password": "wrongpassword"}'
+   ```
+
+2. エラーメッセージが同一であることを確認する
+
+   - どちらも `{"error": "認証に失敗しました"}` が返される
+   - メッセージからはユーザーの存在を判別できない
+
+3. レスポンス時間も比較する
+
+   ```bash
+   # 安全なエンドポイントでタイミングを計測
+   echo "=== 存在するユーザー（安全版） ==="
+   time curl -s -o /dev/null -X POST http://localhost:3000/api/labs/username-enumeration/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "wrongpassword"}'
+
+   echo "=== 存在しないユーザー（安全版） ==="
+   time curl -s -o /dev/null -X POST http://localhost:3000/api/labs/username-enumeration/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "nonexistent_user", "password": "wrongpassword"}'
+   ```
+
+   - 両方とも同程度の応答時間（ダミーハッシュ比較により処理時間が一定）
+   - **この結果が意味すること**: タイミング攻撃でもユーザーの存在を判別できない
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step03-auth/username-enumeration.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: ダミーハッシュの導入と条件分岐の統一
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] ユーザー名列挙が成立するための条件は何か（メッセージ方式・タイミング方式それぞれ）
+- [ ] 攻撃者は何を入力し、サーバーのどの情報差分から、何を判別するのか
+- [ ] エラーメッセージの統一だけでは不十分な理由は何か
+- [ ] ダミーハッシュ比較は「なぜ」タイミング攻撃を無効化するのか（「安全だから安全」ではダメ）
+- [ ] ユーザー名列挙がブルートフォース攻撃の「前段階」として危険な理由は何か
+
+---
+
+[← ラボに戻る](./username-enumeration.mdx)

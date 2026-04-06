@@ -1,0 +1,131 @@
+---
+title: Predictable Session ID — 推測可能なセッションID - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { PredictableSessionIdLab } from '@site/src/components/labs/step04/PredictableSessionIdLab';
+
+# Predictable Session ID — 推測可能なセッションID - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<PredictableSessionIdLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: セッション ID が予測可能であることを確認し、他のユーザーのセッションを乗っ取れることを体験する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. テストユーザーを複数ログインさせ、セッション ID のパターンを観察する
+
+   ```bash
+   # alice でログイン
+   curl -X POST http://localhost:3000/api/labs/predictable-session-id/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "alice", "password": "password123"}' -v 2>&1 | grep session_id
+   # → Set-Cookie: session_id=1001
+
+   # bob でログイン
+   curl -X POST http://localhost:3000/api/labs/predictable-session-id/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "bob", "password": "password123"}' -v 2>&1 | grep session_id
+   # → Set-Cookie: session_id=1002
+   ```
+
+3. パターンを分析する
+
+   - セッション ID が連番（1001, 1002, ...）であることを確認
+   - 次に発行される ID が `1003` であると推測できることを確認
+
+4. 攻撃者のアカウントでログインし、自分の ID から他人の ID を推測する
+
+   ```bash
+   # 攻撃者でログイン
+   curl -X POST http://localhost:3000/api/labs/predictable-session-id/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "attacker", "password": "password123"}' -v 2>&1 | grep session_id
+   # → Set-Cookie: session_id=1003
+
+   # 自分のIDの前の番号を試す
+   curl http://localhost:3000/api/labs/predictable-session-id/vulnerable/profile \
+     -b "session_id=1001"
+   # → 200 OK: { "username": "alice", ... } — alice のセッションを乗っ取り！
+
+   curl http://localhost:3000/api/labs/predictable-session-id/vulnerable/profile \
+     -b "session_id=1002"
+   # → 200 OK: { "username": "bob", ... } — bob のセッションも乗っ取り！
+   ```
+
+5. 結果を確認する
+
+   - わずか数回の試行で他ユーザーのセッションを乗っ取れた
+   - **この結果が意味すること**: セッション ID が予測可能であれば、パスワードを知らなくてもアカウントにアクセスできてしまう
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: セッション ID が暗号論的に安全な乱数で生成され、推測が不可能であることを確認する
+
+1. 安全なエンドポイントで複数回ログインし、セッション ID を観察する
+
+   ```bash
+   # alice でログイン
+   curl -X POST http://localhost:3000/api/labs/predictable-session-id/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "alice", "password": "password123"}' -v 2>&1 | grep session_id
+   # → Set-Cookie: session_id=f47ac10b-58cc-4372-a567-0e02b2c3d479
+
+   # bob でログイン
+   curl -X POST http://localhost:3000/api/labs/predictable-session-id/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "bob", "password": "password123"}' -v 2>&1 | grep session_id
+   # → Set-Cookie: session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8
+   ```
+
+2. セッション ID にパターンがないことを確認する
+
+   - 2つの UUID に規則性がないことを確認
+   - 次の ID を推測する方法がないことを理解する
+
+3. 総当たり攻撃を試みる
+
+   ```bash
+   # ランダムな UUID を生成して試すが、当然ヒットしない
+   for i in $(seq 1 100); do
+     random_uuid=$(cat /proc/sys/kernel/random/uuid)
+     result=$(curl -s http://localhost:3000/api/labs/predictable-session-id/secure/profile \
+       -b "session_id=$random_uuid")
+     echo "試行 $i: $result"
+   done
+   # → 全て 401 Unauthorized
+   ```
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step04-session/predictable-session-id.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `sessionCounter++` vs `crypto.randomUUID()`
+   - 生成される ID の探索空間の違い: 数千通り vs 5.3 x 10^36 通り
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] 連番やタイムスタンプがセッション ID として危険な理由は何か
+- [ ] `Math.random()` が暗号論的に安全でない理由は何か（擬似乱数生成器の予測可能性）
+- [ ] `crypto.randomUUID()` が安全な理由は何か（CSPRNG とエントロピーの観点から）
+- [ ] セッション ID のエントロピーが128ビット以上必要とされる理由は何か（総当たりの計算量）
+
+---
+
+[← ラボに戻る](./predictable-session-id.mdx)

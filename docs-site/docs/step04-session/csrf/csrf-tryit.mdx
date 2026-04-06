@@ -1,0 +1,90 @@
+---
+title: Cross-Site Request Forgery (CSRF) — 被害者のブラウザを使って勝手にリクエストを送る - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { CsrfLab } from '@site/src/components/labs/step04/CsrfLab';
+
+# Cross-Site Request Forgery (CSRF) — 被害者のブラウザを使って勝手にリクエストを送る - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<CsrfLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: 罠ページを経由して、被害者のパスワードが攻撃者の指定した値に変更されることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. ブラウザで `http://localhost:5173` にアクセスし、テストユーザーでログインする
+
+3. 別タブで攻撃者の罠ページ（`http://localhost:5173/attacker/csrf-trap.html`）を開く
+
+   ```html
+   <!-- この罠ページが自動的にパスワード変更リクエストを送信する -->
+   <form id="trap" action="http://localhost:3000/api/labs/csrf/vulnerable/change-password" method="POST">
+     <input type="hidden" name="newPassword" value="hacked123" />
+   </form>
+   <script>document.getElementById('trap').submit();</script>
+   ```
+
+4. 結果を確認する
+
+   - パスワードが `hacked123` に変更されている
+   - 被害者は罠ページを開いただけで、パスワード変更フォームに触れていない
+   - DevTools の Network タブで、Cookie が自動的に付与されたリクエストを確認できる
+   - **この結果が意味すること**: Cookie は送信元サイトに関係なく自動付与されるため、サーバーは「誰が送ったか」は分かっても「どこから送られたか」は分からない
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃が CSRF トークン検証により失敗することを確認する
+
+1. 安全なエンドポイントに対して同じ罠ページで攻撃を試みる
+
+   ```bash
+   # CSRF トークンなしでパスワード変更を試行
+   curl -X POST http://localhost:3000/api/labs/csrf/secure/change-password \
+     -H "Content-Type: application/json" \
+     -b "session_id=valid-session" \
+     -d '{"newPassword": "hacked123"}'
+   ```
+
+2. 結果を確認する
+
+   - `403 Forbidden` が返され、「不正なリクエストです」とエラーになる
+   - CSRF トークンが含まれていないため、サーバーがリクエストを拒否している
+
+3. 正規のフォームからは変更が成功することを確認する
+
+   - 正規ページでは CSRF トークンが自動的にフォームに埋め込まれている
+   - CSRF トークン付きのリクエストは正常に処理される
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step04-session/csrf.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: CSRF トークンの生成・埋め込み・検証
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] CSRF 攻撃が成立するための条件は何か（3つの条件を挙げられるか）
+- [ ] 罠ページから送信されたリクエストに、なぜ被害者の Cookie が付くのか
+- [ ] CSRF トークンは「なぜ」この攻撃を無効化するのか（攻撃者がトークンを取得できない理由を説明できるか）
+- [ ] `SameSite=Lax` が設定されている場合、CSRF 攻撃の成立条件はどう変わるか
+
+---
+
+[← ラボに戻る](./csrf.mdx)

@@ -244,15 +244,15 @@ function steal(data) {
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [CSRF](../../step04-session/csrf.mdx) | SOPが防げない攻撃の代表例。フォーム送信がSOPの例外であること、Cookieの自動送信がCSRFを可能にすることを体験する |
-| [XSS](../../step02-injection/xss) | 注入されたスクリプトが同一オリジンで実行されるため、SOPの保護を受けられないことを体験する |
-| [クリックジャッキング](../../step07-design/clickjacking.mdx) | iframeによるクロスオリジン埋め込みがSOPの例外であることを悪用した攻撃を体験する |
+| [CSRF](../../step04-session/csrf/csrf.mdx) | SOPが防げない攻撃の代表例。フォーム送信がSOPの例外であること、Cookieの自動送信がCSRFを可能にすることを体験する |
+| [XSS](../../step02-injection/xss/xss.mdx) | 注入されたスクリプトが同一オリジンで実行されるため、SOPの保護を受けられないことを体験する |
+| [クリックジャッキング](../../step07-design/clickjacking/clickjacking.mdx) | iframeによるクロスオリジン埋め込みがSOPの例外であることを悪用した攻撃を体験する |
 
 ### オープンリダイレクト
 
 | ラボ | 関連する知識 |
 |------|--------------|
-| [オープンリダイレクト](../../step02-injection/open-redirect) | リダイレクト先の検証不備により、信頼されたドメインからの遷移を装って攻撃者のサイトに誘導する手法 |
+| [オープンリダイレクト](../../step02-injection/open-redirect/open-redirect.mdx) | リダイレクト先の検証不備により、信頼されたドメインからの遷移を装って攻撃者のサイトに誘導する手法 |
 
 ---
 

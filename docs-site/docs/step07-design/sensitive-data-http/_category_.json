@@ -1,0 +1,7 @@
+{
+  "label": "暗号化されていないHTTP通信で機密データが平文で流れる",
+  "position": 8,
+  "link": {
+    "type": "generated-index"
+  }
+}

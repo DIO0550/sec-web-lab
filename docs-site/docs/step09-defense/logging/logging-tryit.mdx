@@ -1,0 +1,83 @@
+---
+title: ログなし / 不十分なログ — セキュリティイベントが記録されない - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { LoggingLab } from '@site/src/components/labs/step09/LoggingLab';
+
+# ログなし / 不十分なログ — セキュリティイベントが記録されない - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<LoggingLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: ブルートフォース攻撃を実行しても、サーバーログに攻撃の痕跡が一切残らないことを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 複数回のログイン失敗を試みる
+
+   ```bash
+   # 異なるパスワードで連続してログインを試行
+   curl -s -X POST http://localhost:3000/api/labs/logging/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "password123"}'
+
+   curl -s -X POST http://localhost:3000/api/labs/logging/vulnerable/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "admin123"}'
+   ```
+
+3. サーバーのコンソール出力を確認する
+
+   - ログイン失敗に関する記録が **一切表示されない**
+   - 何回失敗しても、誰が試行しても、痕跡が残らない
+   - **この結果が意味すること**: 攻撃者は検知を気にすることなく、無制限にブルートフォース攻撃を続けられる
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ操作でセキュリティイベントが構造化ログとして記録されることを確認する
+
+1. 安全なエンドポイントに同じリクエストを送信する
+
+   ```bash
+   curl -s -X POST http://localhost:3000/api/labs/logging/secure/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "wrongpassword"}'
+   ```
+
+2. サーバーのコンソール出力を確認する
+
+   - 構造化 JSON 形式でセキュリティイベントが記録されている
+   - タイムスタンプ、IP アドレス、ユーザー名、イベント種別が含まれている
+
+3. コードの差分を確認する
+
+   - `backend/src/labs/step09-defense/logging.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `securityLog()` の呼び出しの有無
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] アクセスログとセキュリティイベントログの違いは何か
+- [ ] ログがない場合、ブルートフォース攻撃をどうやって検知するのか（できるのか）
+- [ ] 構造化ログ（JSON 形式）が非構造化ログ（自由テキスト）より優れている理由
+- [ ] ログイン成功もログに記録すべき理由は何か
+
+---
+
+[← ラボに戻る](./logging.mdx)

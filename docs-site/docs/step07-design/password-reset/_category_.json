@@ -1,0 +1,7 @@
+{
+  "label": "パスワードリセットトークンが推測可能でアカウントを乗っ取れる",
+  "position": 5,
+  "link": {
+    "type": "generated-index"
+  }
+}
