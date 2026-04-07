@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 2,
       explanation:
         "textContentはHTMLタグを解釈せずテキストとしてそのまま設定するため、XSSのリスクがありません。innerHTMLやouterHTML、insertAdjacentHTMLはHTMLとして解釈されるため、ユーザー入力をそのまま渡すとスクリプトが実行される可能性があります。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "Object.prototypeはすべてのオブジェクトの祖先であるため、ここにプロパティを追加すると、既存・新規を問わずすべてのオブジェクトにそのプロパティが現れます。例えば isAdmin: true を注入されると、権限チェックがバイパスされる可能性があります。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "new Function()はeval()と同等に危険です。文字列をJavaScriptコードとして実行するため、ユーザー入力を渡すと任意のコード実行を許可してしまいます。setTimeout()やsetInterval()に文字列引数を渡す場合も同様に危険です。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "DOMイベントは子要素で発生した後、親要素に向かってバブリング（伝搬）します。この仕組みを利用して、親要素でイベントを委譲して処理する「イベントデリゲーション」というパターンが使われます。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
 
     // === 並べ替え（Ordering）===
@@ -76,7 +76,7 @@ export const quizData = {
       initialOrder: [2, 0, 3, 1],
       explanation:
         "プロパティへのアクセス時、まずオブジェクト自身を確認し、なければプロトタイプ、さらにその上のプロトタイプと辿っていきます。Object.prototypeまで探索しても見つからなければundefinedが返されます。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -87,7 +87,7 @@ export const quizData = {
       correctAnswers: ["DOM"],
       explanation:
         "DOM（Document Object Model）は、HTMLドキュメントをプログラムから操作するためのAPIです。ブラウザはHTMLを解析してDOMツリー（木構造）を構築し、JavaScriptからこのツリーを読み書きできるようにします。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
     {
       id: "fib-2",
@@ -96,7 +96,7 @@ export const quizData = {
       correctAnswers: ["null"],
       explanation:
         "Object.create(null)で生成されたオブジェクトはプロトタイプを持たないため、__proto__プロパティが存在しません。これにより、プロトタイプチェーンを通じた汚染の影響を受けないオブジェクトを安全に使用できます。",
-      referenceLink: "/foundations/js-dom/js-dom-basics",
+      referenceLink: "/foundations/js-dom/js-dom-basics/js-dom-basics",
     },
   ],
 } satisfies QuizData;

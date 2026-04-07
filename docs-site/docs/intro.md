@@ -233,16 +233,16 @@ slug: /
 
 | # | トピック | 関連ステップ | ドキュメント |
 |---|---------|-------------|-------------|
-| F-1 | HTTPの基礎 | Step 1 の前提 | [http-basics](foundations/protocol/http-basics.md) |
-| F-2 | URLエンコーディングとReferer | Step 1 の前提 | [url-encoding](foundations/protocol/url-encoding.md) |
-| F-3 | 同一オリジンポリシー | Step 2, 4 の前提 | [same-origin-policy](foundations/browser/same-origin-policy.md) |
-| F-4 | CORSの仕組み | Step 6 の前提 | [cors](foundations/browser/cors.md) |
-| F-5 | 認証の基礎 | Step 3 の前提 | [authentication](foundations/auth-session/authentication.md) |
-| F-6 | セッション管理の基礎 | Step 4 の前提 | [session-management](foundations/auth-session/session-management.md) |
-| F-7 | 暗号化・ハッシュの基礎 | Step 3, 8 の前提 | [crypto-basics](foundations/crypto/crypto-basics.md) |
-| F-8 | JavaScript・DOMの基礎 | Step 2, 8 の前提 | [js-dom-basics](foundations/js-dom/js-dom-basics.md) |
-| F-9 | 入力処理の基礎 | Step 2 の前提 | [input-basics](foundations/input-handling/input-basics.md) |
-| F-10 | 文字エンコーディングとセキュリティ | Step 2 の補足 | [character-encoding](foundations/input-handling/character-encoding.md) |
+| F-1 | HTTPの基礎 | Step 1 の前提 | [http-basics](foundations/protocol/http-basics/http-basics.md) |
+| F-2 | URLエンコーディングとReferer | Step 1 の前提 | [url-encoding](foundations/protocol/url-encoding/url-encoding.md) |
+| F-3 | 同一オリジンポリシー | Step 2, 4 の前提 | [same-origin-policy](foundations/browser/same-origin-policy/same-origin-policy.md) |
+| F-4 | CORSの仕組み | Step 6 の前提 | [cors](foundations/browser/cors/cors.md) |
+| F-5 | 認証の基礎 | Step 3 の前提 | [authentication](foundations/auth-session/authentication/authentication.md) |
+| F-6 | セッション管理の基礎 | Step 4 の前提 | [session-management](foundations/auth-session/session-management/session-management.md) |
+| F-7 | 暗号化・ハッシュの基礎 | Step 3, 8 の前提 | [crypto-basics](foundations/crypto/crypto-basics/crypto-basics.md) |
+| F-8 | JavaScript・DOMの基礎 | Step 2, 8 の前提 | [js-dom-basics](foundations/js-dom/js-dom-basics/js-dom-basics.md) |
+| F-9 | 入力処理の基礎 | Step 2 の前提 | [input-basics](foundations/input-handling/input-basics/input-basics.md) |
+| F-10 | 文字エンコーディングとセキュリティ | Step 2 の補足 | [character-encoding](foundations/input-handling/character-encoding/character-encoding.md) |
 
 ---
 

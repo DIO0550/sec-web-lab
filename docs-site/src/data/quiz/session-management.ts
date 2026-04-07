@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "URLにセッションIDを含めると、Refererヘッダ経由で外部サイトに漏洩したり、ブラウザ履歴やサーバーログに記録されたりするリスクがあります。URLの共有やブックマークでも漏洩する可能性があるため、セキュリティ上避けるべきです。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "Math.random()は暗号論的に安全な疑似乱数生成器（CSPRNG）ではありません。内部状態から出力が予測可能であり、攻撃者がセッションIDを推測できてしまいます。セッションIDの生成にはcrypto.randomBytes()などのCSPRNGを使用すべきです。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "HTTPプロトコルはステートレス（状態を持たない）に設計されています。各リクエストは独立しており、サーバーは前回のリクエストの情報を保持しません。この制約を補うためにセッション管理の仕組みが必要になります。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "hiddenパラメータは画面上に表示されないだけで、DevToolsのElementsタブで値を変更したり、curlで任意の値を送信したりすることで簡単に改ざんできます。hiddenパラメータの値はクライアント側のデータであり、サーバー側で必ず検証する必要があります。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
 
     // === 並べ替え（Ordering）===
@@ -77,7 +77,7 @@ export const quizData = {
       initialOrder: [3, 0, 4, 2, 1],
       explanation:
         "セッション管理は、ログイン成功→セッションID生成→Cookie送信→以降の自動送信→ユーザー特定という流れで行われます。ブラウザがCookieを自動的に送信する仕組みを利用しています。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -88,7 +88,7 @@ export const quizData = {
       correctAnswers: ["HttpOnly", "httponly", "httpOnly", "HTTPONLY"],
       explanation:
         "HttpOnly属性を設定すると、JavaScriptのdocument.cookieからCookieにアクセスできなくなります。これにより、XSS攻撃によるCookie窃取（セッションハイジャック）を防止できます。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
     {
       id: "fib-2",
@@ -97,7 +97,7 @@ export const quizData = {
       correctAnswers: ["SameSite", "samesite", "sameSite", "SAMESITE"],
       explanation:
         "SameSite属性はクロスサイトリクエストでのCookie送信を制御します。Strict、Lax、Noneの3つの値があり、CSRF攻撃の緩和に重要な役割を果たします。モダンブラウザのデフォルト値はLaxです。",
-      referenceLink: "/foundations/auth-session/session-management",
+      referenceLink: "/foundations/auth-session/session-management/session-management",
     },
   ],
 } satisfies QuizData;

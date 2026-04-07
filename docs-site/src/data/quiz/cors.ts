@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 2,
       explanation:
         "Access-Control-Allow-Credentials: trueを返す場合、Access-Control-Allow-Originにワイルドカード（*）は使用できません。この制約がないと、任意のオリジンから認証付きリクエストが可能になり、攻撃者のサイトから被害者のCookieを使ってAPIを呼び出せてしまいます。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 2,
       explanation:
         "Originヘッダの値をそのままエコーバックすると、攻撃者のオリジン（https://evil.com等）からも認証付きアクセスが許可されてしまいます。安全な実装では、許可リスト（ホワイトリスト）でオリジンを検証する必要があります。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "単純リクエストの条件では、Content-Typeはapplication/x-www-form-urlencoded、multipart/form-data、text/plainのいずれかである必要があります。application/jsonは条件外のため、プリフライトリクエスト（OPTIONSメソッド）が発生します。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "デフォルトでは、クロスオリジンのfetchリクエストにCookieは含まれません。Cookieを送信するにはクライアント側でcredentials: 'include'を指定し、サーバー側でもAccess-Control-Allow-Credentials: trueを返す必要があります。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
 
     // === 並べ替え（Ordering）===
@@ -76,7 +76,7 @@ export const quizData = {
       initialOrder: [2, 0, 3, 1],
       explanation:
         "プリフライトでは、まずブラウザがOPTIONSリクエストで事前確認を行い、サーバーが許可条件を応答します。許可されていれば実際のリクエストが送信され、サーバーがレスポンスを返します。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -87,7 +87,7 @@ export const quizData = {
       correctAnswers: ["OPTIONS"],
       explanation:
         "プリフライトリクエストはOPTIONSメソッドを使った「事前確認」です。ブラウザが自動的に送信し、サーバーがAccess-Control-Allow-*ヘッダで許可条件を応答します。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
     {
       id: "fib-2",
@@ -99,7 +99,7 @@ export const quizData = {
       ],
       explanation:
         "Access-Control-Allow-Originヘッダは、CORSの最も基本的なヘッダです。サーバーがこのヘッダに許可するオリジンを指定することで、ブラウザがレスポンスをJavaScriptに渡すかどうかを判断します。",
-      referenceLink: "/foundations/browser/cors",
+      referenceLink: "/foundations/browser/cors/cors",
     },
   ],
 } satisfies QuizData;

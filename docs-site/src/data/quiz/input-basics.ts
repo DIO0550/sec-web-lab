@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "ブラックリスト方式では、危険な値をすべて列挙する必要がありますが、大文字小文字の混合（DRoP）、エンコーディング（%44ROP）などの方法で迂回される可能性があります。ホワイトリストでは許可する値のみを定義するため、未知の攻撃パターンにも対応できます。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 2,
       explanation:
         "プレースホルダ（パラメータ化クエリ）を使用すると、ユーザー入力がどんな値でもSQL構文として解釈されません。文字列連結でSQLを組み立てることがSQLインジェクションの根本原因であり、プレースホルダはこれを構造的に防止します。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "同じデータでも出力先の文脈によって必要なエスケープは異なります。HTML、SQL、URL、JavaScriptなど、それぞれの文脈に応じたエスケープが必要です。例えば、HTMLエスケープ済みのデータをそのままSQL文に使用するとSQLインジェクションが起きる可能性があります。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "バリデーションは入力が期待する形式かをチェックし不正なら拒否する処理、サニタイズは危険な部分を除去または無害化する処理です。バリデーションが「拒否」であるのに対し、サニタイズは「浄化」です。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
 
     // === 並べ替え（Ordering）===
@@ -76,7 +76,7 @@ export const quizData = {
       initialOrder: [3, 1, 0, 2],
       explanation:
         "入力処理は「バリデーション→サニタイズ→ビジネスロジック→エスケープ」の順で行います。入力時にバリデーションとサニタイズを行い、出力時にエスケープを行うことで、多層的な防御を実現します。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -87,7 +87,7 @@ export const quizData = {
       correctAnswers: ["&lt;", "&LT;"],
       explanation:
         "HTMLエスケープでは、< を &lt; に変換します。これにより、ブラウザがタグの開始として解釈することを防ぎ、テキストとして表示されます。XSS対策の基本的なエスケープの一つです。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
     {
       id: "fib-2",
@@ -96,7 +96,7 @@ export const quizData = {
       correctAnswers: ["DOMPurify", "dompurify", "domPurify"],
       explanation:
         "DOMPurifyは、HTMLの一部を許可しつつ危険なコードを除去する検証済みのサニタイズライブラリです。自前でサニタイズ処理を実装すると、迂回される可能性が高いため、信頼性の高いライブラリを使用すべきです。",
-      referenceLink: "/foundations/input-handling/input-basics",
+      referenceLink: "/foundations/input-handling/input-basics/input-basics",
     },
   ],
 } satisfies QuizData;

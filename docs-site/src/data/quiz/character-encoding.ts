@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "Shift_JISでは「表」「能」「ソ」などの漢字の2バイト目が0x5C（バックスラッシュ）と同じ値になります。バイト単位でエスケープ処理を行うシステムでは、このマルチバイト文字が誤解釈され、SQLインジェクションやXSSの原因になります。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "charsetが指定されていないと、ブラウザがエンコーディングを自動判別します。攻撃者はこれを悪用し、UTF-7などの特殊なエンコーディングで解釈させることで、XSS攻撃を成立させる可能性があります。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "RFC 3629では非最短形式は禁止されており、現代のUTF-8パーサはこれを不正なバイト列として拒否します。Node.jsのTextDecoder（fatal: true）もデフォルトで非最短形式を拒否します。ただし、古いシステムや独自実装のパーサでは受け入れてしまう場合があります。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "文字集合は使用可能な文字の集合と各文字に割り当てられた番号（コードポイント）を定義するものです。文字エンコーディングは、そのコードポイントをバイト列に変換する規則です。例えば、Unicodeは文字集合であり、UTF-8やUTF-16はそのエンコーディングです。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
 
     // === 並べ替え（Ordering）===
@@ -76,7 +76,7 @@ export const quizData = {
       initialOrder: [2, 3, 0, 1],
       explanation:
         "UTF-8のエンコードでは、まず文字のUnicodeコードポイントを確認し、範囲に応じてバイト数を決定します。そのバイトパターンにコードポイントのビットを当てはめて、最終的なバイト列を得ます。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -87,7 +87,7 @@ export const quizData = {
       correctAnswers: ["UTF-8", "utf-8", "utf8", "UTF8"],
       explanation:
         "UTF-8は現在のWebの標準エンコーディングです。ASCII互換性を持ちつつ、Unicodeのすべての文字を1〜4バイトの可変長で表現できます。セキュリティ上も、アプリケーション全体でUTF-8に統一することが最も重要な対策です。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
     {
       id: "fib-2",
@@ -96,7 +96,7 @@ export const quizData = {
       correctAnswers: ["fatal"],
       explanation:
         "TextDecoderのコンストラクタにfatal: trueオプションを指定すると、不正なバイト列（非最短形式や不完全なマルチバイト等）に遭遇した際にTypeErrorがスローされます。デフォルトでは不正なバイト列が置換文字（U+FFFD）に置き換えられるだけでエラーになりません。",
-      referenceLink: "/foundations/input-handling/character-encoding",
+      referenceLink: "/foundations/input-handling/character-encoding/character-encoding",
     },
   ],
 } satisfies QuizData;
