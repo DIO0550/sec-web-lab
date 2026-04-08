@@ -1,0 +1,7 @@
+{
+  "label": "メールヘッダーに改行コードを注入してスパムの踏み台にする",
+  "position": 5,
+  "link": {
+    "type": "generated-index"
+  }
+}

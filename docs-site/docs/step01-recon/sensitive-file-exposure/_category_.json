@@ -1,0 +1,7 @@
+{
+  "label": "機密ファイルの露出 (.git / .env / robots.txt)",
+  "position": 2,
+  "link": {
+    "type": "generated-index"
+  }
+}

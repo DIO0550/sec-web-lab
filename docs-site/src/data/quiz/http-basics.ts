@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "GETリクエストのパラメータはURLのクエリ文字列に含まれるため、ブラウザ履歴、サーバーログ、Refererヘッダなど多くの場所に残り、情報漏洩のリスクが高くなります。POSTではパラメータがリクエストボディに含まれるため、これらの経路からの漏洩を防げます。",
-      referenceLink: "/foundations/protocol/http-basics#getとpostの使い分け",
+      referenceLink: "/foundations/protocol/http-basics/http-basics#getとpostの使い分け",
     },
     {
       id: "mc-2",
@@ -50,7 +50,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "GETは冪等なメソッドです。何回呼んでも同じデータを返します。一方、POSTは呼ぶたびに新しいリソースが作成される可能性があり、冪等ではありません。",
-      referenceLink: "/foundations/protocol/http-basics#メソッドの一覧",
+      referenceLink: "/foundations/protocol/http-basics/http-basics#メソッドの一覧",
     },
     {
       id: "tf-2",
@@ -107,7 +107,7 @@ export const quizData = {
       correctAnswers: ["GET"],
       explanation:
         "GETメソッドはリソースの取得に使います。ボディを持たず、冪等なメソッドです。Webブラウザでページを開く際に使用される最も基本的なHTTPメソッドです。",
-      referenceLink: "/foundations/protocol/http-basics#メソッドの一覧",
+      referenceLink: "/foundations/protocol/http-basics/http-basics#メソッドの一覧",
     },
     {
       id: "fib-2",

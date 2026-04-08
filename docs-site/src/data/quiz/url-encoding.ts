@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "攻撃者はエンコーディングを使ってフィルタを迂回するため、デコード後の値に対してバリデーションやエスケープを行う必要があります。エンコード前の段階でチェックすると、エンコードされた攻撃文字列を見逃してしまいます。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "RefererヘッダにはURLのクエリ文字列も含まれるため、外部リソースの読み込み時にトークンなどのセンシティブな情報が漏洩します。URLにセンシティブな情報を含めないことが重要です。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "日本語文字はUTF-8で複数バイトにエンコードされます。例えば「あ」は `%E3%81%82` のように3つの `%XX` で表現されます。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "`no-referrer` はRefererヘッダを一切送信しない設定です。同一オリジンかどうかに関わらず、すべてのリクエストでRefererが除去されます。同一オリジンにのみ送信したい場合は `same-origin` を使用します。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
 
     // === 並べ替え（Ordering）===
@@ -76,7 +76,7 @@ export const quizData = {
       initialOrder: [2, 3, 0, 1],
       explanation:
         "パーセントエンコーディングは、まず文字をUTF-8バイト列に変換し、各バイトを16進数にして `%` を付け、最終的に連結してURLに使用します。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -87,7 +87,7 @@ export const quizData = {
       correctAnswers: ["%20"],
       explanation:
         "スペース（0x20）をパーセントエンコーディングすると `%20` になります。フォームデータでは `+` で表現されることもありますが、URL内では `%20` が標準です。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
     {
       id: "fib-2",
@@ -96,7 +96,7 @@ export const quizData = {
       correctAnswers: ["Referrer-Policy", "referrer-policy"],
       explanation:
         "Referrer-Policyヘッダを使うことで、Refererヘッダの送信範囲を制御できます。`no-referrer`、`same-origin`、`strict-origin` などの値を設定できます。",
-      referenceLink: "/foundations/protocol/url-encoding",
+      referenceLink: "/foundations/protocol/url-encoding/url-encoding",
     },
   ],
 } satisfies QuizData;

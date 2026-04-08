@@ -23,7 +23,7 @@ export const quizData = {
       correctIndex: 2,
       explanation:
         "汎用ハッシュ関数は高速に設計されているため、攻撃者が大量のパスワード候補を試す総当たり攻撃が容易です。また、ソルトがないためレインボーテーブル（事前計算済みハッシュの辞書）で逆引きが可能です。bcryptやArgon2はソルト付きで意図的に低速に設計されており、パスワード保存に適しています。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
     {
       id: "mc-2",
@@ -38,7 +38,7 @@ export const quizData = {
       correctIndex: 1,
       explanation:
         "ハイブリッド暗号は、公開鍵暗号の「鍵の配送問題を解決できる」利点と、共通鍵暗号の「高速な暗号化」の利点を組み合わせた方式です。TLSでは公開鍵暗号で安全に共通鍵を交換し、その共通鍵を使って実際のデータを暗号化します。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
 
     // === 正誤判定（True/False）===
@@ -49,7 +49,7 @@ export const quizData = {
       correctAnswer: true,
       explanation:
         "ハッシュ関数の重要な特性の一つが一方向性です。入力からハッシュ値は計算できますが、ハッシュ値から元の入力を復元することは計算上不可能です。これがパスワードの保存にハッシュ関数が使われる理由です。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
     {
       id: "tf-2",
@@ -58,7 +58,7 @@ export const quizData = {
       correctAnswer: false,
       explanation:
         "逆です。共通鍵暗号は高速ですが、鍵の配送問題（通信相手に安全に共通鍵を渡す方法がない）があります。公開鍵暗号は低速ですが、公開鍵は公開しても安全なため鍵の配送問題を解決できます。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
 
     // === 並べ替え（Ordering）===
@@ -75,7 +75,7 @@ export const quizData = {
       initialOrder: [1, 2, 0],
       explanation:
         "証明書チェーンでは、サーバー証明書が中間CAによって署名され、中間CAがルートCAによって署名されます。ブラウザはサーバー証明書からルートCAまで辿り、信頼性を確認します。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
 
     // === 穴埋め（Fill in the Blank）===
@@ -86,7 +86,7 @@ export const quizData = {
       correctAnswers: ["Argon2", "argon2", "ARGON2"],
       explanation:
         "Argon2は最新のパスワードハッシュアルゴリズムとして推奨されています。メモリハード関数として設計されており、GPU/ASICによる並列攻撃に対しても耐性があります。bcryptも依然として安全ですが、新規プロジェクトではArgon2が推奨されます。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
     {
       id: "fib-2",
@@ -95,7 +95,7 @@ export const quizData = {
       correctAnswers: ["TLS"],
       explanation:
         "HTTPSは「HTTP over TLS（Transport Layer Security）」の略称です。TLSはHTTP通信を暗号化するプロトコルで、通信の盗聴・改ざんを防ぎます。",
-      referenceLink: "/foundations/crypto/crypto-basics",
+      referenceLink: "/foundations/crypto/crypto-basics/crypto-basics",
     },
   ],
 } satisfies QuizData;

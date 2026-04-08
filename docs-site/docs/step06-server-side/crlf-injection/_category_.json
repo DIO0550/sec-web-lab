@@ -1,0 +1,7 @@
+{
+  "label": "HTTPレスポンスヘッダーへの改行コード注入",
+  "position": 2,
+  "link": {
+    "type": "generated-index"
+  }
+}

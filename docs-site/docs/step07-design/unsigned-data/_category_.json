@@ -1,0 +1,7 @@
+{
+  "label": "クライアントデータを署名なしで信頼し権限昇格やデータ改ざんが可能",
+  "position": 9,
+  "link": {
+    "type": "generated-index"
+  }
+}

@@ -233,16 +233,16 @@ slug: /
 
 | # | トピック | 関連ステップ | ドキュメント |
 |---|---------|-------------|-------------|
-| F-1 | HTTPの基礎 | Step 1 の前提 | [http-basics](foundations/protocol/http-basics.md) |
-| F-2 | URLエンコーディングとReferer | Step 1 の前提 | [url-encoding](foundations/protocol/url-encoding.md) |
-| F-3 | 同一オリジンポリシー | Step 2, 4 の前提 | [same-origin-policy](foundations/browser/same-origin-policy.md) |
-| F-4 | CORSの仕組み | Step 6 の前提 | [cors](foundations/browser/cors.md) |
-| F-5 | 認証の基礎 | Step 3 の前提 | [authentication](foundations/auth-session/authentication.md) |
-| F-6 | セッション管理の基礎 | Step 4 の前提 | [session-management](foundations/auth-session/session-management.md) |
-| F-7 | 暗号化・ハッシュの基礎 | Step 3, 8 の前提 | [crypto-basics](foundations/crypto/crypto-basics.md) |
-| F-8 | JavaScript・DOMの基礎 | Step 2, 8 の前提 | [js-dom-basics](foundations/js-dom/js-dom-basics.md) |
-| F-9 | 入力処理の基礎 | Step 2 の前提 | [input-basics](foundations/input-handling/input-basics.md) |
-| F-10 | 文字エンコーディングとセキュリティ | Step 2 の補足 | [character-encoding](foundations/input-handling/character-encoding.md) |
+| F-1 | HTTPの基礎 | Step 1 の前提 | [http-basics](foundations/protocol/http-basics/http-basics.md) |
+| F-2 | URLエンコーディングとReferer | Step 1 の前提 | [url-encoding](foundations/protocol/url-encoding/url-encoding.md) |
+| F-3 | 同一オリジンポリシー | Step 2, 4 の前提 | [same-origin-policy](foundations/browser/same-origin-policy/same-origin-policy.md) |
+| F-4 | CORSの仕組み | Step 6 の前提 | [cors](foundations/browser/cors/cors.md) |
+| F-5 | 認証の基礎 | Step 3 の前提 | [authentication](foundations/auth-session/authentication/authentication.md) |
+| F-6 | セッション管理の基礎 | Step 4 の前提 | [session-management](foundations/auth-session/session-management/session-management.md) |
+| F-7 | 暗号化・ハッシュの基礎 | Step 3, 8 の前提 | [crypto-basics](foundations/crypto/crypto-basics/crypto-basics.md) |
+| F-8 | JavaScript・DOMの基礎 | Step 2, 8 の前提 | [js-dom-basics](foundations/js-dom/js-dom-basics/js-dom-basics.md) |
+| F-9 | 入力処理の基礎 | Step 2 の前提 | [input-basics](foundations/input-handling/input-basics/input-basics.md) |
+| F-10 | 文字エンコーディングとセキュリティ | Step 2 の補足 | [character-encoding](foundations/input-handling/character-encoding/character-encoding.md) |
 
 ---
 
@@ -255,11 +255,11 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 1 | HTTPヘッダーからの情報漏洩 | ★☆☆ | ラボ実装済 | [header-leakage](step01-recon/header-leakage) |
-| 2 | 機密ファイル露出 (.git/.env) | ★☆☆ | ラボ実装済 | [sensitive-file-exposure](step01-recon/sensitive-file-exposure) |
-| 3 | エラーメッセージからの情報漏洩 | ★☆☆ | ラボ実装済 | [error-message-leakage](step01-recon/error-message-leakage) |
-| 4 | ディレクトリリスティング | ★☆☆ | ラボ実装済 | [directory-listing](step01-recon/directory-listing) |
-| 5 | 不要なヘッダー露出 | ★☆☆ | ラボ実装済 | [header-exposure](step01-recon/header-exposure) |
+| 1 | HTTPヘッダーからの情報漏洩 | ★☆☆ | ラボ実装済 | [header-leakage](step01-recon/header-leakage/header-leakage.mdx) |
+| 2 | 機密ファイル露出 (.git/.env) | ★☆☆ | ラボ実装済 | [sensitive-file-exposure](step01-recon/sensitive-file-exposure/sensitive-file-exposure.mdx) |
+| 3 | エラーメッセージからの情報漏洩 | ★☆☆ | ラボ実装済 | [error-message-leakage](step01-recon/error-message-leakage/error-message-leakage.mdx) |
+| 4 | ディレクトリリスティング | ★☆☆ | ラボ実装済 | [directory-listing](step01-recon/directory-listing/directory-listing.mdx) |
+| 5 | 不要なヘッダー露出 | ★☆☆ | ラボ実装済 | [header-exposure](step01-recon/header-exposure/header-exposure.mdx) |
 
 ---
 
@@ -272,15 +272,15 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 6 | Reflected XSS | ★☆☆ | ラボ実装済 | [xss](step02-injection/xss) |
-| 7 | SQLインジェクション | ★☆☆ | ラボ実装済 | [sql-injection](step02-injection/sql-injection) |
-| 8 | オープンリダイレクト | ★☆☆ | ラボ実装済 | [open-redirect](step02-injection/open-redirect) |
-| 9 | Stored XSS | ★★☆ | ラボ実装済 | [xss](step02-injection/xss) |
-| 10 | DOM-based XSS | ★★☆ | 未実装 | [xss](step02-injection/xss) |
-| 11 | OSコマンドインジェクション | ★★☆ | ラボ実装済 | [command-injection](step02-injection/command-injection) |
-| 12 | メールヘッダインジェクション | ★★☆ | ラボ実装済 | [mail-header-injection](step02-injection/mail-header-injection) |
-| 13 | HTTP Parameter Pollution (HPP) | ★★☆ | ラボ実装済 | [hpp](step02-injection/hpp) |
-| 14 | CSV Injection | ★★☆ | ラボ実装済 | [csv-injection](step02-injection/csv-injection) |
+| 6 | Reflected XSS | ★☆☆ | ラボ実装済 | [xss](step02-injection/xss/xss.mdx) |
+| 7 | SQLインジェクション | ★☆☆ | ラボ実装済 | [sql-injection](step02-injection/sql-injection/sql-injection.mdx) |
+| 8 | オープンリダイレクト | ★☆☆ | ラボ実装済 | [open-redirect](step02-injection/open-redirect/open-redirect.mdx) |
+| 9 | Stored XSS | ★★☆ | ラボ実装済 | [xss](step02-injection/xss/xss.mdx) |
+| 10 | DOM-based XSS | ★★☆ | 未実装 | [xss](step02-injection/xss/xss.mdx) |
+| 11 | OSコマンドインジェクション | ★★☆ | ラボ実装済 | [command-injection](step02-injection/command-injection/command-injection.mdx) |
+| 12 | メールヘッダインジェクション | ★★☆ | ラボ実装済 | [mail-header-injection](step02-injection/mail-header-injection/mail-header-injection.mdx) |
+| 13 | HTTP Parameter Pollution (HPP) | ★★☆ | ラボ実装済 | [hpp](step02-injection/hpp/hpp.mdx) |
+| 14 | CSV Injection | ★★☆ | ラボ実装済 | [csv-injection](step02-injection/csv-injection/csv-injection.mdx) |
 
 ---
 
@@ -293,12 +293,12 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 15 | デフォルト認証情報 | ★☆☆ | ラボ実装済 | [default-credentials](step03-auth/default-credentials) |
-| 16 | 弱いパスワードポリシー | ★☆☆ | ラボ実装済 | [weak-password-policy](step03-auth/weak-password-policy) |
-| 17 | ブルートフォース攻撃 | ★☆☆ | ラボ実装済 | [brute-force](step03-auth/brute-force) |
-| 18 | 平文パスワード保存 | ★☆☆ | ラボ実装済 | [plaintext-password](step03-auth/plaintext-password) |
-| 19 | 弱いハッシュ (MD5/SHA1) | ★★☆ | ラボ実装済 | [weak-hash](step03-auth/weak-hash) |
-| 20 | ユーザー名列挙 | ★☆☆ | ラボ実装済 | [username-enumeration](step03-auth/username-enumeration) |
+| 15 | デフォルト認証情報 | ★☆☆ | ラボ実装済 | [default-credentials](step03-auth/default-credentials/default-credentials.mdx) |
+| 16 | 弱いパスワードポリシー | ★☆☆ | ラボ実装済 | [weak-password-policy](step03-auth/weak-password-policy/weak-password-policy.mdx) |
+| 17 | ブルートフォース攻撃 | ★☆☆ | ラボ実装済 | [brute-force](step03-auth/brute-force/brute-force.mdx) |
+| 18 | 平文パスワード保存 | ★☆☆ | ラボ実装済 | [plaintext-password](step03-auth/plaintext-password/plaintext-password.mdx) |
+| 19 | 弱いハッシュ (MD5/SHA1) | ★★☆ | ラボ実装済 | [weak-hash](step03-auth/weak-hash/weak-hash.mdx) |
+| 20 | ユーザー名列挙 | ★☆☆ | ラボ実装済 | [username-enumeration](step03-auth/username-enumeration/username-enumeration.mdx) |
 
 ---
 
@@ -311,13 +311,13 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 21 | Cookie操作 | ★☆☆ | ラボ実装済 | [cookie-manipulation](step04-session/cookie-manipulation) |
-| 22 | セッション固定攻撃 | ★★☆ | ラボ実装済 | [session-fixation](step04-session/session-fixation) |
-| 23 | セッションハイジャック | ★★☆ | ラボ実装済 | [session-hijacking](step04-session/session-hijacking) |
-| 24 | CSRF | ★★☆ | ラボ実装済 | [csrf](step04-session/csrf) |
-| 25 | トークンリプレイ（失効不備） | ★★☆ | ラボ実装済 | [token-replay](step04-session/token-replay) |
-| 26 | セッション有効期限の不備 | ★☆☆ | ラボ実装済 | [session-expiration](step04-session/session-expiration) |
-| 27 | 推測可能なセッションID | ★★☆ | ラボ実装済 | [predictable-session-id](step04-session/predictable-session-id) |
+| 21 | Cookie操作 | ★☆☆ | ラボ実装済 | [cookie-manipulation](step04-session/cookie-manipulation/cookie-manipulation.mdx) |
+| 22 | セッション固定攻撃 | ★★☆ | ラボ実装済 | [session-fixation](step04-session/session-fixation/session-fixation.mdx) |
+| 23 | セッションハイジャック | ★★☆ | ラボ実装済 | [session-hijacking](step04-session/session-hijacking/session-hijacking.mdx) |
+| 24 | CSRF | ★★☆ | ラボ実装済 | [csrf](step04-session/csrf/csrf.mdx) |
+| 25 | トークンリプレイ（失効不備） | ★★☆ | ラボ実装済 | [token-replay](step04-session/token-replay/token-replay.mdx) |
+| 26 | セッション有効期限の不備 | ★☆☆ | ラボ実装済 | [session-expiration](step04-session/session-expiration/session-expiration.mdx) |
+| 27 | 推測可能なセッションID | ★★☆ | ラボ実装済 | [predictable-session-id](step04-session/predictable-session-id/predictable-session-id.mdx) |
 
 ---
 
@@ -330,10 +330,10 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 28 | IDOR (他ユーザーデータ参照) | ★☆☆ | ラボ実装済 | [idor](step05-access-control/idor) |
-| 29 | パストラバーサル | ★☆☆ | ラボ実装済 | [path-traversal](step05-access-control/path-traversal) |
-| 30 | 権限昇格 | ★★☆ | ラボ実装済 | [privilege-escalation](step05-access-control/privilege-escalation) |
-| 31 | Mass Assignment | ★★☆ | ラボ実装済 | [mass-assignment](step05-access-control/mass-assignment) |
+| 28 | IDOR (他ユーザーデータ参照) | ★☆☆ | ラボ実装済 | [idor](step05-access-control/idor/idor.mdx) |
+| 29 | パストラバーサル | ★☆☆ | ラボ実装済 | [path-traversal](step05-access-control/path-traversal/path-traversal.mdx) |
+| 30 | 権限昇格 | ★★☆ | ラボ実装済 | [privilege-escalation](step05-access-control/privilege-escalation/privilege-escalation.mdx) |
+| 31 | Mass Assignment | ★★☆ | ラボ実装済 | [mass-assignment](step05-access-control/mass-assignment/mass-assignment.mdx) |
 
 ---
 
@@ -346,14 +346,14 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 32 | SSRF | ★★☆ | ラボ実装済 | [ssrf](step06-server-side/ssrf) |
-| 33 | XXE | ★★☆ | ラボ実装済 | [xxe](step06-server-side/xxe) |
-| 34 | ファイルアップロード攻撃 | ★★☆ | ラボ実装済 | [file-upload](step06-server-side/file-upload) |
-| 35 | CRLFインジェクション | ★★☆ | ラボ実装済 | [crlf-injection](step06-server-side/crlf-injection) |
-| 36 | CORS設定ミス | ★★☆ | ラボ実装済 | [cors-misconfiguration](step06-server-side/cors-misconfiguration) |
-| 37 | evalインジェクション | ★★☆ | ラボ実装済 | [eval-injection](step06-server-side/eval-injection) |
-| 38 | SSRFバイパス | ★★★ | ラボ実装済 | [ssrf-bypass](step06-server-side/ssrf-bypass) |
-| 39 | Zip Slip | ★★☆ | ラボ実装済 | [zip-slip](step06-server-side/zip-slip) |
+| 32 | SSRF | ★★☆ | ラボ実装済 | [ssrf](step06-server-side/ssrf/ssrf.mdx) |
+| 33 | XXE | ★★☆ | ラボ実装済 | [xxe](step06-server-side/xxe/xxe.mdx) |
+| 34 | ファイルアップロード攻撃 | ★★☆ | ラボ実装済 | [file-upload](step06-server-side/file-upload/file-upload.mdx) |
+| 35 | CRLFインジェクション | ★★☆ | ラボ実装済 | [crlf-injection](step06-server-side/crlf-injection/crlf-injection.mdx) |
+| 36 | CORS設定ミス | ★★☆ | ラボ実装済 | [cors-misconfiguration](step06-server-side/cors-misconfiguration/cors-misconfiguration.mdx) |
+| 37 | evalインジェクション | ★★☆ | ラボ実装済 | [eval-injection](step06-server-side/eval-injection/eval-injection.mdx) |
+| 38 | SSRFバイパス | ★★★ | ラボ実装済 | [ssrf-bypass](step06-server-side/ssrf-bypass/ssrf-bypass.mdx) |
+| 39 | Zip Slip | ★★☆ | ラボ実装済 | [zip-slip](step06-server-side/zip-slip/zip-slip.mdx) |
 
 ---
 
@@ -366,18 +366,18 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 40 | レート制限なし | ★☆☆ | ラボ実装済 | [rate-limiting](step07-design/rate-limiting) |
-| 41 | クリックジャッキング | ★☆☆ | ラボ実装済 | [clickjacking](step07-design/clickjacking) |
-| 42 | HTTPでの機密データ送信 | ★☆☆ | ラボ実装済 | [sensitive-data-http](step07-design/sensitive-data-http) |
-| 43 | 不要なHTTPメソッド許可 | ★☆☆ | ラボ実装済 | [http-methods](step07-design/http-methods) |
-| 44 | 推測可能なパスワードリセット | ★★☆ | ラボ実装済 | [password-reset](step07-design/password-reset) |
-| 45 | ビジネスロジックの欠陥 | ★★☆ | ラボ実装済 | [business-logic](step07-design/business-logic) |
-| 46 | 署名なしデータの信頼 | ★★☆ | ラボ実装済 | [unsigned-data](step07-design/unsigned-data) |
-| 47 | セキュリティレスポンスヘッダ未設定 | ★☆☆ | ラボ実装済 | [security-headers](step07-design/security-headers) |
-| 48 | キャッシュ制御の不備 | ★★☆ | ラボ実装済 | [cache-control](step07-design/cache-control) |
-| 49 | Web Storageの不適切な使用 | ★★☆ | ラボ実装済 | [web-storage-abuse](step07-design/web-storage-abuse) |
-| 50 | Host Header Injection | ★★☆ | ラボ実装済 | [host-header-injection](step07-design/host-header-injection) |
-| 51 | X-Forwarded-For 信頼ミス | ★★☆ | ラボ実装済 | [xff-trust](step07-design/xff-trust) |
+| 40 | レート制限なし | ★☆☆ | ラボ実装済 | [rate-limiting](step07-design/rate-limiting/rate-limiting.mdx) |
+| 41 | クリックジャッキング | ★☆☆ | ラボ実装済 | [clickjacking](step07-design/clickjacking/clickjacking.mdx) |
+| 42 | HTTPでの機密データ送信 | ★☆☆ | ラボ実装済 | [sensitive-data-http](step07-design/sensitive-data-http/sensitive-data-http.mdx) |
+| 43 | 不要なHTTPメソッド許可 | ★☆☆ | ラボ実装済 | [http-methods](step07-design/http-methods/http-methods.mdx) |
+| 44 | 推測可能なパスワードリセット | ★★☆ | ラボ実装済 | [password-reset](step07-design/password-reset/password-reset.mdx) |
+| 45 | ビジネスロジックの欠陥 | ★★☆ | ラボ実装済 | [business-logic](step07-design/business-logic/business-logic.mdx) |
+| 46 | 署名なしデータの信頼 | ★★☆ | ラボ実装済 | [unsigned-data](step07-design/unsigned-data/unsigned-data.mdx) |
+| 47 | セキュリティレスポンスヘッダ未設定 | ★☆☆ | ラボ実装済 | [security-headers](step07-design/security-headers/security-headers.mdx) |
+| 48 | キャッシュ制御の不備 | ★★☆ | ラボ実装済 | [cache-control](step07-design/cache-control/cache-control.mdx) |
+| 49 | Web Storageの不適切な使用 | ★★☆ | ラボ実装済 | [web-storage-abuse](step07-design/web-storage-abuse/web-storage-abuse.mdx) |
+| 50 | Host Header Injection | ★★☆ | ラボ実装済 | [host-header-injection](step07-design/host-header-injection/host-header-injection.mdx) |
+| 51 | X-Forwarded-For 信頼ミス | ★★☆ | ラボ実装済 | [xff-trust](step07-design/xff-trust/xff-trust.mdx) |
 
 ---
 
@@ -390,16 +390,16 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 52 | JWT改ざん | ★★★ | ラボ実装済 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities) |
-| 53 | JWT alg=none / 弱い鍵 | ★★★ | ラボ実装済 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities) |
-| 54 | JWT Claim 検証不備 | ★★★ | ラボ実装済 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities) |
-| 55 | SSTI | ★★★ | ラボ実装済 | [ssti](step08-advanced/ssti) |
-| 56 | レースコンディション | ★★★ | ラボ実装済 | [race-condition](step08-advanced/race-condition) |
-| 57 | 安全でないデシリアライゼーション | ★★★ | ラボ実装済 | [deserialization](step08-advanced/deserialization) |
-| 58 | Prototype Pollution | ★★★ | ラボ実装済 | [prototype-pollution](step08-advanced/prototype-pollution) |
-| 59 | ReDoS (正規表現DoS) | ★★★ | ラボ実装済 | [redos](step08-advanced/redos) |
-| 60 | postMessage脆弱性 | ★★★ | ラボ実装済 | [postmessage](step08-advanced/postmessage) |
-| 61 | Unicode正規化バイパス | ★★★ | ラボ実装済 | [unicode-normalization](step08-advanced/unicode-normalization) |
+| 52 | JWT改ざん | ★★★ | ラボ実装済 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities/jwt-vulnerabilities.mdx) |
+| 53 | JWT alg=none / 弱い鍵 | ★★★ | ラボ実装済 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities/jwt-vulnerabilities.mdx) |
+| 54 | JWT Claim 検証不備 | ★★★ | ラボ実装済 | [jwt-vulnerabilities](step08-advanced/jwt-vulnerabilities/jwt-vulnerabilities.mdx) |
+| 55 | SSTI | ★★★ | ラボ実装済 | [ssti](step08-advanced/ssti/ssti.mdx) |
+| 56 | レースコンディション | ★★★ | ラボ実装済 | [race-condition](step08-advanced/race-condition/race-condition.mdx) |
+| 57 | 安全でないデシリアライゼーション | ★★★ | ラボ実装済 | [deserialization](step08-advanced/deserialization/deserialization.mdx) |
+| 58 | Prototype Pollution | ★★★ | ラボ実装済 | [prototype-pollution](step08-advanced/prototype-pollution/prototype-pollution.mdx) |
+| 59 | ReDoS (正規表現DoS) | ★★★ | ラボ実装済 | [redos](step08-advanced/redos/redos.mdx) |
+| 60 | postMessage脆弱性 | ★★★ | ラボ実装済 | [postmessage](step08-advanced/postmessage/postmessage.mdx) |
+| 61 | Unicode正規化バイパス | ★★★ | ラボ実装済 | [unicode-normalization](step08-advanced/unicode-normalization/unicode-normalization.mdx) |
 
 ---
 
@@ -412,13 +412,13 @@ slug: /
 
 | # | ラボ名 | 難易度 | 状態 | ドキュメント |
 |---|--------|--------|------|-------------|
-| 62 | 詳細エラーメッセージ露出 | ★☆☆ | ラボ実装済 | [error-messages](step09-defense/error-messages) |
-| 63 | スタックトレース漏洩 | ★☆☆ | ラボ実装済 | [stack-trace](step09-defense/stack-trace) |
-| 64 | ログなし / 不十分なログ | ★☆☆ | ラボ実装済 | [logging](step09-defense/logging) |
-| 65 | ログインジェクション | ★★☆ | ラボ実装済 | [log-injection](step09-defense/log-injection) |
-| 66 | Fail-Open | ★★☆ | ラボ実装済 | [fail-open](step09-defense/fail-open) |
-| 67 | CSP (Content Security Policy) 導入 | ★★☆ | ラボ実装済 | [csp](step09-defense/csp) |
-| 68 | 入力バリデーション設計 | ★★☆ | ラボ実装済 | [input-validation](step09-defense/input-validation) |
+| 62 | 詳細エラーメッセージ露出 | ★☆☆ | ラボ実装済 | [error-messages](step09-defense/error-messages/error-messages.mdx) |
+| 63 | スタックトレース漏洩 | ★☆☆ | ラボ実装済 | [stack-trace](step09-defense/stack-trace/stack-trace.mdx) |
+| 64 | ログなし / 不十分なログ | ★☆☆ | ラボ実装済 | [logging](step09-defense/logging/logging.mdx) |
+| 65 | ログインジェクション | ★★☆ | ラボ実装済 | [log-injection](step09-defense/log-injection/log-injection.mdx) |
+| 66 | Fail-Open | ★★☆ | ラボ実装済 | [fail-open](step09-defense/fail-open/fail-open.mdx) |
+| 67 | CSP (Content Security Policy) 導入 | ★★☆ | ラボ実装済 | [csp](step09-defense/csp/csp.mdx) |
+| 68 | 入力バリデーション設計 | ★★☆ | ラボ実装済 | [input-validation](step09-defense/input-validation/input-validation.mdx) |
 
 ---
 

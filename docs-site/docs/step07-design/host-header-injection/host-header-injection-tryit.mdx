@@ -1,0 +1,115 @@
+---
+title: Host Header Injection — Hostヘッダ汚染によるリンク詐称 - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { HostHeaderInjectionLab } from '@site/src/components/labs/step07/HostHeaderInjectionLab';
+
+# Host Header Injection — Hostヘッダ汚染によるリンク詐称 - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<HostHeaderInjectionLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: `Host` ヘッダを偽装して、パスワードリセットリンクが攻撃者のドメインを含むように操作できることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. 正常なリクエストでリセットリンクの内容を確認する
+
+   ```bash
+   # 正常な Host ヘッダでリセットを要求
+   curl -X POST http://localhost:3000/api/labs/host-header-injection/vulnerable/reset-request \
+     -H "Content-Type: application/json" \
+     -d '{"email": "victim@example.com"}'
+   ```
+
+   レスポンスに含まれるリセットリンクが `http://localhost:3000/reset?token=...` であることを確認する。
+
+3. `Host` ヘッダを偽装してリクエストを送信する
+
+   ```bash
+   # Host ヘッダを攻撃者のドメインに差し替え
+   curl -X POST http://localhost:3000/api/labs/host-header-injection/vulnerable/reset-request \
+     -H "Host: evil.example" \
+     -H "Content-Type: application/json" \
+     -d '{"email": "victim@example.com"}'
+   ```
+
+4. 結果を確認する
+
+   - レスポンスに含まれるリセットリンクが `https://evil.example/reset?token=...` になっていることを確認する
+   - DevTools の Network タブでリクエストとレスポンスを確認する
+   - **この結果が意味すること**: このリンクがメールで被害者に送信された場合、被害者がクリックするとトークンが `evil.example`（攻撃者のサーバー）に送信される。メール自体は正規サーバーから送信されるため、被害者はフィッシングと気づきにくい
+
+5. トークンの窃取をシミュレーションする
+
+   ```bash
+   # レスポンスからトークンを取得（実際にはメールに含まれるリンクから取得される）
+   TOKEN="レスポンスに含まれるトークン値"
+
+   # 攻撃者は盗んだトークンで正規サーバーにパスワードリセットを要求
+   curl -X POST http://localhost:3000/api/labs/host-header-injection/vulnerable/reset-password \
+     -H "Content-Type: application/json" \
+     -d "{\"token\": \"${TOKEN}\", \"newPassword\": \"attackerPassword123\"}"
+   ```
+
+   パスワードが変更されることを確認する。
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ `Host` ヘッダ偽装がベースURL固定化と許可リスト検証により無効化されることを確認する
+
+1. 安全なエンドポイントに不正な `Host` ヘッダを送信する
+
+   ```bash
+   # 不正な Host ヘッダでリクエスト — Host ヘッダ検証で拒否される
+   curl -v -X POST http://localhost:3000/api/labs/host-header-injection/secure/reset-request \
+     -H "Host: evil.example" \
+     -H "Content-Type: application/json" \
+     -d '{"email": "victim@example.com"}'
+   ```
+
+   `400 Bad Request` が返り、「不正なHostヘッダです」というエラーメッセージが表示されることを確認する。
+
+2. 正常な `Host` ヘッダでリクエストする
+
+   ```bash
+   # 正常な Host ヘッダでリセットを要求
+   curl -X POST http://localhost:3000/api/labs/host-header-injection/secure/reset-request \
+     -H "Content-Type: application/json" \
+     -d '{"email": "victim@example.com"}'
+   ```
+
+   リセットリンクが環境変数で設定されたベースURL（例: `https://myapp.example.com/reset?token=...`）を使用していることを確認する。`Host` ヘッダの値がリンクに反映されていないことがポイント。
+
+3. コードの差分を確認する
+
+   - `backend/src/labs/step07-design/host-header-injection.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `c.req.header("host")` → `process.env.BASE_URL`、Host ヘッダ許可リスト検証の追加
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] `Host` ヘッダはなぜクライアントが自由に設定できるのか、そしてなぜサーバーがそれを信頼してはいけないのか
+- [ ] 攻撃者が `Host` ヘッダを偽装したとき、サーバー内部でどのようにリセットリンクが組み立てられ、被害者にどのようなメールが届くか
+- [ ] ベースURLのハードコード（環境変数化）がなぜこの攻撃を無効化するのか（「安全だから安全」ではダメ）
+- [ ] リバースプロキシ環境で `X-Forwarded-Host` を使用する場合、何に注意すべきか
+
+---
+
+[← ラボに戻る](./host-header-injection.mdx)

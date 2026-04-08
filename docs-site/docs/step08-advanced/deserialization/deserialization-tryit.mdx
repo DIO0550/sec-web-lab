@@ -1,0 +1,110 @@
+---
+title: Insecure Deserialization — 信頼できないデータの復元でコードが実行される - 実際に試す
+sidebar_label: ラボ
+sidebar_position: 2
+---
+
+import { DeserializationLab } from '@site/src/components/labs/step08/DeserializationLab';
+
+# Insecure Deserialization — 信頼できないデータの復元でコードが実行される - 実際に試す
+
+## ラボ体験
+
+以下の埋め込みラボUIで、脆弱バージョンと安全バージョンを切り替えて試すことができます。
+
+<DeserializationLab />
+
+---
+
+## ハンズオン手順
+
+### Step 1: 脆弱バージョンで攻撃を体験
+
+**ゴール**: `eval()` 経由でサーバー上のコードが実行されること、およびプロトタイプ汚染で認可が回避されることを確認する
+
+1. 開発サーバーを起動する
+
+   ```bash
+   cd backend && pnpm dev
+   ```
+
+2. eval() によるコード実行を試す
+
+   ```bash
+   # サーバーで任意のコードを実行
+   curl -X POST http://localhost:3000/api/labs/deserialization/vulnerable/config \
+     -H "Content-Type: text/plain" \
+     -d '({result: 1+1})'
+   ```
+
+   - レスポンスに `{"config": {"result": 2}}` が返される — 式が **評価** されている
+
+3. より危険なペイロードを試す
+
+   ```bash
+   # OS コマンドの実行を試みる
+   curl -X POST http://localhost:3000/api/labs/deserialization/vulnerable/config \
+     -H "Content-Type: text/plain" \
+     -d '({result: require("os").hostname()})'
+   ```
+
+   - サーバーのホスト名がレスポンスに含まれる
+   - **この結果が意味すること**: `eval()` は入力を JavaScript コードとして実行するため、Node.js の全 API にアクセスできる
+
+4. プロトタイプ汚染を試す
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/deserialization/vulnerable/settings \
+     -H "Content-Type: application/json" \
+     -d '{"__proto__": {"isAdmin": true}}'
+
+   # 通常ユーザーとして管理者チェックを試みる
+   curl http://localhost:3000/api/labs/deserialization/vulnerable/admin-check
+   ```
+
+   - プロトタイプ汚染により管理者として認識される
+
+### Step 2: 安全バージョンで防御を確認
+
+**ゴール**: 同じ攻撃が失敗することを確認する
+
+1. 同じペイロードを安全なエンドポイントに送信する
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/deserialization/secure/config \
+     -H "Content-Type: text/plain" \
+     -d '({result: 1+1})'
+   ```
+
+2. 結果を確認する
+
+   - `400 Bad Request`（無効な JSON 形式）が返される
+   - `JSON.parse()` は JavaScript コードをパースできないため、エラーになる
+
+3. プロトタイプ汚染攻撃も試す
+
+   ```bash
+   curl -X POST http://localhost:3000/api/labs/deserialization/secure/settings \
+     -H "Content-Type: application/json" \
+     -d '{"__proto__": {"isAdmin": true}}'
+   ```
+
+   - `__proto__` がフィルタリングされ、プロトタイプは汚染されない
+
+4. コードの差分を確認する
+
+   - `backend/src/labs/step08-advanced/deserialization.ts` の脆弱版と安全版を比較
+   - **どの行が違いを生んでいるか** に注目: `eval()` vs `JSON.parse()`、マージ時のフィルタリング
+
+### 確認ポイント
+
+以下を自分の言葉で説明できれば、このラボは完了です:
+
+- [ ] `eval()` と `JSON.parse()` の根本的な違いは何か（コード実行 vs データパース）
+- [ ] プロトタイプ汚染が成立するメカニズムを説明できるか（`__proto__` がなぜ特別なのか）
+- [ ] なぜ `JSON.parse()` では任意コード実行が不可能なのか
+- [ ] シリアライゼーション/デシリアライゼーションが他の脆弱性（XSS、RCE）につながるケースは何か
+
+---
+
+[← ラボに戻る](./deserialization.mdx)

@@ -1,0 +1,7 @@
+{
+  "label": "信頼されたURLからフィッシングサイトへ誘導する",
+  "position": 3,
+  "link": {
+    "type": "generated-index"
+  }
+}
