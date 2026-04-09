@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Build release zip
+        run: chmod +x scripts/build-release-zip.sh && ./scripts/build-release-zip.sh "${GITHUB_REF_NAME}"
+
+      - name: Create GitHub Release
+        run: gh release create "${GITHUB_REF_NAME}" sec-web-lab-*.zip --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
