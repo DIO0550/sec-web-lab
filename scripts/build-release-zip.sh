@@ -60,8 +60,12 @@ TAR_EXCLUDES=()
 for item in "${ROOT_ONLY_EXCLUDES[@]}"; do
   TAR_EXCLUDES+=(--exclude="./$item")
 done
+# ANY_DEPTHは ./$item (ルート直下) と */$item (任意の階層下) の両方を明示
 for item in "${ANY_DEPTH_EXCLUDES[@]}"; do
-  TAR_EXCLUDES+=(--exclude="$item")
+  TAR_EXCLUDES+=(
+    --exclude="./$item"
+    --exclude="*/$item"
+  )
 done
 # *.png をルート直下のみ除外
 TAR_EXCLUDES+=(--exclude="./*.png")
