@@ -1,24 +1,17 @@
-FROM ubuntu:24.04
+FROM node:24-bookworm-slim
 
-# Node.js バージョン
-ARG NODE_VERSION=24
 ARG USERNAME=vscode
 
-ENV NODE_VERSION=${NODE_VERSION}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 
-# 基本パッケージとNode.jsのインストール
+# gitのみ追加で必要（node公式イメージにはcurl/ca-certificatesは含まれている）
 RUN apt-get update \
-    && apt-get install -y \
-        curl \
-        ca-certificates \
-        gnupg \
+    && apt-get install -y --no-install-recommends \
         git \
-    && useradd -m -s /bin/bash $USERNAME \
-    && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
-    && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m -s /bin/bash $USERNAME
 
 USER $USERNAME
 
