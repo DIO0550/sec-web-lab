@@ -25,7 +25,9 @@ USER $USERNAME
 SHELL ["/bin/bash", "-l", "-c"]
 
 # pnpmセットアップ（gistを外部参照せず、ローカルのスクリプトを使用）
-COPY --chown=$USERNAME:$USERNAME .devcontainer/app/pnpm-setup.sh /tmp/pnpm-setup.sh
+# リポジトリ内では .devcontainer.release/app/pnpm-setup.sh を参照して単体ビルド可能にする。
+# リリースzipに入る際は build-release-zip.sh が .devcontainer/app/pnpm-setup.sh に書き換える。
+COPY --chown=$USERNAME:$USERNAME .devcontainer.release/app/pnpm-setup.sh /tmp/pnpm-setup.sh
 RUN sh /tmp/pnpm-setup.sh && rm /tmp/pnpm-setup.sh
 
 # postCreateCommandなどの非ログインシェルでもpnpmが見えるようにPATHを通す
