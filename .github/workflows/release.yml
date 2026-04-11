@@ -10,6 +10,8 @@ permissions:
 
 jobs:
   release:
+    # タグ削除(push eventのdeleted=true)では起動せず、不要なcheckout失敗を避ける
+    if: github.event.deleted == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
