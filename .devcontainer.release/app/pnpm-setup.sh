@@ -42,7 +42,9 @@ pnpm -v
 pnpm config set -g global-bin-dir "$PNPM_HOME"
 pnpm config set --global minimumReleaseAge 7200
 
-npm config set ignore-scripts true
+# 注意: gistの元版には npm config set ignore-scripts true があるが、
+# Vite/esbuild等がネイティブバイナリ配置に install scripts を使うため
+# リリース版では設定しない（pnpm install が失敗する）。
 
 # 環境変数を永続化（.profile と .bashrc 両方に）
 for f in "$PROFILE_FILE" "$HOME/.bashrc"; do
