@@ -73,9 +73,13 @@ cp -a "$REPO_ROOT/.devcontainer.release/" "$WORK/.devcontainer/"
 # 配布先では .devcontainer.release/ が存在しないため、.devcontainer/ 側のパスに書き換え
 # （リポジトリ内では .devcontainer.release/ として単体ビルド検証可能な状態を維持するため、
 #  元ファイルは .devcontainer.release/ を参照したままにしている）
-sed -i 's|\.devcontainer\.release/|.devcontainer/|g' \
+# sed -i は GNU/BSD で挙動が異なるため、tempfile + mv でPOSIX準拠の書き換えを行う
+for f in \
   "$WORK/.devcontainer/docker-compose.yml" \
-  "$WORK/.devcontainer/app/Dockerfile"
+  "$WORK/.devcontainer/app/Dockerfile"; do
+  sed 's|\.devcontainer\.release/|.devcontainer/|g' "$f" > "$f.tmp"
+  mv "$f.tmp" "$f"
+done
 
 # zip生成（既存zipを削除して常にクリーンに作成。zip -r は in-place 更新するため）
 cd "$TMPDIR"
