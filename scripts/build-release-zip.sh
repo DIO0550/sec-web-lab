@@ -42,7 +42,6 @@ ROOT_ONLY_EXCLUDES=(
   .devcontainer.release
   .github
   CLAUDE.md
-  LICENSE
 )
 
 # ANY_DEPTH: workspace配下のどの階層でも除外（pnpm workspaceのネストnode_modules対策）
