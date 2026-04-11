@@ -68,8 +68,8 @@ TAR_EXCLUDES+=(--exclude="./*.png")
 
 (cd "$REPO_ROOT" && tar cf - "${TAR_EXCLUDES[@]}" .) | (cd "$WORK" && tar xf -)
 
-# ルート直下の *.yml を削除 (pnpm-workspace.yaml は残す)
-find "$WORK" -maxdepth 1 -name '*.yml' ! -name 'pnpm-workspace.yaml' -delete
+# ルート直下の *.yml のみ削除（*.yaml は対象外。pnpm-workspace.yaml は .yaml なので影響なし）
+find "$WORK" -maxdepth 1 -name '*.yml' -delete
 
 # .devcontainer.release/ → .devcontainer/ にコピー
 cp -a "$REPO_ROOT/.devcontainer.release/" "$WORK/.devcontainer/"
