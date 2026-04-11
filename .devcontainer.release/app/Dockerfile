@@ -5,7 +5,9 @@ ARG USERNAME=vscode
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 
-# gitのみ追加で必要（node公式イメージにはcurl/ca-certificatesは含まれている）
+# 追加で必要なパッケージをインストール
+# - git: pnpm install時にgit依存を解決するため
+# - ca-certificates: node:24-bookworm-slim はdebian slimベースで同梱されないため明示的に追加
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         git \
