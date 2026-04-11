@@ -28,15 +28,13 @@ WORK="$TMPDIR/$DEST_DIR"
 mkdir -p "$WORK"
 
 # 除外対象のリスト
-EXCLUDES=(
+# ROOT_ONLY: ルート直下のみ除外（frontend/src/labs/ 等のネストした同名ディレクトリは残す）
+ROOT_ONLY_EXCLUDES=(
   .claude
   .specs
   .playwright
   .playwright-cli
   .orchestrator
-  .git
-  node_modules
-  .pnpm-store
   scripts
   docker
   labs
@@ -47,10 +45,20 @@ EXCLUDES=(
   LICENSE
 )
 
+# ANY_DEPTH: workspace配下のどの階層でも除外（pnpm workspaceのネストnode_modules対策）
+ANY_DEPTH_EXCLUDES=(
+  node_modules
+  .pnpm-store
+  .git
+)
+
 # tar + パイプで除外リスト適用しながらコピー
 TAR_EXCLUDES=()
-for item in "${EXCLUDES[@]}"; do
+for item in "${ROOT_ONLY_EXCLUDES[@]}"; do
   TAR_EXCLUDES+=(--exclude="./$item")
+done
+for item in "${ANY_DEPTH_EXCLUDES[@]}"; do
+  TAR_EXCLUDES+=(--exclude="$item")
 done
 # *.png をルート直下のみ除外
 TAR_EXCLUDES+=(--exclude="./*.png")
