@@ -19,6 +19,8 @@ jobs:
         run: chmod +x scripts/build-release-zip.sh && ./scripts/build-release-zip.sh "${GITHUB_REF_NAME}"
 
       - name: Create GitHub Release
-        run: gh release create "${GITHUB_REF_NAME}" "sec-web-lab-${GITHUB_REF_NAME}.zip" --generate-notes
+        run: |
+          SAFE_TAG="${GITHUB_REF_NAME//\//_}"
+          gh release create "${GITHUB_REF_NAME}" "sec-web-lab-${SAFE_TAG}.zip" --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

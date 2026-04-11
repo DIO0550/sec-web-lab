@@ -15,8 +15,12 @@ if [[ -z "$TAG" ]]; then
   exit 1
 fi
 
-ZIP_NAME="sec-web-lab-${TAG}.zip"
-DEST_DIR="sec-web-lab-${TAG}"
+# Git tag名は `/` を含められるため、ファイル名・ディレクトリ名には安全な値に変換する
+# (GitHub Release のタグ名自体は元のTAGを使う)
+SAFE_TAG="${TAG//\//_}"
+
+ZIP_NAME="sec-web-lab-${SAFE_TAG}.zip"
+DEST_DIR="sec-web-lab-${SAFE_TAG}"
 
 echo "=== リリース用zip生成: ${ZIP_NAME} ==="
 
