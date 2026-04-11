@@ -9,7 +9,7 @@
     "5173": { "label": "Docs (Docusaurus)", "onAutoForward": "openBrowser" },
     "5432": { "label": "PostgreSQL", "onAutoForward": "silent" }
   },
-  "postCreateCommand": "pnpm install && pnpm --filter backend db:seed",
+  "postCreateCommand": "pnpm install && pnpm --filter ./backend db:seed",
   "customizations": {
     "vscode": {
       "extensions": [
