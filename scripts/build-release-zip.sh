@@ -69,6 +69,8 @@ for item in "${ANY_DEPTH_EXCLUDES[@]}"; do
 done
 # *.png をルート直下のみ除外
 TAR_EXCLUDES+=(--exclude="./*.png")
+# 過去に生成した出力zipをルート直下から除外（新zipへの混入・肥大化を防ぐ）
+TAR_EXCLUDES+=(--exclude="./sec-web-lab-*.zip")
 
 (cd "$REPO_ROOT" && tar cf - "${TAR_EXCLUDES[@]}" .) | (cd "$WORK" && tar xf -)
 
