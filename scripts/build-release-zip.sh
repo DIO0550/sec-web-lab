@@ -63,8 +63,9 @@ find "$WORK" -maxdepth 1 -name '*.yml' ! -name 'pnpm-workspace.yaml' -delete
 # .devcontainer.release/ → .devcontainer/ にコピー
 cp -a "$REPO_ROOT/.devcontainer.release/" "$WORK/.devcontainer/"
 
-# zip生成
+# zip生成（既存zipを削除して常にクリーンに作成。zip -r は in-place 更新するため）
 cd "$TMPDIR"
+rm -f "$REPO_ROOT/$ZIP_NAME"
 zip -r "$REPO_ROOT/$ZIP_NAME" "$DEST_DIR"
 
 echo "=== 完了: ${ZIP_NAME} ($(du -h "$REPO_ROOT/$ZIP_NAME" | cut -f1)) ==="
