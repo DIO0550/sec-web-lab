@@ -60,7 +60,8 @@ ENVEOF
   fi
 done
 
-# install safe-chain (supply-chain security)
-curl -fsSL https://github.com/AikidoSec/safe-chain/releases/latest/download/install-safe-chain.sh | sh
+# 注意: gistの元版ではここで AikidoSec/safe-chain を curl | sh でインストールするが、
+# リリース版devcontainerでは外部ネットワーク依存とバージョン未固定のリモート実行を
+# 避けるため、safe-chainのインストールは行わない。
 
 echo "[setup] Done!"
