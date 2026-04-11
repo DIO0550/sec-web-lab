@@ -21,6 +21,10 @@ jobs:
       - name: Create GitHub Release
         run: |
           SAFE_TAG="${GITHUB_REF_NAME//\//_}"
-          gh release create "${GITHUB_REF_NAME}" "sec-web-lab-${SAFE_TAG}.zip" --generate-notes
+          # 同一タグで再実行されても失敗しないよう、存在確認してから作成・上書きする
+          if ! gh release view "${GITHUB_REF_NAME}" > /dev/null 2>&1; then
+            gh release create "${GITHUB_REF_NAME}" --generate-notes
+          fi
+          gh release upload "${GITHUB_REF_NAME}" "sec-web-lab-${SAFE_TAG}.zip" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
