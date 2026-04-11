@@ -77,6 +77,9 @@ TAR_EXCLUDES+=(--exclude="./sec-web-lab-*.zip")
 # ルート直下の *.yml のみ削除（*.yaml は対象外。pnpm-workspace.yaml は .yaml なので影響なし）
 find "$WORK" -maxdepth 1 -name '*.yml' -delete
 
+# untracked の .env / .env.* による秘密情報の流出を防ぐ（.env.example は配布物として残す）
+find "$WORK" \( -name '.env' -o -name '.env.*' \) ! -name '.env.example' -type f -delete
+
 # .devcontainer.release/ → .devcontainer/ にコピー
 cp -a "$REPO_ROOT/.devcontainer.release/" "$WORK/.devcontainer/"
 
