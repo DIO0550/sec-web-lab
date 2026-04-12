@@ -60,12 +60,10 @@ TAR_EXCLUDES=()
 for item in "${ROOT_ONLY_EXCLUDES[@]}"; do
   TAR_EXCLUDES+=(--exclude="./$item")
 done
-# ANY_DEPTHは ./$item (ルート直下) と */$item (任意の階層下) の両方を明示
+# ANY_DEPTHはtarのglobだと * が / をまたげず2階層以上ネストをカバーできないため、
+# tarではルート直下のみ除外し、残りはコピー後にfind -deleteで全階層から削除する
 for item in "${ANY_DEPTH_EXCLUDES[@]}"; do
-  TAR_EXCLUDES+=(
-    --exclude="./$item"
-    --exclude="*/$item"
-  )
+  TAR_EXCLUDES+=(--exclude="./$item")
 done
 # *.png をルート直下のみ除外
 TAR_EXCLUDES+=(--exclude="./*.png")
@@ -73,6 +71,11 @@ TAR_EXCLUDES+=(--exclude="./*.png")
 TAR_EXCLUDES+=(--exclude="./sec-web-lab-*.zip")
 
 (cd "$REPO_ROOT" && tar cf - "${TAR_EXCLUDES[@]}" .) | (cd "$WORK" && tar xf -)
+
+# ANY_DEPTH除外: tar glob では2階層以上ネストをカバーできないため find で全階層から確実に削除
+for item in "${ANY_DEPTH_EXCLUDES[@]}"; do
+  find "$WORK" -name "$item" -type d -exec rm -rf {} + 2>/dev/null || true
+done
 
 # ルート直下の *.yml のみ削除（*.yaml は対象外。pnpm-workspace.yaml は .yaml なので影響なし）
 find "$WORK" -maxdepth 1 -name '*.yml' -delete
