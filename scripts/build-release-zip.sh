@@ -84,6 +84,11 @@ find "$WORK" -maxdepth 1 -name '*.yml' -delete
 find "$WORK" \( -name '.env' -o -name '.env.*' \) ! -name '.env.example' -type f -delete
 
 # .devcontainer.release/ → .devcontainer/ にコピー
+if [ ! -d "$REPO_ROOT/.devcontainer.release" ]; then
+  echo "エラー: $REPO_ROOT/.devcontainer.release が見つかりません。" >&2
+  echo "このコミットにリリース用devcontainer設定が含まれているか確認してください。" >&2
+  exit 1
+fi
 cp -a "$REPO_ROOT/.devcontainer.release/" "$WORK/.devcontainer/"
 
 # 配布先では .devcontainer.release/ が存在しないため、.devcontainer/ 側のパスに書き換え
