@@ -26,8 +26,8 @@ COPY --chown=$USERNAME:$USERNAME .devcontainer.release/app/pnpm-setup.sh /tmp/pn
 RUN sh /tmp/pnpm-setup.sh && rm /tmp/pnpm-setup.sh
 
 # postCreateCommandなどの非ログインシェルでもpnpmが見えるようにPATHを通す
-ENV NPM_PREFIX=/home/vscode/.npm-global
-ENV PNPM_HOME=/home/vscode/.local/share/pnpm
+ENV NPM_PREFIX=/home/${USERNAME}/.npm-global
+ENV PNPM_HOME=/home/${USERNAME}/.local/share/pnpm
 ENV PATH=$NPM_PREFIX/bin:$PNPM_HOME:$PATH
 
 WORKDIR /workspace
