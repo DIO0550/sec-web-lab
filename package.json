@@ -2,7 +2,6 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev": "pnpm --filter ./backend --filter ./docs-site -r --parallel dev",
-    "tag": "git tag -a \"v$(node -p \"require('./package.json').version\")\" -m \"Release v$(node -p \"require('./package.json').version\")\""
+    "dev": "pnpm --filter ./backend --filter ./docs-site -r --parallel dev"
   }
 }
