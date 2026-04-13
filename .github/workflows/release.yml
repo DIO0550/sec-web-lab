@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    # タグ削除(push eventのdeleted=true)では起動せず、不要なcheckout失敗を避ける
+    if: github.event.deleted == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Build release zip
+        run: chmod +x scripts/build-release-zip.sh && ./scripts/build-release-zip.sh "${GITHUB_REF_NAME}"
+
+      - name: Create GitHub Release
+        run: |
+          SAFE_TAG="${GITHUB_REF_NAME//\//_}"
+          # 同一タグで再実行されても失敗しないよう、存在確認してから作成・上書きする
+          if ! gh release view "${GITHUB_REF_NAME}" > /dev/null 2>&1; then
+            gh release create "${GITHUB_REF_NAME}" --generate-notes
+          fi
+          gh release upload "${GITHUB_REF_NAME}" "sec-web-lab-${SAFE_TAG}.zip" --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer.release/app/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    ports:
+      - "13000:3000"
+      - "15173:5173"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://labuser:labpass@db:5432/secweblab
+      NODE_ENV: development
+
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: labuser
+      POSTGRES_PASSWORD: labpass
+      POSTGRES_DB: secweblab
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U labuser -d secweblab"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
